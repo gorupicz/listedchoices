@@ -1,0 +1,35 @@
+[
+  {
+    "subtitle": "Real Estate Agency",
+    "Title": "Find Your Dream House By Us",
+    "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
+    "icon": "FaHome",
+    "bgImage": "11.jpg",
+    "id": "1",
+    "buttonText": "Make An Enquiry",
+    "variationCenter": true,
+    "variationRight": false
+  },
+  {
+    "subtitle": "Real Estate Agency",
+    "Title": "The Right Place of House Finding",
+    "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
+    "icon": "FaHome",
+    "bgImage": "12.jpg",
+    "id": "2",
+    "buttonText": "Make An Enquiry",
+    "variationCenter": false,
+    "variationRight": true
+  },
+  {
+    "subtitle": "Real Estate Agency",
+    "Title": "Search and Find Luxury House",
+    "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
+    "icon": "FaHome",
+    "bgImage": "13.jpg",
+    "id": "3",
+    "buttonText": "Make An Enquiry",
+    "variationCenter": false,
+    "variationRight": false
+  }
+]
