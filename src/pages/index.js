@@ -6,7 +6,7 @@ import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { LayoutOne } from "@/layouts";
-import HeroSectionStyleOne from "@/components/hero/styleOne";
+import HeroSectionStyle from "@/components/hero/styleFive";
 import CarDealerSearchForm from "@/components/carDealerSearchForm";
 import AboutUsStyleOne from "@/components/aboutUs/aboutUsStyleOne";
 import AboutUsStyleTwo from "@/components/aboutUs/aboutUsStyleTwo";
@@ -152,7 +152,7 @@ function HomePage(props) {
   return (
     <>
       <LayoutOne topbar={true}>
-        <HeroSectionStyleOne data={Herodata} />
+        <HeroSectionStyle data={Herodata} />
 
         <CarDealerSearchForm navMenuClass="d-none" customClasses="" />
         {/* <!-- CAR DEALER FORM AREA END -->
