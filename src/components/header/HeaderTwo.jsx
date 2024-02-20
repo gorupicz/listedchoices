@@ -89,7 +89,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
                 </div>
               </Col>
               <div className="ltn__header-options ltn__header-options-2 ">
-                {/* <!-- Mobile Menu Button --> */}
+                {/* <!-- Mobile Menu Button --> 
                 <div className="mobile-menu-toggle d-xl-none">
                   <button
                     onClick={offcanVasToggler}
@@ -110,7 +110,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
                       ></path>
                     </svg>
                   </button>
-                </div>
+                </div>*/}
               </div>
             </Row>
           </Container>
