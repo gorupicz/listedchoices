@@ -8,7 +8,7 @@ import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import SideBar from "@/components/shopSideBar";
 import RelatedProduct from "@/components/product/related-product";
 import ProductList from "@/components/product/list";
-import Search from "@/components/search";
+//import Search from "@/components/search";
 import CallToAction from "@/components/callToAction";
 import ReactPaginate from "react-paginate";
 
@@ -115,6 +115,7 @@ function Shop() {
                     </li>
 
                     <li>
+              {/*
                       <div className="short-by text-center">
                         <Form.Select
                           className="form-control nice-select"
@@ -128,11 +129,12 @@ function Shop() {
                           <option value="priceLowToHigh">Price - Low to High</option>
                         </Form.Select>
                       </div>
+                        */}
                     </li>
                   </ul>
                 </div>
 
-                <Search spaceBottom="mb-30" setQuery={setQuery} />
+{/*<--                <Search spaceBottom="mb-30" setQuery={setQuery} /> -->*/}
 
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
