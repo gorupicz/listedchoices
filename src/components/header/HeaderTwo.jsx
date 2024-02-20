@@ -74,7 +74,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
                 <div className="site-logo-wrap">
                   <div className="site-logo">
                     <Link href="/">
-                      <img src="/img/logo-2.jpg" alt="Logo" />
+                      <img src="/img/logo.png" alt="Logo" />
                     </Link>
                   </div>
                 </div>
@@ -128,13 +128,13 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
 
       {/* <!-- Utilize Cart Menu End --> */}
 
-      {/* <!-- Utilize Mobile Menu Start --> 
+      {/* <!-- Utilize Mobile Menu Start --> */}
       <MobileMenu
         offCanVastoggleBtn={offCanVastoggleBtn}
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
-*/}
+
       {/* <!-- Utilize Mobile Menu End --> */}
       <div
         className="ltn__utilize-overlay"
