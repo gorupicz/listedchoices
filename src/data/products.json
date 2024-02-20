@@ -9,7 +9,7 @@
     ],
     "title": "The Elegance",
     "productImg": "Elegance850.jpg",
-    "price": 69,
+    "price": 10,
     "priceRange": ["Low Budget"],
     "discount": 5,
     "country": true,
@@ -20,7 +20,7 @@
     "rent": false,
     "photo": ["buying", "women", "women"],
     "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "bedBath": ["2/2"],
     "ratingCount": 5,
     "rating": 3,
     "saleCount": 5,
@@ -90,7 +90,7 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Dishwasher"],
+    "AmenitiesList": ["Air Conditioning", "Microwave", "Starlink Internet", "Toilet (Electric)", "Shower", "Roku TV"],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -120,7 +120,7 @@
     ],
     "title": "The Gemini",
     "productImg": "Gemini850.jpg",
-    "price": 69,
+    "price": 10,
     "priceRange": ["Low Budget"],
     "discount": 5,
     "country": true,
@@ -131,7 +131,7 @@
     "rent": true,
     "photo": ["buying", "women", "women"],
     "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "bedBath": ["2/2"],
     "ratingCount": 5,
     "rating": 3,
     "saleCount": 5,
@@ -201,7 +201,7 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Dishwasher"],
+    "AmenitiesList": ["Air Conditioning", "Microwave","Toilet (Marine)", "Shower", "Roku TV"],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",

@@ -150,7 +150,7 @@ const RelatedProduct = ({
           <div className="product-price">
             <span>
               {`$ ${productData.price}`}
-              <label>/Month</label>
+              <label>/Share</label>
             </span>
           </div>
         </div>

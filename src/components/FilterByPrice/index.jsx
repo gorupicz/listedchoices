@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const FilterByPrice = () => {
   const min = 0;
-  const max = 30;
+  const max = 100;
 
   const [value, setValue] = useState([min, max]);
 
