@@ -1322,6 +1322,10 @@
 }
 
 @media (max-width: 991px) {
+
+  .ltn__shop-options {
+    display: none;
+  }
   .ltn__product-item-3 {
     .product-info {
       padding: 25px 15px 15px;

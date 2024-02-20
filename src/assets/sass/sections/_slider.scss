@@ -976,6 +976,10 @@
 }
 
 @media (max-width: 991px) {
+  
+  .slide-sub-title {
+   display: none;
+  }
   .slide-title {
     font-size: 26px;
   }
@@ -1003,6 +1007,7 @@
     }
   }
   .ltn__slide-item-3 {
+    padding-top: 40px !important;
     .slide-item-img {
       width: 100%;
       position: relative;
