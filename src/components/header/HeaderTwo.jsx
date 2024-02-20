@@ -89,7 +89,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
                 </div>
               </Col>
               <div className="ltn__header-options ltn__header-options-2 ">
-                {/* <!-- Mobile Menu Button --> 
+                {/* <!-- Mobile Menu Button --> */}
                 <div className="mobile-menu-toggle d-xl-none">
                   <button
                     onClick={offcanVasToggler}
@@ -110,7 +110,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
                       ></path>
                     </svg>
                   </button>
-                </div>*/}
+                </div>
               </div>
             </Row>
           </Container>
@@ -128,13 +128,13 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
 
       {/* <!-- Utilize Cart Menu End --> */}
 
-      {/* <!-- Utilize Mobile Menu Start --> */}
+      {/* <!-- Utilize Mobile Menu Start --> 
       <MobileMenu
         offCanVastoggleBtn={offCanVastoggleBtn}
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
-
+*/}
       {/* <!-- Utilize Mobile Menu End --> */}
       <div
         className="ltn__utilize-overlay"
