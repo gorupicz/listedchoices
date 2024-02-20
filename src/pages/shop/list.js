@@ -89,10 +89,10 @@ function ShopList() {
   };
 
   return (
-    <LayoutOne topbar={true}>
+    <LayoutOne topbar={false}>
       {/* <!-- BREADCRUMB AREA START --> */}
 
-      <ShopBreadCrumb
+   {/*   <ShopBreadCrumb
         title="Property List"
         sectionPace=""
         currentSlug="Property List"

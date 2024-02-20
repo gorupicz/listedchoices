@@ -24,7 +24,7 @@ const ProductList = ({
   if (productData.rent) {
     badgeText = "For Rent";
   } else {
-    badgeText = "For Sale";
+    badgeText = "Receiving guests";
   }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -94,15 +94,15 @@ const ProductList = ({
           <ul className="ltn__plot-brief">
             <li>
               <span>{productData.propertyDetails.bedrooms}</span>
-              <span className="ms-1">Bedrooms</span>
+              <span className="ms-1">Reviews</span>
             </li>
             <li>
               <span>{productData.propertyDetails.baths}</span>
-              <span className="ms-1">Bathrooms</span>
+              <span className="ms-1">Occupancy</span>
             </li>
             <li>
               <span>{productData.propertyDetails.area}</span>
-              <span className="ms-1">square Ft</span>
+              <span className="ms-1">RevPAN</span>
             </li>
           </ul>
         </div>

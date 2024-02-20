@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import ModalVideo from "react-modal-video";
 import {
   FaPlay,
-  FaHome,
+  FaShip,
   FaArrowRight,
   FaArrowLeft,
   FaDribbble,
@@ -174,7 +174,7 @@ function HeroSectionStyleTwo({ data }) {
                           <div className="slide-item-info-inner ltn__slide-animation">
                             <h6 className="slide-sub-title animated">
                               <span>
-                                <FaHome />
+                                <FaShip />
                               </span>
                               {item.subtitle}
                             </h6>

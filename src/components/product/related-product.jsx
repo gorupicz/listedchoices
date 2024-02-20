@@ -22,9 +22,9 @@ const RelatedProduct = ({
   let badgeText = "";
 
   if (productData.rent) {
-    badgeText = "For Rent";
+    badgeText = "Travellers Award Winner on Booking";
   } else {
-    badgeText = "For Sale";
+    badgeText = "Guest Favorite on Airbnb ★4.94/5 ";
   }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -91,15 +91,15 @@ const RelatedProduct = ({
           <ul className="ltn__plot-brief">
             <li>
               <span>{productData.propertyDetails.bedrooms}</span>
-              <span className="ms-1">Bedrooms</span>
+              <span className="ms-1">Rentals</span>
             </li>
             <li>
               <span>{productData.propertyDetails.baths}</span>
-              <span className="ms-1">Bathrooms</span>
+              <span className="ms-1">Reviews</span>
             </li>
             <li>
               <span>{productData.propertyDetails.area}</span>
-              <span className="ms-1">square Ft</span>
+              <span className="ms-1">Occupancy</span>
             </li>
           </ul>
           <div className="product-hover-action">

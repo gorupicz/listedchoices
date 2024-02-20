@@ -27,7 +27,7 @@ const ProductItem = ({
   if (productData.rent) {
     badgeText = "For Rent";
   } else {
-    badgeText = "For Sale";
+    badgeText = "Receiving guests";
   }
 
   const dispatch = useDispatch();
@@ -123,21 +123,21 @@ const ProductItem = ({
                 {productData.propertyDetails.bedrooms}
                 <i className="flaticon-bed"></i>
               </span>
-              Bedrooms
+              Reviews
             </li>
             <li>
               <span>
                 {productData.propertyDetails.baths}
                 <i className="flaticon-clean"></i>
               </span>
-              Bathrooms
+              % Occupancy
             </li>
             <li>
               <span>
                 {productData.propertyDetails.area}
                 <i className="flaticon-square-shape-design-interface-tool-symbol"></i>
               </span>
-              square Ft
+              RevPAN
             </li>
           </ul>
         </div>

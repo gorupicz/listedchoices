@@ -168,7 +168,7 @@ function ProductDetails({ product }) {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <LayoutOne topbar={false}>
         <ModalVideo
           channel="youtube"
           autoplay
@@ -177,7 +177,7 @@ function ProductDetails({ product }) {
           onClose={() => setOpen(false)}
         />
         {/* <!-- BREADCRUMB AREA START --> */}
-
+{/*
         <BreadCrumb
           title="Product Details"
           sectionPace="mb-0"

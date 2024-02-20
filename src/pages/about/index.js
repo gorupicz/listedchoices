@@ -71,12 +71,12 @@ function AboutUs() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
-        <ShopBreadCrumb
+      <LayoutOne topbar={false}>
+     {   /* <ShopBreadCrumb
           title="About Us"
           sectionPace=""
           currentSlug="About Us"
-        />
+  />*/}
 
         <AboutUsStyleOne sectionSpace="pb-90" />
 
