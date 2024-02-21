@@ -1421,7 +1421,7 @@ ul {
 .slick-dots {
   margin: 0 0 30px;
   padding: 0;
-  display: block;
+  display: none !important;
   text-align: center;
   line-height: 1;
   li {
@@ -2339,7 +2339,7 @@ ul {
   margin-bottom: 80px;
 }
 .mb-90 {
-  margin-bottom: 90px;
+  margin-bottom: 0px;
 }
 .mb-95 {
   margin-bottom: 95px;

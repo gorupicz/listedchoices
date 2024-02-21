@@ -11,7 +11,13 @@ import Col from "react-bootstrap/Col";
 import clsx from "clsx";
 import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
 import MenuList from "@/components/header/elements/menuList";
+import { useRouter } from 'next/router';
+
 const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
+  
+  const router = useRouter();
+  const isHomePage = router.pathname === '/';
+
   const [searchFormOpener, searchFormOpenerSet] = useState(false);
 
   const [cartMenuOpener, cartMenuOpenerSet] = useState(false);
@@ -116,7 +122,7 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
                   </nav>
                 </div>
               </Col>
-              <Col className="ltn__header-options ltn__header-options-2 mb-sm-20">
+              <Col className={`ltn__header-options ltn__header-options-2 mb-sm-20 ${isHomePage && "hide"}`}>
                 {/* <!-- header-search-1 --> */}
                 <div className="header-search-wrap">
                   <div

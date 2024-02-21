@@ -236,18 +236,6 @@ function ProductDetails({ product }) {
                             ""
                           ))
                       }
-
-                      <li className="ltn__blog-date">
-                        <i className="far fa-calendar-alt"></i>
-                        {product.date}
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="far fa-comments"></i>
-                          {product.comments}
-                          Comments
-                        </a>
-                      </li>
                     </ul>
                   </div>
                   <h1> {product.title}</h1>
@@ -1079,6 +1067,19 @@ function ProductDetails({ product }) {
 
               <Col xs={12} lg={4}>
                 <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
+                  {/* <!-- Call to Action Widget --> */}
+                  <div className="widget ltn__CaC-widget">
+                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
+                      <span>${new Intl.NumberFormat('en-US').format(product.amountAvailable)}</span> Available
+                    </h4>
+                    <Link
+                      href="/shop"
+                      className="theme-btn-1 btn btn-effect-1"
+                    >
+                      Sign up to invest
+                    </Link>
+                  </div>
+                  
                   {/* <!-- Author Widget --> */}
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">
