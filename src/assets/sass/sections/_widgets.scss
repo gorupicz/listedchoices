@@ -91,7 +91,13 @@
 
 .ltn__CaC-widget {
   background-color: var(--section-bg-1);
+  text-align: center;
+  border: 2px solid;
 }
+
+.ltn__CaC-widget > .ltn__widget-title-border-2 {
+    border-left: unset !important;
+  }
 
 /* ----------------------------------------------------
     Search Widget
@@ -798,6 +804,18 @@
   }
 }
 @media (max-width: 991px) {
+
+  .ltn__CaC-widget {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    left: 0px;
+    padding: 15px 20px 15px 20px !important;
+    margin-bottom: unset;
+    border: unset !important;
+  }
+
   .ltn__video-icon-2 {
     height: 50px;
     width: 50px;
