@@ -174,7 +174,7 @@ function HeroSectionStyleTwo({ data }) {
                           <div className="slide-item-info-inner ltn__slide-animation">
                             <h6 className="slide-sub-title animated">
                               <span>
-                                <FaShip />
+                                <FaArrowRight />
                               </span>
                               {item.subtitle}
                             </h6>

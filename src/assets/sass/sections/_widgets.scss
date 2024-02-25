@@ -99,9 +99,16 @@
     border-left: unset !important;
   }
 
-.ltn__CaC-widget > .ltn__widget-title-border-2 > span {
+.ltn__CaC-widget span {
     font-size: 1.5em;
   }
+
+.CaC-widget__sticky-active {
+  /* position: fixed;
+  top: 100px;
+  z-index: 999;
+  */
+}
 /* ----------------------------------------------------
     Search Widget
 ---------------------------------------------------- */
@@ -817,6 +824,11 @@
     padding: 15px 20px 15px 20px !important;
     margin-bottom: unset;
     border: unset !important;
+    box-shadow:15px 15px 20px 2px var(--ltn__secondary-color);
+  }
+
+  .ltn__CaC-widget .btn {
+    width: 90%;
   }
 
   .ltn__video-icon-2 {

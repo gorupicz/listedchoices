@@ -1,7 +1,8 @@
-import { useState } from "react";
 import ModalVideo from "react-modal-video";
 import Link from "next/link";
 import Slider from "react-slick";
+import clsx from "clsx";
+import { useState, useEffect } from "react";
 import {
   FaArrowRight,
   FaArrowLeft,
@@ -165,6 +166,21 @@ function ProductDetails({ product }) {
   };
 
   const [isOpen, setOpen] = useState(false);
+
+  const [scroll, setScroll] = useState(0);
+  const [sliderHeight, setSliderHeight] = useState(0);
+  useEffect(() => {
+    const slider = document.querySelector(".ltn__CaC-widget");
+    setSliderHeight(slider.offsetHeight);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+  };
 
   return (
     <>
@@ -754,7 +770,7 @@ function ProductDetails({ product }) {
                   </div>
 
                   <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
-                    <h4 className="title-2">Customer Reviews</h4>
+                    <h4 className="title-2">Guests Reviews</h4>
                     <div className="product-ratting">
                       <ul>
                         <li>
@@ -783,7 +799,7 @@ function ProductDetails({ product }) {
                           </a>
                         </li>
                         <li className="review-total">
-                          <a href="#"> ( 95 Reviews )</a>
+                          <a href="#"> ( ${product.vacationRentalDetails.reviews} Reviews )</a>
                         </li>
                       </ul>
                     </div>
@@ -1068,7 +1084,11 @@ function ProductDetails({ product }) {
               <Col xs={12} lg={4}>
                 <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
                   {/* <!-- Call to Action Widget --> */}
-                  <div className="widget ltn__CaC-widget">
+                  <div className={clsx(
+                    "widget ltn__CaC-widget",
+                    scroll > sliderHeight && "CaC-widget__sticky-active"
+                  )}>
+                    
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       <span>${new Intl.NumberFormat('en-US').format(product.amountAvailable)}</span> Available
                     </h4>
@@ -1079,7 +1099,286 @@ function ProductDetails({ product }) {
                       Sign up to invest
                     </Link>
                   </div>
-                  
+
+                  {/* <!-- Guests Reviews Widget --> */}
+                  <div className="widget ltn__author-widget">
+                    <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
+                      <h4 className="title-2">Guests Reviews</h4>
+                      <div className="product-ratting">
+                        <ul>
+                          <li>
+                            <a href="#">
+                              <FaStar />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FaStar />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FaStar />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FaStar />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <FaRegStar />
+                            </a>
+                          </li>
+                          <li className="review-total">
+                            <a href="#"> ( {product.vacationRentalDetails.reviews} Reviews )</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <hr />
+                      {/* <!-- comment-area --> */}
+                      <div className="ltn__comment-area mb-30">
+                        <div className="ltn__comment-inner">
+                          <ul>
+                            <li>
+                              <div className="ltn__comment-item clearfix">
+                                <div className="ltn__commenter-img">
+                                  <img src="/img/testimonial/1.jpg" alt="Image" />
+                                </div>
+                                <div className="ltn__commenter-comment">
+                                  <h6>
+                                    <a href="#">Adam Smit</a>
+                                  </h6>
+                                  <div className="product-ratting">
+                                    <ul>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaRegStar />
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <p>
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Doloribus, omnis fugit
+                                    corporis iste magnam ratione.
+                                  </p>
+                                  <span className="ltn__comment-reply-btn">
+                                    September 3, 2020
+                                  </span>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div className="ltn__comment-item clearfix">
+                                <div className="ltn__commenter-img">
+                                  <img src="/img/testimonial/3.jpg" alt="Image" />
+                                </div>
+                                <div className="ltn__commenter-comment">
+                                  <h6>
+                                    <a href="#">Adam Smit</a>
+                                  </h6>
+                                  <div className="product-ratting">
+                                    <ul>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaRegStar />
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <p>
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Doloribus, omnis fugit
+                                    corporis iste magnam ratione.
+                                  </p>
+                                  <span className="ltn__comment-reply-btn">
+                                    September 2, 2020
+                                  </span>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div className="ltn__comment-item clearfix">
+                                <div className="ltn__commenter-img">
+                                  <img src="/img/testimonial/2.jpg" alt="Image" />
+                                </div>
+                                <div className="ltn__commenter-comment">
+                                  <h6>
+                                    <a href="#">Adam Smit</a>
+                                  </h6>
+                                  <div className="product-ratting">
+                                    <ul>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaStar />
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="#">
+                                          <FaRegStar />
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <p>
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Doloribus, omnis fugit
+                                    corporis iste magnam ratione.
+                                  </p>
+                                  <span className="ltn__comment-reply-btn">
+                                    September 2, 2020
+                                  </span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      {/* <!-- comment-reply --> */}
+                      <div className="ltn__comment-reply-area ltn__form-box mb-30">
+                        <form action="#">
+                          <h4>Add a Review</h4>
+                          <div className="mb-30">
+                            <div className="add-a-review">
+                              <h6>Your Ratings:</h6>
+                              <div className="product-ratting">
+                                <ul>
+                                  <li>
+                                    <a href="#">
+                                      <FaStar />
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="#">
+                                      <FaStar />
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="#">
+                                      <FaStar />
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="#">
+                                      <FaStar />
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="#">
+                                      <FaStar />
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="input-item input-item-textarea ltn__custom-icon">
+                            <textarea placeholder="Type your comments...."></textarea>
+                            <span className="inline-icon">
+                              <FaPencilAlt />
+                            </span>
+                          </div>
+                          <div className="input-item input-item-name ltn__custom-icon">
+                            <input type="text" placeholder="Type your name...." />
+                            <span className="inline-icon">
+                              <FaUserAlt />
+                            </span>
+                          </div>
+                          <div className="input-item input-item-email ltn__custom-icon">
+                            <input
+                              type="email"
+                              placeholder="Type your email...."
+                            />
+                            <span className="inline-icon">
+                              <FaEnvelope />
+                            </span>
+                          </div>
+                          <div className="input-item input-item-website ltn__custom-icon">
+                            <input
+                              type="text"
+                              name="website"
+                              placeholder="Type your website...."
+                            />
+                            <span className="inline-icon">
+                              <FaGlobe />
+                            </span>
+                          </div>
+                          <label className="mb-0">
+                            <input type="checkbox" name="agree" /> Save my name,
+                            email, and website in this browser for the next time I
+                            comment.
+                          </label>
+                          <div className="btn-wrapper">
+                            <button
+                              className="btn theme-btn-1 btn-effect-1 text-uppercase"
+                              type="submit"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
                   {/* <!-- Author Widget --> */}
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">

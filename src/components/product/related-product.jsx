@@ -64,57 +64,21 @@ const RelatedProduct = ({
               </Link>
             </div>
           </div>
-        </div>
-        <div className="product-info">
-          <div className="product-badge">
-            <ul>
-              <li
-                className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
-              >
-                {badgeText}
-              </li>
-            </ul>
-          </div>
-          <h2 className="product-title">
-            <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
-          </h2>
-          <div className="product-img-location">
-            <ul>
-              <li>
-                <Link href={`/${baseUrl}/${slug}`}>
-                  <i className="flaticon-pin"></i>
-                  {productData.locantion}
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <ul className="ltn__plot-brief">
-            <li>
-              <span>{productData.propertyDetails.bedrooms}</span>
-              <span className="ms-1">Rentals</span>
-            </li>
-            <li>
-              <span>{productData.propertyDetails.baths}</span>
-              <span className="ms-1">Reviews</span>
-            </li>
-            <li>
-              <span>{productData.propertyDetails.area}</span>
-              <span className="ms-1">Occupancy</span>
-            </li>
-          </ul>
           <div className="product-hover-action">
             <ul>
+              <span className="product-hover-action-quickview">
               <li>
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={quickViewTooltip}
-                >
-                  <button onClick={() => setModalShow(true)}>
-                    <i className="flaticon-expand"></i>
-                  </button>
-                </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={quickViewTooltip}
+                  >
+                    <button onClick={() => setModalShow(true)}>
+                      <i className="flaticon-expand"></i>
+                    </button>
+                  </OverlayTrigger>
               </li>
+              </span>
               <li>
                 <OverlayTrigger
                   placement="right"
@@ -146,14 +110,54 @@ const RelatedProduct = ({
             </ul>
           </div>
         </div>
+        <Link href={`/${baseUrl}/${slug}`}>
+        <div className="product-info">
+          <div className="product-badge">
+            <ul>
+              <li
+                className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
+              >
+                {badgeText}
+              </li>
+            </ul>
+          </div>
+          <h2 className="product-title">
+            <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
+          </h2>
+          <div className="product-img-location">
+            <ul>
+              <li>
+                <Link href={`/${baseUrl}/${slug}`}>
+                  <i className="flaticon-pin"></i>
+                  {productData.locantion}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <ul className="ltn__plot-brief">
+            <li>
+              <span>{productData.vacationRentalDetails.rentals}</span>
+              <span className="ms-1">Rentals</span>
+            </li>
+            <li>
+              <span>{productData.vacationRentalDetails.reviews}</span>
+              <span className="ms-1">Reviews</span>
+            </li>
+            <li>
+              <span>{productData.vacationRentalDetails.occupancyRate}</span>
+              <span className="ms-1">Occupancy</span>
+            </li>
+          </ul>
+        </div>
         <div className="product-info-bottom">
-          <div className="product-price">
+          <div className="product-price amount-available">
             <span>
-              {`$ ${productData.price}`}
-              <label>/Share</label>
+              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
+              <label> Available</label>
             </span>
           </div>
         </div>
+        </Link>
       </div>
 
       <QuickViewtModal

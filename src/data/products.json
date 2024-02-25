@@ -29,7 +29,7 @@
     "properties": 2,
     "featured": true,
     "new": true,
-    "rent": false,
+    "rent": true,
     "photo": ["buying", "women", "women"],
     "video": ["buying", "women"],
     "bedBath": ["2/2"],
@@ -57,17 +57,22 @@
     "comments": 35,
     "locantion": "Isla Mujeres, Mexico",
     "description": {
-      "title": "About",
+      "title": "Beachfront private sailboat",
       "fullDescription": "Elegance is a big modern sailboat (40 ft long, 14 ft wide) with all the amenities guests need to relax and have fun, and is currently located in a beachfront marina, surrounded by turquoise water, in the incredible Isla Mujeres. \n\r\n\rShe's a delight with a big deck, a nice galley, and a bedroom with AC, a queen-size walk-around bed, and a private bathroom en-suite with a shower.\nElegance is safely located in a beachfront marina at Downtown Beach beside the world-famous North Beach (200 meters from the ferry station), moored to the main pier so that you can step in and out on your own just walking. Also, the sea movement there is less than when you are anchored outside.\nDowntown beach is at the end of the pier, literally 10 meters from the boat, so guests can access it barefoot.",
       "shortDescription": "Our modern and romantic sailboat, Elegance, is perfect for couples. Spend your days lounging on the deck enjoying the stunning ocean views and surrounded by turquoise waters. At night, cuddle up in the comfortable cabin with AC, and take a shower in your private bathroom. The beach is just there, at the end of the pier, and the downtown with all the restaurants and souvenir stores is just crossing the street. You don't need a golf cart for the week here!"
     },
+    "vacationRentalDetails": {
+      "occupancyRate": "80%",
+      "rentals": 109,
+      "reviews": 34
+    },
     "propertyDetails": {
       "propertyId": "HZ29",
-      "area": "80%",
+      "area": "540",
       "propertyStatus": "For sale",
-      "rooms": 7,
-      "bedrooms": 109,
-      "baths": 34,
+      "rooms": 3,
+      "bedrooms": 2,
+      "baths": 2,
       "createdYear": 1985
     },
     "factsAndFeatures": {
@@ -175,14 +180,19 @@
       "fullDescription": "Massa tempor nec feugiat nisl pretium. Egestas fringilla phasellus faucibus scelerisque eleifend donec Porta nibh venenatis cras sed felis eget velit aliquet. Neque volutpat ac tincidunt vitae semper quis lectus. Turpis in eu mi bibendum neque egestas congue quisque. Sed elementum tempus egestas sed sed risus pretium quam. Dignissim sodales ut eu sem. Nibh mauris cursus mattis molestee iaculis at erat pellentesque. Id interdum velit laoreet id donec ultrices tincidunt.",
       "shortDescription": "To the left is the modern kitchen with central island, leading through to the unique breakfast family room which feature glass walls and doors out onto the garden and access to the separate utility room."
     },
+    "vacationRentalDetails": {
+      "occupancyRate": "76%",
+      "rentals": 136,
+      "reviews": 45
+    },
     "propertyDetails": {
       "propertyId": "HZ29",
-      "area": "76%",
+      "area": "572",
       "propertyStatus": "For rent",
-      "rooms": 7,
-      "bedrooms": 136,
+      "rooms": 3,
+      "bedrooms": 2,
       "baths": 45,
-      "createdYear": 1985
+      "createdYear": 1977
     },
     "factsAndFeatures": {
       "livingRoom": "20 x 16 sq feet",

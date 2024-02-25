@@ -93,80 +93,31 @@ const ProductList = ({
 
           <ul className="ltn__plot-brief">
             <li>
-              <span>{productData.propertyDetails.bedrooms}</span>
+              <span>{productData.vacationRentalDetails.rentals}</span>
+              <span className="ms-1">Rentals</span>
+            </li>
+            <li>
+              <span>{productData.vacationRentalDetails.reviews}</span>
               <span className="ms-1">Reviews</span>
             </li>
             <li>
-              <span>{productData.propertyDetails.baths}</span>
+              <span>{productData.vacationRentalDetails.occupancyRate}</span>
               <span className="ms-1">Occupancy</span>
-            </li>
-            <li>
-              <span>{productData.propertyDetails.area}</span>
-              <span className="ms-1">RevPAN</span>
             </li>
           </ul>
         </div>
         <div className="product-info-bottom">
-          <div className="real-estate-agent">
-            <div className="agent-img">
-              <Link href={`/${baseUrl}/${slug}`}>
-                <img
-                  src={`/img/blog/author.jpg`}
-                  alt={`${productData.title}`}
-                />
-              </Link>
-            </div>
+          <div className="product-price amount-available">
+            <span>
+              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
+              <label> Available</label>
+            </span>
           </div>
-
-          <div className="product-hover-action">
-            <ul>
-              <li>
-              <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={quickViewTooltip}
-                >
-                <button onClick={() => setModalShow(true)}>
-                  <i className="flaticon-expand"></i>
-                </button>
-
-
-                </OverlayTrigger>
-              </li>
-              <li>
-
-              <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={wishListTooltip}
-                >
-                <button
-                  onClick={
-                    wishlistItem !== undefined
-                      ? () => dispatch(deleteFromWishlist(productData.id))
-                      : () => dispatch(addToWishlist(productData))
-                  }
-                >
-                  <i className="flaticon-heart-1"></i>
-                </button>
-
-                  
-                </OverlayTrigger>
-              </li>
-              <li>
-              <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={addToCartTooltip}
-                >
-                <button onClick={() => dispatch(addToCart(productData))}>
-                  <i className="flaticon-add"></i>
-                </button>
-
-                  
-                </OverlayTrigger>
-              </li>
-            </ul>
+          <div className="product-price">
+            <span>
+              ${new Intl.NumberFormat('en-US').format(productData.price)}
+              <label>/Share</label>
+            </span>
           </div>
         </div>
       </div>

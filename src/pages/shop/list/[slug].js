@@ -771,7 +771,7 @@ function ProductDetails({ product }) {
                   </div>
 
                   <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
-                    <h4 className="title-2">Customer Reviews</h4>
+                    <h4 className="title-2">Guests Reviews</h4>
                     <div className="product-ratting">
                       <ul>
                         <li>
