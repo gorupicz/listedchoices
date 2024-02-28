@@ -9,7 +9,6 @@ import {
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import ReactHtmlParser from 'react-html-parser';
 const RelatedProduct = ({
   productData,
   slug,
