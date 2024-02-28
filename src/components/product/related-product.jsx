@@ -9,6 +9,7 @@ import {
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import ReactHtmlParser from 'react-html-parser';
 const RelatedProduct = ({
   productData,
   slug,
@@ -26,6 +27,7 @@ const RelatedProduct = ({
   } else {
     badgeText = "Guest Favorite on Airbnb ★4.94/5 ";
   }
+
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
 
@@ -114,11 +116,6 @@ const RelatedProduct = ({
         <div className="product-info">
           <div className="product-badge">
             <ul>
-              <li
-                className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
-              >
-                {badgeText}
-              </li>
             </ul>
           </div>
           <h2 className="product-title">
