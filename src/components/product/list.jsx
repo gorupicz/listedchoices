@@ -9,6 +9,7 @@ import {
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import numeral from 'numeral'; 
 const ProductList = ({
   productData,
   slug,
@@ -19,12 +20,37 @@ const ProductList = ({
   wishlistItem,
   compareItem,
 }) => {
-  let badgeText = "";
+  
+  let badgeCount = 0;
+
+  let statusBadge = "";
+
+  if (productData.status) {
+    statusBadge = productData.status;
+    badgeCount++;
+  }
+  let vacationRentalStatusBadge = "";
+
+  if (!productData.fund) {
+    vacationRentalStatusBadge = productData.vacationRentalDetails.status;
+    badgeCount++;
+  }
+
+  let typeBadge = "";
 
   if (productData.fund) {
-    badgeText = "Fund";
+    typeBadge = "Fund";
   } else {
-    badgeText = productData.propertyTypes;
+    typeBadge = productData.propertyTypes;
+  }
+
+  let marketBadge = "";
+  if (productData.market) {
+    marketBadge = productData.market;
+  }
+
+  if (typeBadge) {
+    badgeCount++;
   }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -59,21 +85,26 @@ const ProductList = ({
         <div className="product-info">
           <div className="product-badge-price">
             <div className="product-badge">
-              <ul>
-                <li
-                  className={`sale-badge ${productData.fund ? "bg-green" : "bg-blue"}`}
-                >
-                  {badgeText}
-                </li>
-              </ul>
+              <span
+                className={`sale-badge ${productData.status == "new" ? "bg-black" : "display-none"}`}
+              >
+                {statusBadge}
+              </span> <span
+                className={`sale-badge ${productData.fund ? "bg-green" : "bg-blue"}`}
+              >
+                {typeBadge}
+              </span> <span
+                className={`sale-badge ${productData.fund ? "display-none" : "bg-orange"}`}>
+                {vacationRentalStatusBadge}
+              </span> {badgeCount < 3 ? (
+                <span className={`sale-badge ${marketBadge ? "bg-green" : "display-none"}`}>
+                  {marketBadge} market
+                </span>
+              ) : null}
+
             </div>
 
-            <div className="product-price">
-              <span>
-                {`$ ${productData.price}`}
-                <label>/Month</label>
-              </span>
-            </div>
+            
           </div>
 
           <h2 className="product-title">
@@ -109,14 +140,14 @@ const ProductList = ({
         <div className="product-info-bottom">
           <div className="product-price amount-available">
             <span>
-              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
+              {Number.isInteger(parseFloat(numeral(productData.amountAvailable).format('(0.0a)').slice(0, -1))) ? numeral(productData.amountAvailable).format('($0a)') : numeral(productData.amountAvailable).format('($0.0a)')}
               <label> Available</label>
             </span>
           </div>
           <div className="product-price">
             <span>
-              ${new Intl.NumberFormat('en-US').format(productData.price)}
-              <label>/Share</label>
+              {Number.isInteger(parseFloat(numeral(productData.price).format('(0.0a)').slice(0, -1))) ? numeral(productData.price).format('($0a)') : numeral(productData.price).format('($0.0a)')}
+              <label> Total</label>
             </span>
           </div>
         </div>

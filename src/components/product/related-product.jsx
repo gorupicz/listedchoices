@@ -9,6 +9,7 @@ import {
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import numeral from 'numeral'; 
 const RelatedProduct = ({
   productData,
   slug,
@@ -19,14 +20,20 @@ const RelatedProduct = ({
   wishlistItem,
   compareItem,
 }) => {
-  let statusBadge = productData.status;
 
+  let badgeCount = 0;
+
+  let statusBadge = "";
+
+  if (productData.status) {
+    statusBadge = productData.status;
+    badgeCount++;
+  }
   let vacationRentalStatusBadge = "";
 
-  if (productData.fund) {
-    vacationRentalStatusBadge = "";
-  } else {
+  if (!productData.fund) {
     vacationRentalStatusBadge = productData.vacationRentalDetails.status;
+    badgeCount++;
   }
 
   let typeBadge = "";
@@ -36,6 +43,17 @@ const RelatedProduct = ({
   } else {
     typeBadge = productData.propertyTypes;
   }
+
+  let marketBadge = "";
+  if (productData.market) {
+    marketBadge = productData.market;
+  }
+
+  if (typeBadge) {
+    badgeCount++;
+  }
+
+  
 
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -125,7 +143,7 @@ const RelatedProduct = ({
         <div className="product-info">
           <div className="product-badge">
                 <span
-                  className={`sale-badge ${productData.status == "new" ? "bg-black" : "bg-yellow"}`}
+                  className={`sale-badge ${productData.status == "new" ? "bg-black" : "display-none"}`}
                 >
                 {statusBadge}
               </span> <span
@@ -133,9 +151,14 @@ const RelatedProduct = ({
               >
                 {typeBadge}
               </span> <span
-                className={`sale-badge ${productData.fund ? "bg-transparent" : "bg-orange"}`}>
+                className={`sale-badge ${productData.fund ? "display-none" : "bg-orange"}`}>
                 {vacationRentalStatusBadge}
-              </span>
+              </span> {badgeCount < 3 ? (
+                <span className={`sale-badge ${marketBadge ? "bg-green" : "display-none"}`}>
+                  {marketBadge} market
+                </span>
+              ) : null}
+
           </div>
           <h2 className="product-title">
             <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
@@ -165,14 +188,20 @@ const RelatedProduct = ({
             </li>
           </ul>
         </div>
-        <div className="product-info-bottom">
-          <div className="product-price amount-available">
-            <span>
-              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
-              <label> Available</label>
-            </span>
+          <div className="product-info-bottom">
+            <div className="product-price amount-available">
+              <span>
+                {Number.isInteger(parseFloat(numeral(productData.amountAvailable).format('(0.0a)').slice(0, -1))) ? numeral(productData.amountAvailable).format('($0a)') : numeral(productData.amountAvailable).format('($0.0a)')}
+                <label> Available</label>
+              </span>
+            </div>
+            <div className="product-price">
+              <span>
+                {Number.isInteger(parseFloat(numeral(productData.price).format('(0.0a)').slice(0, -1))) ? numeral(productData.price).format('($0a)') : numeral(productData.price).format('($0.0a)')}
+                <label> Total</label>
+              </span>
+            </div>
           </div>
-        </div>
         </Link>
       </div>
 
