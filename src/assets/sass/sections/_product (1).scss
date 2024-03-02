@@ -58,8 +58,9 @@
 }
 .product-hover-action {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 60%;
+  left: 0;
+  right: 0;
   text-align: center;
   // transform: translateY(-50%);
   opacity: 0;
@@ -107,18 +108,18 @@
   top: 15px;
   right: 18px;
 }
-.product-badge span {
+.product-badge ul {
   margin: 0;
   padding: 0;
 }
-.product-badge span {
+.product-badge li {
   list-style: none;
   display: inline-block;
   font-size: 13px;
   font-weight: 600;
   background-color: var(--ltn__secondary-color);
   color: var(--white);
-  padding: 3px 10px;
+  padding-top: 3px;
   text-transform: uppercase;
   line-height: 25px;
   &:first-child {
@@ -367,7 +368,7 @@
     padding: 20px 30px 30px;
   }
   .product-hover-action {
-    position: absolute;
+    position: relative;
     opacity: 1;
     visibility: visible;
     // transform: inherit;
@@ -484,8 +485,8 @@
   }
   .real-estate-agent {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    top: 20px;
+    right: 20px;
     transition: all 0.3s ease 0s;
     .agent-img {
       max-width: 50px;
@@ -497,6 +498,7 @@
   }
   .product-hover-action {
     text-align: left;
+    margin-bottom: 25px;
   }
 }
 .ltn__product-list-view {
@@ -804,10 +806,6 @@
 }
 
 @media (max-width: 1200px) {
-
-  .product-hover-action-quickview {
-    display: none;
-  }
   .ltn__tab-menu-3 {
     a {
       margin-right: 30px;
@@ -1451,7 +1449,7 @@
     line-height: 35px;
     font-size: 13px;
   }
-  .product-badge span {
+  .product-badge li {
     font-size: 12px;
     padding: 1px 10px;
     line-height: 20px;

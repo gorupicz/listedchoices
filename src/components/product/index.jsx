@@ -24,10 +24,10 @@ const ProductItem = ({
 }) => {
   let badgeText = "";
 
-  if (productData.rent) {
-    badgeText = "For Rent";
+  if (productData.fund) {
+    badgeText = "Fund";
   } else {
-    badgeText = "Receiving guests";
+    badgeText = productData.propertyTypes;
   }
 
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ const ProductItem = ({
           <div className="product-badge">
             <ul>
               <li
-                className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
+                className={`sale-badge ${productData.rent ? "bg-green" : "bg-blue"}`}
               >
                 {badgeText}
               </li>

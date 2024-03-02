@@ -11,13 +11,11 @@ const MenuList = ({ addListing }) => {
       </li>
       <li className="menu-icon">
         <Link href="/about">
-          Sell
+          About
         </Link>
       </li>
-      <li className="menu-icon">
-        <Link href="/about">
-          Host
-        </Link>
+      <li>
+        <Link href="/contact">Contact</Link>
       </li>
 
       {addListing ? (

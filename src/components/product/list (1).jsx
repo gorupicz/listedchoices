@@ -21,10 +21,10 @@ const ProductList = ({
 }) => {
   let badgeText = "";
 
-  if (productData.fund) {
-    badgeText = "Fund";
+  if (productData.rent) {
+    badgeText = "For Rent";
   } else {
-    badgeText = productData.propertyTypes;
+    badgeText = "Receiving guests";
   }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -61,7 +61,7 @@ const ProductList = ({
             <div className="product-badge">
               <ul>
                 <li
-                  className={`sale-badge ${productData.fund ? "bg-green" : "bg-blue"}`}
+                  className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
                 >
                   {badgeText}
                 </li>
@@ -93,31 +93,80 @@ const ProductList = ({
 
           <ul className="ltn__plot-brief">
             <li>
-              <span>{productData.vacationRentalDetails.rentals}</span>
-              <span className="ms-1">Rentals</span>
-            </li>
-            <li>
-              <span>{productData.vacationRentalDetails.reviews}</span>
+              <span>{productData.propertyDetails.bedrooms}</span>
               <span className="ms-1">Reviews</span>
             </li>
             <li>
-              <span>{productData.vacationRentalDetails.occupancyRate}</span>
+              <span>{productData.propertyDetails.baths}</span>
               <span className="ms-1">Occupancy</span>
+            </li>
+            <li>
+              <span>{productData.propertyDetails.area}</span>
+              <span className="ms-1">RevPAN</span>
             </li>
           </ul>
         </div>
         <div className="product-info-bottom">
-          <div className="product-price amount-available">
-            <span>
-              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
-              <label> Available</label>
-            </span>
+          <div className="real-estate-agent">
+            <div className="agent-img">
+              <Link href={`/${baseUrl}/${slug}`}>
+                <img
+                  src={`/img/blog/author.jpg`}
+                  alt={`${productData.title}`}
+                />
+              </Link>
+            </div>
           </div>
-          <div className="product-price">
-            <span>
-              ${new Intl.NumberFormat('en-US').format(productData.price)}
-              <label>/Share</label>
-            </span>
+
+          <div className="product-hover-action">
+            <ul>
+              <li>
+              <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={quickViewTooltip}
+                >
+                <button onClick={() => setModalShow(true)}>
+                  <i className="flaticon-expand"></i>
+                </button>
+
+
+                </OverlayTrigger>
+              </li>
+              <li>
+
+              <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={wishListTooltip}
+                >
+                <button
+                  onClick={
+                    wishlistItem !== undefined
+                      ? () => dispatch(deleteFromWishlist(productData.id))
+                      : () => dispatch(addToWishlist(productData))
+                  }
+                >
+                  <i className="flaticon-heart-1"></i>
+                </button>
+
+                  
+                </OverlayTrigger>
+              </li>
+              <li>
+              <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={addToCartTooltip}
+                >
+                <button onClick={() => dispatch(addToCart(productData))}>
+                  <i className="flaticon-add"></i>
+                </button>
+
+                  
+                </OverlayTrigger>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

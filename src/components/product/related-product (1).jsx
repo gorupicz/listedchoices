@@ -19,24 +19,13 @@ const RelatedProduct = ({
   wishlistItem,
   compareItem,
 }) => {
-  let statusBadge = productData.status;
-
-  let vacationRentalStatusBadge = "";
+  let badgeText = "";
 
   if (productData.fund) {
-    vacationRentalStatusBadge = "";
+    badgeText = "Travellers Award Winner on Booking";
   } else {
-    vacationRentalStatusBadge = productData.vacationRentalDetails.status;
+    badgeText = "Guest Favorite on Airbnb ★4.94/5 ";
   }
-
-  let typeBadge = "";
-
-  if (productData.fund) {
-    typeBadge = "Fund";
-  } else {
-    typeBadge = productData.propertyTypes;
-  }
-
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
 
@@ -75,21 +64,57 @@ const RelatedProduct = ({
               </Link>
             </div>
           </div>
+        </div>
+        <div className="product-info">
+          <div className="product-badge">
+            <ul>
+              <li
+                className={`sale-badge ${productData.fund ? "bg-green" : "bg-blue"}`}
+              >
+                {badgeText}
+              </li>
+            </ul>
+          </div>
+          <h2 className="product-title">
+            <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
+          </h2>
+          <div className="product-img-location">
+            <ul>
+              <li>
+                <Link href={`/${baseUrl}/${slug}`}>
+                  <i className="flaticon-pin"></i>
+                  {productData.locantion}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <ul className="ltn__plot-brief">
+            <li>
+              <span>{productData.propertyDetails.area}</span>
+              <span className="ms-1">Rentals</span>
+            </li>
+            <li>
+              <span>{productData.propertyDetails.baths}</span>
+              <span className="ms-1">Reviews</span>
+            </li>
+            <li>
+              <span>{productData.propertyDetails.area}</span>
+              <span className="ms-1">Occupancy</span>
+            </li>
+          </ul>
           <div className="product-hover-action">
             <ul>
-              <span className="product-hover-action-quickview">
               <li>
-                  <OverlayTrigger
-                    placement="right"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={quickViewTooltip}
-                  >
-                    <button onClick={() => setModalShow(true)}>
-                      <i className="flaticon-expand"></i>
-                    </button>
-                  </OverlayTrigger>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={quickViewTooltip}
+                >
+                  <button onClick={() => setModalShow(true)}>
+                    <i className="flaticon-expand"></i>
+                  </button>
+                </OverlayTrigger>
               </li>
-              </span>
               <li>
                 <OverlayTrigger
                   placement="right"
@@ -121,59 +146,20 @@ const RelatedProduct = ({
             </ul>
           </div>
         </div>
-        <Link href={`/${baseUrl}/${slug}`}>
-        <div className="product-info">
-          <div className="product-badge">
-                <span
-                  className={`sale-badge ${productData.status == "new" ? "bg-black" : "bg-yellow"}`}
-                >
-                {statusBadge}
-              </span> <span
-                className={`sale-badge ${productData.fund ? "bg-green" : "bg-blue"}`}
-              >
-                {typeBadge}
-              </span> <span
-                className={`sale-badge ${productData.fund ? "bg-transparent" : "bg-orange"}`}>
-                {vacationRentalStatusBadge}
-              </span>
-          </div>
-          <h2 className="product-title">
-            <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
-          </h2>
-          <div className="product-img-location">
-            <ul>
-              <li>
-                <Link href={`/${baseUrl}/${slug}`}>
-                  <i className="flaticon-pin"></i>
-                  {productData.locantion}
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <ul className="ltn__plot-brief">
-            <li>
-              <span>{productData.vacationRentalDetails.rentals}</span>
-              <span className="ms-1">Rentals</span>
-            </li>
-            <li>
-              <span>{productData.vacationRentalDetails.reviews}</span>
-              <span className="ms-1">Reviews</span>
-            </li>
-            <li>
-              <span>{productData.vacationRentalDetails.occupancyRate}</span>
-              <span className="ms-1">Occupancy</span>
-            </li>
-          </ul>
-        </div>
         <div className="product-info-bottom">
           <div className="product-price amount-available">
             <span>
-              ${new Intl.NumberFormat('en-US').format(productData.amountAvailable)}
+              {`$ ${productData.amountAvailable}`}
               <label> Available</label>
             </span>
           </div>
+          <div className="product-price">
+            <span>
+              {`$ ${productData.price}`}
+              <label>/Share</label>
+            </span>
+          </div>
         </div>
-        </Link>
       </div>
 
       <QuickViewtModal
