@@ -19,6 +19,9 @@ const MenuList = ({ addListing }) => {
           Host
         </Link>
       </li>
+      <li>
+        <Link href="/contact">About</Link>
+      </li>
 
       {addListing ? (
         <li className="special-link">
