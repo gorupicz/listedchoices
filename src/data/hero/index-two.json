@@ -2,7 +2,8 @@
   {
     "subtitle": "Vacation rental accommodation investment marketplace",
     "Title": "Earn passive income by investing in Choices",
-    "Desc": "A Choice is a self-managed vacation rental property or vehicle and its listings on major online travel agencies such as Airbnb and Booking.",
+    "titleWord": "Choices",
+    "Desc": "A Choice is a self-managed vacation rental property or vehicle and its listings on major online travel agencies such as Airbnb.",
     "icon": "tabler:sailboat",
     "heroimage": "DSC09989-6.png",
     "id": "1",
@@ -14,6 +15,7 @@
   {
     "subtitle": "List your vacation house with us today",
     "Title": "Sell your second home at the best price",
+    "titleWord": "best price",
     "Desc": "Bricks are great, but using your money for something better when you want, it's a better choice.",
     "icon": "FaShip",
     "heroimage": "grass.jpg",
@@ -26,7 +28,8 @@
   {
     "subtitle": "Manage the best vacation rentals in your city",
     "Title": "Hospitality is not for everyone",
-    "Desc": "We are in the business of supporting our guests to create memories with their loved ones.",
+    "titleWord": "Hospitality",
+    "Desc": "Are you passionate about taking care of the small details and making others feel in their best place? Join as Host",
     "icon": "FaShip",
     "heroimage": "sell.jpg",
     "id": "3",

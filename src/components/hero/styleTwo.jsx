@@ -157,6 +157,12 @@ function HeroSectionStyleTwo({ data }) {
           className="ltn__slider-11-active"
         >
           {data.map((item, key) => {
+
+            let Title = item.Title;
+            const highlightedWorld = item.titleWord;
+            const titleParts = Title.split(new RegExp(`(${highlightedWorld})`, 'g'));
+
+
             return (
               <div
                 className="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal ltn__slide-item-3 ltn__slide-item-11"
@@ -171,20 +177,28 @@ function HeroSectionStyleTwo({ data }) {
                     <Row className="row">
                       <Col xs={12} className="align-self-center">
                         <div className="slide-item-info">
-                          <div className="slide-item-info-inner ltn__slide-animation">
-                            <h6 className="slide-sub-title animated">
+                          <div className="slide-item-info-inner">
+                            <h6 className="slide-sub-title">
                               <span>
                                 <FaArrowRight />
                               </span>
                               {item.subtitle}
                             </h6>
-                            <h1 className="slide-title animated">
-                              {item.Title}
+                            <h1 className="slide-title">
+                              {titleParts.map((part, index) => (
+                                part === highlightedWorld ? (
+                                  <span key={index} className="slide-highlightedWord">
+                                    {highlightedWorld}
+                                  </span>
+                                ) : (
+                                    <span key={index}>{part}</span>
+                                )
+                              ))}
                             </h1>
-                            <div className="slide-brief animated">
+                            <div className="slide-brief ">
                               <p>{item.Desc}</p>
                             </div>
-                            <div className="btn-wrapper animated">
+                            <div className="btn-wrapper ">
                               <Link
                                 href="/shop"
                                 className="theme-btn-1 btn btn-effect-1"
