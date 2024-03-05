@@ -234,28 +234,7 @@ function ProductDetails({ product }) {
             <Row>
               <Col xs={12} lg={8}>
                 <div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
-                  <div className="ltn__blog-meta">
-                    <ul>
-                      {
-                        (product.featured ? (
-                          <li className="ltn__blog-category">
-                            <Link href="#">Featured</Link>
-                          </li>
-                        ) : (
-                          ""
-                        ),
-                          product.rent ? (
-                            <li className="ltn__blog-category">
-                              <Link className="bg-orange" href="#">
-                                For Rent
-                              </Link>
-                            </li>
-                          ) : (
-                            ""
-                          ))
-                      }
-                    </ul>
-                  </div>
+
                   <h1> {product.title}</h1>
                   <label>
                     <span className="ltn__secondary-color">
