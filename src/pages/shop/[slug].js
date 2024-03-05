@@ -110,7 +110,7 @@ function ProductDetails({ product }) {
     infinite: true,
     centerPadding: "450px",
     slidesToShow: 1,
-    dots: false,
+    dots: true,
     speed: 500,
     prevArrow: <SlickArrowLeft />,
     nextArrow: <SlickArrowRight />,
@@ -267,7 +267,7 @@ function ProductDetails({ product }) {
                   <p>{product.description.fullDescription}</p>
                   <p>{product.description.shortDescription}</p>
 
-                  <h4 className="title-2">Property Detail</h4>
+                  <h4 className="title-2">Property Details</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>

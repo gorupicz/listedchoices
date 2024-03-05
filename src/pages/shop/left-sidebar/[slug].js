@@ -148,7 +148,7 @@ function ProductDetails({ product, baseUrl }) {
           slidesToShow: 1,
           slidesToScroll: 1,
           centerPadding: "0px",
-          dots: true,
+          dots: false,
         },
       },
     ],
@@ -157,7 +157,7 @@ function ProductDetails({ product, baseUrl }) {
   const popular_product = {
     infinite: true,
     slidesToShow: 1,
-    dots: true,
+    dots: false,
     speed: 500,
     arrows: false,
   };
