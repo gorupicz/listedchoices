@@ -105,6 +105,8 @@ function ProductDetails({ product }) {
     </button>
   );
   const productDetailsCarouselSettings = {
+    autoplay: true,
+    autoplaySpeed: 2000,
     centerMode: true,
     infinite: true,
     centerPadding: "450px",
