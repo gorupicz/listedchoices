@@ -230,7 +230,14 @@ function HeroSectionStyleTwo({ data }) {
                             item.variationLeft ? "slide-img-left" : ""
                           }`}
                         >
-                          <img src={`/img/slider/${item.heroimage}`} alt="#" />
+                          <Image
+                            src={`/img/slider/${item.heroimage}`}
+                            alt={`${item.subtitle}`}
+                            width={830}
+                            height={960}
+                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                          />
+
                         </div>
                       </Col>
                     </Row>
