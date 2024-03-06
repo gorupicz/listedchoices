@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaInstagram, FaTwitter, FaFacebookF } from "react-icons/fa";
 const TeamItem = ({ data, baseUrl, slug, additionalClassname }) => {
   return (

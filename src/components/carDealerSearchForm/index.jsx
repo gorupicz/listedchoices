@@ -1,6 +1,7 @@
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import { FaCarAlt, FaUserAlt } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 
 function CarDealerSearchForm({ navMenuClass, customClasses }) {
   return (

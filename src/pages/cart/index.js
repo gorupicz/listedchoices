@@ -12,6 +12,7 @@ import {
 } from "@/store/slices/cart-slice";
 import { getDiscountPrice, cartItemStock, productSlug } from "@/lib/product";
 import Link from "next/link";
+import Image from "next/image";
 
 const Cart = () => {
   const [quantityCount] = useState(1);

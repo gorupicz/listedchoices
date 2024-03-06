@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FaFilm, FaCamera } from "react-icons/fa";
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import { useDispatch } from "react-redux";

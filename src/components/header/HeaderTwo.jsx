@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import HeaderTopBarTwo from "./headerTopBar/headerTopBarStyleTwo";
 import HeaderCartMenu from "./elements/headerCartMenu";
 import MobileMenu from "./elements/mobileMennu";

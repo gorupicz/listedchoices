@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 import portfolioData from "@/data/portfolio/index.json";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

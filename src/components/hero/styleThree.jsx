@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Slider from "react-slick";
 import { FaHome, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { Container, Col, Row } from "react-bootstrap";

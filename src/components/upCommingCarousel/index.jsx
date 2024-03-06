@@ -1,5 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 import Slider from "react-slick";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 

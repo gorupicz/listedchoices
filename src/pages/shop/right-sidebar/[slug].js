@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
 import Link from "next/link";
+import Image from "next/image";
 import Slider from "react-slick";
 import BreadCrumb from "@/components/breadCrumbs";
 import { LayoutOne } from "@/layouts";

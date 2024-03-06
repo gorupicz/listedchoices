@@ -14,6 +14,7 @@ import PropertyItem from "@/components/product/properties";
 import { useSelector } from "react-redux";
 import { FaArrowLeft, FaArrowRight, FaPlay } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 import ModalVideo from "react-modal-video";
 import AminitiesItemTwo from "@/components/aminities/itemTwo";
 import aminitiesData from "@/data/aminities/index.json";

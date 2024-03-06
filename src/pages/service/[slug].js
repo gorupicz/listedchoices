@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaArrowRight, FaSearch, FaRegEnvelopeOpen } from "react-icons/fa";
 import serviceData from "@/data/service";
 import { LayoutOne } from "@/layouts";

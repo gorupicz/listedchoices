@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 
 const TestimonialCarouselItemTwo = ({ data }) => {

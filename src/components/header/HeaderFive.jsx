@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDiscountPrice, productSlug } from "@/lib/product";
 import Link from "next/link";
+import Image from "next/image";
 import HeaderCartMenu from "./elements/headerCartMenu";
 import MobileMenu from "./elements/mobileMennu";
 import Container from "react-bootstrap/Container";

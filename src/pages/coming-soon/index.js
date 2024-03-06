@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import Countdown from "@/components/Countdown/countdown";
 import Link from "next/link";
+import Image from "next/image";
 const comingSoon = () => {
 
   return (

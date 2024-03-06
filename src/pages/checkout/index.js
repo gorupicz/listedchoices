@@ -14,6 +14,7 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 
 const Wishlist = () => {
   const [open, setOpen] = useState(false);

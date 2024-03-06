@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { LayoutOne } from "@/layouts";

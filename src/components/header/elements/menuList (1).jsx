@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaPlus, FaAngleDoubleRight } from "react-icons/fa";
 const MenuList = ({ addListing }) => {
   return (

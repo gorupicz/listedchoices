@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaRegUser, FaTags, FaRegCalendarAlt } from "react-icons/fa";
 const BlogItem = ({ baseUrl, data, slug }) => {
   return (

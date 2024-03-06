@@ -12,6 +12,7 @@ import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 
 import Link from "next/link";
+import Image from "next/image";
 
 function Locations() {
   return (

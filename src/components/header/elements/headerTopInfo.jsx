@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const HeaderTopInfo = function () {

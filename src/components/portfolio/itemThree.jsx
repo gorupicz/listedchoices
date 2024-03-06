@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 const PortfolioitemThree = ({ data, baseUrl, slug }) => {
   return (
     <div className="ltn__img-slide-item-4">

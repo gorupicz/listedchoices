@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const ServiceItemOne = ({ data, slug, ltn__service }) => {
   

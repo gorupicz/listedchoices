@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Col } from "react-bootstrap";
 import { FaArrowRight } from "react-icons/fa";
 const PortfolioitemTwo = ({ data, baseUrl, slug }) => {

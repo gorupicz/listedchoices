@@ -1,5 +1,6 @@
 import ModalVideo from "react-modal-video";
 import Link from "next/link";
+import Image from "next/image";
 import Slider from "react-slick";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
@@ -215,8 +216,10 @@ function ProductDetails({ product }) {
                 return (
                   <div className="ltn__img-slide-item-4" key={key}>
                     <Link href="#">
-                      <img
+                      <Image
                         src={`/img/img-slide/${single.img}`}
+                        width={1904}
+                        height={1006}
                         alt={`${single.title}`}
                       />
                     </Link>

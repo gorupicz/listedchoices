@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Col } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 const Portfolioitem = ({ data, baseUrl, slug, setBasicExampleOpen }) => {

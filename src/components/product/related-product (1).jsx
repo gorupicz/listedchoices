@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/slices/cart-slice";
 import { useState } from "react";

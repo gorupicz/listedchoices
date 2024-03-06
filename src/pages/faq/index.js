@@ -19,6 +19,7 @@ import CallToAction from "@/components/callToAction";
 import Accordion from "react-bootstrap/Accordion";
 import ModalVideo from "react-modal-video";
 import Link from "next/link";
+import Image from "next/image";
 import CounterUp from "@/components/counterUp";
 
 function Faq() {

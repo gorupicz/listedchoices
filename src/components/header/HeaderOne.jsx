@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { productSlug } from "@/lib/product";
 import Link from "next/link";
+import Image from "next/image";
 import HeaderTopBarOne from "./headerTopBar/headerTopBarStyleOne";
 import HeaderCartMenu from "./elements/headerCartMenu";
 import MobileMenu from "./elements/mobileMennu";

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getDiscountPrice, productSlug } from "@/lib/product";
