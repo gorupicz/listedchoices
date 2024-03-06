@@ -305,6 +305,17 @@ function ProductDetails({ product }) {
                       </li>
                     </ul>
                   </div>
+                  
+                  <h4 className="title-2">Location</h4>
+                  <div className="property-details-google-map mb-60">
+                    <iframe
+                      src={`${product.googleMaps}`}
+                      width="100%"
+                      height="100%"
+                      frameBorder="0"
+                      allowFullScreen=""
+                    ></iframe>
+                  </div>
 
                   <h4 className="title-2">Facts and Features</h4>
                   <div className="property-detail-feature-list clearfix mb-45">
@@ -489,17 +500,6 @@ function ProductDetails({ product }) {
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <h4 className="title-2">Location</h4>
-                  <div className="property-details-google-map mb-60">
-                    <iframe
-                      src={`${product.googleMaps}`}
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      allowFullScreen=""
-                    ></iframe>
                   </div>
 
                   <h4 className="title-2">Floor Plans</h4>
