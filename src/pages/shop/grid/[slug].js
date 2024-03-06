@@ -264,7 +264,6 @@ function ProductDetails({ product }) {
                     {product.locantion}
                   </label>
                   <h4 className="title-2"> {product.description.title}</h4>
-                  <p>{product.description.fullDescription}</p>
                   <p>{product.description.shortDescription}</p>
 
                   <h4 className="title-2">Property Detail</h4>
