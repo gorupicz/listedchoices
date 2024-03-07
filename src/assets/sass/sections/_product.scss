@@ -807,6 +807,16 @@
   }
 }
 
+@media (max-width: 1199px) and (min-width: 990px) {
+  .ltn__product-item-5 {
+    .ltn__plot-brief {
+      li {
+        display: none;
+      }  
+    }
+  }
+}
+
 @media (max-width: 1200px) {
 
   .product-hover-action-quickview {
