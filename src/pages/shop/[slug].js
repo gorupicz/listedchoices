@@ -474,6 +474,21 @@ function ProductDetails({ product }) {
                     </div>
                   </div>
                   --> */}
+                  {/* <!-- APARTMENTS PLAN AREA END --> */}
+                  
+                  <h4 className="title-2">Property Video</h4>
+                  <div
+                    className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
+                    style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
+                  >
+                    <button
+                      className="ltn__video-icon-2 ltn__video-icon-2-border---"
+                      onClick={() => setOpen(true)}
+                    >
+                      <FaPlay />
+                    </button>
+                  </div>
+                  
                   <h4 className="title-2 mb-10">Amenities</h4>
 
                   <div className="property-details-amenities mb-60">
@@ -540,6 +555,7 @@ function ProductDetails({ product }) {
                       </div>
                     </div>
                   </div>
+
 
                   <h4 className="title-2">Blueprint</h4>
                   {/* <!-- APARTMENTS PLAN AREA START --> */}
@@ -799,21 +815,6 @@ function ProductDetails({ product }) {
                     </Tab.Container>
                   </div>
 
-                  {/* <!-- APARTMENTS PLAN AREA END --> */}
-                  
-                  <h4 className="title-2">Property Video</h4>
-                  <div
-                    className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
-                    style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
-                  >
-                    <button
-                      className="ltn__video-icon-2 ltn__video-icon-2-border---"
-                      onClick={() => setOpen(true)}
-                    >
-                      <FaPlay />
-                    </button>
-                  </div>
-                  
                   {/* <!--
                   <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
                     
