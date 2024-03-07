@@ -692,13 +692,13 @@
     background-color: var(--main-color-one);
     .image-slide-item {
       padding: 0 10px;
-      img {
+      img, Image {
         border: 5px solid;
         border-color: var(--section-bg-1);
         cursor: pointer;
       }
       &.slick-current {
-        img {
+        img, Image {
           opacity: 0.9;
         }
       }
@@ -794,7 +794,7 @@
     .ltn__slider-11-img-slide-arrow-active {
       .image-slide-item {
         padding: 0 3px;
-        img {
+        img, Image {
           border: 2px solid;
           border-color: var(--section-bg-1);
         }
@@ -917,7 +917,7 @@
 @media (min-width: 992px) and (max-width: 1199px) {
   .ltn__slide-item-3 {
     .slide-item-img {
-      width: 45%;
+      width: 40%;
       right: 60px;
       &.slide-img-left {
         right: auto;
@@ -956,6 +956,10 @@
     margin-bottom: 30px;
   }
   .ltn__slide-item-2 {
+    .slide-item-info {
+      max-width: 550px;
+    }
+
     .slide-title {
       font-size: 50px;
     }

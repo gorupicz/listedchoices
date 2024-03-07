@@ -488,7 +488,7 @@ pre {
 a i {
   padding: 0 2px;
 }
-img {
+img, Image {
   max-width: 100%;
 }
 ul li,
@@ -1192,7 +1192,7 @@ object {
   max-width: 100%;
   clear: both;
 }
-.wp-caption img[class*="wp-image-"] {
+.wp-caption img, Image [class*="wp-image-"] {
   display: block;
   margin-left: auto;
   margin-right: auto;
