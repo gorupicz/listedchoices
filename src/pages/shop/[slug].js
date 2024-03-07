@@ -282,12 +282,12 @@ function ProductDetails({ product }) {
                         <label>Operating, Financing, Legal & Management Expenses:</label>{" "}
                         <span>${new Intl.NumberFormat('en-US').format(product.expenses)}</span>
                       </li>
+                    </ul>
+                    <ul>
                       <li>
                         <label>Free Cash Flow / Dividend:</label>{" "}
                         <span>${new Intl.NumberFormat('en-US').format(product.income - product.expenses)}</span>
                       </li>
-                    </ul>
-                    <ul>
                       <li>
                         <label>Raise Amount:</label>{" "}
                         <span>${new Intl.NumberFormat('en-US').format(product.price)}</span>
