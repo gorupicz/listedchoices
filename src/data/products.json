@@ -152,14 +152,14 @@
     ],
     "AmenitiesList": ["Air Conditioning", "Microwave", "Starlink Internet", "Toilet (Electric)", "Shower", "Roku TV"],
     "agent": {
-      "firstName": "Rosalina D.",
-      "lastName": "Willaimson",
-      "fullName": "Rosalina D. Willaimson",
-      "type": "Property Seller",
+      "firstName": "Esteban",
+      "lastName": "Gorupicz",
+      "fullName": "Esteban Gorupicz",
+      "type": "Property Manager",
       "img": "author.jpg",
-      "designation": "Traveller/Photographer",
+      "designation": "Founder CEO & CTO",
       "raiting": 3,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
+      "description": "I'm pasionate about sailboats and want to share with others the joy of living on board",
       "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
     },
 

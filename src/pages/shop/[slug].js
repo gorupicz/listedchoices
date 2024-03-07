@@ -796,7 +796,7 @@ function ProductDetails({ product }) {
                   </div>
 
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
-
+                  {/* <!--
                   <h4 className="title-2">Property Video</h4>
                   <div
                     className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
@@ -809,8 +809,11 @@ function ProductDetails({ product }) {
                       <FaPlay />
                     </button>
                   </div>
-
+                  --> */}
+                  {/* <!--
                   <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
+                    
+                  
                     <h4 className="title-2">Guests Reviews</h4>
                     <div className="product-ratting">
                       <ul>
@@ -846,6 +849,7 @@ function ProductDetails({ product }) {
                     </div>
                     <hr />
                     {/* <!-- comment-area --> */}
+                    {/* <!--
                     <div className="ltn__comment-area mb-30">
                       <div className="ltn__comment-inner">
                         <ul>
@@ -1000,6 +1004,7 @@ function ProductDetails({ product }) {
                       </div>
                     </div>
                     {/* <!-- comment-reply --> */}
+                    {/* <!--
                     <div className="ltn__comment-reply-area ltn__form-box mb-30">
                       <form action="#">
                         <h4>Add a Review</h4>
@@ -1084,6 +1089,7 @@ function ProductDetails({ product }) {
                       </form>
                     </div>
                   </div>
+                  --> */}
 
                   <h4 className="title-2">Related Properties</h4>
                   <Row>
@@ -1142,6 +1148,7 @@ function ProductDetails({ product }) {
                   </div>
 
                   {/* <!-- Guests Reviews Widget --> */}
+                  {/* <!-- 
                   <div className="widget ltn__author-widget">
                     <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
                       <h4 className="title-2">Guests Reviews</h4>
@@ -1179,6 +1186,7 @@ function ProductDetails({ product }) {
                       </div>
                       <hr />
                       {/* <!-- comment-area --> */}
+                      {/* <!-- 
                       <div className="ltn__comment-area mb-30">
                         <div className="ltn__comment-inner">
                           <ul>
@@ -1333,6 +1341,7 @@ function ProductDetails({ product }) {
                         </div>
                       </div>
                       {/* <!-- comment-reply --> */}
+                      {/* <!-- 
                       <div className="ltn__comment-reply-area ltn__form-box mb-30">
                         <form action="#">
                           <h4>Add a Review</h4>
@@ -1418,7 +1427,7 @@ function ProductDetails({ product }) {
                       </div>
                     </div>
                   </div>
-
+                  --> */}
 
                   {/* <!-- Author Widget --> */}
                   <div className="widget ltn__author-widget">
