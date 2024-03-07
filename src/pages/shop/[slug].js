@@ -22,7 +22,8 @@ import {
   FaPencilAlt,
   FaCalendarAlt,
   FaAirbnb,
-  faB
+  faCircleB,
+  FaYoutube
 } from "react-icons/fa";
 import BreadCrumb from "@/components/breadCrumbs";
 
@@ -194,7 +195,7 @@ function ProductDetails({ product }) {
           channel="youtube"
           autoplay
           isOpen={isOpen}
-          videoId="X7R-q9rsrtU"
+          videoId="j3d3_dIkeXU"
           onClose={() => setOpen(false)}
         />
         {/* <!-- BREADCRUMB AREA START --> */}
@@ -333,7 +334,7 @@ function ProductDetails({ product }) {
                             href={product.vacationRentalDetails.listings.booking}
                             target="_blank"
                           >
-                            <faB /> Listing on Booking.com
+                            <faCircleB /> Listing on Booking.com
                           </Link>
                         </label>
                       </li>
@@ -796,11 +797,11 @@ function ProductDetails({ product }) {
                   </div>
 
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
-                  {/* <!--
+                  
                   <h4 className="title-2">Property Video</h4>
                   <div
                     className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
-                    style={{ backgroundImage: `url("../../img/others/5.jpg")` }}
+                    style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
                   >
                     <button
                       className="ltn__video-icon-2 ltn__video-icon-2-border---"
@@ -809,7 +810,7 @@ function ProductDetails({ product }) {
                       <FaPlay />
                     </button>
                   </div>
-                  --> */}
+                  
                   {/* <!--
                   <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
                     
@@ -1462,7 +1463,7 @@ function ProductDetails({ product }) {
                           </li>
                           <li>
                             <a href="#">
-                              <FaRegStar />
+                              <FaStar />
                             </a>
                           </li>
                           <li className="review-total">
@@ -1479,24 +1480,19 @@ function ProductDetails({ product }) {
                       <div className="ltn__social-media">
                         <ul>
                           <li>
-                            <a href="#" title="Facebook">
+                            <a href="https://www.facebook.com/boatairbnb" title="Facebook">
                               <FaFacebookF />
                             </a>
                           </li>
                           <li>
-                            <a href="#" title="Twitter">
-                              <FaTwitter />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" title="Linkedin">
+                            <a href="https://www.instagram.com/boatschoice/" title="Instagram">
                               <FaInstagram />
                             </a>
                           </li>
 
                           <li>
-                            <a href="#" title="Youtube">
-                              <FaDribbble />
+                            <a href="https://www.youtube.com/channel/UCJau0nP2Ug5p-sXp7jcehKw/" title="Youtube">
+                              <FaYoutube />
                             </a>
                           </li>
                         </ul>
@@ -1504,6 +1500,7 @@ function ProductDetails({ product }) {
                     </div>
                   </div>
                   {/* <!-- Search Widget --> */}
+                  {/* <!--
                   <div className="widget ltn__search-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       Search Objects
@@ -1519,10 +1516,11 @@ function ProductDetails({ product }) {
                       </button>
                     </form>
                   </div>
+                  --> */}
                   {/* <!-- Form Widget --> */}
                   <div className="widget ltn__form-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Drop Messege For Book
+                      Send us a message
                     </h4>
                     <form action="#">
                       <input
@@ -1540,11 +1538,12 @@ function ProductDetails({ product }) {
                         placeholder="Write Message..."
                       ></textarea>
                       <button type="submit" className="btn theme-btn-1">
-                        Send Messege
+                        Send Message
                       </button>
                     </form>
                   </div>
                   {/* <!-- Top Rated Product Widget --> */}
+                  {/* <!-- 
                   <div className="widget ltn__top-rated-product-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       Top Rated Product
@@ -1608,6 +1607,7 @@ function ProductDetails({ product }) {
                       })}
                     </ul>
                   </div>
+                   --> */}
                   {/* <!-- Menu Widget (Category) --> */}
                   <div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
@@ -1720,6 +1720,7 @@ function ProductDetails({ product }) {
                     </Slider>
                   </div>
                   {/* <!-- Popular Post Widget --> */}
+                  {/* <!--
                   <div className="widget ltn__popular-post-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       Leatest Blogs
@@ -1765,12 +1766,13 @@ function ProductDetails({ product }) {
                       })}
                     </ul>
                   </div>
-
+                  --> */}
                   <FollowUs title="Follow Us" />
 
                   {/* <!-- Tagcloud Widget --> */}
-
+                  {/* <!--
                   <Tags title="Popular Tags" />
+                  --> */}
                 </aside>
               </Col>
             </Row>
