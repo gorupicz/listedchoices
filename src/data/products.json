@@ -91,14 +91,23 @@
     },
     "vacationRentalDetails": {
       "status": "bookable",
-      "occupancyRate": "80%",
+      "occupancyRate": "75.55",
+      "lastMonthOccupancyRate": "89.65",
       "rentals": 109,
       "reviews": 34,
+      "lastMonthAdr": 301,
+      "YearToDateRevPAR": 196,
       "awards": [
         ["Guest Favorite", "Airbnb"], 
         ["Superhost", "Airbnb"],
         ["Genius Partner", "Booking"]
-      ]
+      ],
+      "listings": {
+        "airbnb": "https://airbnb.com/h/elegancefortwo",
+        "booking": "https://www.booking.com/Share-UVcx8S",
+        "vrbo": ""
+      }
+        
     },
         
     "propertyDetails": {
@@ -122,25 +131,24 @@
     },
 
     "amenities1": [
-      "Air Conditioning",
-      "Gym",
+      "Central Air Conditioning",
+      "Two refrigerators",
       "Microwave",
-      "Swimming Pool",
-      "WiFi"
+      "Stove with Oven",
+      "Starlink WiFi"
     ],
     "amenities2": [
-      "Barbeque",
-      "Recreation",
-      "Microwave",
-      "Basketball Cout",
-      "Fireplace"
+      "Electric Toilet",
+      "How Water Shower",
+      "En-Suite Bathrooms (2)",
+      "Platform Bed (Queen-size)",
+      "Vanity Desk"
     ],
     "amenities3": [
-      "Refrigerator",
-      "Window Coverings",
-      "Washer",
-      "24x7 Security",
-      "Indoor Game"
+      "Dining Area",
+      "Fine-wood table",
+      "Exterior Dining Area",
+      "24x7 Security"
     ],
     "AmenitiesList": ["Air Conditioning", "Microwave", "Starlink Internet", "Toilet (Electric)", "Shower", "Roku TV"],
     "agent": {

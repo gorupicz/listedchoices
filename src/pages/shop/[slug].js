@@ -21,6 +21,8 @@ import {
   FaGlobe,
   FaPencilAlt,
   FaCalendarAlt,
+  FaAirbnb,
+  faB
 } from "react-icons/fa";
 import BreadCrumb from "@/components/breadCrumbs";
 
@@ -275,25 +277,65 @@ function ProductDetails({ product }) {
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label>Rent: </label>{" "}
+                        <label>Rent:</label>
                         <span>${new Intl.NumberFormat('en-US').format(product.income)}</span>
                       </li>
                       <li>
-                        <label>Operating, Financing, Legal & Management Expenses:</label>{" "}
+                        <label>Operating, Financing, Legal & Management Expenses:</label>
                         <span>${new Intl.NumberFormat('en-US').format(product.expenses)}</span>
                       </li>
                     </ul>
                     <ul>
                       <li>
-                        <label>Free Cash Flow / Dividend:</label>{" "}
+                        <label>Free Cash Flow / Dividend:</label>
                         <span>${new Intl.NumberFormat('en-US').format(product.income - product.expenses)}</span>
                       </li>
                       <li>
-                        <label>Raise Amount:</label>{" "}
+                        <label>Raise Amount:</label>
                         <span>${new Intl.NumberFormat('en-US').format(product.price)}</span>
                       </li>
                       <li>
                         <label>Return %:</label> <span>{new Intl.NumberFormat('en-US').format((product.income - product.expenses)/product.price*100)}%</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <h4 className="title-2">Vacation Rental Performance</h4>
+                  <div className="property-detail-info-list section-bg-1 clearfix mb-60">
+                    <ul>
+                      <li>
+                        <label>Occupancy (Last month):</label>
+                        <span>{new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthOccupancyRate)}%</span>
+                      </li>
+                      <li>
+                        <label>ADR (Last month):</label>
+                        <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthAdr)}</span>
+                      </li>
+                      <li>
+                        <label>RevPAR (Year to date):</label>
+                        <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <label style={{maxWidth: `100%`}}>
+                          <Link
+                            href={product.vacationRentalDetails.listings.airbnb}
+                            target="_blank"
+                          >
+                            <FaAirbnb /> Listing on Airbnb
+                          </Link>
+                        </label>
+                      </li>
+                      <li>
+                        <label style={{maxWidth: `100%`}}>
+                          <Link
+                            href={product.vacationRentalDetails.listings.booking}
+                            target="_blank"
+                          >
+                            <faB /> Listing on Booking.com
+                          </Link>
+                        </label>
                       </li>
                     </ul>
                   </div>
