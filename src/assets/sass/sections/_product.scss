@@ -808,6 +808,17 @@
 }
 
 @media (max-width: 1199px) and (min-width: 990px) {
+
+  .property-detail-info-list {
+    ul {
+      max-width: 50%;
+      li {
+        label {
+          max-width: 50% !important;
+        }
+      }
+    }
+  }
   .ltn__product-item-5 {
     .ltn__plot-brief {
       li {
