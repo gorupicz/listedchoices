@@ -271,37 +271,29 @@ function ProductDetails({ product }) {
                   <h4 className="title-2"> {product.description.title}</h4>
                   <p>{product.description.shortDescription}</p>
 
-                  <h4 className="title-2">Property Details</h4>
+                  <h4 className="title-2">Financials (Past 12 months)</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label>Area: </label>{" "}
-                        <span>{product.propertyDetails.area} sqft</span>
+                        <label>Rent: </label>{" "}
+                        <span>${new Intl.NumberFormat('en-US').format(product.income)}</span>
                       </li>
                       <li>
-                        <label>Rooms:</label>{" "}
-                        <span>{product.propertyDetails.rooms}</span>
+                        <label>Operating, Financing, Legal & Management Expenses:</label>{" "}
+                        <span>${new Intl.NumberFormat('en-US').format(product.expenses)}</span>
                       </li>
                       <li>
-                        <label>Baths:</label>{" "}
-                        <span>{product.propertyDetails.baths}</span>
-                      </li>
-                      <li>
-                        <label>Year built:</label>{" "}
-                        <span>{product.propertyDetails.createdYear}</span>
+                        <label>Free Cash Flow / Dividend:</label>{" "}
+                        <span>${new Intl.NumberFormat('en-US').format(product.income - product.expenses)}</span>
                       </li>
                     </ul>
                     <ul>
                       <li>
-                        <label>Bedrooms:</label>{" "}
-                        <span>{product.propertyDetails.bedrooms}</span>
+                        <label>Raise Amount:</label>{" "}
+                        <span>${new Intl.NumberFormat('en-US').format(product.price)}</span>
                       </li>
                       <li>
-                        <label>Price:</label> <span>${new Intl.NumberFormat('en-US').format(productPrice)}</span>
-                      </li>
-                      <li>
-                        <label>Property Status:</label>{" "}
-                        <span>{product.propertyDetails.propertyStatus}</span>
+                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US').format((product.income - product.expenses)/product.price*100)}%</span>
                       </li>
                     </ul>
                   </div>
@@ -316,7 +308,7 @@ function ProductDetails({ product }) {
                       allowFullScreen=""
                     ></iframe>
                   </div>
-
+                  {/* <!--  
                   <h4 className="title-2">Facts and Features</h4>
                   <div className="property-detail-feature-list clearfix mb-45">
                     <ul>
@@ -394,7 +386,8 @@ function ProductDetails({ product }) {
                       </li>
                     </ul>
                   </div>
-
+                   --> */}
+                   {/* <!--
                   <h4 className="title-2">From Our Gallery</h4>
                   <div className="ltn__property-details-gallery mb-30">
                     <div className="row">
@@ -434,7 +427,7 @@ function ProductDetails({ product }) {
                       </div>
                     </div>
                   </div>
-
+                  --> */}
                   <h4 className="title-2 mb-10">Amenities</h4>
 
                   <div className="property-details-amenities mb-60">
@@ -502,11 +495,12 @@ function ProductDetails({ product }) {
                     </div>
                   </div>
 
-                  <h4 className="title-2">Floor Plans</h4>
+                  <h4 className="title-2">Blueprint</h4>
                   {/* <!-- APARTMENTS PLAN AREA START --> */}
 
                   <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
                     <Tab.Container defaultActiveKey="first">
+                      {/* <!--
                       <div className="ltn__tab-menu ltn__tab-menu-3">
                         <Nav className="nav">
                           <Nav.Link eventKey="first">First Floor</Nav.Link>
@@ -515,15 +509,23 @@ function ProductDetails({ product }) {
                           <Nav.Link eventKey="fourth">Top Garden</Nav.Link>
                         </Nav>
                       </div>
+                      --> */}
                       <Tab.Content>
                         <Tab.Pane eventKey="first">
                           <div className="ltn__apartments-tab-content-inner">
                             <div className="row">
-                              <div className="col-lg-7">
+                              <div className="col-lg-7" style={{ width: `100%`, height: `312px` }}>
                                 <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
+                                  <Image 
+                                    src="/img/others/hunter.webp" 
+                                    alt="#" 
+                                    fill={true}
+                                    style={{objectFit: 'cover'}}
+
+                                    />
                                 </div>
                               </div>
+                              {/* <!--
                               <div className="col-lg-5">
                                 <div className="apartments-plan-info">
                                   <h2>First Floor</h2>
@@ -536,6 +538,8 @@ function ProductDetails({ product }) {
                                   </p>
                                 </div>
                               </div>
+                          --> */}
+                              {/* <!--
                               <div className="col-lg-12">
                                 <div className="product-details-apartments-info-list  section-bg-1">
                                   <div className="row">
@@ -570,6 +574,7 @@ function ProductDetails({ product }) {
                                   </div>
                                 </div>
                               </div>
+                              --> */}
                             </div>
                           </div>
                         </Tab.Pane>
