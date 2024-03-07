@@ -175,7 +175,10 @@ function ProductDetails({ product }) {
       <LayoutOne topbar={false}>
         <ModalVideo
           channel="youtube"
-          autoplay
+          youtube={{
+              autoplay: 1,
+              mute: 1
+            }}
           isOpen={isOpen}
           videoId="X7R-q9rsrtU"
           onClose={() => setOpen(false)}
