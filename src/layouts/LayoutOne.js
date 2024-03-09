@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { HeaderOne } from "@/components/header";
 import Footer from "@/components/footer/footer";
 import ScrollToTop from "@/components/scroll-to-top";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const LayoutOne = ({ children, navPositionClass, topbar }) => {
   const [toggleClassName, SetToggleClassName] = useState(false);
@@ -25,6 +26,7 @@ const LayoutOne = ({ children, navPositionClass, topbar }) => {
         <Footer />
         <ScrollToTop />
       </div>
+      <GoogleTagManager gtmId="GTM-5F6TSG9X" />
     </Fragment>
   );
 };
