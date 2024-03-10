@@ -342,6 +342,16 @@ function ProductDetails({ product }) {
                         </TooltipSpan> 
                         <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
                       </li>
+                      <li>
+                        <label style={{maxWidth: `100%`}}>
+                          <Link
+                            href="#"
+                            target="_blank"
+                          >
+                            What other metrics would you like to see here?
+                          </Link>
+                        </label>
+                      </li>
                     </ul>
                     <ul>
                       <li>
@@ -366,7 +376,7 @@ function ProductDetails({ product }) {
                       </li>
                     </ul>
                   </div>
-                  
+
                   <h4 className="title-2">Location</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe

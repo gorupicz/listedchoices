@@ -92,7 +92,7 @@
     "vacationRentalDetails": {
       "status": "bookable",
       "occupancyRate": "75.55",
-      "lastMonthOccupancyRate": "89.65",
+      "lastMonthOccupancyRate": "89",
       "rentals": 109,
       "reviews": 34,
       "lastMonthAdr": 301,
