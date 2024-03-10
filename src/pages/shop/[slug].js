@@ -4,6 +4,8 @@ import Image from "next/image";
 import Slider from "react-slick";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import {
   FaArrowRight,
   FaArrowLeft,
@@ -22,8 +24,9 @@ import {
   FaPencilAlt,
   FaCalendarAlt,
   FaAirbnb,
-  faCircleB,
-  FaYoutube
+  FaYoutube,
+  FaExclamationCircle,
+  FaCircle
 } from "react-icons/fa";
 import BreadCrumb from "@/components/breadCrumbs";
 
@@ -44,6 +47,17 @@ function ProductDetails({ product }) {
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
   const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
+
+
+
+  const TooltipSpan = ({ id, title, children }) => (
+    <OverlayTrigger
+      placement="right"
+      delay={{ show: 250, hide: 400 }}
+      overlay={<Tooltip id={id}>{title}</Tooltip>}>
+        {children}
+    </OverlayTrigger>
+  );
 
   const relatedProducts = getProducts(
     products,
@@ -312,11 +326,20 @@ function ProductDetails({ product }) {
                         <span>{new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthOccupancyRate)}%</span>
                       </li>
                       <li>
-                        <label>ADR (Last month):</label>
+                        <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
+                        <label>ADR (Last month){' '}
+                            <FaExclamationCircle />
+                          </label>
+                        </TooltipSpan>
                         <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthAdr)}</span>
                       </li>
                       <li>
-                        <label>RevPAR (Year to date):</label>
+                        <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
+                          <label> 
+                            RevPAR (Year to date){' '}
+                            <FaExclamationCircle />
+                          </label>
+                        </TooltipSpan> 
                         <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
                       </li>
                     </ul>
@@ -337,7 +360,7 @@ function ProductDetails({ product }) {
                             href={product.vacationRentalDetails.listings.booking}
                             target="_blank"
                           >
-                            <faCircleB /> Listing on Booking.com
+                            <FaCircle /> Listing on Booking.com
                           </Link>
                         </label>
                       </li>
