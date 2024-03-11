@@ -52,7 +52,7 @@ function ProductDetails({ product }) {
 
   const TooltipSpan = ({ id, title, children }) => (
     <OverlayTrigger
-      placement="right"
+      placement="bottom"
       delay={{ show: 250, hide: 400 }}
       overlay={<Tooltip id={id}>{title}</Tooltip>}>
         {children}
@@ -299,7 +299,12 @@ function ProductDetails({ product }) {
                         <span>${new Intl.NumberFormat('en-US').format(product.income)}</span>
                       </li>
                       <li>
-                        <label>Operating, Financing, Legal & Management Expenses:</label>
+                        <TooltipSpan title="Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not." id="expenses">
+                          <label> 
+                            Operating, Financing, Legal & Mgmt Expenses{' '}
+                            <FaExclamationCircle />
+                          </label>
+                        </TooltipSpan> 
                         <span>${new Intl.NumberFormat('en-US').format(product.expenses)}</span>
                       </li>
                     </ul>
