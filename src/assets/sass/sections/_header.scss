@@ -102,6 +102,8 @@
 ---------------------------------------------- */
 .ltn__header-middle-area {
   z-index: 999;
+  border-bottom: 1px solid;
+  border-color: var(--border-color-1);
 }
 .ltn__header-middle-area > .container-fluid > .row,
 .ltn__header-middle-area > .container > .row {

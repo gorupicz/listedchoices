@@ -13,7 +13,7 @@ import AboutUsSectionTwo from "@/components/aboutUs/aboutUsSectionTwo";
 import UpCommingcarousel from "@/components/upCommingCarousel";
 import PropertyItem from "@/components/product/properties";
 import { useSelector } from "react-redux";
-import { FaArrowLeft, FaArrowRight, FaPlay } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlay, FaHeart, FaStar, FaCircle } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import ModalVideo from "react-modal-video";
@@ -33,8 +33,6 @@ function HomeVersionTwo(props) {
   const featureData = getProducts(featuresData, "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
   const { data } = props;
-
-
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -1165,15 +1163,4 @@ function HomeVersionTwo(props) {
     </LayoutOne>
   );
 }
-
-// export async function getStaticProps() {
-//   const filePath = path.join(process.cwd(), "src/data/hero/", "index-two.json");
-//   const data = JSON.parse(await fs.readFile(filePath));
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
 export default HomeVersionTwo;

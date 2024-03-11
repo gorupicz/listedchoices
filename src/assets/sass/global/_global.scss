@@ -501,10 +501,27 @@ ol li {
 ------------------------------------- */
 .section-bg-1 {
   background-color: var(--section-bg-1);
+  background: linear-gradient(90deg, rgb(242, 242, 244), rgb(255, 255, 255) 50%, var(--section-bg-1) 100%);
   .ltn__separate-line .separate-icon {
     background-color: var(--section-bg-1);
   }
 }
+.fa-bg {
+    display: flex;
+    justify-content: space-between;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, #ffffff 30px, #ffffff 60px);
+    background-size: contain;
+    height: 200px;
+    position: relative;
+  }
+  .fa-bg-icon {
+    font-size: 24px;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 .section-bg-2,
 .section-bg-6,
 .section-bg-7 {

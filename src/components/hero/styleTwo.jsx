@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -15,6 +15,7 @@ import {
 import { Col, Container, Row } from "react-bootstrap";
 
 function HeroSectionStyleTwo({ data }) {
+  
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}

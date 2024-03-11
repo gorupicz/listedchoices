@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaPlus, FaAngleDoubleRight } from "react-icons/fa";
+
 const MenuList = ({ addListing }) => {
   return (
     <ul>
@@ -11,7 +12,7 @@ const MenuList = ({ addListing }) => {
         
       </li>
       <li className="menu-icon">
-        <Link href="/about">
+        <Link href="#">
           Sell
         </Link>
       </li>
