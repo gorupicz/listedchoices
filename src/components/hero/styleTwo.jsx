@@ -204,6 +204,7 @@ function HeroSectionStyleTwo({ data }) {
                               <Link
                                 href="/shop"
                                 className="theme-btn-1 btn btn-effect-1"
+                                id="main-call-to-action-at-home-for-gtm-tracking"
                               >
                                 {item.buttonText}
                               </Link>
