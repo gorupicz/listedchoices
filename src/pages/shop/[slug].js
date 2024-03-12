@@ -314,7 +314,7 @@ function ProductDetails({ product }) {
                         <span>${new Intl.NumberFormat('en-US').format(product.income - product.expenses)}</span>
                       </li>
                       <li>
-                        <label>Raise Amount:</label>
+                        <label>Asset Valuation:</label>
                         <span>${new Intl.NumberFormat('en-US').format(product.price)}</span>
                       </li>
                       <li>
