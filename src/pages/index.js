@@ -198,7 +198,7 @@ function HomeVersionTwo(props) {
         onClose={() => setOpen(false)}
       />
       {/* <!-- SLIDER AREA START (slider-11) --> */}
-      <div className="ltn__slider-area ltn__slider-11 section-bg-1">
+      <div className="ltn__slider-area ltn__slider-11 section-bg-1 section-bg-1-hero">
         <HeroSectionStyleTwo data={heroData} />
       </div>
       {/* <!-- SLIDER AREA END -->
