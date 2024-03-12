@@ -1185,6 +1185,7 @@ function ProductDetails({ product }) {
                     <Link
                       href="/shop"
                       className="theme-btn-1 btn btn-effect-1"
+                      id="main-call-to-action-at-product-page-for-gtm"
                     >
                       Sign up to invest
                     </Link>
