@@ -3,7 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
+import Head from "next/head";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {
@@ -48,8 +49,6 @@ function ProductDetails({ product }) {
   const { compareItems } = useSelector((state) => state.compare);
   const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
 
-
-
   const TooltipSpan = ({ id, title, children }) => (
     <OverlayTrigger
       placement="bottom"
@@ -93,6 +92,9 @@ function ProductDetails({ product }) {
     (compareItem) => compareItem.id === product.id
   );
 
+  const pageTitle = product.title + " - " + product.locantion;
+  const pageDescription = product.description.shortDescription;
+  const ogImage = product.carousel[0].img;
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -205,6 +207,14 @@ function ProductDetails({ product }) {
   return (
     <>
       <LayoutOne topbar={false}>
+        <Head>
+          <title>{pageTitle}</title>
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDescription} />
+          <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
+          {/* Add more Open Graph meta tags as needed */}
+        </Head>
+        
         <ModalVideo
           channel="youtube"
           youtube={{
