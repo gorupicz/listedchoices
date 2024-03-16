@@ -204,7 +204,7 @@ function HomeVersionTwo(props) {
       {/* <!-- SLIDER AREA END -->
 
     <!-- ABOUT US AREA START --> */}
-      <div className="ltn__about-us-area pt-115 pb-100 ">
+      <div className="ltn__about-us-area pt-50 pb-30 ">
         <AboutUsSectionOne />
       </div>
       {/* <!-- ABOUT US AREA END -->

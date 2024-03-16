@@ -237,7 +237,7 @@ function HeroSectionStyleTwo({ data }) {
                             alt={`${item.subtitle}`}
                             width={830}
                             height={960}
-                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                            layout="responsive"
                           />
 
                         </div>

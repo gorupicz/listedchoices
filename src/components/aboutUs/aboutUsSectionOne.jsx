@@ -16,7 +16,7 @@ function AboutUsSectionOne() {
                 alt="When I retire, I will make a living from this."
                 width={626}
                 height={800}
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                layout="responsive"
               />
             </div>
           </Col>
