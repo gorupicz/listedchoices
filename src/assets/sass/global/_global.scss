@@ -506,6 +506,12 @@ ol li {
   }
 }
 
+.real-state-icons-pattern-bg {
+  background-image: url(./backgrounds/real-state-pattern-icons.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .section-bg-1-hero {
   background: linear-gradient(90deg, rgb(242, 242, 244), rgb(255, 255, 255) 50%, var(--section-bg-1) 100%);
 }
