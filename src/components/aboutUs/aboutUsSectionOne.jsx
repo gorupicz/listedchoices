@@ -11,7 +11,13 @@ function AboutUsSectionOne() {
         <Row>
           <Col xs={12} lg={6} className="align-self-center">
             <div className="about-us-img-wrap about-img-left">
-              <img src="/img/others/11.png" alt="About Us Image" />
+              <Image
+                src="/img/others/11.png"
+                alt="When I retire, I will make a living from this."
+                width={626}
+                height={800}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+              />
             </div>
           </Col>
           <Col xs={12} lg={6} className="align-self-center">
