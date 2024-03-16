@@ -209,28 +209,29 @@ function HomeVersionTwo(props) {
       </div>
       {/* <!-- ABOUT US AREA END -->
 
-    <!-- ABOUT US AREA START --> */}
-      <div className="ltn__about-us-area section-bg-1 bg-image-right-before pt-120 pb-90">
+    {/* <!-- ABOUT US AREA START --> */}
+    {/* <!--   <div className="ltn__about-us-area section-bg-1 bg-image-right-before pt-120 pb-90">
         <AboutUsSectionTwo />
-      </div>
-      {/* <!-- ABOUT US AREA END -->
+      </div> -->
+      {/* <!-- ABOUT US AREA END --> */}
 
-    <!-- FEATURE AREA START ( Feature - 6) --> */}
+    {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
       <Feature
         servicebtn={true}
-        iconTag={false}
+        iconTag={true}
         data={featureData}
         classes=""
         headingClasses=""
         titleSectionData={{
           sectionClasses: "text-center",
-          subTitle: "Our Services",
-          title: "Our Main Focus",
+          subTitle: "Simplified and Online",
+          title: "Invest in three easy steps",
         }}
       />
       {/* <!-- FEATURE AREA END -->
 
     <!-- UPCOMING PROJECT AREA START --> */}
+    {/*  
       <div
         className="ltn__upcoming-project-area bg-image-top pt-115 pb-65"
         style={{ backgroundImage: `url("../img/bg/22.jpg")` }}
@@ -253,10 +254,11 @@ function HomeVersionTwo(props) {
 
         </Container>
       </div>
+      */}
       {/* <!-- UPCOMING PROJECT AREA END -->
 
     <!-- APARTMENTS PLAN AREA START --> */}
-
+    {/*  
       <div className="ltn__apartments-plan-area pb-70">
         <Container>
           <Row>
@@ -524,8 +526,8 @@ function HomeVersionTwo(props) {
         </Container>
       </div>
       {/* <!-- APARTMENTS PLAN AREA END -->
-
-    <!-- SEARCH BY PLACE AREA START (testimonial-7) --> */}
+    */}
+    {/* <!-- SEARCH BY PLACE AREA START (testimonial-7) --> */}
       <div
         className="ltn__search-by-place-area before-bg-top pt-115 pb-70"
 
@@ -574,6 +576,7 @@ function HomeVersionTwo(props) {
       {/* <!-- SEARCH BY PLACE AREA END -->
 
     <!-- SELECT AVAILABILITY AREA START --> */}
+    {/*  
       <div className="select-availability-area pb-120">
         <Container>
           <Row>
@@ -761,6 +764,7 @@ function HomeVersionTwo(props) {
       {/* <!-- SELECT AVAILABILITY AREA END -->
 
     <!-- NEIGHBOUR AREA START --> */}
+    
       <div className="neighbour-area section-bg-1 pt-118 pb-120">
         <Container>
           <Row>
@@ -1053,9 +1057,11 @@ function HomeVersionTwo(props) {
           </Row>
         </Container>
       </div>
+      
       {/* <!-- NEIGHBOUR AREA END -->
 
     <!-- CATEGORY AREA START --> */}
+    {/* 
       <div className="ltn__category-area ltn__product-gutter pt-115 pb-70">
         <Container>
           <Row>
@@ -1120,6 +1126,7 @@ function HomeVersionTwo(props) {
       {/* <!-- TESTIMONIAL AREA END -->
 
     <!-- BLOG AREA START (blog-3) --> */}
+    {/* 
       <div className="ltn__blog-area pb-70">
         <Container>
           <Row>

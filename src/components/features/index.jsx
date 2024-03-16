@@ -15,7 +15,7 @@ function Feature({
 }) {
   return (
     <>
-      <div className={`ltn__feature-area pt-115 pb-90 ${classes}`}>
+      <div className={`about-us-info-wrap ${classes}`}>
         <Container>
           <Row>
             <Col xs={12}>
@@ -31,6 +31,9 @@ function Feature({
               const slug = productSlug(item.title);
               return (
                 <Col key={key} xs={12} sm={6} lg={4}>
+                  <Link
+                    href="/shop"
+                  >
                   <div
                     className={`ltn__feature-item ltn__feature-item-6 text-center bg-white  box-shadow-1 ${
                       item.active ? "active" : ""
@@ -50,17 +53,22 @@ function Feature({
                     </div>
                     <div className="ltn__feature-info">
                       <h3>
-                        <Link href={`/service/${slug}`}>{item.title}</Link>
+                        <Link 
+                          href="/shop"
+                        >
+                          {/*href={`/service/${slug}`}>*/}
+                          {item.title}
+                        </Link>
                       </h3>
                       <p>{item.shortDescription}</p>
 
                       {servicebtn ? (
                         <Link
                           className="ltn__service-btn"
-                          href={`/service/${slug}`}
+                          href="/shop"
                         >
+                          {/*href={`/service/${slug}`}>*/}
                           {item.buttonText}
-
                           <i className="flaticon-right-arrow"></i>
                         </Link>
                       ) : (
@@ -68,6 +76,7 @@ function Feature({
                       )}
                     </div>
                   </div>
+                  </Link>
                 </Col>
               );
             })}
