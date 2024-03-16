@@ -18,15 +18,13 @@ function AboutUsSectionOne() {
             <div className="about-us-info-wrap">
               <div className="section-title-area ltn__section-title-2--- mb-30">
                 <h6 className="section-subtitle section-subtitle-2--- ltn__secondary-color">
-                  About Us
+                  Make a living from this when you retire
                 </h6>
                 <h1 className="section-title">
-                  Dream Living Spaces Setting New Build
+                  Build a portfolio you can rely on
                 </h1>
                 <p>
-                  Over 39,000 people work for us in more than 70 countries all
-                  over the This breadth of global coverage, combined with
-                  specialist services
+                  Invest in turn-key properties with active track-record in Airbnb and Vrbo, managed by proffesional property managers
                 </p>
               </div>
               <div className="ltn__feature-item ltn__feature-item-3">
@@ -38,12 +36,11 @@ function AboutUsSectionOne() {
                 <div className="ltn__feature-info">
                   <h4>
                     <Link href="https://quarter-nextjs.netlify.app/service/buy-a-home">
-                      The Perfect Residency
+                      Only the best properties, curated by our experts
                     </Link>
                   </h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisic do eiusmod
-                    tempor incididunt ut labore et
+                    Listed properties go through our rigurous process to ensure product-market fit and maximize returns
                   </p>
                 </div>
               </div>
@@ -56,12 +53,11 @@ function AboutUsSectionOne() {
                 <div className="ltn__feature-info">
                   <h4>
                     <Link href="https://quarter-nextjs.netlify.app/service/buy-a-home">
-                      Global Architect Experts
+                      Furnished and optimized for tourists
                     </Link>
                   </h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisic do eiusmod
-                    tempor incididunt ut labore et
+                    From different coffee makers to hypoallergenic bedding, we focus on providing a memorable and cost-effective guest experience
                   </p>
                 </div>
               </div>
@@ -74,12 +70,11 @@ function AboutUsSectionOne() {
                 <div className="ltn__feature-info">
                   <h4>
                     <Link href="https://quarter-nextjs.netlify.app/service/buy-a-home">
-                      Built-in Storage Cupboards
+                      Location rules, always
                     </Link>
                   </h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisic do eiusmod
-                    tempor incididunt ut labore et
+                    We only list properties with direct sea views and walking distance to beach
                   </p>
                 </div>
               </div>

@@ -212,7 +212,6 @@ function ProductDetails({ product }) {
           <meta property="og:title" content={pageTitle} />
           <meta property="og:description" content={pageDescription} />
           <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
-          {/* Add more Open Graph meta tags as needed */}
         </Head>
         
         <ModalVideo
