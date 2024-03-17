@@ -510,7 +510,11 @@ ol li {
   background-image: url(./backgrounds/real-state-pattern-icons.svg);
   background-repeat: no-repeat;
   background-size: cover;
+  @media screen and (max-width: 991px) {
+    background-image: url(./backgrounds/real-state-pattern-mobile.svg);
+  }
 }
+
 
 .section-bg-1-hero {
   background: linear-gradient(90deg, rgb(242, 242, 244), rgb(255, 255, 255) 50%, var(--section-bg-1) 100%);
