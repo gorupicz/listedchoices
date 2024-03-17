@@ -1092,6 +1092,11 @@
 }
 
 @media (max-width: 767px) {
+  .ltn__slide-item {
+  background-image: url(/img/backgrounds/real-state-pattern-icons-mobile.svg);
+  background-repeat: repeat;
+  background-size: cover;
+}
   .liton-slide-item-inner {
     height: inherit;
   }
