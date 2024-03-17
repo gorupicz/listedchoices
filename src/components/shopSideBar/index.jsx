@@ -17,7 +17,7 @@ const SideBar = ({ products, getSortParams }) => {
   return (
     <>
       <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar">
-        <h3 className="mb-10">Advance Information</h3>
+        <h3 className="mb-10 mt-20">Advance Information</h3>
         <label className="mb-30">
           <small>About 2 results (0.62 seconds) </small>
         </label>

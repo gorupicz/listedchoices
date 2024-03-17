@@ -1,6 +1,11 @@
 /* ----------------------------------------------------
     Product Area
 ---------------------------------------------------- */
+.ltn__product-area {
+  background-image: url(/img/backgrounds/real-state-pattern-icons.svg);
+  background-repeat: repeat;
+  background-size: contain;
+}
 .ltn__product-item {
   position: relative;
   margin-bottom: 50px;
@@ -1200,6 +1205,10 @@
 }
 
 @media (max-width: 767px) {
+  .ltn__product-area {
+  background-image: unset;
+
+}
   .property-detail-info-list {
     ul {
       padding: 20px 30px 20px;

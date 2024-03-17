@@ -219,7 +219,7 @@ function HeroSectionStyleTwo({ data }) {
                               ) : (
                                 <Link
                                 href="/about"
-                                  className="btn btn-transparent btn-effect-3"
+                                  className="btn btn-white btn-effect-3"
                                 >
                                   {item.learnMoreButtonText}
                                 </Link>
