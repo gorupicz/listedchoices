@@ -1,4 +1,3 @@
-import ModalVideo from "react-modal-video";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -41,6 +40,8 @@ import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
 import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
+import ModalVideo from "react-modal-video";
+import { useRouter } from "next/router";
 
 function ProductDetails({ product }) {
   const { products } = useSelector((state) => state.product);
@@ -91,10 +92,6 @@ function ProductDetails({ product }) {
   const compareItem = compareItems.find(
     (compareItem) => compareItem.id === product.id
   );
-
-  const pageTitle = product.title + " - " + product.locantion;
-  const pageDescription = product.description.shortDescription;
-  const ogImage = product.carousel[0].img;
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -189,8 +186,13 @@ function ProductDetails({ product }) {
 
   const [isOpen, setOpen] = useState(false);
 
+  const router = useRouter();
+  const pageTitle = product.title + " - " + product.locantion;
+  const pageDescription = product.description.shortDescription;
+  const ogImage = product.carousel[0].img;
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
+    
   useEffect(() => {
     const slider = document.querySelector(".ltn__CaC-widget");
     setSliderHeight(slider.offsetHeight);
@@ -203,6 +205,15 @@ function ProductDetails({ product }) {
   const handleScroll = () => {
     setScroll(window.scrollY);
   };
+
+  useEffect(() => {
+    if (router.isReady) {
+      document.title = pageTitle;
+      document.querySelector('meta[property="og:title"]').setAttribute("content", pageTitle);
+      document.querySelector('meta[property="og:description"]').setAttribute("content", pageDescription);
+      document.querySelector('meta[property="og:image"]').setAttribute("content", `/img/img-slide/${ogImage}`);
+    }
+  }, [router.isReady, product]);
 
   return (
     <>
