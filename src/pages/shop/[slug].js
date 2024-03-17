@@ -207,7 +207,7 @@ function ProductDetails({ product }) {
   };
 
   useEffect(() => {
-    if (router.isReady) {
+    if (typeof window !== 'undefined' && router.isReady) {
       document.title = pageTitle;
       document.querySelector('meta[property="og:title"]').setAttribute("content", pageTitle);
       document.querySelector('meta[property="og:description"]').setAttribute("content", pageDescription);
