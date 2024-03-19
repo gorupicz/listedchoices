@@ -210,9 +210,9 @@ function HomeVersionTwo(props) {
       {/* <!-- ABOUT US AREA END -->
 
     {/* <!-- ABOUT US AREA START --> */}
-    {/* <!--   <div className="ltn__about-us-area section-bg-1 bg-image-right-before pt-120 pb-90">
+    <div className="ltn__about-us-area section-bg-1 real-state-icons-pattern-bg bg-image-right-before pt-120 pb-90">
         <AboutUsSectionTwo />
-      </div> -->
+      </div>
       {/* <!-- ABOUT US AREA END --> */}
 
     {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
