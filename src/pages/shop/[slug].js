@@ -316,7 +316,7 @@ function ProductDetails({ product }) {
                     <ul>
                       <li>
                         <label>Rent:</label>
-                        <span>${new Intl.NumberFormat('en-US').format(product.income)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.income)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not." id="expenses">
@@ -325,20 +325,20 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US').format(product.expenses)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.expenses)}</span>
                       </li>
                     </ul>
                     <ul>
                       <li>
                         <label>Free Cash Flow / Dividend:</label>
-                        <span>${new Intl.NumberFormat('en-US').format(product.income - product.expenses)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.income - product.expenses)}</span>
                       </li>
                       <li>
                         <label>Asset Valuation:</label>
-                        <span>${new Intl.NumberFormat('en-US').format(product.price)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.price)}</span>
                       </li>
                       <li>
-                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US').format((product.income - product.expenses)/product.price*100)}%</span>
+                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((product.income - product.expenses)/product.price*100)}%</span>
                       </li>
                     </ul>
                   </div>
@@ -348,7 +348,7 @@ function ProductDetails({ product }) {
                     <ul>
                       <li>
                         <label>Occupancy (Last month):</label>
-                        <span>{new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthOccupancyRate)}%</span>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.lastMonthOccupancyRate)}%</span>
                       </li>
                       <li>
                         <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
@@ -356,7 +356,7 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan>
-                        <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.lastMonthAdr)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.lastMonthAdr)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
@@ -365,7 +365,7 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US').format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
@@ -1200,7 +1200,7 @@ function ProductDetails({ product }) {
                   )}>
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      <span>${new Intl.NumberFormat('en-US').format(product.amountAvailable)}</span> Available
+                      <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.amountAvailable)}</span> Available
                     </h4>
                     <Link
                       href="/shop"
