@@ -31,8 +31,7 @@ const Footer = function () {
                     </div>
                   </div>
                   <p>
-                    Lorem Ipsum is simply dummy text of the and typesetting
-                    industry. Lorem Ipsum is dummy text of the printing.
+                    Vacation Rental Investment Marketplace
                   </p>
                   <div className="footer-address">
                     <ul>
@@ -41,17 +40,7 @@ const Footer = function () {
                           <FaMapMarkerAlt />
                         </div>
                         <div className="footer-address-info">
-                          <p>Brooklyn, New York, United States</p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="footer-address-icon">
-                          <FaPhoneAlt />
-                        </div>
-                        <div className="footer-address-info">
-                          <p>
-                            <Link href="tel:+0123-456789">+0123-456789</Link>
-                          </p>
+                          <p>Dover, Delaware, United States</p>
                         </div>
                       </li>
                       <li>
@@ -61,7 +50,7 @@ const Footer = function () {
                         <div className="footer-address-info">
                           <p>
                             <Link href="mailto:example@example.com">
-                              example@example.com
+                              support@listedchoices.com
                             </Link>
                           </p>
                         </div>
@@ -71,7 +60,7 @@ const Footer = function () {
                   <div className="ltn__social-media mt-20">
                     <ul>
                       <li>
-                        <Link href="#" title="Facebook">
+                        <Link href="https://www.facebook.com/profile.php?id=61557227398934" target="_blank" title="Facebook">
                           <FaFacebookF />
                         </Link>
                       </li>
@@ -206,7 +195,7 @@ const Footer = function () {
               <Col xs={12} md={6}>
                 <div className="ltn__copyright-design clearfix">
                   <p>
-                    All Rights Reserved @ Company{" "}
+                    All Rights Reserved @ Listed Choices{" "}
                     <span className="current-year"></span>
                   </p>
                 </div>

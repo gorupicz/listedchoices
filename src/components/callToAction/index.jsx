@@ -6,7 +6,7 @@ const CallToAction = () => {
     <>
       <div className="call-to-action-inner call-to-action-inner-6 ltn__secondary-bg position-relative">
         <div className="coll-to-info text-color-white">
-          <h1>Looking to invest in Vacation Rental?</h1>
+          <h1>Looking to invest in Vacation Rentals?</h1>
           <p>Earn passive income by investing in <span>Choices</span></p>
         </div>
         <div className="btn-wrapper">

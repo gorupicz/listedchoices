@@ -203,17 +203,6 @@ function HomeVersionTwo(props) {
       </div>
       {/* <!-- SLIDER AREA END -->
 
-    <!-- ABOUT US AREA START --> */}
-      <div className="ltn__about-us-area pt-50 pb-30 ">
-        <AboutUsSectionOne />
-      </div>
-      {/* <!-- ABOUT US AREA END -->
-
-    {/* <!-- ABOUT US AREA START --> */}
-    {/* <!--   <div className="ltn__about-us-area section-bg-1 bg-image-right-before pt-120 pb-90">
-        <AboutUsSectionTwo />
-      </div> -->
-      {/* <!-- ABOUT US AREA END --> */}
 
     {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
       <Feature
@@ -228,9 +217,22 @@ function HomeVersionTwo(props) {
           title: "Invest in three easy steps",
         }}
       />
-      {/* <!-- FEATURE AREA END -->
+      {/* <!-- FEATURE AREA END --> */}
 
-    <!-- UPCOMING PROJECT AREA START --> */}
+
+    {/*  <!-- ABOUT US AREA START --> */}
+      <div className="ltn__about-us-area pt-50 pb-30 ">
+        <AboutUsSectionOne />
+      </div>
+      {/* <!-- ABOUT US AREA END -->
+
+    {/* <!-- ABOUT US AREA START --> */}
+    {/* <!--   <div className="ltn__about-us-area section-bg-1 bg-image-right-before pt-120 pb-90">
+        <AboutUsSectionTwo />
+      </div> -->
+      {/* <!-- ABOUT US AREA END --> */}
+
+    {/*<!-- UPCOMING PROJECT AREA START --> */}
     {/*  
       <div
         className="ltn__upcoming-project-area bg-image-top pt-115 pb-65"
@@ -528,6 +530,7 @@ function HomeVersionTwo(props) {
       {/* <!-- APARTMENTS PLAN AREA END -->
     */}
     {/* <!-- SEARCH BY PLACE AREA START (testimonial-7) --> */}
+    {/* 
       <div
         className="ltn__search-by-place-area before-bg-top pt-115 pb-70"
 
@@ -573,6 +576,7 @@ function HomeVersionTwo(props) {
 
         </Container>
       </div>
+       */}
       {/* <!-- SEARCH BY PLACE AREA END -->
 
     <!-- SELECT AVAILABILITY AREA START --> */}
@@ -764,7 +768,7 @@ function HomeVersionTwo(props) {
       {/* <!-- SELECT AVAILABILITY AREA END -->
 
     <!-- NEIGHBOUR AREA START --> */}
-    
+    {/*  
       <div className="neighbour-area section-bg-1 pt-118 pb-120">
         <Container>
           <Row>
@@ -949,6 +953,7 @@ function HomeVersionTwo(props) {
                   <Col xs={12} lg={6}>
                     <Accordion>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="1" className="card">
                         <Accordion.Header className="ltn__card-title">
                           <i className="flaticon-mortarboard"></i> University /
@@ -964,6 +969,7 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="2" className="card">
                         <Accordion.Header className="ltn__card-title"><i className="flaticon-hospital"></i> Medical Hospital</Accordion.Header>
                         <Accordion.Body>
@@ -988,6 +994,7 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="3" className="card">
                         <Accordion.Header className="ltn__card-title">
                           <i className="flaticon-metro"></i> Railway Station
@@ -1002,11 +1009,13 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!--  --> */}
+                      {/* 
                     </Accordion>
                   </Col>
                   <Col xs={12} lg={6}>
                     <Accordion>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="1" className="card">
                         <Accordion.Header className="ltn__card-title">
                           <i className="flaticon-building"></i> Shopping Mall
@@ -1021,6 +1030,7 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="2" className="card">
                         <Accordion.Header className="ltn__card-title">
                           <i className="flaticon-airplane"></i> Airport/Biman
@@ -1035,6 +1045,7 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!-- card --> */}
+                      {/* 
                       <Accordion.Item eventKey="3" className="card">
                         <Accordion.Header className="ltn__card-title">
                           <i className="flaticon-slider"></i> Children Playland
@@ -1049,6 +1060,7 @@ function HomeVersionTwo(props) {
                         </Accordion.Body>
                       </Accordion.Item>
                       {/* <!--  --> */}
+                      {/* 
                     </Accordion>
                   </Col>
                 </Row>
@@ -1057,7 +1069,7 @@ function HomeVersionTwo(props) {
           </Row>
         </Container>
       </div>
-      
+       */}
       {/* <!-- NEIGHBOUR AREA END -->
 
     <!-- CATEGORY AREA START --> */}
@@ -1093,6 +1105,7 @@ function HomeVersionTwo(props) {
 
 
     <!-- TESTIMONIAL AREA START (testimonial-8) --> */}
+    {/* 
       <div
         className="ltn__testimonial-area bg-image-top pt-115 pb-65"
         style={{ backgroundImage: `url("../img/bg/23.jpg")` }}
@@ -1102,7 +1115,7 @@ function HomeVersionTwo(props) {
             <Col xs={12}>
               <div className="section-title-area">
                 <h6 className="section-subtitle white-color">
-                  Client,s Testimonial
+                  Clients Testimonial
                 </h6>
                 <h1 className="section-title white-color">
                   See What,s Our Client <br />
@@ -1120,6 +1133,7 @@ function HomeVersionTwo(props) {
             })}
 
             {/* <!--  --> */}
+            {/* 
           </Slider>
         </Container>
       </div>
@@ -1155,8 +1169,8 @@ function HomeVersionTwo(props) {
         </Container>
       </div>
       {/* <!-- BLOG AREA END -->
-
-    <!-- CALL TO ACTION START (call-to-action-6) --> */}
+ */}
+    {/* <!-- CALL TO ACTION START (call-to-action-6) --> */}
       <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
         <Container>
           <Row>
