@@ -133,8 +133,10 @@ const ProductList = ({
               <span className="ms-1">Reviews</span>
             </li>
             <li>
-              <span>{productData.vacationRentalDetails.occupancyRate}</span>
-              <span className="ms-1">Occupancy</span>
+              <span>{productData.vacationRentalDetails.score}</span>
+              <span className="ms-1">
+                {productData.vacationRentalDetails.reviews > 4.8 ? "Excellent" : "Very Good"}
+              </span>
             </li>
           </ul>
         </div>

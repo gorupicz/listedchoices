@@ -247,6 +247,9 @@ i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
 .flaticon-pin:before {
     content: "\f148";
 }
+.flaticon-star:before {
+    content: "\f2605";
+}
 .flaticon-plane:before {
     content: "\f149";
 }

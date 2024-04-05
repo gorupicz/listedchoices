@@ -333,6 +333,9 @@ $flaticon-map: (
 .flaticon-pin:before {
     content: map-get($flaticon-map, "pin");
 }
+.flaticon-star {
+    content: map-get($flaticon-map, "star");
+}
 .flaticon-plane:before {
     content: map-get($flaticon-map, "plane");
 }
