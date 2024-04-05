@@ -483,6 +483,9 @@
       list-style: none;
       flex: 1;
       font-size: 14px;
+      &:last-child {
+        flex: inherit;
+      }
       span {
         font-weight: 700;
       }
