@@ -91,13 +91,13 @@
     },
     "vacationRentalDetails": {
       "status": "bookable",
-      "occupancyRate": "62.4",
-      "lastMonthOccupancyRate": "74",
+      "occupancyRate": "67",
+      "lastMonthOccupancyRate": "60",
       "rentals": 93,
       "reviews": 42,
-      "score": 4.83,
-      "lastMonthAdr": 128,
-      "YearToDateRevPAR": 144,
+      "score": 4.88,
+      "lastMonthAdr": 127,
+      "YearToDateRevPAR": 110,
       "awards": [
         ["Guest Favorite", "Airbnb"], 
         ["Superhost", "Airbnb"],
