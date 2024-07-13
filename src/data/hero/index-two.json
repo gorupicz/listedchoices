@@ -1,0 +1,41 @@
+[
+  {
+    "subtitle": "Vacation Rental Investment marketplace",
+    "Title": "Earn passive income by investing in Choices",
+    "titleWord": "Choices",
+    "Desc": "A Choice is a professionally managed vacation rental property that distributes earnings from reservations and the appreciation of a future sale among shareholders.",
+    "icon": "tabler:sailboat",
+    "heroimage": "DSC09989-6.png",
+    "id": "1",
+    "buttonText": "Start investing",
+    "videoButton": true,
+    "learnMoreButtonText": "LEARN MORE",
+    "variationLeft": false
+  },
+  {
+    "subtitle": "List your vacation house with us today",
+    "Title": "Sell your second home at the best price",
+    "titleWord": "best price",
+    "Desc": "Bricks are great, but using your money for something better when you want, it's a better choice.",
+    "icon": "FaShip",
+    "heroimage": "grass.jpg",
+    "id": "2",
+    "buttonText": "Receive an offer",
+    "videoButton": false,
+    "learnMoreButtonText": "LEARN MORE",
+    "variationLeft": false
+  },
+  {
+    "subtitle": "Manage the best vacation rentals in your city",
+    "Title": "Hospitality is not for everyone",
+    "titleWord": "Hospitality",
+    "Desc": "Are you passionate about taking care of the small details and making others feel in their best place? Join as Host",
+    "icon": "FaShip",
+    "heroimage": "sell.jpg",
+    "id": "3",
+    "buttonText": "Apply today",
+    "videoButton": false,
+    "learnMoreButtonText": "LEARN MORE",
+    "variationLeft": false
+  }
+]
