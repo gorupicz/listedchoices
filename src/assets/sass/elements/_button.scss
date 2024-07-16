@@ -18,12 +18,13 @@
     position: relative;
     z-index: 1;
     margin-right: 15px;
+    text-transform: uppercase;
     &:last-child {
         margin-right: 0;
     }
 }
 .theme-btn-1 {
-    background-color: var(--ltn__secondary-color);
+    background-color: var(--ltn__secondary-color-2);
     color: var(--white);
     &:hover{
         background-color:  var(--ltn__primary-color);
@@ -203,11 +204,20 @@
 @media only screen and (max-width:767px){
     .btn {
         padding: 10px 20px;
-        font-size: 14px;
+        font-size: 1.125rem;
+        line-height: 2.5rem;
+        margin-right: 0px;
     }
     [type="submit"].btn {
         padding: 12px 30px;
     }
+
+    .btn-wrapper  {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 50px;
+}
 }
 
 /* ----------------------------------------------------

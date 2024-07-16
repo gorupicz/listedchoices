@@ -1,15 +1,17 @@
 [
   {
-    "subtitle": "Vacation Rental Investment marketplace",
-    "Title": "Earn passive income by investing in Choices",
-    "titleWord": "Choices",
-    "Desc": "A Choice is a professionally managed vacation rental property that distributes earnings from reservations and the appreciation of a future sale among shareholders.",
+    "subtitle": "Todas las mejores casas están aquí",
+    "Title": "Invierte en casas como si invirtieras en la bolsa",
+    "titleWord": ["casas", "bolsa"],
+    "Desc": "Gana dividendos y apreciación y vende tus acciones cuando quieras. Sin intermediarios ni gastos ocultos.",
     "icon": "tabler:sailboat",
     "heroimage": "DSC09989-6.png",
     "id": "1",
-    "buttonText": "Start investing",
-    "videoButton": true,
-    "learnMoreButtonText": "LEARN MORE",
+    "buttonText": "Simula tu inversión",
+    "buttonLink": "https://formless.ai/c/0lF03P5MqeEp",
+    "videoButton": false,
+    "learnMoreButtonText": "Ver propiedades",
+    "learnMoreButtonLink": "/shop",
     "variationLeft": false
   },
   {
@@ -21,8 +23,10 @@
     "heroimage": "grass.jpg",
     "id": "2",
     "buttonText": "Receive an offer",
+    "buttonLink": "Receive an offer",
     "videoButton": false,
     "learnMoreButtonText": "LEARN MORE",
+    "learnMoreButtonLink": "LEARN MORE",
     "variationLeft": false
   },
   {
@@ -34,8 +38,10 @@
     "heroimage": "sell.jpg",
     "id": "3",
     "buttonText": "Apply today",
+    "buttonLink": "Apply today",
     "videoButton": false,
     "learnMoreButtonText": "LEARN MORE",
+    "learnMoreButtonLink": "LEARN MORE",
     "variationLeft": false
   }
 ]

@@ -161,9 +161,9 @@ function HeroSectionStyleTwo({ data }) {
           {data.map((item, key) => {
 
             let Title = item.Title;
-            const highlightedWorld = item.titleWord;
-            const titleParts = Title.split(new RegExp(`(${highlightedWorld})`, 'g'));
-
+            const titleWords = Array.isArray(item.titleWord) ? item.titleWord : [item.titleWord];
+            const regexPattern = '(' + titleWords.join('|') + ')';
+            const titleParts = Title.split(new RegExp(regexPattern, 'gi'));
 
             return (
               <div
@@ -187,22 +187,26 @@ function HeroSectionStyleTwo({ data }) {
                               {item.subtitle}
                             </h6>
                             <h1 className="slide-title">
-                              {titleParts.map((part, index) => (
-                                part === highlightedWorld ? (
+                              {titleParts.map((part, index) => {
+                                // Check if the current part matches any word in titleWords
+                                const isHighlighted = titleWords.some(word => part.toLowerCase() === word.toLowerCase());
+
+                                return isHighlighted ? (
                                   <span key={index} className="slide-highlightedWord">
-                                    {highlightedWorld}
+                                    {part}
                                   </span>
                                 ) : (
-                                    <span key={index}>{part}</span>
-                                )
-                              ))}
+                                  <span key={index}>{part}</span>
+                                );
+                              })}
+
                             </h1>
                             <div className="slide-brief ">
-                              <p>{item.Desc}</p>
+                              <h4>{item.Desc}</h4>
                             </div>
-                            <div className="btn-wrapper ">
+                            <div className="btn-wrapper">
                               <Link
-                                href="/shop"
+                                href={item.buttonLink}
                                 className="theme-btn-1 btn btn-effect-1"
                                 id="main-call-to-action-at-home-for-gtm-tracking"
                               >
@@ -218,7 +222,7 @@ function HeroSectionStyleTwo({ data }) {
                                 </button>
                               ) : (
                                 <Link
-                                href="/about"
+                                  href={item.learnMoreButtonLink}
                                   className="btn btn-white btn-effect-3"
                                 >
                                   {item.learnMoreButtonText}

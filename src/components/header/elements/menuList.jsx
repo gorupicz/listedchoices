@@ -7,22 +7,22 @@ const MenuList = ({ addListing }) => {
     <ul>
       <li className="menu-icon">
         <Link href="/shop">
-          Invest
+          Invierte
         </Link>
         
       </li>
       <li className="menu-icon">
         <Link href="#">
-          Sell
+          Propietarios
         </Link>
       </li>
       <li className="menu-icon">
         <Link href="/about">
-          Host
+          Anfitriones
         </Link>
       </li>
       <li>
-        <Link href="/contact">About</Link>
+        <Link href="/contact">Nosotros</Link>
       </li>
 
       {addListing ? (
