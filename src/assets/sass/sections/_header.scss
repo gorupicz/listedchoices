@@ -1355,8 +1355,9 @@
 }
 /* Sticky Background White */
 .sticky-active.ltn__sticky-bg-white {
-  background-color: var(--white);
-  .ltn__main-menu > ul > li > a,
+  background-color: var(--ltn__secondary-color);
+  border-bottom: none;
+  .ltn__main-menu > ul > li > a,  
   .header-wishlist a,
   .mini-cart-icon,
   .header-feature-item h6,
@@ -1364,8 +1365,13 @@
   .header-feature-icon,
   .header-search-1 .search-icon,
   .ltn__header-options .ltn__drop-menu > ul > li > a {
-    color: var(--ltn__heading-color);
+    color: var(--ltn__primary-color);
+    &:hover{
+      color: white;
+      border-bottom: 2px solid #eee;
+    }
   }
+
   .ltn__header-options-2 .header-search-1,
   .ltn__header-options-2 .header-search-1 i,
   .ltn__header-options-2 .ltn__drop-menu > ul > li > a,
