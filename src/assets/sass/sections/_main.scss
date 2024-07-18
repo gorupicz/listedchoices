@@ -255,6 +255,10 @@
 .section-title-area {
   margin-bottom: 50px;
 
+  .section-subtitle {
+    text-transform: uppercase;
+  }
+
   p {
     margin-bottom: 0;
     max-width: 500px;
@@ -279,6 +283,7 @@
 }
 
 .section-title {
+  color: var(--ltn__primary-color);
   font-size: 44px;
   font-weight: 700;
   line-height: 1.3;
@@ -1183,7 +1188,7 @@
 
     .ltn__service-btn {
       transition: all 0.3s ease 0s;
-      color: var(--ltn__color-1);
+      color: var(--ltn__primary-color);
       font-weight: 700;
       font-size: 14px;
       display: flex;

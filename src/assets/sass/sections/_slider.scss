@@ -198,8 +198,8 @@
     font-size: 65px;
     line-height: 1.2;
     margin-bottom: 20px;
+    color: var(--ltn__primary-color);
     .slide-highlightedWord {
-      color: var(--ltn__secondary-color-3);
       text-decoration: underline;
     }
   }
@@ -207,8 +207,14 @@
     margin-top: 40px;
   }
   .slide-brief {
+    color: var(--ltn__paragraph-color);
+    clear: both;
+    font-family: var(--ltn__heading-font);
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 15px;
     padding-left: 30px;
-    border-left: 1px solid #576466;
+    border-left: 1px solid var(--ltn__paragraph-color);
   }
 }
 

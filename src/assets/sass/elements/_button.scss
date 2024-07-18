@@ -24,10 +24,10 @@
     }
 }
 .theme-btn-1 {
-    background-color: var(--ltn__secondary-color-2);
+    background-color: var(--ltn__primary-color);
     color: var(--white);
     &:hover{
-        background-color:  var(--ltn__primary-color);
+        background-color:  var(--ltn__secondary-color);
         color: var(--white);
     }
 }

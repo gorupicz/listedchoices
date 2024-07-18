@@ -207,7 +207,7 @@ function HeroSectionStyleTwo({ data }) {
                             <div className="btn-wrapper">
                               <Link
                                 href={item.buttonLink}
-                                className="theme-btn-1 btn btn-effect-1"
+                                className="btn theme-btn-1 btn-effect-4"
                                 id="main-call-to-action-at-home-for-gtm-tracking"
                               >
                                 {item.buttonText}
@@ -223,7 +223,7 @@ function HeroSectionStyleTwo({ data }) {
                               ) : (
                                 <Link
                                   href={item.learnMoreButtonLink}
-                                  className="btn btn-white btn-effect-3"
+                                  className="btn btn-white btn-effect-4"
                                 >
                                   {item.learnMoreButtonText}
                                 </Link>

@@ -233,14 +233,14 @@ font-family: 'Poppins', sans-serif;
     Normalize    0B2C3D
 ---------------------------------------------------- */
 :root {
-  --ltn__primary-color: #000000;
-  --ltn__primary-color-2: #041113; /* Darken */
-  --ltn__primary-color-3: #133236; /* Lighten */
-  --ltn__secondary-color: #0a3856;
+  --ltn__primary-color: #00249C;
+  --ltn__primary-color-2: #0a2656; /* Darken */
+  --ltn__primary-color-3: #0a5656; /* Lighten */
+  --ltn__secondary-color: #C6AA76;
   --ltn__secondary-color-2: #0a2656; /* Darken */
   --ltn__secondary-color-3: #0a5656; /* Lighten */
   --ltn__heading-color: #071c1f;
-  --ltn__paragraph-color: #5c727d;
+  --ltn__paragraph-color: #666666;
 
   --ltn__heading-font: "Poppins", sans-serif;
   --ltn__body-font: "Nunito Sans", sans-serif;
@@ -429,14 +429,7 @@ h6,
 .h3,
 .h4,
 .h5,
-.h6 {
-  color: var(--ltn__heading-color);
-  clear: both;
-  font-family: var(--ltn__heading-font);
-  font-weight: 500;
-  line-height: 1.3;
-  margin-bottom: 15px;
-}
+.h6,
 p {
   color: var(--ltn__paragraph-color);
   margin-bottom: 1.5em;
