@@ -12,13 +12,13 @@ const MenuList = ({ addListing }) => {
         
       </li>
       <li className="menu-icon">
-        <Link href="#">
-          Propietarios
+        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1">
+          Anfitriones
         </Link>
       </li>
       <li className="menu-icon">
         <Link href="/about">
-          Anfitriones
+          Propietarios
         </Link>
       </li>
       <li>
