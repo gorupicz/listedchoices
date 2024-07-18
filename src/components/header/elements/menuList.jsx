@@ -12,7 +12,7 @@ const MenuList = ({ addListing }) => {
         
       </li>
       <li className="menu-icon">
-        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1">
+        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1" target="_blank" title="Comunidad de WhatsApp de Anfitriones de Airbnb">
           Anfitriones
         </Link>
       </li>
