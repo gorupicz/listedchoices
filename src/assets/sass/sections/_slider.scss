@@ -399,6 +399,15 @@
     top: auto;
     bottom: 100px;
     height: 70%;
+    div {
+      position: absolute;
+      background-color: var(--ltn__secondary-color);
+      color: var(--ltn__primary-color);
+      text-align: center;
+      width: 100%;
+      bottom: 0;
+      line-height: 2.5rem;
+    }
     img {
       text-align: right;
       margin-left: auto;

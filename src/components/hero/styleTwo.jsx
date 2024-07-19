@@ -236,6 +236,7 @@ function HeroSectionStyleTwo({ data }) {
                             item.variationLeft ? "slide-img-left" : ""
                           }`}
                         >
+                          <div>{item.caption}</div>
                           <Image
                             src={`/img/slider/${item.heroimage}`}
                             alt={`${item.subtitle}`}
