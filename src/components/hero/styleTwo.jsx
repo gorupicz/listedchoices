@@ -243,6 +243,7 @@ function HeroSectionStyleTwo({ data }) {
                             height={960}
                             layout="responsive"
                           />
+                          
 
                         </div>
                       </Col>

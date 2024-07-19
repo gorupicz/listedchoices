@@ -187,6 +187,7 @@ function HomeVersionTwo(props) {
       },
     ],
   };
+
   return (
     <LayoutOne topbar={false}>
 
@@ -217,6 +218,7 @@ function HomeVersionTwo(props) {
           title: "Invest in three easy steps",
         }}
       />
+      
       {/* <!-- FEATURE AREA END --> */}
 
 
