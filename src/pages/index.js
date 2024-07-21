@@ -214,8 +214,8 @@ function HomeVersionTwo(props) {
         headingClasses=""
         titleSectionData={{
           sectionClasses: "text-center",
-          subTitle: "Simplified and Online",
-          title: "Invest in three easy steps",
+          subTitle: "Proceso simplificado y en línea",
+          title: "La mejor plusvalía de México",
         }}
       />
       

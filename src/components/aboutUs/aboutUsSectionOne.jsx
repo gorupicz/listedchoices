@@ -24,10 +24,10 @@ function AboutUsSectionOne() {
             <div className="about-us-info-wrap">
               <div className="section-title-area ltn__section-title-2--- mb-30">
                 <h6 className="section-subtitle section-subtitle-2--- ltn__secondary-color">
-                  Make a living from this when you retire
+                  Vive de tus propiedades
                 </h6>
                 <h1 className="section-title">
-                  Build a portfolio you can rely on
+                  Gana dividendos mensuales
                 </h1>
                 <p>
                   Invest in turn-key properties with active track-record in Airbnb and Vrbo, managed by proffesional property managers
