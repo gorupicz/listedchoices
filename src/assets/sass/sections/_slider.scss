@@ -701,6 +701,9 @@
   .ltn__slide-item-11 {
     min-height: calc(100vh - 140px);
   }
+  .ltn__slide-item {
+  padding-bottom: 60px;
+  }
 }
 
 /* slider-4-img-slide-arrow */
@@ -983,7 +986,6 @@
   .ltn__slide-item-2 {
     .slide-item-info {
       max-width: 550px;
-      height: calc(80vh - 6rem);
       align-items: center;
     }
 
