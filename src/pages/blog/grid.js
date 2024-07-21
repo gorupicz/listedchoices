@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import { productSlug } from "@/lib/product";
@@ -28,7 +28,7 @@ function BlogGrid() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Blog Grid"
           sectionPace=""
@@ -86,7 +86,7 @@ function BlogGrid() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

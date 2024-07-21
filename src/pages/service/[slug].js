@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight, FaSearch, FaRegEnvelopeOpen } from "react-icons/fa";
 import serviceData from "@/data/service";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
@@ -14,7 +14,7 @@ function ServiceDetails({ service }) {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         {/* <!-- BREADCRUMB AREA START --> */}
 
         <ShopBreadCrumb
@@ -152,7 +152,7 @@ function ServiceDetails({ service }) {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { useState, useEffect } from "react";
 import BlogItemTwo from "@/components/blog/blogItemTwo";
 import blogData from "@/data/blog";
@@ -37,7 +37,7 @@ function BlogLeftSideBar() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb title="Blog Left Sidebar" sectionPace="" currentSlug="Blog" />
 
         <div class="ltn__blog-area mb-120">
@@ -98,7 +98,7 @@ function BlogLeftSideBar() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
@@ -29,7 +29,7 @@ import Image from "next/image";
 function MyAccount() {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="My Account"
           sectionPace=""
@@ -2141,7 +2141,7 @@ function MyAccount() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

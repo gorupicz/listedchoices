@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import { getProducts, productSlug } from "@/lib/product";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
@@ -10,7 +10,7 @@ function TeamPage() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb title="Our Agent" sectionPace="" currentSlug="Agent" />
 
         <div className="ltn__team-area pb-90">
@@ -42,7 +42,7 @@ function TeamPage() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

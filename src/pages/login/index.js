@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -17,7 +17,7 @@ function Login() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb title="Account" sectionPace="" currentSlug="Login" />
 
         {/* <!-- LOGIN AREA START --> */}
@@ -71,7 +71,7 @@ function Login() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
 
 
       <Modal

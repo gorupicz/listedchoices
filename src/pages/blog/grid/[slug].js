@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 
 import blogData from "@/data/blog";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
@@ -38,7 +38,7 @@ function BlogtDetails({ blog }) {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         {/* <!-- BREADCRUMB AREA START --> */}
 
         <ShopBreadCrumb
@@ -412,7 +412,7 @@ function BlogtDetails({ blog }) {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import TitleSection from "@/components/titleSection";
@@ -74,7 +74,7 @@ function HistoryPage() {
         ],
     };
     return (
-        <LayoutOne topbar={true}>
+        <Layout topbar={true}>
             <ShopBreadCrumb title="Our History" sectionPace="" currentSlug="History" />
 
             <div className="ltn__our-history-area pb-100">
@@ -343,7 +343,7 @@ function HistoryPage() {
                     </Row>
                 </Container>
             </div>
-        </LayoutOne>
+        </Layout>
     );
 }
 

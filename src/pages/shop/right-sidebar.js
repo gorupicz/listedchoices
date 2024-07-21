@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import { getSortedProducts, productSlug ,getDiscountPrice} from "@/lib/product";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { FaThLarge, FaThList, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import SideBar from "@/components/shopSideBar";
@@ -86,7 +86,7 @@ function ShopRightSideBar() {
 
 
   return (
-    <LayoutOne topbar={true}>
+    <Layout topbar={true}>
       {/* <!-- BREADCRUMB AREA START --> */}
 
       <ShopBreadCrumb
@@ -258,7 +258,7 @@ function ShopRightSideBar() {
           </Container>
         </div>
       {/* <!-- CALL TO ACTION END --> */}
-    </LayoutOne>
+    </Layout>
   );
 }
 

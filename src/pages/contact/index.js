@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
@@ -7,7 +7,7 @@ import Contact from "@/components/contact";
 function ContactUs() {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Contact Us"
           sectionPace=""
@@ -25,7 +25,7 @@ function ContactUs() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -10,7 +10,7 @@ import {
 import { FaPhoneAlt, FaArrowDown } from "react-icons/fa";
 
 import teamData from "@/data/team";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { productSlug } from "@/lib/product";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
@@ -19,7 +19,7 @@ import ServiceItemOne from "@/components/service/serviceItemOne";
 function TeamDetails({ team }) {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         {/* <!-- BREADCRUMB AREA START --> */}
 
         <ShopBreadCrumb
@@ -221,7 +221,7 @@ function TeamDetails({ team }) {
         </div>
 
         {/* <!-- TEAM DETAILS AREA END --> */}
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   FaArrowRight,
@@ -64,7 +64,7 @@ function Faq() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ModalVideo
           channel="youtube"
           autoplay
@@ -325,7 +325,7 @@ function Faq() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

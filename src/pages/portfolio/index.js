@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import { getProducts, productSlug } from "@/lib/product";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
@@ -85,7 +85,7 @@ function Portfolio() {
         slides={gallerySlides}
         plugins={[Zoom, Counter, Fullscreen, Download]}
       />
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Our Portfolio"
           sectionPace=""
@@ -183,7 +183,7 @@ function Portfolio() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

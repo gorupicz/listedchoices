@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Slider from "react-slick";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { getProducts, productSlug } from "@/lib/product";
@@ -190,7 +190,7 @@ function HomeVersionTwo(props) {
     ],
   };
   return (
-    <LayoutOne topbar={false}>
+    <Layout topbar={false}>
 
       <ModalVideo
         channel="youtube"
@@ -1162,7 +1162,7 @@ function HomeVersionTwo(props) {
         </Container>
       </div>
       {/* <!-- CALL TO ACTION END --> */}
-    </LayoutOne>
+    </Layout>
   );
 }
 

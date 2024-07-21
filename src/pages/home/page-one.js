@@ -5,7 +5,7 @@ import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import HeroSectionStyleOne from "@/components/hero/styleOne";
 import CarDealerSearchForm from "@/components/carDealerSearchForm";
 import AboutUsStyleOne from "@/components/aboutUs/aboutUsStyleOne";
@@ -151,7 +151,7 @@ function HomePage(props) {
 
     return (
         <>
-            <LayoutOne topbar={true}>
+            <Layout topbar={true}>
                 <HeroSectionStyleOne data={Herodata} />
 
                 <CarDealerSearchForm navMenuClass="d-none" customClasses="" />
@@ -617,7 +617,7 @@ function HomePage(props) {
                         </Row>
                     </Container>
                 </div>
-            </LayoutOne>
+            </Layout>
         </>
     );
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const Wishlist = () => {
     let cartTotalPrice = 0;
     return (
         <>
-            <LayoutOne topbar={true}>
+            <Layout topbar={true}>
                 {/* <!-- BREADCRUMB AREA START --> */}
                 <ShopBreadCrumb title="Wishlist" sectionPace="" currentSlug="wishlist" />
                 {/* <!-- BREADCRUMB AREA END --> */}
@@ -105,7 +105,7 @@ const Wishlist = () => {
                         </Row>
                     </Container>
                 </div>
-            </LayoutOne>
+            </Layout>
         </>
     );
 };

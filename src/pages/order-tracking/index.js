@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
@@ -6,7 +6,7 @@ import CallToAction from "@/components/callToAction";
 function OrderTracking() {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Order Tracking"
           sectionPace=""
@@ -58,7 +58,7 @@ function OrderTracking() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

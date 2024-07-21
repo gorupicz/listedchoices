@@ -2,14 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 
 const comingSoon = () => {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb title="404 Page" sectionPace="" currentSlug="404" />
 
         {/* <!-- 404 area start --> */}
@@ -53,7 +53,7 @@ const comingSoon = () => {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 };

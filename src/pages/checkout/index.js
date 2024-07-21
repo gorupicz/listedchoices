@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
@@ -21,7 +21,7 @@ const Wishlist = () => {
   const [vissible, setVissible] = useState(false);
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         {/* <!-- BREADCRUMB AREA START --> */}
         <ShopBreadCrumb
           title="Checkout"
@@ -389,7 +389,7 @@ const Wishlist = () => {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 };

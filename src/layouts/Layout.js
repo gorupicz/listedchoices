@@ -1,9 +1,10 @@
 import { Fragment, useState } from "react";
-import { HeaderFour } from "@/components/header";
+import { Header } from "@/components/header";
 import Footer from "@/components/footer/footer";
 import ScrollToTop from "@/components/scroll-to-top";
+import { GoogleTagManager } from '@next/third-parties/google'
 
-const LayoutSix = ({ children, navPositionClass, topbar }) => {
+const LayoutOne = ({ children, navPositionClass, topbar }) => {
   const [toggleClassName, SetToggleClassName] = useState(false);
 
   function toggleClassNameInBody() {
@@ -15,7 +16,7 @@ const LayoutSix = ({ children, navPositionClass, topbar }) => {
       <div
         className={`body-wrapper ${toggleClassName ? "ltn__utilize-open" : ""}`}
       >
-        <HeaderFour
+        <Header
           toggleClassNameInBody={toggleClassNameInBody}
           SetToggleClassName={SetToggleClassName}
           navPositionClass={navPositionClass}
@@ -25,8 +26,9 @@ const LayoutSix = ({ children, navPositionClass, topbar }) => {
         <Footer />
         <ScrollToTop />
       </div>
+      <GoogleTagManager gtmId="GTM-5F6TSG9X" />
     </Fragment>
   );
 };
 
-export default LayoutSix;
+export default LayoutOne;

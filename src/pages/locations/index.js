@@ -1,4 +1,4 @@
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import {
   FaMapMarkedAlt,
@@ -17,7 +17,7 @@ import Image from "next/image";
 function Locations() {
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Google Map Locations"
           sectionPace="mb-0"
@@ -538,7 +538,7 @@ function Locations() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

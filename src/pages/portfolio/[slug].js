@@ -7,7 +7,7 @@ import {
   FaRegComments,
 } from "react-icons/fa";
 import portfolioData from "@/data/portfolio";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
@@ -19,7 +19,7 @@ function portfolioDetails({ portfolio }) {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         {/* <!-- BREADCRUMB AREA START --> */}
 
         <ShopBreadCrumb
@@ -198,7 +198,7 @@ function portfolioDetails({ portfolio }) {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

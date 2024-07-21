@@ -20,7 +20,7 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 
 function PortFolioPageTwo() {
   const portfolios = getProducts(portfolioData, "buying", "featured", 12);
@@ -110,7 +110,7 @@ function PortFolioPageTwo() {
         plugins={[Zoom, Counter, Fullscreen, Download]}
       />
 
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb
           title="Our Portfolio"
           sectionPace=""
@@ -259,7 +259,7 @@ function PortFolioPageTwo() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

@@ -48,8 +48,8 @@ function HeroSectionStyleTwo({ data }) {
   const [nav2, setNav2] = useState();
 
   const Herosettings = {
-    dots: false,
-    arrows: false,
+    dots: true,
+    arrows: true,
     infinite: true,
     autoplay: false,
     autoplaySpeed: 10000,
@@ -64,8 +64,8 @@ function HeroSectionStyleTwo({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false,
-          dots: false,
+          arrows: true,
+          dots: true,
         },
       },
       {
@@ -73,8 +73,8 @@ function HeroSectionStyleTwo({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false,
-          dots: false,
+          arrows: true,
+          dots: true,
         },
       },
       {
@@ -82,15 +82,15 @@ function HeroSectionStyleTwo({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false,
-          dots: false,
+          arrows: true,
+          dots: true,
         },
       },
       {
         breakpoint: 575,
         settings: {
-          arrows: false,
-          dots: false,
+          arrows: true,
+          dots: true,
           slidesToShow: 1,
           slidesToScroll: 1,
         },
@@ -103,8 +103,8 @@ function HeroSectionStyleTwo({ data }) {
     initialSlide: 2,
     centerMode: true,
     centerPadding: "0px",
-    dots: false /* image slide dots */,
-    arrows: false /* image slide arrow */,
+    dots: true /* image slide dots */,
+    arrows: true /* image slide arrow */,
     focusOnSelect: true,
     prevArrow: <SlickArrowLeft />,
     nextArrow: <SlickArrowRight />,
@@ -112,29 +112,29 @@ function HeroSectionStyleTwo({ data }) {
       {
         breakpoint: 1600,
         settings: {
-          arrows: false,
-          dots: false,
+          arrows: true,
+          dots: true,
         },
       },
       {
         breakpoint: 1200,
         settings: {
           arrows: true,
-          dots: false,
+          dots: true,
         },
       },
       {
         breakpoint: 768,
         settings: {
           arrows: true,
-          dots: false,
+          dots: true,
         },
       },
       {
         breakpoint: 575,
         settings: {
           arrows: true,
-          dots: false,
+          dots: true,
         },
       },
     ],

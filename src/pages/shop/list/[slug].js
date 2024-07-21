@@ -22,7 +22,7 @@ import {
   FaCalendarAlt
 } from "react-icons/fa";
 import BreadCrumb from "@/components/breadCrumbs";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
 import products from "@/data/products.json";
@@ -172,7 +172,7 @@ function ProductDetails({ product }) {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
-      <LayoutOne topbar={false}>
+      <Layout topbar={false}>
         <ModalVideo
           channel="youtube"
           youtube={{
@@ -1462,7 +1462,7 @@ function ProductDetails({ product }) {
           </div>
         </div>
         {/* <!-- CALL TO ACTION END --> */}
-      </LayoutOne>
+      </Layout>
 
     </>
   );

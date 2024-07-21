@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import { FaPencilAlt, } from "react-icons/fa";
@@ -12,7 +12,7 @@ function AddListingPage() {
 
   return (
     <>
-      <LayoutOne topbar={true}>
+      <Layout topbar={true}>
         <ShopBreadCrumb title="Add Listing" sectionPace="" currentSlug="Add Listing" />
         {/* // <!-- APPOINTMENT AREA START --> */}
         <div className="ltn__appointment-area pb-120">
@@ -837,7 +837,7 @@ function AddListingPage() {
             </Row>
           </Container>
         </div>
-      </LayoutOne>
+      </Layout>
     </>
   );
 }

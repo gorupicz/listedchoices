@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import { getSortedProducts, productSlug,getDiscountPrice } from "@/lib/product";
-import { LayoutOne } from "@/layouts";
+import { Layout } from "@/layouts";
 import {
   FaThLarge,
   FaThList,
@@ -89,7 +89,7 @@ function ShopList() {
   };
 
   return (
-    <LayoutOne topbar={false}>
+    <Layout topbar={false}>
       {/* <!-- BREADCRUMB AREA START --> */}
 
    {/*   <ShopBreadCrumb
@@ -272,7 +272,7 @@ function ShopList() {
         </Container>
       </div>
       {/* <!-- CALL TO ACTION END --> */}
-    </LayoutOne>
+    </Layout>
   );
 }
 
