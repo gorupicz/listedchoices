@@ -184,9 +184,10 @@
     margin-bottom: 20px;
     font-family: var(--ltn__body-font);
     text-transform: uppercase;
+    color: var(--ltn__secondary-color);
+    font-weight: 600;
     span {
       display: inline-flex;
-      color: var(--ltn__secondary-color);
       margin-right: 10px;
      svg{
         width: 20px;

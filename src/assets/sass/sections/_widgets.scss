@@ -85,14 +85,21 @@
   margin-bottom: 40px;
 }
 
+.ltn__right-sidebar > h3 {
+  color: var(--ltn__primary-color)
+}
 /* ----------------------------------------------------
     Call to Action Widget
 ---------------------------------------------------- */
 
 .ltn__CaC-widget {
-  background-color: var(--section-bg-1);
+  background-color: var(--ltn__secondary-color);
   text-align: center;
   border: 2px solid;
+  h4 {
+    color: var(--white);
+  }  
+  border-color: var(--ltn__secondary-color);
 }
 
 .ltn__CaC-widget > .ltn__widget-title-border-2 {
@@ -867,6 +874,9 @@
   }
   p {
     font-size: 14px;
+  }
+  h5 {
+    margin-bottom: 0;
   }
   .ltn__social-media ul li {
     color: var(--ltn__color-1);

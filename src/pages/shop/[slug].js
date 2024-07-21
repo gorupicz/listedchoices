@@ -1600,7 +1600,7 @@ function ProductDetails({ product }) {
                         name="yourmessage"
                         placeholder="Write Message..."
                       ></textarea>
-                      <button type="submit" className="btn theme-btn-1">
+                      <button type="submit" className="btn theme-btn-1 btn-effect-4">
                         Send Message
                       </button>
                     </form>
