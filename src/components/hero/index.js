@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 import { Col, Container, Row } from "react-bootstrap";
 
-function HeroSectionStyleTwo({ data }) {
+function Hero ({ data }) {
   
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -300,4 +300,4 @@ function HeroSectionStyleTwo({ data }) {
   );
 }
 
-export default HeroSectionStyleTwo;
+export default Hero;

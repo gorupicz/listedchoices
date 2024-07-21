@@ -7,7 +7,7 @@ import { getProducts, productSlug } from "@/lib/product";
 import TitleSection from "@/components/titleSection";
 import Feature from "@/components/features";
 import featuresData from "@/data/service";
-import HeroSectionStyleTwo from "@/components/hero/styleTwo";
+import Hero from "@/components/hero";
 import AboutUsSectionOne from "@/components/aboutUs/aboutUsSectionOne";
 import AboutUsSectionTwo from "@/components/aboutUs/aboutUsSectionTwo";
 import UpCommingcarousel from "@/components/upCommingCarousel";
@@ -200,7 +200,7 @@ function HomeVersionTwo(props) {
       />
       {/* <!-- SLIDER AREA START (slider-11) --> */}
       <div className="ltn__slider-area ltn__slider-11 section-bg-1 section-bg-1-hero">
-        <HeroSectionStyleTwo data={heroData} />
+        <Hero data={heroData} />
       </div>
       {/* <!-- SLIDER AREA END -->
 
