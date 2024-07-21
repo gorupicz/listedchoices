@@ -550,6 +550,7 @@
 
 /* Menu Icon */
 .menu-icon {
+  text-transform: uppercase;
   & > a {
     position: relative;
     // &::before {

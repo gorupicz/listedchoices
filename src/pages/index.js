@@ -24,7 +24,7 @@ import testimonialData from "@/data/testimonial";
 import blogData from "@/data/blog";
 import BlogItem from "@/components/blog";
 import CallToAction from "@/components/callToAction";
-import heroData from '@/data/hero/index-two.json';
+import heroData from '@/data/hero/index.json';
 
 
 function HomeVersionTwo(props) {
