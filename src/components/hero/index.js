@@ -48,8 +48,8 @@ function Hero ({ data }) {
   const [nav2, setNav2] = useState();
 
   const Herosettings = {
-    dots: true,
-    arrows: true,
+    dots: false,
+    arrows: false,
     infinite: true,
     autoplay: false,
     autoplaySpeed: 10000,
@@ -64,8 +64,8 @@ function Hero ({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
@@ -73,8 +73,8 @@ function Hero ({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
@@ -82,15 +82,15 @@ function Hero ({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
         breakpoint: 575,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
           slidesToShow: 1,
           slidesToScroll: 1,
         },
@@ -98,43 +98,44 @@ function Hero ({ data }) {
     ],
   };
   const Navsettings = {
-    slidesToShow: 3,
+    lazyLoad: true,
+    slidesToShow: 1,
     slidesToScroll: 1,
-    initialSlide: 2,
-    centerMode: true,
+    initialSlide: 1,
+    centerMode: false,
     centerPadding: "0px",
-    dots: true /* image slide dots */,
-    arrows: true /* image slide arrow */,
-    focusOnSelect: true,
+    dots: false /* image slide dots */,
+    arrows: false /* image slide arrow */,
+    focusOnSelect: false,
     prevArrow: <SlickArrowLeft />,
     nextArrow: <SlickArrowRight />,
     responsive: [
       {
         breakpoint: 1600,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
         breakpoint: 1200,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
       {
         breakpoint: 575,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: false,
+          dots: false,
         },
       },
     ],
@@ -275,25 +276,6 @@ function Hero ({ data }) {
               </Link>
             </li>
           </ul>
-        </div>
-        {/* <!-- slider-4-img-slide-arrow --> */}
-        <div className="ltn__slider-11-img-slide-arrow">
-          <div className="ltn__slider-11-img-slide-arrow-inner">
-            <Slider
-              {...Navsettings}
-              asNavFor={nav1}
-              ref={(slider2) => setNav2(slider2)}
-              className="ltn__slider-11-img-slide-arrow-active"
-            >
-              {data.map((item, key) => {
-                return (
-                  <div className="image-slide-item" key={key}>
-                    <img src={`/img/slider/${item.heroimage}`} alt="#" />
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
         </div>
       </div>
     </>

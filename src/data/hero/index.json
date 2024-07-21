@@ -14,37 +14,5 @@
     "learnMoreButtonText": "Ver propiedades",
     "learnMoreButtonLink": "/shop",
     "variationLeft": false
-  },
-  {
-    "subtitle": "List your vacation house with us today",
-    "Title": "Sell your second home at the best price",
-    "titleWord": "best price",
-    "Desc": "Bricks are great, but using your money for something better when you want, it's a better choice.",
-    "icon": "FaShip",
-    "heroimage": "grass.jpg",
-    "caption": false,
-    "id": "2",
-    "buttonText": "Receive an offer",
-    "buttonLink": "Receive an offer",
-    "videoButton": false,
-    "learnMoreButtonText": "LEARN MORE",
-    "learnMoreButtonLink": "LEARN MORE",
-    "variationLeft": false
-  },
-  {
-    "subtitle": "Manage the best vacation rentals in your city",
-    "Title": "Hospitality is not for everyone",
-    "titleWord": "Hospitality",
-    "Desc": "Are you passionate about taking care of the small details and making others feel in their best place? Join as Host",
-    "icon": "FaShip",
-    "heroimage": "sell.jpg",
-    "caption": false,
-    "id": "3",
-    "buttonText": "Apply today",
-    "buttonLink": "Apply today",
-    "videoButton": false,
-    "learnMoreButtonText": "LEARN MORE",
-    "learnMoreButtonLink": "LEARN MORE",
-    "variationLeft": false
   }
 ]
