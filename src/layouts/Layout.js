@@ -4,7 +4,7 @@ import Footer from "@/components/footer/footer";
 import ScrollToTop from "@/components/scroll-to-top";
 import { GoogleTagManager } from '@next/third-parties/google'
 
-const LayoutOne = ({ children, navPositionClass, topbar }) => {
+const Layout = ({ children, navPositionClass, topbar }) => {
   const [toggleClassName, SetToggleClassName] = useState(false);
 
   function toggleClassNameInBody() {
@@ -31,4 +31,4 @@ const LayoutOne = ({ children, navPositionClass, topbar }) => {
   );
 };
 
-export default LayoutOne;
+export default Layout;

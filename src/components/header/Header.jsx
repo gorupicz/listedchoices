@@ -14,7 +14,7 @@ import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
 import MenuList from "@/components/header/elements/menuList";
 import { useRouter } from 'next/router';
 
-const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
+const HeaderStyle = function ({ SetToggleClassName, topbar }) {
   
   const router = useRouter();
   const isHomePage = router.pathname === '/';
@@ -285,4 +285,4 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
   );
 };
 
-export default HeaderStyleOne;
+export default HeaderStyle;

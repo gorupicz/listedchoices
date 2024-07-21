@@ -301,7 +301,7 @@ function ProductDetails({ product }) {
                       }
                     </ul>
                   </div>
-                  <h1> {product.title}</h1>
+                  <h1 className="ltn__primary-color"> {product.title}</h1>
                   <label>
                     <span className="ltn__secondary-color">
                       <i className="flaticon-pin"></i>
