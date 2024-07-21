@@ -212,12 +212,12 @@
     clear: both;
     font-family: var(--ltn__heading-font);
     font-weight: 500;
-    line-height: 1.5;
     margin-bottom: 15px;
     padding-left: 30px;
     border-left: 1px solid var(--ltn__paragraph-color);
     h4{
       hyphens: none !important;
+      line-height: 1.5;
     }
     
   }
