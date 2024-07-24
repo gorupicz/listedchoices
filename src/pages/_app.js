@@ -37,12 +37,12 @@ const MyApp = ({ Component, ...rest }) => {
   return (
     <Fragment>
       <Head>
-        <title>Listed Choices - Vacation Rental investment marketplace</title>
-        <meta name="description" content="Listed Choices - Vacation rental investment marketplace" />
+        <title>Bolsa de Casas</title>
+        <meta name="description" content="Bolsa de Casas - Mercado de Propiedades de Renta Vacacional" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Listed Choices - Vacation Rental investment marketplace" />
-        <meta property="og:description" content="Listed Choices - Vacation Rental investment marketplace" />
-        <meta property="og:image" content="/favicon.ico" />
+        <meta property="og:title" content="Bolsa de Casas" />
+        <meta property="og:description" content="Bolsa de Casas - Mercado de Propiedades de Renta Vacacional" />
+        <meta property="og:image" content="/product-3/boat-vison-fund.jpg" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <style jsx global>{`

@@ -35,7 +35,7 @@ const Footer = function () {
                     </div>
                   </div>
                   <p>
-                    Listed Choices - Vacation Rental Investment Marketplace
+                    Bolsa de Casas - Mercado de Propiedades de Renta Vacacional
                   </p>
                   <div className="footer-address">
                     <ul>
