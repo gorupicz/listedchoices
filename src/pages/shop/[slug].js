@@ -1203,7 +1203,7 @@ function ProductDetails({ product }) {
                       <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.amountAvailable)}</span> Available
                     </h4>
                     <Link
-                      href="/shop"
+                      href="https://formless.ai/c/O8dMU4mHBc7N"
                       className="theme-btn-1 btn btn-effect-1"
                       id="main-call-to-action-at-product-page-for-gtm"
                     >
