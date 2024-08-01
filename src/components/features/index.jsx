@@ -32,7 +32,7 @@ function Feature({
               return (
                 <Col key={key} xs={12} sm={6} lg={4}>
                   <Link
-                    href="/shop"
+                    href={item.link}
                   >
                   <div
                     className={`ltn__feature-item ltn__feature-item-6 text-center bg-white  box-shadow-1 ${
@@ -54,9 +54,8 @@ function Feature({
                     <div className="ltn__feature-info">
                       <h3>
                         <Link 
-                          href="/shop"
+                          href={item.link}
                         >
-                          {/*href={`/service/${slug}`}>*/}
                           {item.title}
                         </Link>
                       </h3>
@@ -65,9 +64,8 @@ function Feature({
                       {servicebtn ? (
                         <Link
                           className="ltn__service-btn"
-                          href="/shop"
+                          href={item.link}
                         >
-                          {/*href={`/service/${slug}`}>*/}
                           {item.buttonText}
                           <i className="flaticon-right-arrow"></i>
                         </Link>
