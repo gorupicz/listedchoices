@@ -47,7 +47,7 @@
     "productImg": "Elegance850.jpg",
     "income": 33290,
     "expenses": 16395,
-    "price": 45630,
+    "price": 55630,
     "sharePrice": 1000,
     "amountAvailable": 30420,
     "amountInvested": 15210,
@@ -102,7 +102,7 @@
         ["Guest Favorite", "Airbnb"], 
         ["Superhost", "Airbnb"],
         ["Genius Partner", "Booking"]
-      ],
+      ], 
       "listings": {
         "airbnb": "https://airbnb.com/h/elegancefortwo",
         "booking": "https://www.booking.com/Share-UVcx8S",
