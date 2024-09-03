@@ -365,7 +365,7 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.YearToDateRevPAR)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.RevPAR)}</span>
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
