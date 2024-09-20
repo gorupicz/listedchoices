@@ -1,14 +1,177 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model User {
+  id             Int            @id @default(autoincrement())
+  username       String         @unique
+  password       String
+  email          String         @unique
+  phone_number   String? // Optional
+  role           UserRole
+  oauth_provider String? // For OAuth
+  oauth_id       String? // For OAuth
+  oauth_token    String? // For OAuth
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  properties     Property[]     @relation("PropertyManager")
+  reservations   Reservation[]
+  reviews        Review[]
+  boughtShares   Transactions[] @relation("Buyer")
+  soldShares     Transactions[] @relation("Seller")
+}
+
+model Property {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  description       String
+  location          Bytes
+  address           String
+  city              String
+  state             String
+  postal_code       String
+  country           String
+  googleMaps        String
+  manager_id        Int
+  price             Decimal
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  platform_accounts PlatformAccount[]
+  listings          Listing[]
+  reservations      Reservation[]
+  manager           User                @relation("PropertyManager", fields: [manager_id], references: [id])
+  Transactions      Transactions[]
+  SharePriceHistory SharePriceHistory[]
+}
+
+model PlatformAccount {
+  id          Int       @id @default(autoincrement())
+  property_id Int
+  platform    Platform
+  account_id  String
+  status      String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  property    Property  @relation(fields: [property_id], references: [id])
+  listings    Listing[] // Add this back-relation to the Listing model
+}
+
+model Listing {
+  id                  Int             @id @default(autoincrement())
+  property_id         Int
+  platform_account_id Int
+  listing_id          String
+  url                 String? // Add this field for the listing URL
+  status              ListingStatus
+  start_date          DateTime
+  end_date            DateTime
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  property            Property        @relation(fields: [property_id], references: [id])
+  platform_account    PlatformAccount @relation(fields: [platform_account_id], references: [id])
+}
+
+model Reservation {
+  id                  Int      @id @default(autoincrement())
+  property_id         Int
+  guest_name          String
+  start_date          DateTime
+  end_date            DateTime
+  platform            Platform
+  reservation_id      String
+  base_price          Decimal  @db.Decimal(10, 2)
+  cleaning_fee        Decimal  @db.Decimal(10, 2)
+  taxes               Decimal  @db.Decimal(10, 2)
+  platform_commission Decimal  @db.Decimal(10, 2)
+  amount              Decimal  @db.Decimal(10, 2)
+  currency            Currency
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  property            Property @relation(fields: [property_id], references: [id])
+  reviews             Review[]
+  user                User?    @relation(fields: [userId], references: [id])
+  userId              Int?
+}
+
+model Review {
+  id             Int         @id @default(autoincrement())
+  reservation_id Int
+  rating         Int
+  comment        String
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  reservation    Reservation @relation(fields: [reservation_id], references: [id])
+  user           User?       @relation(fields: [userId], references: [id])
+  userId         Int?
+}
+
+model ExchangeRate {
+  id    Int     @id @default(autoincrement())
+  year  Int
+  month Int
+  value Decimal @db.Decimal(10, 4)
+
+  @@unique([year, month]) // Ensure that the combination of year and month is unique
+}
+
+model Transactions {
+  id               Int      @id @default(autoincrement())
+  property         Property @relation(fields: [property_id], references: [id])
+  property_id      Int
+  buyer            User     @relation("Buyer", fields: [buyer_id], references: [id])
+  buyer_id         Int
+  seller           User     @relation("Seller", fields: [seller_id], references: [id])
+  seller_id        Int
+  shares_traded    Int
+  price_per_share  Decimal
+  currency         Currency // Enum to track transaction currency
+  transaction_date DateTime @default(now())
+}
+
+model SharePriceHistory {
+  id          Int               @id @default(autoincrement())
+  property    Property          @relation(fields: [property_id], references: [id])
+  property_id Int
+  date        DateTime          @default(now())
+  price       Decimal           @db.Decimal(10, 2) // Share price at the time
+  reason      PriceChangeReason // Enum to distinguish between property value changes, market influence, or dividends
+}
+
+enum PriceChangeReason {
+  PROPERTY_VALUE_UPDATE
+  MARKET_DEMAND
+  DIVIDEND_PAYMENT
+}
+
+enum UserRole {
+  investor
+  property_manager
+  super_admin
+}
+
+enum Platform {
+  Airbnb
+  Booking
+  Vrbo
+  Direct
+}
+
+enum ListingStatus {
+  active
+  inactive
+  closed
+  cancelled
+}
+
+enum Currency {
+  USD
+  MXN
 }
