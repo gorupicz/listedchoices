@@ -1,67 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "mysql"
   url      = env("MYSQL_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
   id             Int            @id @default(autoincrement())
-  username       String         @unique
-  password       String
   email          String         @unique
-  phone_number   String? // Optional
+  password       String
+  username       String         @unique
+  first_name     String
+  last_name      String
+  biography      String
+  facebook       String
+  linkedin       String
+  instagram      String
+  photograph     String
+  phone_number   String?
   role           UserRole
-  oauth_provider String? // For OAuth
-  oauth_id       String? // For OAuth
-  oauth_token    String? // For OAuth
+  oauth_provider String?
+  oauth_id       String?
+  oauth_token    String?
   created_at     DateTime       @default(now())
   updated_at     DateTime       @updatedAt
   properties     Property[]     @relation("PropertyManager")
   reservations   Reservation[]
   reviews        Review[]
-  boughtShares   Transactions[] @relation("Buyer")
-  soldShares     Transactions[] @relation("Seller")
+  bought_shares  Transactions[] @relation("Buyer")
+  sold_shares    Transactions[] @relation("Seller")
 }
 
 model Property {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  description       String
-  location          Bytes
-  address           String
-  city              String
-  state             String
-  postal_code       String
-  country           String
-  googleMaps        String
-  manager_id        Int
-  price             Decimal
-  created_at        DateTime            @default(now())
-  updated_at        DateTime            @updatedAt
-  platform_accounts PlatformAccount[]
-  listings          Listing[]
-  reservations      Reservation[]
-  manager           User                @relation("PropertyManager", fields: [manager_id], references: [id])
-  Transactions      Transactions[]
-  SharePriceHistory SharePriceHistory[]
+  id                  Int                 @id @default(autoincrement())
+  slug                String              @unique
+  legal_name          String
+  address             String
+  city                String
+  state               String
+  postal_code         String
+  country             String
+  google_maps         String              @db.VarChar(2048)
+  manager_id          Int
+  price               Decimal             @db.Decimal(10, 4)
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  listings            Listing[]
+  manager             User                @relation("PropertyManager", fields: [manager_id], references: [id])
+  transactions        Transactions[]
+  share_price_history SharePriceHistory[]
 }
 
 model PlatformAccount {
   id          Int       @id @default(autoincrement())
-  property_id Int
   platform    Platform
   account_id  String
   status      String
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
-  property    Property  @relation(fields: [property_id], references: [id])
-  listings    Listing[] // Add this back-relation to the Listing model
+  listings    Listing[] // Back-relation to Listing
 }
 
 model Listing {
@@ -69,36 +64,29 @@ model Listing {
   property_id         Int
   platform_account_id Int
   listing_id          String
-  url                 String? // Add this field for the listing URL
+  url                 String?
   status              ListingStatus
-  start_date          DateTime
-  end_date            DateTime
   created_at          DateTime        @default(now())
   updated_at          DateTime        @updatedAt
   property            Property        @relation(fields: [property_id], references: [id])
   platform_account    PlatformAccount @relation(fields: [platform_account_id], references: [id])
+  reservations        Reservation[] // Relation to reservations
 }
 
 model Reservation {
   id                  Int      @id @default(autoincrement())
-  property_id         Int
   guest_name          String
   start_date          DateTime
   end_date            DateTime
-  platform            Platform
   reservation_id      String
   base_price          Decimal  @db.Decimal(10, 2)
-  cleaning_fee        Decimal  @db.Decimal(10, 2)
-  taxes               Decimal  @db.Decimal(10, 2)
   platform_commission Decimal  @db.Decimal(10, 2)
-  amount              Decimal  @db.Decimal(10, 2)
   currency            Currency
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
-  property            Property @relation(fields: [property_id], references: [id])
   reviews             Review[]
-  user                User?    @relation(fields: [userId], references: [id])
-  userId              Int?
+  listing_id          Int // Foreign key field
+  listing             Listing  @relation(fields: [listing_id], references: [id])
 }
 
 model Review {
@@ -109,40 +97,39 @@ model Review {
   created_at     DateTime    @default(now())
   updated_at     DateTime    @updatedAt
   reservation    Reservation @relation(fields: [reservation_id], references: [id])
-  user           User?       @relation(fields: [userId], references: [id])
-  userId         Int?
+  user_id        Int?
+  user           User?       @relation(fields: [user_id], references: [id])
 }
 
 model ExchangeRate {
   id    Int     @id @default(autoincrement())
-  year  Int
-  month Int
+  date  DateTime
   value Decimal @db.Decimal(10, 4)
 
-  @@unique([year, month]) // Ensure that the combination of year and month is unique
+  @@unique([date])
 }
 
 model Transactions {
   id               Int      @id @default(autoincrement())
-  property         Property @relation(fields: [property_id], references: [id])
   property_id      Int
-  buyer            User     @relation("Buyer", fields: [buyer_id], references: [id])
+  property         Property @relation(fields: [property_id], references: [id])
   buyer_id         Int
-  seller           User     @relation("Seller", fields: [seller_id], references: [id])
+  buyer            User     @relation("Buyer", fields: [buyer_id], references: [id])
   seller_id        Int
+  seller           User     @relation("Seller", fields: [seller_id], references: [id])
   shares_traded    Int
-  price_per_share  Decimal
-  currency         Currency // Enum to track transaction currency
+  price_per_share  Decimal  @db.Decimal(10, 4)
+  currency         Currency
   transaction_date DateTime @default(now())
 }
 
 model SharePriceHistory {
   id          Int               @id @default(autoincrement())
-  property    Property          @relation(fields: [property_id], references: [id])
   property_id Int
+  property    Property          @relation(fields: [property_id], references: [id])
   date        DateTime          @default(now())
-  price       Decimal           @db.Decimal(10, 2) // Share price at the time
-  reason      PriceChangeReason // Enum to distinguish between property value changes, market influence, or dividends
+  price       Decimal           @db.Decimal(10, 2)
+  reason      PriceChangeReason
 }
 
 enum PriceChangeReason {
