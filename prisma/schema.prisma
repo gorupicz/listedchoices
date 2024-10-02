@@ -23,7 +23,6 @@ model User {
   created_at     DateTime       @default(now())
   updated_at     DateTime       @updatedAt
   properties     Property[]     @relation("PropertyManager")
-  reservations   Reservation[]
   reviews        Review[]
   bought_shares  Transactions[] @relation("Buyer")
   sold_shares    Transactions[] @relation("Seller")
