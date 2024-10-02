@@ -32,7 +32,7 @@ import BreadCrumb from "@/components/breadCrumbs";
 
 import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
-import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
+import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } from "@/lib/product";
 import products from "@/data/products.json";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
@@ -42,8 +42,12 @@ import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import ModalVideo from "react-modal-video";
 import { useRouter } from "next/router";
+import prisma from "@/lib/prisma";
+import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
 
-function ProductDetails({ product }) {
+
+
+function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -61,36 +65,41 @@ function ProductDetails({ product }) {
 
   const relatedProducts = getProducts(
     products,
-    product.category[0],
+    productJSON.category[0],
     "popular",
     2
   );
 
   const topRatedProducts = getProducts(
     products,
-    product.category[0],
+    productJSON.category[0],
     "topRated",
     2
   );
   const popularProducts = getProducts(
     products,
-    product.category[0],
+    productJSON.category[0],
     "popular",
     4
   );
 
   const discountedPrice = getDiscountPrice(
-    product.price,
-    product.discount
+    productJSON.price,
+    productJSON.discount
   ).toFixed(2);
 
-  const productPrice = product.price.toFixed(2);
-  const cartItem = cartItems.find((cartItem) => cartItem.id === product.id);
+  const daysInPreviousMonth = getDaysInPreviousMonth(
+    productMONGO.updated_at
+  );
+
+
+  const productPrice = productJSON.price.toFixed(2);
+  const cartItem = cartItems.find((cartItem) => cartItem.id === productJSON.id);
   const wishlistItem = wishlistItems.find(
-    (wishlistItem) => wishlistItem.id === product.id
+    (wishlistItem) => wishlistItem.id === productJSON.id
   );
   const compareItem = compareItems.find(
-    (compareItem) => compareItem.id === product.id
+    (compareItem) => compareItem.id === productJSON.id
   );
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -187,9 +196,9 @@ function ProductDetails({ product }) {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
-  const pageTitle = product.title + " - " + product.locantion;
-  const pageDescription = product.description.shortDescription;
-  const ogImage = product.carousel[0].img;
+  const pageTitle = productJSON.title + " - " + productJSON.locantion;
+  const pageDescription = productJSON.description.shortDescription;
+  const ogImage = productJSON.carousel[0].img;
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
     
@@ -213,7 +222,7 @@ function ProductDetails({ product }) {
       document.querySelector('meta[property="og:description"]').setAttribute("content", pageDescription);
       document.querySelector('meta[property="og:image"]').setAttribute("content", `/img/img-slide/${ogImage}`);
     }
-  }, [router.isReady, product]);
+  }, [router.isReady, productJSON]);
 
   return (
     <>
@@ -232,7 +241,7 @@ function ProductDetails({ product }) {
               mute: 1
             }}
           isOpen={isOpen}
-          videoId="j3d3_dIkeXU"
+          videoId={productMONGO.videoId}
           onClose={() => setOpen(false)}
         />
         {/* <!-- BREADCRUMB AREA START --> */}
@@ -252,7 +261,7 @@ function ProductDetails({ product }) {
               {...productDetailsCarouselSettings}
               className="ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner"
             >
-              {product.carousel.map((single, key) => {
+              {productJSON.carousel.map((single, key) => {
                 return (
                   <div className="ltn__img-slide-item-4" key={key}>
                     <Link href="#">
@@ -282,14 +291,14 @@ function ProductDetails({ product }) {
                   <div className="ltn__blog-meta">
                     <ul>
                       {
-                        (product.featured ? (
+                        (productJSON.featured ? (
                           <li className="ltn__blog-category">
                             <Link href="#">Featured</Link>
                           </li>
                         ) : (
                           ""
                         ),
-                          product.rent ? (
+                          productJSON.rent ? (
                             <li className="ltn__blog-category">
                               <Link className="bg-orange" href="#">
                                 For Rent
@@ -301,22 +310,22 @@ function ProductDetails({ product }) {
                       }
                     </ul>
                   </div>
-                  <h1 className="ltn__primary-color"> {product.title}</h1>
+                  <h1 className="ltn__primary-color"> {productJSON.title}</h1>
                   <label>
                     <span className="ltn__secondary-color">
                       <i className="flaticon-pin"></i>
                     </span>{" "}
-                    {product.locantion}
+                    {productJSON.locantion}
                   </label>
-                  <h4 className="title-2"> {product.description.title}</h4>
-                  <p>{product.description.shortDescription}</p>
+                  <h4 className="title-2"> {productJSON.description.title}</h4>
+                  <p>{productJSON.description.shortDescription}</p>
 
                   <h4 className="title-2">Financials (Past 12 months)</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
                         <label>Rent:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.income)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last_twelve_months)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not." id="expenses">
@@ -325,20 +334,20 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.expenses)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.expenses.last_twelve_months)}</span>
                       </li>
                     </ul>
                     <ul>
                       <li>
                         <label>Free Cash Flow / Dividend:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.income - product.expenses)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last_twelve_months - productMONGO.expenses.last_twelve_months)}</span>
                       </li>
                       <li>
                         <label>Asset Valuation:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.price)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.price)}</span>
                       </li>
                       <li>
-                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((product.income - product.expenses)/product.price*100)}%</span>
+                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((productMONGO.income.last_twelve_months - productMONGO.expenses.last_twelve_months)/productMONGO.price*100)}%</span>
                       </li>
                     </ul>
                   </div>
@@ -348,7 +357,7 @@ function ProductDetails({ product }) {
                     <ul>
                       <li>
                         <label>Occupancy (Last month):</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.lastMonthOccupancyRate)}%</span>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.occupancy.last_month)}%</span>
                       </li>
                       <li>
                         <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
@@ -356,7 +365,7 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.lastMonthAdr)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.vacationRentalDetails.lastMonthAdr)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
@@ -365,7 +374,7 @@ function ProductDetails({ product }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.vacationRentalDetails.RevPAR)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.vacationRentalDetails.RevPAR)}</span>
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
@@ -382,7 +391,7 @@ function ProductDetails({ product }) {
                       <li>
                         <label style={{maxWidth: `100%`}}>
                           <Link
-                            href={product.vacationRentalDetails.listings.airbnb}
+                            href={productJSON.vacationRentalDetails.listings.airbnb}
                             target="_blank"
                           >
                             <FaAirbnb /> Listing on Airbnb
@@ -392,7 +401,7 @@ function ProductDetails({ product }) {
                       <li>
                         <label style={{maxWidth: `100%`}}>
                           <Link
-                            href={product.vacationRentalDetails.listings.booking}
+                            href={productJSON.vacationRentalDetails.listings.booking}
                             target="_blank"
                           >
                             <FaCircle /> Listing on Booking.com
@@ -405,7 +414,7 @@ function ProductDetails({ product }) {
                   <h4 className="title-2">Location</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
-                      src={`${product.googleMaps}`}
+                      src={`${productMYSQL.googleMaps}`}
                       width="100%"
                       height="100%"
                       frameBorder="0"
@@ -554,7 +563,7 @@ function ProductDetails({ product }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {product.amenities1.map((single, key) => {
+                            {productJSON.amenities1.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -574,7 +583,7 @@ function ProductDetails({ product }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {product.amenities2.map((single, key) => {
+                            {productJSON.amenities2.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -594,7 +603,7 @@ function ProductDetails({ product }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {product.amenities3.map((single, key) => {
+                            {productJSON.amenities3.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -1159,18 +1168,18 @@ function ProductDetails({ product }) {
                     {relatedProducts.map((data, key) => {
                       const slug = productSlug(data.title);
                       const discountedPrice = getDiscountPrice(
-                        product.price,
-                        product.discount
+                        productJSON.price,
+                        productJSON.discount
                       ).toFixed(2);
-                      const productPrice = product.price.toFixed(2);
+                      const productPrice = productJSON.price.toFixed(2);
                       const cartItem = cartItems.find(
-                        (cartItem) => cartItem.id === product.id
+                        (cartItem) => cartItem.id === productJSON.id
                       );
                       const wishlistItem = wishlistItems.find(
-                        (wishlistItem) => wishlistItem.id === product.id
+                        (wishlistItem) => wishlistItem.id === productJSON.id
                       );
                       const compareItem = compareItems.find(
-                        (compareItem) => compareItem.id === product.id
+                        (compareItem) => compareItem.id === productJSON.id
                       );
                       return (
                         <Col xs={12} sm={6} key={key}>
@@ -1200,7 +1209,7 @@ function ProductDetails({ product }) {
                   )}>
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(product.amountAvailable)}</span> Available
+                      <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)}</span> Available
                     </h4>
                     <Link
                       href="https://formless.ai/c/O8dMU4mHBc7N"
@@ -1497,11 +1506,11 @@ function ProductDetails({ product }) {
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">
                       <img
-                        src={`/img/team/${product.agent.img}`}
-                        alt={`${product.agent.fullName}`}
+                        src={`/img/team/${productJSON.agent.img}`}
+                        alt={`${productJSON.agent.fullName}`}
                       />
-                      <h5>{product.agent.fullName}</h5>
-                      <small>{product.agent.designation}</small>
+                      <h5>{productJSON.agent.fullName}</h5>
+                      <small>{productJSON.agent.designation}</small>
                       <div className="product-ratting">
                         <ul>
                           <li>
@@ -1533,12 +1542,12 @@ function ProductDetails({ product }) {
                             {" "}
                             <Link href="#">
                               {" "}
-                              ( {product.agent.raiting} Reviews )
+                              ( {productJSON.agent.raiting} Reviews )
                             </Link>
                           </li>
                         </ul>
                       </div>
-                      <p>{product.agent.description}</p>
+                      <p>{productJSON.agent.description}</p>
 
                       <div className="ltn__social-media">
                         <ul>
@@ -1716,8 +1725,8 @@ function ProductDetails({ product }) {
                     >
                       {/* <!-- ltn__product-item --> */}
 
-                      {popularProducts.map((product, key) => {
-                        const slug = productSlug(product.title);
+                      {popularProducts.map((productJSON, key) => {
+                        const slug = productSlug(productJSON.title);
                         return (
                           <div
                             key={key}
@@ -1726,7 +1735,7 @@ function ProductDetails({ product }) {
                             <div className="product-img">
                               <Link href={`/shop/${slug}`}>
                                 <img
-                                  src={`/img/product-3/${product.productImg}`}
+                                  src={`/img/product-3/${productJSON.productImg}`}
                                   alt={slug}
                                 />
                               </Link>
@@ -1741,13 +1750,13 @@ function ProductDetails({ product }) {
                             <div className="product-info">
                               <div className="product-price">
                                 <span>
-                                  ${product.price}
+                                  ${productJSON.price}
                                   <label>/Month</label>
                                 </span>
                               </div>
                               <h2 className="product-title">
                                 <Link href={`/shop/${slug}`}>
-                                  {product.title}
+                                  {productJSON.title}
                                 </Link>
                               </h2>
                               <div className="product-img-location">
@@ -1755,7 +1764,7 @@ function ProductDetails({ product }) {
                                   <li>
                                     <Link href="product-details">
                                       <i className="flaticon-pin"></i>
-                                      {product.locantion}
+                                      {productJSON.locantion}
                                     </Link>
                                   </li>
                                 </ul>
@@ -1763,16 +1772,16 @@ function ProductDetails({ product }) {
                               <ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
                                 <li>
                                   <span>
-                                    {product.propertyDetails.bedrooms}
+                                    {productJSON.propertyDetails.bedrooms}
                                   </span>
                                   <span className="ms-1">Bedrooms</span>
                                 </li>
                                 <li>
-                                  <span>{product.propertyDetails.baths}</span>
+                                  <span>{productJSON.propertyDetails.baths}</span>
                                   <span className="ms-1">Bathrooms</span>
                                 </li>
                                 <li>
-                                  <span>{product.propertyDetails.area}</span>
+                                  <span>{productJSON.propertyDetails.area}</span>
                                   <span className="ms-1">square Ft</span>
                                 </li>
                               </ul>
@@ -1862,20 +1871,50 @@ function ProductDetails({ product }) {
 
 export default ProductDetails;
 
-export async function getStaticProps({ params }) {
-  // get product data based on slug
-  const product = products.filter(
-    (single) => productSlug(single.title) === params.slug
-  )[0];
 
-  return { props: { product } };
-}
 
-export async function getStaticPaths() {
-  // get the paths we want to pre render based on products
-  const paths = products.map((product) => ({
-    params: { slug: productSlug(product.title) },
-  }));
+export async function getServerSideProps({ params }) {
+  // 1. Fetch property details using Prisma from MySQL
+  const productMYSQL = await prisma.property.findUnique({
+    where: {
+      slug: params.slug,
+    },
+    include: {
+      platform_accounts: true,
+      reservations: true,
+    },
+  });
 
-  return { paths, fallback: false };
+  // 2. If no product is found in MySQL, return 404
+  if (!productMYSQL) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // 3. Fetch listing details from MongoDB
+  const connectMongoDB = require('mongodb/mongoClient');
+  const db = await connectMongoDB();
+  const productMONGO = await db.collection('listings').findOne({
+    property_id: productMYSQL.id,
+  });
+
+  // Serialize both MySQL (Prisma) and MongoDB data
+  const serializedProductMYSQL = serializePrismaData(productMYSQL);
+  const serializedProductMONGO = serializeMongoData(productMONGO);
+
+
+  // 4. Fetch data from products.json (find the product by slug)
+  const productJSON = products.find(
+    (singleProduct) => productSlug(singleProduct.title) === params.slug
+  );
+
+  // 5. Return the three separate products as props
+  return {
+    props: {
+      productJSON,
+      productMYSQL: serializedProductMYSQL,
+      productMONGO: serializedProductMONGO,
+    },
+  };
 }
