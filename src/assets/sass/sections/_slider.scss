@@ -201,44 +201,43 @@
     margin-bottom: 40px;
     color: var(--ltn__primary-color);
     .slide-highlightedWord {
-      text-decoration:underline;
-      text-transform: uppercase; 
-      color: #1a73e8; /* Base color */
-  font-weight: bold;
-  position: relative;
-  background: none; /* Remove the previous background gradient */
-}
+      
+      color: var(--ltn__primary-color); /* Base color */
+      font-weight: bold;
+      position: relative;
+      background: none; /* Remove the previous background gradient */
+    }
 
-.slide-highlightedWord::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, transparent 70%),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
-              linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
-  background-repeat: no-repeat;
-  background-size: 100% 100%, 100% 100%, 100% 100%;
-  background-position: center;
-  transform: translate(-50%, -50%);
-  animation: cross-shine 3s infinite;
-  pointer-events: none;
-  z-index: 1;
-}
+    .slide-highlightedWord::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, transparent 70%),
+                  linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+                  linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+      background-repeat: no-repeat;
+      background-size: 100% 100%, 100% 100%, 100% 100%;
+      background-position: center;
+      transform: translate(-50%, -50%);
+      animation: cross-shine 3s infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-@keyframes cross-shine {
-  0% {
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-}
+    @keyframes cross-shine {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+    }
   }
   .btn-wrapper {
     margin-top: 40px;
