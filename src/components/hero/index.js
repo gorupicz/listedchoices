@@ -147,8 +147,9 @@ function Hero ({ data }) {
       <ModalVideo
         channel="youtube"
         autoplay
+        mute={true}
         isOpen={isOpen}
-        videoId="HnbMYzdjuBs"
+        videoId="xpPcAUMCko4"
         onClose={() => setOpen(false)}
       />
 
