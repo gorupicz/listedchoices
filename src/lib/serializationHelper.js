@@ -1,49 +1,62 @@
 import superjson from 'superjson';
 import { Prisma } from '@prisma/client';
 
+// Helper function to recursively handle nested fields
+const serializeField = (value) => {
+  if (Prisma.Decimal.isDecimal(value)) {
+    return value.toNumber();
+  }
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+  if (Array.isArray(value)) {
+    return value.map(serializeField);
+  }
+  if (value && typeof value === 'object') {
+    return serializePrismaData(value); // Recursively serialize nested objects
+  }
+  return value;
+};
+
 // Helper function to serialize Prisma data
 export const serializePrismaData = (data) => {
-  const { json: superjsonData } = superjson.serialize(data);
+  if (!data || typeof data !== 'object') {
+    return data; // Return primitive types as is
+  }
 
-  Object.keys(superjsonData).forEach((key) => {
-    const value = superjsonData[key];
+  const serializedData = {};
 
-    // Handle Prisma Decimal types by converting them to numbers
-    if (Prisma.Decimal.isDecimal(value)) {
-      superjsonData[key] = value.toNumber();
-    }
-
-    // Handle Date objects by converting them to ISO strings
-    if (value instanceof Date) {
-      superjsonData[key] = value.toISOString();
-    }
+  Object.keys(data).forEach((key) => {
+    serializedData[key] = serializeField(data[key]);
   });
 
-  return superjsonData;
+  return serializedData;
 };
 
 // Helper function for MongoDB data serialization
 export const serializeMongoData = (data) => {
-  const { json: superjsonData } = superjson.serialize(data);
+  if (!data || typeof data !== 'object') {
+    return data; // Return primitive types as is
+  }
 
-  Object.keys(superjsonData).forEach((key) => {
-    const value = superjsonData[key];
+  const serializedData = {};
+
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
 
     // Handle MongoDB ObjectID types by converting them to strings
     if (key === '_id' && value && typeof value === 'object' && value.toString) {
-      superjsonData[key] = value.toString();
-    }
-
-    // Convert nested ObjectId fields if they exist
-    if (value && typeof value === 'object' && value._bsontype === 'ObjectID') {
-      superjsonData[key] = value.toString();
-    }
-
-    // Handle Date objects by converting them to ISO strings
-    if (value instanceof Date) {
-      superjsonData[key] = value.toISOString();
+      serializedData[key] = value.toString();
+    } else if (value && typeof value === 'object' && value._bsontype === 'ObjectID') {
+      serializedData[key] = value.toString();
+    } else if (value instanceof Date) {
+      serializedData[key] = value.toISOString();
+    } else if (Array.isArray(value)) {
+      serializedData[key] = value.map(serializeField);
+    } else {
+      serializedData[key] = serializeField(value); // Recursively serialize nested objects
     }
   });
 
-  return superjsonData;
+  return serializedData;
 };
