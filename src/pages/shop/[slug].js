@@ -65,27 +65,26 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
 
   const relatedProducts = getProducts(
     products,
-    productJSON.category[0],
+    productMONGO.category[0],
     "popular",
     2
   );
 
   const topRatedProducts = getProducts(
     products,
-    productJSON.category[0],
+    productMONGO.category[0],
     "topRated",
     2
   );
   const popularProducts = getProducts(
     products,
-    productJSON.category[0],
+    productMONGO.category[0],
     "popular",
     4
   );
 
   const discountedPrice = getDiscountPrice(
-    productJSON.price,
-    productJSON.discount
+    productMONGO.price,
   ).toFixed(2);
 
   const daysInPreviousMonth = getDaysInPreviousMonth(
@@ -93,13 +92,13 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
   );
 
 
-  const productPrice = productJSON.price.toFixed(2);
-  const cartItem = cartItems.find((cartItem) => cartItem.id === productJSON.id);
+  const productPrice = productMONGO.price.toFixed(2);
+  const cartItem = cartItems.find((cartItem) => cartItem.id === productMONGO.property_id);
   const wishlistItem = wishlistItems.find(
-    (wishlistItem) => wishlistItem.id === productJSON.id
+    (wishlistItem) => wishlistItem.id === productMONGO.property_id
   );
   const compareItem = compareItems.find(
-    (compareItem) => compareItem.id === productJSON.id
+    (compareItem) => compareItem.id === productMONGO.property_id
   );
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -196,8 +195,8 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
-  const pageTitle = productJSON.title + " - " + productJSON.locantion;
-  const pageDescription = productJSON.description.shortDescription;
+  const pageTitle = productMONGO.title + " - " + productMONGO.locantion;
+  const pageDescription = productMONGO.shortDescription;
   const ogImage = productJSON.carousel[0].img;
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
@@ -261,7 +260,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
               {...productDetailsCarouselSettings}
               className="ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner"
             >
-              {productJSON.carousel.map((single, key) => {
+              {productMONGO.photos.map((single, key) => {
                 return (
                   <div className="ltn__img-slide-item-4" key={key}>
                     <Link href="#">
@@ -310,22 +309,22 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       }
                     </ul>
                   </div>
-                  <h1 className="ltn__primary-color"> {productJSON.title}</h1>
+                  <h1 className="ltn__primary-color"> {productMONGO.name}</h1>
                   <label>
                     <span className="ltn__secondary-color">
                       <i className="flaticon-pin"></i>
                     </span>{" "}
-                    {productJSON.locantion}
+                    {productMONGO.location}
                   </label>
-                  <h4 className="title-2"> {productJSON.description.title}</h4>
-                  <p>{productJSON.description.shortDescription}</p>
+                  <h4 className="title-2"> {productMONGO.title}</h4>
+                  <p>{productMONGO.shortDescription}</p>
 
                   <h4 className="title-2">Financials (Past 12 months)</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
                         <label>Rent:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last_twelve_months)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not." id="expenses">
@@ -334,20 +333,20 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.expenses.last_twelve_months)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
                       </li>
                     </ul>
                     <ul>
                       <li>
                         <label>Free Cash Flow / Dividend:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last_twelve_months - productMONGO.expenses.last_twelve_months)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
                       </li>
                       <li>
                         <label>Asset Valuation:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.price)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
                       </li>
                       <li>
-                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((productMONGO.income.last_twelve_months - productMONGO.expenses.last_twelve_months)/productMONGO.price*100)}%</span>
+                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)/productMONGO.price*100)}%</span>
                       </li>
                     </ul>
                   </div>
@@ -357,7 +356,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                     <ul>
                       <li>
                         <label>Occupancy (Last month):</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.occupancy.last_month)}%</span>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.occupancy.lastMonthNights / 30 *100)}%</span>
                       </li>
                       <li>
                         <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
@@ -365,16 +364,16 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.vacationRentalDetails.lastMonthAdr)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.lastMonthUSD / productMONGO.occupancy.lastMonthNights)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
                           <label> 
-                            RevPAR (Year to date){' '}
+                            RevPAR (Past 12 months){' '}
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.vacationRentalDetails.RevPAR)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
@@ -414,7 +413,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                   <h4 className="title-2">Location</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
-                      src={`${productMYSQL.googleMaps}`}
+                      src={`${productMYSQL.google_maps}`}
                       width="100%"
                       height="100%"
                       frameBorder="0"
@@ -563,7 +562,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {productJSON.amenities1.map((single, key) => {
+                            {productMONGO.amenities1.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -583,7 +582,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {productJSON.amenities2.map((single, key) => {
+                            {productMONGO.amenities2.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -603,7 +602,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       <div className="col-lg-4 col-md-6">
                         <div className="ltn__menu-widget">
                           <ul>
-                            {productJSON.amenities3.map((single, key) => {
+                            {productMONGO.amenities3.map((single, key) => {
                               return (
                                 <li key={key}>
                                   <label className="checkbox-item">
@@ -1168,18 +1167,18 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                     {relatedProducts.map((data, key) => {
                       const slug = productSlug(data.title);
                       const discountedPrice = getDiscountPrice(
-                        productJSON.price,
+                        productMONGO.price,
                         productJSON.discount
                       ).toFixed(2);
-                      const productPrice = productJSON.price.toFixed(2);
+                      const productPrice = productMONGO.price.toFixed(2);
                       const cartItem = cartItems.find(
-                        (cartItem) => cartItem.id === productJSON.id
+                        (cartItem) => cartItem.id === productMONGO.property_id
                       );
                       const wishlistItem = wishlistItems.find(
-                        (wishlistItem) => wishlistItem.id === productJSON.id
+                        (wishlistItem) => wishlistItem.id === productMONGO.property_id
                       );
                       const compareItem = compareItems.find(
-                        (compareItem) => compareItem.id === productJSON.id
+                        (compareItem) => compareItem.id === productMONGO.property_id
                       );
                       return (
                         <Col xs={12} sm={6} key={key}>
@@ -1506,11 +1505,11 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">
                       <img
-                        src={`/img/team/${productJSON.agent.img}`}
-                        alt={`${productJSON.agent.fullName}`}
+                        src={`/img/team/${productMONGO.propertyManager.img}`}
+                        alt={`${productMONGO.propertyManager.fullName}`}
                       />
-                      <h5>{productJSON.agent.fullName}</h5>
-                      <small>{productJSON.agent.designation}</small>
+                      <h5>{productMONGO.propertyManager.fullName}</h5>
+                      <small>{productMONGO.propertyManager.designation}</small>
                       <div className="product-ratting">
                         <ul>
                           <li>
@@ -1542,12 +1541,12 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             {" "}
                             <Link href="#">
                               {" "}
-                              ( {productJSON.agent.raiting} Reviews )
+                              ( {productMONGO.propertyManager.raiting} Reviews )
                             </Link>
                           </li>
                         </ul>
                       </div>
-                      <p>{productJSON.agent.description}</p>
+                      <p>{productMONGO.propertyManager.description}</p>
 
                       <div className="ltn__social-media">
                         <ul>
@@ -1726,7 +1725,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       {/* <!-- ltn__product-item --> */}
 
                       {popularProducts.map((productJSON, key) => {
-                        const slug = productSlug(productJSON.title);
+                        const slug = productSlug(productMONGO.name);
                         return (
                           <div
                             key={key}
@@ -1750,13 +1749,13 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             <div className="product-info">
                               <div className="product-price">
                                 <span>
-                                  ${productJSON.price}
+                                  ${productMONGO.price}
                                   <label>/Month</label>
                                 </span>
                               </div>
                               <h2 className="product-title">
                                 <Link href={`/shop/${slug}`}>
-                                  {productJSON.title}
+                                  {productMONGO.name}
                                 </Link>
                               </h2>
                               <div className="product-img-location">
@@ -1764,7 +1763,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                                   <li>
                                     <Link href="product-details">
                                       <i className="flaticon-pin"></i>
-                                      {productJSON.locantion}
+                                      {productMONGO.location}
                                     </Link>
                                   </li>
                                 </ul>
@@ -1879,12 +1878,7 @@ export async function getServerSideProps({ params }) {
     where: {
       slug: params.slug,
     },
-    include: {
-      platform_accounts: true,
-      reservations: true,
-    },
   });
-
   // 2. If no product is found in MySQL, return 404
   if (!productMYSQL) {
     return {
@@ -1898,6 +1892,12 @@ export async function getServerSideProps({ params }) {
   const productMONGO = await db.collection('listings').findOne({
     property_id: productMYSQL.id,
   });
+
+  if (!productMONGO) {
+    return {
+      notFound: true,
+    };
+  }
 
   // Serialize both MySQL (Prisma) and MongoDB data
   const serializedProductMYSQL = serializePrismaData(productMYSQL);
