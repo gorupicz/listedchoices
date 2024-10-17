@@ -46,13 +46,23 @@ import prisma from "@/lib/prisma";
 import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
 
 
-
 function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-  const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
+  const { getDateRanges } = require('/src/lib/dateRangeHelper'); 
+  const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
+
+const yearToDateTotalNights = () => {
+  const updatedAt = new Date(productMONGO.updated_at);
+  const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
+  
+  const differenceInDays = calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd);
+  
+  return differenceInDays > 0 ? differenceInDays : 0;
+};
+
 
   const TooltipSpan = ({ id, title, children }) => (
     <OverlayTrigger
@@ -309,7 +319,17 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                       }
                     </ul>
                   </div>
+                  <div style={{display:`flex`, alignItems: `baseline`}}>
                   <h1 className="ltn__primary-color"> {productMONGO.name}</h1>
+                  <label style={{display:`inline-block`, marginLeft: `18px`}}>
+                    <Link
+                      href={productJSON.vacationRentalDetails.listings.airbnb}
+                      target="_blank"
+                    >
+                      <FaAirbnb /> <span style={{ textDecoration: `underline` }}>Airbnb listing</span>
+                    </Link>
+                  </label>
+                  </div>
                   <label>
                     <span className="ltn__secondary-color">
                       <i className="flaticon-pin"></i>
@@ -355,16 +375,29 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label>Occupancy (Last month):</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.occupancy.lastMonthNights / 30 *100)}%</span>
+                        <label><b>Occupancy</b></label>
                       </li>
                       <li>
+                        <label>Last month:</label>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.occupancy.lastMonthNights / 30 *100)}%</span>
+                      </li>
+                      <li>
+                        <label>Last 3 months:</label>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
+                      </li>
+                      <li>
+                        <label>Year to date:</label>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
                         <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
-                        <label>ADR (Last month){' '}
+                        <label>ADR (Past 12 months){' '}
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.lastMonthUSD / productMONGO.occupancy.lastMonthNights)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
                       </li>
                       <li>
                         <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
@@ -373,7 +406,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
+                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
@@ -382,28 +415,6 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
                             target="_blank"
                           >
                             What other metrics would you like to see here?
-                          </Link>
-                        </label>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <label style={{maxWidth: `100%`}}>
-                          <Link
-                            href={productJSON.vacationRentalDetails.listings.airbnb}
-                            target="_blank"
-                          >
-                            <FaAirbnb /> Listing on Airbnb
-                          </Link>
-                        </label>
-                      </li>
-                      <li>
-                        <label style={{maxWidth: `100%`}}>
-                          <Link
-                            href={productJSON.vacationRentalDetails.listings.booking}
-                            target="_blank"
-                          >
-                            <FaCircle /> Listing on Booking.com
                           </Link>
                         </label>
                       </li>
