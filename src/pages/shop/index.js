@@ -48,22 +48,13 @@ function Shop() {
   };
   useEffect(() => {
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
-
-    const filterSortedProducts = getSortedProducts(
-      sortedProducts,
-      filterSortType,
-      filterSortValue
-    );
+    const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
 
     sortedProducts = filterSortedProducts;
-
-    setSortedProducts(sortedProducts);
-
-    setCurrentItems(sortedProducts.slice(offset, offset + pageLimit));
-
-    setCurrentItems(
-      SearchProduct(sortedProducts.slice(offset, offset + pageLimit))
-    );
+    
+    // Only update state once instead of twice
+    const filteredProducts = SearchProduct(sortedProducts.slice(offset, offset + pageLimit));
+    setCurrentItems(filteredProducts);
   }, [
     offset,
     products,
@@ -81,7 +72,7 @@ function Shop() {
   }, [offset, pageLimit]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * pageLimit) % products.length;
+    const newOffset = event.selected * pageLimit;
     setOffset(newOffset);
   };
 

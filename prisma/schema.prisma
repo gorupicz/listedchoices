@@ -1,0 +1,181 @@
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             Int            @id @default(autoincrement())
+  username       String         @unique
+  password       String
+  email          String         @unique
+  phone_number   String?
+  role           UserRole
+  oauth_provider String?
+  oauth_id       String?
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  oauth_token    String?
+  first_name     String
+  last_name      String
+  biography      String
+  facebook       String?
+  instagram      String?
+  linkedin       String?
+  photograph     String?
+  properties     Property[]     @relation("PropertyManager")
+  reviews        Review[]
+  bought_shares  Transactions[] @relation("Buyer")
+  sold_shares    Transactions[] @relation("Seller")
+}
+
+model Property {
+  id                  Int                 @id @default(autoincrement())
+  address             String
+  city                String
+  state               String
+  postal_code         String
+  country             String
+  manager_id          Int
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  legal_name          String
+  price               Decimal             @db.Decimal(10, 4)
+  slug                String              @unique
+  google_maps         String              @db.VarChar(2048)
+  listings            Listing[]
+  manager             User                @relation("PropertyManager", fields: [manager_id], references: [id])
+  share_price_history SharePriceHistory[]
+  transactions        Transactions[]
+
+  @@index([manager_id], map: "Property_manager_id_fkey")
+}
+
+model PlatformAccount {
+  id         Int       @id @default(autoincrement())
+  platform   Platform
+  account_id String
+  status     String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  listings   Listing[]
+}
+
+model Listing {
+  id                  Int             @id @default(autoincrement())
+  property_id         Int
+  platform_account_id Int
+  listing_id          String
+  status              ListingStatus?
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  url                 String?
+  platform_account    PlatformAccount @relation(fields: [platform_account_id], references: [id])
+  property            Property        @relation(fields: [property_id], references: [id])
+  reservations        Reservation[]
+
+  @@index([platform_account_id], map: "Listing_platform_account_id_fkey")
+  @@index([property_id], map: "Listing_property_id_fkey")
+}
+
+model Reservation {
+  id                  Int      @id @default(autoincrement())
+  guest_name          String
+  start_date          DateTime
+  end_date            DateTime
+  reservation_id      String
+  base_price          Decimal  @db.Decimal(10, 2)
+  platform_commission Decimal  @db.Decimal(10, 2)
+  currency            Currency
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  listing_id          Int
+  listing             Listing  @relation(fields: [listing_id], references: [id])
+  reviews             Review[]
+
+  @@index([listing_id], map: "Reservation_listing_id_fkey")
+}
+
+model Review {
+  id             Int         @id @default(autoincrement())
+  reservation_id Int
+  rating         Int
+  comment        String
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  user_id        Int?
+  reservation    Reservation @relation(fields: [reservation_id], references: [id])
+  user           User?       @relation(fields: [user_id], references: [id])
+
+  @@index([reservation_id], map: "Review_reservation_id_fkey")
+  @@index([user_id], map: "Review_user_id_fkey")
+}
+
+model ExchangeRate {
+  id    Int      @id @default(autoincrement())
+  date  DateTime @unique(map: "ExchangeRate_year_month_key") @db.DateTime(0)
+  value Decimal  @db.Decimal(10, 4)
+}
+
+model Transactions {
+  id               Int      @id @default(autoincrement())
+  property_id      Int
+  buyer_id         Int
+  seller_id        Int
+  shares_traded    Int
+  price_per_share  Decimal  @db.Decimal(10, 4)
+  currency         Currency
+  transaction_date DateTime @default(now())
+  buyer            User     @relation("Buyer", fields: [buyer_id], references: [id])
+  property         Property @relation(fields: [property_id], references: [id])
+  seller           User     @relation("Seller", fields: [seller_id], references: [id])
+
+  @@index([buyer_id], map: "Transactions_buyer_id_fkey")
+  @@index([property_id], map: "Transactions_property_id_fkey")
+  @@index([seller_id], map: "Transactions_seller_id_fkey")
+}
+
+model SharePriceHistory {
+  id          Int               @id @default(autoincrement())
+  property_id Int
+  date        DateTime          @default(now())
+  price       Decimal           @db.Decimal(10, 2)
+  reason      PriceChangeReason
+  property    Property          @relation(fields: [property_id], references: [id])
+
+  @@index([property_id], map: "SharePriceHistory_property_id_fkey")
+}
+
+enum PriceChangeReason {
+  PROPERTY_VALUE_UPDATE
+  MARKET_DEMAND
+  DIVIDEND_PAYMENT
+}
+
+enum UserRole {
+  investor
+  property_manager
+  super_admin
+}
+
+enum Platform {
+  Airbnb
+  Booking
+  Vrbo
+  Direct
+}
+
+enum ListingStatus {
+  active
+  inactive
+  closed
+  cancelled
+}
+
+enum Currency {
+  USD
+  MXN
+}
