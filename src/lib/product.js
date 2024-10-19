@@ -1,4 +1,10 @@
 import slugify from "slugify";
+
+export const getDaysInPreviousMonth = (isoStringDate) => {
+  const date = new Date(isoStringDate); // Convert ISO string to Date object
+  const previousMonth = new Date(date.getFullYear(), date.getMonth(), 0); // Get the last day of the previous month
+  return previousMonth.getDate(); // Return the number of days in the previous month
+};
 // get products
 export const getProducts = (products, category, type, limit) => {
   const finalProducts = category
