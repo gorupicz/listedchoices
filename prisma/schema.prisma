@@ -1,19 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("MYSQL_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
   id             Int            @id @default(autoincrement())
-  username       String         @unique
+  username       String?        @unique
   password       String
   email          String         @unique
   phone_number   String?
-  role           UserRole
+  role           UserRole?
   oauth_provider String?
   oauth_id       String?
   created_at     DateTime       @default(now())
@@ -21,7 +21,7 @@ model User {
   oauth_token    String?
   first_name     String
   last_name      String
-  biography      String
+  biography      String?
   facebook       String?
   instagram      String?
   linkedin       String?

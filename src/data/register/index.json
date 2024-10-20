@@ -1,0 +1,15 @@
+{
+  "title": "Regístrate",
+  "firstNamePlaceholder": "First Name*",
+  "lastNamePlaceholder": "Last Name*",
+  "emailPlaceholder": "Email*",
+  "passwordPlaceholder": "Password*",
+  "confirmPasswordPlaceholder": "Confirm Password*",
+  "passwordStrengthLabels": ["Weak", "Fair", "Good", "Strong", "Very Strong"],
+  "createAccountButton": "CREATE ACCOUNT",
+  "privacyPolicyConsentText": "By creating an account, you consent to the Privacy Policy.",
+  "errorMessageInvalidEmail": "Please enter a valid email address.",
+  "errorMessagePasswordMismatch": "Passwords do not match.",
+  "errorMessageWeakPassword": "Password is too weak. Please make it stronger.",
+  "alreadyHaveAccountText": "ALREADY HAVE AN ACCOUNT?"
+}

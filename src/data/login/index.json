@@ -1,0 +1,14 @@
+{
+  "pageTitle": "Ingresa",
+  "emailPlaceholder": "Email*",
+  "passwordPlaceholder": "Password*",
+  "forgotPasswordText": "Forgot your password?",
+  "signInButtonText": "SIGN IN",
+  "dontHaveAccountText": "DON'T HAVE AN ACCOUNT?",
+  "modalTitle": "FORGET PASSWORD?",
+  "modalDescription": "Enter your registered email.",
+  "modalEmailPlaceholder": "Type your registered email*",
+  "modalSubmitButtonText": "Submit",
+  "invalidEmailMessage": "Please enter a valid email address.",
+  "defaultErrorMessage": "Something went wrong"
+}
