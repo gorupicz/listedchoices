@@ -1355,9 +1355,13 @@ ul {
   }
 }
 
-.go-to-btn button {
-  background-color: transparent;
+.go-to-btn {
+  text-transform: uppercase;
+  button {
+    background-color: transparent;
+  }
 }
+  
 
 .go-to-btn button:hover {
   color: var(--ltn__secondary-color);

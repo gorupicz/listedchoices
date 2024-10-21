@@ -53,6 +53,7 @@
 /* ----------------------------------------------------
     Common CSS
 ---------------------------------------------------- */
+
 .ltn__social-media {
   ul {
     margin: 0;
@@ -3576,6 +3577,19 @@ blockquote {
   padding: 40px 50px 50px;
   position: relative;
   z-index: 1;
+
+  .passwordInputContainer {
+    position: relative;
+  }
+
+  .passwordStrength {
+    position: absolute;
+    top: 35%;  /* Adjust this value as per your UI */
+    left: 20px;
+    font-size: 0.85rem;
+    color: var(--ltn__secondary-color);
+    margin-top: 5px;
+  }
 
   input::-webkit-input-placeholder {
     color: var(--ltn__color-1);

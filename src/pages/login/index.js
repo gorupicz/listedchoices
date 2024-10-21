@@ -5,30 +5,91 @@ import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
-import loginData from "@/data/login/index.json";  // Import the text content
+import loginData from "@/data/login/index.json";  // Import text content
+import emailVerificationData from "@/data/register/index.json";  // Import text content for verification
 
 function Login() {
-  const [show, setShow] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState('');  // For showing messages in modal
+  const [isError, setIsError] = useState(false);  // Track if it's an error message
+  const [showModal, setShowModal] = useState(false);  // Modal state
+  const [reopenForgotPassword, setReopenForgotPassword] = useState(false); // To track reopening Forgot Password modal
   const router = useRouter();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // Function to close all modals
+  const handleCloseAllModals = () => {
+    setShowForgotPassword(false);
+    setShowModal(false);
+  };
+
+  // Function to show error/success modal
+  const handleShowModal = (message, isError, reopenForgotPassword = false) => {
+    setModalMessage(message);
+    setIsError(isError);
+    setShowModal(true);
+    if (reopenForgotPassword) {
+      setReopenForgotPassword(true);
+    }
+  };
+
+  // Close the error/success modal and optionally reopen Forgot Password modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (reopenForgotPassword) {
+      setShowForgotPassword(true);
+      setReopenForgotPassword(false);  // Reset state
+    }
+    if (!isError) {
+      router.push(`/register/email-verification?email=${email}`);
+    }
+  };
+
+  const handleCloseForgotPassword = () => setShowForgotPassword(false);
+  const handleShowForgotPassword = () => setShowForgotPassword(true);
+
+  const handlePasswordRecovery = async (e) => {
+    e.preventDefault();
+    const cleanedEmail = validator.trim(email);
+
+    if (!validator.isEmail(cleanedEmail)) {
+      // Close Forgot Password modal and show error modal
+      handleCloseForgotPassword();
+      handleShowModal(loginData.invalidEmailMessage, true, true);
+      return;
+    }
+
+    // Send recovery email request
+    const res = await fetch('/api/password-recovery', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: cleanedEmail }),
+    });
+
+    if (res.ok) {
+      handleCloseForgotPassword();  // Close the modal after submission
+      handleShowModal(loginData.passwordRecoverySentMessage, false);  // Show recovery success message
+    } else {
+      handleCloseForgotPassword();
+      handleShowModal(loginData.defaultErrorMessage, true);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const cleanedEmail = validator.trim(email);
     if (!validator.isEmail(cleanedEmail)) {
-      setErrorMessage(loginData.invalidEmailMessage);
+      handleShowModal(loginData.invalidEmailMessage, true);  // Show invalid email modal
       return;
     }
 
+    // Send login request to check if credentials are correct
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -39,18 +100,24 @@ function Login() {
 
     const data = await res.json();
 
+    // First check if email and password are correct
     if (res.ok) {
-      // Handle success (e.g., store the token or session)
-      router.push('/dashboard'); // Redirect to dashboard or another page
+      if (data.isVerified) {
+        // If verified, proceed to dashboard
+        router.push('/dashboard');
+      } else {
+        // If not verified, show the modal and send the user to verification page
+        handleShowModal(emailVerificationData.verificationCodeSentMessage, false);
+      }
     } else {
-      setErrorMessage(data.message || loginData.defaultErrorMessage);
+      // Show error if email/password is incorrect
+      handleShowModal(data.message || loginData.defaultErrorMessage, true);  // Show error modal
     }
   };
 
   return (
     <>
       <Layout topbar={false}>
-        {/* LOGIN AREA START */}
         <div className="ltn__login-area pb-65 pt-20">
           <div className="container">
             <Row>
@@ -81,7 +148,7 @@ function Login() {
                       required
                     />
                     <p>
-                      <Link href="" className="go-to-btn" onClick={handleShow}>
+                      <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
                         <small>{loginData.forgotPasswordText}</small>
                       </Link>
                     </p>
@@ -91,7 +158,6 @@ function Login() {
                       </button>
                     </div>
                   </form>
-                  {errorMessage && <p className="error">{errorMessage}</p>}
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
                       <Link href="/register"><b>{loginData.dontHaveAccountText}</b></Link>
@@ -102,7 +168,6 @@ function Login() {
             </Row>
           </div>
         </div>
-        {/* LOGIN AREA END */}
 
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
@@ -117,15 +182,15 @@ function Login() {
 
       {/* Modal for Forget Password */}
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={showForgotPassword}
+        onHide={handleCloseForgotPassword}
         backdrop="static"
         keyboard={false}
         size="md"
         className="ltn__modal-area"
       >
         <Modal.Header>
-          <Button onClick={handleClose} className="close" variant="secondary">
+          <Button onClick={handleCloseForgotPassword} className="close" variant="secondary">
             <span aria-hidden="true">&times;</span>
           </Button>
         </Modal.Header>
@@ -137,14 +202,56 @@ function Login() {
                   <div className="modal-product-info text-center">
                     <h4>{loginData.modalTitle}</h4>
                     <p className="added-cart">{loginData.modalDescription}</p>
-                    <form action="#" className="ltn__form-box">
-                      <input type="text" name="email" placeholder={loginData.modalEmailPlaceholder} />
+                    <form onSubmit={handlePasswordRecovery} className="ltn__form-box">
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder={loginData.emailPlaceholder}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
                       <div className="btn-wrapper mt-0">
                         <button className="theme-btn-1 btn btn-full-width-2" type="submit">
                           {loginData.modalSubmitButtonText}
                         </button>
                       </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal for showing success/error messages */}
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        backdrop="static"
+        keyboard={false}
+        size="md"
+        className="ltn__modal-area"
+      >
+        <Modal.Header>
+          <Button onClick={handleCloseModal} className="close" variant="secondary">
+            <span aria-hidden="true">&times;</span>
+          </Button>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="ltn__quick-view-modal-inner">
+            <div className="modal-product-item">
+              <div className="row">
+                <div className="col-12">
+                  <div className="modal-product-info text-center">
+                    <h4>{isError ? loginData.errorModalTitle : emailVerificationData.successModalTitle}</h4>
+                    <p className="added-cart">{modalMessage}</p>
+                    <div className="btn-wrapper mt-0">
+                      <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
+                        {loginData.errorSuccessModalSubmit}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

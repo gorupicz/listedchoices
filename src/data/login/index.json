@@ -1,14 +1,20 @@
 {
-  "pageTitle": "Ingresa",
+  "pageTitle": "Sign In",
   "emailPlaceholder": "Email*",
   "passwordPlaceholder": "Password*",
-  "forgotPasswordText": "Forgot your password?",
   "signInButtonText": "SIGN IN",
-  "dontHaveAccountText": "DON'T HAVE AN ACCOUNT?",
-  "modalTitle": "FORGET PASSWORD?",
+  "forgotPasswordText": "Forgot your password?",
+  "dontHaveAccountText": "Don't have an account?",
+  "modalTitle": "Password recovery",
   "modalDescription": "Enter your registered email.",
-  "modalEmailPlaceholder": "Type your registered email*",
   "modalSubmitButtonText": "Submit",
   "invalidEmailMessage": "Please enter a valid email address.",
-  "defaultErrorMessage": "Something went wrong"
+  "defaultErrorMessage": "Something went wrong. Please try again.",
+  "passwordRecoverySentMessage": "If the email exists, a recovery email will be sent.",
+  "errorModalTitle": "Error",
+  "successModalTitle": "Success",
+  "errorSuccessModalSubmit": "Accept",
+  "recoveryEmailSubject": "Password Recovery",
+  "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}"
+
 }

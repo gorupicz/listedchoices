@@ -1,40 +1,52 @@
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
+import { sendEmail } from '@/lib/mailer';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, first_name, last_name } = req.body;
+    const { email, password, first_name, last_name, code, subject, body } = req.body;
 
     try {
-        const existingUser = await prisma.user.findUnique({
-            where: { email },
-        });
+      // Check if the user already exists
+      const existingUser = await prisma.user.findUnique({
+        where: { email },
+      });
 
-        if (existingUser) {
-            return res.status(400).json({ message: 'User with this email already exists.' });
-        }
+      if (existingUser) {
+        return res.status(400).json({ message: 'User with this email already exists.' });
+      }
 
-        const created_at = new Date();
-        const updated_at = new Date();
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Save the user to the database with the hashed password
+      // Save the user and verification code to the database
       const newUser = await prisma.user.create({
         data: {
           email,
           password: hashedPassword,
           first_name,
           last_name,
-          created_at,
-          updated_at,
+          verificationCode: code,  // Store the verification code
+          isVerified: false,  // New users are not verified yet
         },
       });
 
-      return res.status(201).json({ message: 'User registered successfully', newUser });
+      // Try sending the verification email
+      try {
+        await sendEmail({
+          to: email,
+          subject,
+          body,  // The email body is already formatted in the frontend
+        });
+        return res.status(200).json({ message: 'User registered successfully and verification email sent.' });
+      } catch (emailError) {
+        console.error('Error sending verification email:', emailError);  // Log the email error
+        return res.status(201).json({ message: 'User registered successfully, but email could not be sent.' });
+      }
 
-    } catch (error) {
-      return res.status(500).json({ message: 'Internal server error' });
+    } catch (dbError) {
+      console.error('Error during registration:', dbError);  // Log the database error
+      return res.status(500).json({ message: 'Internal server error during user registration.' });
     }
   } else {
     return res.status(405).json({ message: 'Method not allowed' });

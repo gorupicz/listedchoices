@@ -5,20 +5,10 @@ import zxcvbn from 'zxcvbn';
 import { Layout } from "@/layouts";
 import registerData from "@/data/register/index.json";
 import { Container, Row, Col } from "react-bootstrap";
-import {
-  FaArrowRight,
-  FaArrowLeft,
-  FaPlay,
-  FaSearch,
-  FaRegEnvelopeOpen,
-  FaPhoneAlt,
-} from "react-icons/fa";
-
-import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
-import Image from "next/image";
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -28,6 +18,9 @@ function Register() {
   const [last_name, setLastName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [passwordStrength, setPasswordStrength] = useState(0); // for password strength meter
+  const [modalMessage, setModalMessage] = useState('');  // For modal message
+  const [isError, setIsError] = useState(false);  // For tracking error or success
+  const [showModal, setShowModal] = useState(false);  // For showing modal
   const router = useRouter();
 
   function getPasswordStrength(password) {
@@ -40,23 +33,25 @@ function Register() {
 
     const cleanedEmail = validator.trim(email);
     if (!validator.isEmail(cleanedEmail)) {
-      setErrorMessage('Please enter a valid email address.');
+      handleShowModal(registerData.invalidEmailMessage, true);
       return;
     }
     
     if (password !== confirm_password) {
-      setErrorMessage("Passwords do not match.");
+      handleShowModal(registerData.passwordsDoNotMatchMessage, true);
       return;
     }
 
     if (passwordStrength < 2) {  // Set minimum acceptable strength
-      setErrorMessage('Password is too weak. Please make it stronger.');
+      handleShowModal(registerData.weakPasswordMessage, true);
       return;
     }
 
-
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
+
+    // Generate a verification code (6-digit random)
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
 
     const res = await fetch('/api/register', {
       method: 'POST',
@@ -67,17 +62,20 @@ function Register() {
         email: cleanedEmail,
         password,
         first_name: cleanedFirstName,
-        last_name: cleanedLastName
+        last_name: cleanedLastName,
+        code,
+        subject: registerData.verificationEmailSubject,
+        body: registerData.verificationEmailBody.replace('{code}', code),
       }),
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      // Handle success (e.g., redirect to login)
-      router.push('/login');
+      // Open modal saying the code was sent
+      handleShowModal(registerData.verificationCodeSentMessage, false);
     } else {
-      setErrorMessage(data.message || 'Something went wrong');
+      handleShowModal(data.message || registerData.defaultErrorMessage, true);
     }
   };
 
@@ -89,10 +87,25 @@ function Register() {
     setPasswordStrength(strength);  // Update state with the strength score
   };
 
+  // Modal functions to show and close modal
+  const handleShowModal = (message, isError) => {
+    setModalMessage(message);
+    setIsError(isError);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (!isError) {
+      // Redirect to email verification after closing the modal
+      router.push(`/register/email-verification?email=${email}`);
+    }
+  };
+
   return (
     <>
       <Layout topbar={false}>
-        {/* LOGIN AREA START (Register) */}
+        {/* REGISTER AREA START */}
         <div className="ltn__login-area pb-110 pt-20">
           <Container>
             <Row>
@@ -137,18 +150,24 @@ function Register() {
                       required
                     />
 
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder={registerData.passwordPlaceholder}
-                      value={password}
-                      onChange={handlePasswordChange}  // Use the password handler
-                      required
-                    />
-                    {/* Display password strength only when user starts typing */}
-                    {password && (
-                      <p><small>Password Strength: {registerData.passwordStrengthLabels[passwordStrength]}</small></p>
-                    )}
+                    {/* Password input and strength meter */}
+                    <div className="passwordInputContainer">
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder={registerData.passwordPlaceholder}
+                        value={password}
+                        onChange={handlePasswordChange}  // Use the password handler
+                        required
+                      />
+                      {/* Display password strength only when user starts typing */}
+                      {password && (
+                        <p className="passwordStrength">
+                          <small>{registerData.passwordStrengthLabel}: {registerData.passwordStrengthLabels[passwordStrength]}</small>
+                        </p>
+                      )}
+                    </div>
+
                     <input
                       type="password"
                       name="confirmpassword"
@@ -165,7 +184,6 @@ function Register() {
                         {registerData.createAccountButton}
                       </button>
                     </div>
-                  {errorMessage && <p>{errorMessage}</p>}
                   </form>
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
@@ -177,7 +195,7 @@ function Register() {
             </Row>
           </Container>
         </div>
-        {/* LOGIN AREA END */}
+        {/* REGISTER AREA END */}
 
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
@@ -189,6 +207,41 @@ function Register() {
           </Container>
         </div>
       </Layout>
+
+      {/* Modal for showing success/error messages */}
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        backdrop="static"
+        keyboard={false}
+        size="md"
+        className="ltn__modal-area"
+      >
+        <Modal.Header>
+          <Button onClick={handleCloseModal} className="close" variant="secondary">
+            <span aria-hidden="true">&times;</span>
+          </Button>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="ltn__quick-view-modal-inner">
+            <div className="modal-product-item">
+              <div className="row">
+                <div className="col-12">
+                  <div className="modal-product-info text-center">
+                    <h4>{isError ? registerData.errorModalTitle : registerData.successModalTitle}</h4>
+                    <p className="added-cart">{modalMessage}</p>
+                    <div className="btn-wrapper mt-0">
+                      <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
+                        {registerData.errorSuccessModalSubmit}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
