@@ -4,7 +4,7 @@ import { sendEmail } from '@/lib/mailer';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, first_name, last_name, code, subject, body } = req.body;
+    const { email, password, first_name, last_name, subject, body } = req.body;
 
     try {
       // Check if the user already exists
@@ -18,6 +18,9 @@ export default async function handler(req, res) {
 
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Generate a verification code (6-digit random)
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
 
       // Save the user and verification code to the database
       const newUser = await prisma.user.create({
@@ -35,8 +38,8 @@ export default async function handler(req, res) {
       try {
         await sendEmail({
           to: email,
-          subject,
-          body,  // The email body is already formatted in the frontend
+          subject: subject.replace('{code}', code),
+          body: body.replace('{code}', code),
         });
         return res.status(200).json({ message: 'User registered successfully and verification email sent.' });
       } catch (emailError) {

@@ -50,9 +50,6 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
-    // Generate a verification code (6-digit random)
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-
     const res = await fetch('/api/register', {
       method: 'POST',
       headers: {
@@ -63,9 +60,8 @@ function Register() {
         password,
         first_name: cleanedFirstName,
         last_name: cleanedLastName,
-        code,
         subject: registerData.verificationEmailSubject,
-        body: registerData.verificationEmailBody.replace('{code}', code),
+        body: registerData.verificationEmailBody,
       }),
     });
 

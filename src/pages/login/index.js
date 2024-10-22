@@ -8,7 +8,6 @@ import Modal from "react-bootstrap/Modal";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import loginData from "@/data/login/index.json";  // Import text content
-import emailVerificationData from "@/data/register/index.json";  // Import text content for verification
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -68,7 +67,11 @@ function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: cleanedEmail }),
+      body: JSON.stringify({ 
+        email: cleanedEmail,
+        subject: loginData.recoveryEmailSubject,
+        body: loginData.recoveryEmailBody
+      }),
     });
 
     if (res.ok) {
@@ -95,7 +98,12 @@ function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ 
+        email, 
+        password, 
+        subject: loginData.verificationEmailSubject, 
+        body: loginData.verificationEmailSubject 
+      }),
     });
 
     const data = await res.json();
@@ -107,7 +115,7 @@ function Login() {
         router.push('/dashboard');
       } else {
         // If not verified, show the modal and send the user to verification page
-        handleShowModal(emailVerificationData.verificationCodeSentMessage, false);
+        handleShowModal(loginData.verificationCodeSentMessage, false);
       }
     } else {
       // Show error if email/password is incorrect

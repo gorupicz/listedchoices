@@ -1,10 +1,10 @@
+import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
-import { sendRecoveryEmail } from '@/lib/mailer';
-import loginData from '@/data/login/index.json'; // Import recovery email texts
+import { sendEmail } from '@/lib/mailer';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email } = req.body;
+    const { email, subject, body } = req.body;
 
     try {
       // Log to check if the email is coming through
@@ -21,16 +21,24 @@ export default async function handler(req, res) {
       }
 
       // Generate token (e.g., JWT or any token logic for password recovery)
-      const recoveryToken = 'generated-recovery-token'; // Replace with your token logic
-      console.log('Generated token:', recoveryToken);
-
+      const recoveryToken = jwt.sign(
+        { userId: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }  // Token will expire in 1 hour
+      );
+      const recoveryLink = `${process.env.NEXT_PUBLIC_BASE_URL}/login/password-reset?token=${recoveryToken}`;
+      
       // Send recovery email
       try {
-        await sendRecoveryEmail(email, recoveryToken, loginData);
+        await await sendEmail({
+          to: email,
+          subject,
+          body: body.replace('{link}', recoveryLink),
+        });
         console.log('Recovery email sent successfully to:', email);
         return res.status(200).json({ message: loginData.passwordRecoverySentMessage });
-      } catch (emailError) {
-        console.error('Error sending recovery email:', emailError);
+      } catch (error) {
+        console.error('Error sending recovery email:', error);
         return res.status(500).json({ message: 'Error sending email. Please try again.' });
       }
 

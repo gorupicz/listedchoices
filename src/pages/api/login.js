@@ -4,7 +4,7 @@ import { sendEmail } from '@/lib/mailer';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, code, subject, body } = req.body;
+    const { email, password, subject, body } = req.body;
 
     try {
       // Fetch the user from the database by email
@@ -27,19 +27,19 @@ export default async function handler(req, res) {
       if (!user.isVerified) {
         try {
           // Generate a verification code if not provided in the request
-          const verificationCode = code || Math.floor(100000 + Math.random() * 900000).toString();
+          const code = Math.floor(100000 + Math.random() * 900000).toString();
 
           // Update the user's verification code in the database
           await prisma.user.update({
             where: { email },
-            data: { verificationCode: verificationCode },
+            data: { verificationCode: code },
           });
 
           // Send verification email
           await sendEmail({
             to: email,
-            subject: subject,
-            body: body.replace('{code}', verificationCode),  // Format the email body
+            subject: subject.replace('{code}', code),
+            body: body.replace('{code}', code),  // Format the email body
           });
 
           return res.status(201).json({ message: 'Email not verified, verification email sent', isVerified: false });

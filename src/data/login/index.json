@@ -15,6 +15,9 @@
   "successModalTitle": "Success",
   "errorSuccessModalSubmit": "Accept",
   "recoveryEmailSubject": "Password Recovery",
-  "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}"
-
+  "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}",
+  "verificationEmailSubject": "Your code is {code}",
+  "verificationEmailBody": "Enter this code to verify your email address: {code}",
+  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email.",
+  "verificationModalTitle": "Verify your email"
 }
