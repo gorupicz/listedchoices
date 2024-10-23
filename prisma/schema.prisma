@@ -1,35 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("MYSQL_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model User {
+  id               Int            @id @default(autoincrement())
+  username         String?        @unique
+  password         String
+  email            String         @unique
+  phone_number     String?
+  role             UserRole?
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+  first_name       String
+  last_name        String
+  biography        String?
+  facebook         String?
+  instagram        String?
+  linkedin         String?
+  photograph       String?
+  isVerified       Boolean?       @default(false)
+  verificationCode String?
+  accounts         Account[]
+  properties       Property[]     @relation("PropertyManager")
+  reviews          Review[]
+  sessions         Session[]
+  bought_shares    Transactions[] @relation("Buyer")
+  sold_shares      Transactions[] @relation("Seller")
 }
 
-model User {
-  id             Int            @id @default(autoincrement())
-  username       String         @unique
-  password       String
-  email          String         @unique
-  phone_number   String?
-  role           UserRole
-  oauth_provider String?
-  oauth_id       String?
-  created_at     DateTime       @default(now())
-  updated_at     DateTime       @updatedAt
-  oauth_token    String?
-  first_name     String
-  last_name      String
-  biography      String
-  facebook       String?
-  instagram      String?
-  linkedin       String?
-  photograph     String?
-  properties     Property[]     @relation("PropertyManager")
-  reviews        Review[]
-  bought_shares  Transactions[] @relation("Buyer")
-  sold_shares    Transactions[] @relation("Seller")
+model Account {
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  provider          String  @db.VarChar(255)
+  providerAccountId String  @db.VarChar(255)
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String? @db.VarChar(255)
+  scope             String? @db.Text
+  id_token          String? @db.Text
+  session_state     String? @db.Text
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "account_ibfk_1")
+
+  @@unique([provider, providerAccountId], map: "provider")
+  @@index([userId], map: "userId")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique(map: "sessionToken") @db.VarChar(255)
+  userId       Int
+  expires      DateTime @db.DateTime(0)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "session_ibfk_1")
+
+  @@index([userId], map: "userId")
+
 }
 
 model Property {
