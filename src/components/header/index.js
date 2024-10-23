@@ -13,14 +13,17 @@ import clsx from "clsx";
 import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
 import MenuList from "@/components/header/elements/menuList";
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';  // Import the useSession hook
+import headerData from "@/data/header/index.json";  // Importing the JSON data
 
 const Header = function ({ SetToggleClassName, topbar }) {
+
+  const { data: session, status } = useSession();  // Get the session and status
   
   const router = useRouter();
   const isHomePage = router.pathname === '/';
 
   const [searchFormOpener, searchFormOpenerSet] = useState(false);
-
   const [cartMenuOpener, cartMenuOpenerSet] = useState(false);
   const [overlayBtn, SetoverlayBtn] = useState(false);
   const [offCanVastoggleBtn, SetOffCanVastoggleBtn] = useState(false);
@@ -110,8 +113,8 @@ const Header = function ({ SetToggleClassName, topbar }) {
                   <div className="site-logo">
                     <Link href="/">
                       <Image
-                        src="/img/logo.png"
-                        alt="Listed Choices logo"
+                        src={headerData.logo}
+                        alt={headerData.logoAltText}
                         width={185}
                         height={77}
                       />
@@ -156,7 +159,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                         onChange={(e) => setQuery(e.target.value.toLowerCase())}
                         type="text"
                         name="search"
-                        placeholder="Search here..."
+                        placeholder={headerData.searchPlaceholder}
                       />
                       <button type="submit">
                         <span>
@@ -178,7 +181,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                           );
                         })
                       ) : (
-                        <li>NO Products Found</li>
+                        <li>{headerData.noProducts}</li>
                       )}
                     </ul>
                   </div>
@@ -192,16 +195,24 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       </Link>
                       <ul>
                         <li>
-                          <Link href="/login">Sign in</Link>
+                          <Link href="/login">{headerData.signIn}</Link>
                         </li>
                         <li>
-                          <Link href="/register">Register</Link>
+                          <Link href="/register">{headerData.register}</Link>
                         </li>
-                        <li>
-                          <Link href="/my-account">My Account</Link>
-                        </li>
-                        <li>
-                          <Link href="/wishlist">Wishlist</Link>
+                        {/* Only show My Account link if user is logged in */}
+                        {session && status === "authenticated" && (
+                          <li>
+                            <Link href="/my-account">{headerData.myAccount}</Link>
+                          </li>
+                        )}
+                        {/* Wishlist - Redirect to login if user is not authenticated */}
+                          <li>
+                            <Link
+                              href={session && status === "authenticated" ? "/wishlist" : "/login"}
+                            >
+                              {headerData.wishlist}
+                            </Link>
                         </li>
                       </ul>
                     </li>
@@ -221,7 +232,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                     {cartItems.length > 0 ? (
                       <sup>{cartItems.length}</sup>
                     ) : (
-                      <sup>0</sup>
+                      <sup>{headerData.emptyCart}</sup>
                     )}
                   </button>
                 </div>
@@ -255,19 +266,8 @@ const Header = function ({ SetToggleClassName, topbar }) {
         {/* <!-- ltn__header-middle-area end --> */}
       </header>
 
-      {/* <!-- Utilize Cart Menu Start --> */}
-
-      <HeaderCartMenu
-        cartMenu={cartMenu}
-        cartMenuOpener={cartMenuOpener}
-        closeSideBar={closeSideBar}
-      />
-
-      {/* <!-- Utilize Cart Menu End --> */}
-
-      {/* <!-- Utilize Mobile Menu Start --> */}
+      {/* Utilize Mobile Menu */}
       <MobileMenu
-        offCanVastoggleBtn={offCanVastoggleBtn}
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
