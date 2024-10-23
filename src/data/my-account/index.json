@@ -1,0 +1,25 @@
+{
+  "tabs": [
+    { "eventKey": "ltn_tab_1_1", "label": "Dashboard", "icon": "FaHome" },
+    { "eventKey": "ltn_tab_1_2", "label": "Profiles", "icon": "FaUserAlt" },
+    { "eventKey": "ltn_tab_1_3", "label": "Address", "icon": "FaMapMarkerAlt" },
+    { "eventKey": "ltn_tab_1_4", "label": "Account Details", "icon": "FaUserAlt" },
+    { "eventKey": "ltn_tab_1_5", "label": "My Properties", "icon": "FaList" },
+    { "eventKey": "ltn_tab_1_6", "label": "Favorited Properties", "icon": "FaHeart" },
+    { "eventKey": "ltn_tab_1_7", "label": "Add Property", "icon": "FaMapMarked" },
+    { "eventKey": "ltn_tab_1_8", "label": "Payments", "icon": "FaDollarSign" },
+    { "eventKey": "ltn_tab_1_9", "label": "Change Password", "icon": "FaLock" }
+  ],
+  "logoutLabel": "Logout",
+  "tabContent": [
+    { "eventKey": "ltn_tab_1_1", "text": "Hello UserName. From your account dashboard you can view your recent orders, manage your addresses, and edit your account details." },
+    { "eventKey": "ltn_tab_1_2", "text": "This is the profile page." },
+    { "eventKey": "ltn_tab_1_3", "text": "Manage your address details here." },
+    { "eventKey": "ltn_tab_1_4", "text": "Here you can update your account details." },
+    { "eventKey": "ltn_tab_1_5", "text": "Here are your properties." },
+    { "eventKey": "ltn_tab_1_6", "text": "Here are your favorited properties." },
+    { "eventKey": "ltn_tab_1_7", "text": "Add new properties here." },
+    { "eventKey": "ltn_tab_1_8", "text": "Manage your payments here." },
+    { "eventKey": "ltn_tab_1_9", "text": "Change your password here." }
+  ]
+}

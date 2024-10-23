@@ -16,6 +16,8 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/counter.css";
 import "@/assets/sass/style.scss";
 import "@/assets/responsive.css";
+import { SessionProvider } from 'next-auth/react';
+
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -52,17 +54,16 @@ const MyApp = ({ Component, ...rest }) => {
         }
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-         
           font-family: ${Poppin.style.fontFamily};
       }
-
-
       `}</style>
-      <Provider store={store}>
-        <PersistGate persistor={store.__persistor} loading={<Preloader />}>
-          <Component {...props.pageProps} />
-        </PersistGate>
-      </Provider>
+      <SessionProvider session={props.pageProps.session}>
+        <Provider store={store}>
+          <PersistGate persistor={store.__persistor} loading={<Preloader />}>
+            <Component {...props.pageProps} />
+          </PersistGate>
+        </Provider>
+      </SessionProvider>
     </Fragment>
   );
 };

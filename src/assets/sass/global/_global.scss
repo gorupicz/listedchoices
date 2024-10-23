@@ -912,14 +912,14 @@ input[type="submit"],
 textarea {
   background-color: var(--white);
   border: 2px solid;
-  border-color: var(--border-color-9);
-  height: 65px;
+  border-color: var(--border-color-7);
+  height: 55px;
   box-shadow: none;
   padding-left: 20px;
   font-size: 16px;
-  color: var(--ltn__paragraph-color);
+  color: var(--ltn__primary-color-2);
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   border-radius: 0;
   padding-right: 40px;
 }
@@ -1355,9 +1355,13 @@ ul {
   }
 }
 
-.go-to-btn button {
-  background-color: transparent;
+.go-to-btn {
+  text-transform: uppercase;
+  button {
+    background-color: transparent;
+  }
 }
+  
 
 .go-to-btn button:hover {
   color: var(--ltn__secondary-color);
