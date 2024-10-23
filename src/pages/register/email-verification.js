@@ -24,7 +24,7 @@ function EmailVerification() {
   const handleCloseModal = () => {
     setShowModal(false);
     if (!isError) {
-      router.push('/dashboard');  // Redirect to dashboard on success
+      router.push('/my-account');  // Redirect to dashboard on success
     }
   };
 

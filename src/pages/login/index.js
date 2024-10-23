@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import validator from 'validator';
 import { Layout } from "@/layouts";
@@ -8,6 +8,8 @@ import Modal from "react-bootstrap/Modal";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import loginData from "@/data/login/index.json";  // Import text content
+import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
+import { FaGoogle } from "react-icons/fa";
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -17,7 +19,18 @@ function Login() {
   const [isError, setIsError] = useState(false);  // Track if it's an error message
   const [showModal, setShowModal] = useState(false);  // Modal state
   const [reopenForgotPassword, setReopenForgotPassword] = useState(false); // To track reopening Forgot Password modal
+  const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
+
+  // Check if the user is authenticated via Google or regular flow
+  useEffect(() => {
+    if (status === 'authenticated') {
+      if (session?.user?.isVerified) {
+        // Redirect to the dashboard if the user is verified
+        router.push('/my-account');
+      }
+    }
+  }, [session, status, router]);
 
   // Function to close all modals
   const handleCloseAllModals = () => {
@@ -112,7 +125,7 @@ function Login() {
     if (res.ok) {
       if (data.isVerified) {
         // If verified, proceed to dashboard
-        router.push('/dashboard');
+        router.push('/my-account');
       } else {
         // If not verified, show the modal and send the user to verification page
         handleShowModal(loginData.verificationCodeSentMessage, false);
@@ -130,7 +143,7 @@ function Login() {
           <div className="container">
             <Row>
               <Col xs={12}>
-                <div className="section-title-area text-center">
+                <div className="section-title-area text-center mb-0">
                   <h1 className="section-title">{loginData.pageTitle}</h1>
                 </div>
               </Col>
@@ -138,6 +151,14 @@ function Login() {
             <Row>
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
+                  <div className="text-center">
+                    <Button style={{ width:'100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} variant="primary" onClick={() => {
+                      signIn('google');
+                    }}>
+                      <FaGoogle style={{ marginRight: '10px' }}/> {loginData.googleSignInButtonLabel}
+                    </Button>
+                    <p className="separator checkbox-inline mt-10 mb-10"><small>{loginData.socialSignInOr}</small></p>
+                  </div>
                   <form onSubmit={handleSubmit}>
                     <input
                       type="text"
@@ -253,7 +274,7 @@ function Login() {
               <div className="row">
                 <div className="col-12">
                   <div className="modal-product-info text-center">
-                    <h4>{isError ? loginData.errorModalTitle : emailVerificationData.successModalTitle}</h4>
+                    <h4>{isError ? loginData.errorModalTitle : loginData.verificationModalTitle}</h4>
                     <p className="added-cart">{modalMessage}</p>
                     <div className="btn-wrapper mt-0">
                       <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
