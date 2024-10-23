@@ -17,11 +17,13 @@ import { useSession } from 'next-auth/react';  // Import the useSession hook
 import headerData from "@/data/header/index.json";  // Importing the JSON data
 
 const Header = function ({ SetToggleClassName, topbar }) {
-
   const { data: session, status } = useSession();  // Get the session and status
-  
   const router = useRouter();
   const isHomePage = router.pathname === '/';
+
+  // Add a condition to hide the user-menu on specific routes
+  const hideUserMenuPages = ['/login', '/register', '/my-account'];
+  const hideUserMenu = hideUserMenuPages.includes(router.pathname);
 
   const [searchFormOpener, searchFormOpenerSet] = useState(false);
   const [cartMenuOpener, cartMenuOpenerSet] = useState(false);
@@ -94,12 +96,8 @@ const Header = function ({ SetToggleClassName, topbar }) {
   return (
     <>
       <header className="ltn__header-area ltn__header-5">
-        {/* <!-- ltn__header-top-area start --> */}
         {topbar ? <HeaderTopBarOne /> : null}
 
-        {/* <!-- ltn__header-top-area end --> */}
-
-        {/* <!-- ltn__header-middle-area start --> */}
         <div
           className={clsx(
             "ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white",
@@ -131,148 +129,137 @@ const Header = function ({ SetToggleClassName, topbar }) {
                   </nav>
                 </div>
               </Col>
-              <Col className={`ltn__header-options ltn__header-options-2 mb-sm-20 ${isHomePage && "hide"}`}>
-                {/* <!-- header-search-1 --> */}
-                <div className="header-search-wrap">
-                  <div
-                    className={`header-search-1 ${
-                      searchFormOpener ? "search-open" : ""
-                    }`}
-                  >
-                    {/* search-open */}
-                    <div className="search-icon">
-                      <span onClick={searchForm}>
-                        <FaSearch className="icon-search for-search-show" />
-                      </span>
-                      <span onClick={searchForm}>
-                        <FaTimes className="icon-cancel  for-search-close" />
-                      </span>
+              {!hideUserMenu && (
+                <Col className={`ltn__header-options ltn__header-options-2 mb-sm-20 ${isHomePage && "hide"}`}>
+                  <div className="header-search-wrap">
+                    <div
+                      className={`header-search-1 ${
+                        searchFormOpener ? "search-open" : ""
+                      }`}
+                    >
+                      <div className="search-icon">
+                        <span onClick={searchForm}>
+                          <FaSearch className="icon-search for-search-show" />
+                        </span>
+                        <span onClick={searchForm}>
+                          <FaTimes className="icon-cancel for-search-close" />
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      className={`header-search-1-form ${
+                        searchFormOpener ? "search-open" : ""
+                      }`}
+                    >
+                      <form id="#" method="get" action="#">
+                        <input
+                          onChange={(e) => setQuery(e.target.value.toLowerCase())}
+                          type="text"
+                          name="search"
+                          placeholder={headerData.searchPlaceholder}
+                        />
+                        <button type="submit">
+                          <span>
+                            <FaSearch />
+                          </span>
+                        </button>
+                      </form>
+
+                      <ul className="searched-product-lists list-group">
+                        {currentItems.length > 0 ? (
+                          currentItems.map((product, key) => {
+                            const slug = productSlug(product.title);
+                            return (
+                              <li key={key} className="list-group-item">
+                                <Link href={`/shop/${slug}`}>
+                                  {product.title}
+                                </Link>
+                              </li>
+                            );
+                          })
+                        ) : (
+                          <li>{headerData.noProducts}</li>
+                        )}
+                      </ul>
                     </div>
                   </div>
-                  <div
-                    className={`header-search-1-form ${
-                      searchFormOpener ? "search-open" : ""
-                    }`}
-                  >
-                    <form id="#" method="get" action="#">
-                      <input
-                        onChange={(e) => setQuery(e.target.value.toLowerCase())}
-                        type="text"
-                        name="search"
-                        placeholder={headerData.searchPlaceholder}
-                      />
-                      <button type="submit">
-                        <span>
-                          <FaSearch />
-                        </span>
-                      </button>
-                    </form>
-
-                    <ul className="searched-product-lists list-group">
-                      {currentItems && currentItems ? (
-                        currentItems.map((product, key) => {
-                          const slug = productSlug(product.title);
-                          return (
-                            <li key={key} className="list-group-item">
-                              <Link href={`/shop/${slug}`}>
-                                {product.title}
-                              </Link>
-                            </li>
-                          );
-                        })
-                      ) : (
-                        <li>{headerData.noProducts}</li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-                {/* <!-- user-menu --> */}
-                <div className="ltn__drop-menu user-menu">
-                  <ul>
-                    <li>
-                      <Link href="#">
-                        <FaRegUser />
-                      </Link>
-                      <ul>
-                        <li>
-                          <Link href="/login">{headerData.signIn}</Link>
-                        </li>
-                        <li>
-                          <Link href="/register">{headerData.register}</Link>
-                        </li>
-                        {/* Only show My Account link if user is logged in */}
-                        {session && status === "authenticated" && (
+                  <div className="ltn__drop-menu user-menu">
+                    <ul>
+                      <li>
+                        <Link href="#">
+                          <FaRegUser />
+                        </Link>
+                        <ul>
                           <li>
-                            <Link href="/my-account">{headerData.myAccount}</Link>
+                            <Link href="/login">{headerData.signIn}</Link>
                           </li>
-                        )}
-                        {/* Wishlist - Redirect to login if user is not authenticated */}
+                          <li>
+                            <Link href="/register">{headerData.register}</Link>
+                          </li>
+                          {session && status === "authenticated" && (
+                            <li>
+                              <Link href="/my-account">{headerData.myAccount}</Link>
+                            </li>
+                          )}
                           <li>
                             <Link
                               href={session && status === "authenticated" ? "/wishlist" : "/login"}
                             >
                               {headerData.wishlist}
                             </Link>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-                {/* <!-- mini-cart --> */}
-                <div className="mini-cart-icon">
-                  <button
-                    onClick={cartMenu}
-                    className={`ltn__utilize-toggle ${
-                      cartMenuOpener ? "close" : ""
-                    }`}
-                  >
-                    <FaCartArrowDown />
-                    {/* <sup>6</sup> */}
-
-                    {cartItems.length > 0 ? (
-                      <sup>{cartItems.length}</sup>
-                    ) : (
-                      <sup>{headerData.emptyCart}</sup>
-                    )}
-                  </button>
-                </div>
-                {/* <!-- mini-cart --> */}
-                {/* <!-- Mobile Menu Button --> */}
-                <div className="mobile-menu-toggle d-xl-none">
-                  <button
-                    onClick={offcanVasToggler}
-                    className={`ltn__utilize-toggle ${
-                      offCanVastoggleBtn ? "close" : ""
-                    }`}
-                  >
-                    <svg viewBox="0 0 800 600">
-                      <path
-                        d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
-                        id="top"
-                      ></path>
-                      <path d="M300,320 L540,320" id="middle"></path>
-                      <path
-                        d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
-                        id="bottom"
-                        transform="translate(480, 320) scale(1, -1) translate(-480, -318) "
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-              </Col>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="mini-cart-icon">
+                    <button
+                      onClick={cartMenu}
+                      className={`ltn__utilize-toggle ${
+                        cartMenuOpener ? "close" : ""
+                      }`}
+                    >
+                      <FaCartArrowDown />
+                      {cartItems.length > 0 ? (
+                        <sup>{cartItems.length}</sup>
+                      ) : (
+                        <sup>{headerData.emptyCart}</sup>
+                      )}
+                    </button>
+                  </div>
+                  <div className="mobile-menu-toggle d-xl-none">
+                    <button
+                      onClick={offcanVasToggler}
+                      className={`ltn__utilize-toggle ${
+                        offCanVastoggleBtn ? "close" : ""
+                      }`}
+                    >
+                      <svg viewBox="0 0 800 600">
+                        <path
+                          d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
+                          id="top"
+                        ></path>
+                        <path d="M300,320 L540,320" id="middle"></path>
+                        <path
+                          d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
+                          id="bottom"
+                          transform="translate(480, 320) scale(1, -1) translate(-480, -318) "
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </Col>
+              )}
             </Row>
           </Container>
         </div>
-        {/* <!-- ltn__header-middle-area end --> */}
       </header>
 
-      {/* Utilize Mobile Menu */}
       <MobileMenu
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
 
-      {/* <!-- Utilize Mobile Menu End --> */}
       <div
         className="ltn__utilize-overlay"
         style={{

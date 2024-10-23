@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import Head from "next/head";
-import { Nunito_Sans,Poppins } from "next/font/google";
+import { Nunito_Sans, Poppins } from "next/font/google";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "@/store";
@@ -17,7 +17,7 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import "@/assets/sass/style.scss";
 import "@/assets/responsive.css";
 import { SessionProvider } from 'next-auth/react';
-
+import CookieConsent from "react-cookie-consent";
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -63,6 +63,21 @@ const MyApp = ({ Component, ...rest }) => {
             <Component {...props.pageProps} />
           </PersistGate>
         </Provider>
+        <CookieConsent
+          location="bottom"
+          buttonText="Accept"
+          declineButtonText="Decline"
+          enableDeclineButton
+          cookieName="mySiteCookieConsent"
+          style={{ background: "#2B373B", color: "#ffffff" }}
+          buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+          expires={365}
+        >
+          This website uses cookies to enhance the user experience.{" "}
+          <a href="/privacy-policy" style={{ color: "#ffffff", textDecoration: "underline" }}>
+            Learn more
+          </a>
+        </CookieConsent>
       </SessionProvider>
     </Fragment>
   );
