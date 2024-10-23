@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Verify Your Email",
+  "verificationCodePlaceholder": "Enter your 6-digit code",
+  "submitButtonText": "Verify",
+  "successMessage": "Your email has been successfully verified. Redirecting to your dashboard...",
+  "errorMessage": "Invalid verification code. Please try again.",
+  "successModalTitle": "Verification Successful",
+  "errorModalTitle": "Verification Failed",
+  "modalSubmitText": "Accept",
+  "goBackToLoginText": "GO BACK TO LOGIN"
+}

@@ -53,6 +53,7 @@
 /* ----------------------------------------------------
     Common CSS
 ---------------------------------------------------- */
+
 .ltn__social-media {
   ul {
     margin: 0;
@@ -287,6 +288,8 @@
   font-size: 44px;
   font-weight: 700;
   line-height: 1.3;
+  margin-top: 20px;
+  margin-bottom: 0px;
 
   span {
     color: var(--ltn__secondary-color);
@@ -3574,6 +3577,45 @@ blockquote {
   padding: 40px 50px 50px;
   position: relative;
   z-index: 1;
+
+  .separator {
+    -webkit-box-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 16px 0px !important;
+    white-space: nowrap !important;
+
+    &:before {
+      content: "" !important;
+      display: block !important;
+      width: 100% !important;
+      height: 1px !important;
+      background-color: var(--border-color-1);
+      margin-right: 16px !important;
+    }
+
+    &:after {
+      content: "" !important;
+      display: block !important;
+      width: 100% !important;
+      height: 1px !important;
+      background-color: var(--border-color-1);
+      margin-left: 16px !important;
+    }
+  }
+
+  .passwordInputContainer {
+    position: relative;
+  }
+
+  .passwordStrength {
+    position: absolute;
+    top: 35%;  /* Adjust this value as per your UI */
+    left: 20px;
+    font-size: 0.85rem;
+    color: var(--ltn__secondary-color);
+    margin-top: 5px;
+  }
 
   input::-webkit-input-placeholder {
     color: var(--ltn__color-1);
