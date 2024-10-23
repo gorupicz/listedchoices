@@ -53,8 +53,8 @@ const Footer = function () {
                         </div>
                         <div className="footer-address-info">
                           <p>
-                            <Link href="mailto:example@example.com">
-                              support@listedchoices.com
+                            <Link href="mailto:info@bolsadecasas.mx">
+                              info@bolsadecasas.mx
                             </Link>
                           </p>
                         </div>
