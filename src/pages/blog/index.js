@@ -4,7 +4,6 @@ import BlogItemTwo from "@/components/blog/blogItemTwo";
 import blogData from "@/data/blog";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-import BlogSideBar from "@/components/blog/sidebar";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug } from "@/lib/product";
 import ReactPaginate from "react-paginate";
@@ -37,10 +36,8 @@ function Blog() {
 
   return (
     <>
-      <Layout topbar={true}>
-        <ShopBreadCrumb title="News Feeds" sectionPace="" currentSlug="Blog" />
-
-        <div className="ltn__blog-area mb-120">
+      <Layout topbar={false}>
+        <div className="ltn__blog-area mb-120 pt-50">
           <Container>
             <Row>
               <Col xs={12} lg={8}>
@@ -88,11 +85,6 @@ function Blog() {
 
 
               <Col xs={12} lg={{ span: 4, order: 0 }}>
-                <BlogSideBar
-                  latestdBlogs={latestdBlogs}
-                  topRatedProducts={topRatedProducts}
-                  popularProducts={popularProducts}
-                />
               </Col>
             </Row>
           </Container>
