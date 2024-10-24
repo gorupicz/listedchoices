@@ -74,7 +74,7 @@ const MyApp = ({ Component, ...rest }) => {
           expires={365}
         >
           This website uses cookies to enhance the user experience.{" "}
-          <a href="/privacy-policy" style={{ color: "#ffffff", textDecoration: "underline" }}>
+          <a href="/blog/privacy-policy" style={{ color: "#ffffff", textDecoration: "underline" }}>
             Learn more
           </a>
         </CookieConsent>
