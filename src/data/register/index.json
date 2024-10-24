@@ -19,8 +19,8 @@
   "errorModalTitle": "Error",
   "successModalTitle": "Success",
   "errorSuccessModalSubmit": "Accept",
-  "verificationEmailSubject": "Your code is {code}",
-  "verificationEmailBody": "Enter this code to verify your email address: {code}",
+  "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
+  "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code.\n\nIf you didn’t attempt to sign in, you can safely ignore this email.",
   "verificationCodeSentMessage": "A six-digit verification code has been sent to your email.",
   "verificationModalTitle": "Verify your email"
 }
