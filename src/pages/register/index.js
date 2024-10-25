@@ -9,11 +9,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
-import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
-import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
-import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
-import { FaEnvelope } from 'react-icons/fa'; // Import the email icon
-import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
+import { signIn, useSession } from 'next-auth/react';
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaEnvelope } from 'react-icons/fa';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -23,14 +22,13 @@ function Register() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState(0); // for password strength meter
-  const [modalMessage, setModalMessage] = useState('');  // For modal message
-  const [isError, setIsError] = useState(false);  // For tracking error or success
-  const [showModal, setShowModal] = useState(false);  // For showing modal
-  const [showRegisterForm, setShowRegisterForm] = useState(false); // New state for form visibility
-  const { data: session, status } = useSession(); // Get session and status
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const [recaptchaToken, setRecaptchaToken] = useState(null); // State for reCAPTCHA token
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
@@ -72,7 +70,10 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
-    if (!recaptchaToken) {
+    // Execute reCAPTCHA v3
+    const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
+
+    if (!token) {
       handleShowModal(registerData.recaptchaErrorMessage, true);
       return;
     }
@@ -90,7 +91,7 @@ function Register() {
           last_name: cleanedLastName,
           subject: registerData.verificationEmailSubject,
           body: registerData.verificationEmailBody,
-          recaptchaToken, // Send reCAPTCHA token
+          recaptchaToken: token,
         }),
       });
 
@@ -112,9 +113,9 @@ function Register() {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setShowConfirmPassword(value.length > 0); // Show the confirm password field if there's input in the password field
-    const strength = getPasswordStrength(value);  // Get strength score
-    setPasswordStrength(strength);  // Update state with the strength score
+    setShowConfirmPassword(value.length > 0);
+    const strength = getPasswordStrength(value);
+    setPasswordStrength(strength);
   };
 
   // Modal functions to show and close modal
@@ -233,11 +234,6 @@ function Register() {
                           required
                         />
                       )}
-                      <ReCAPTCHA
-                        className="mb-10"
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} // Replace with your site key
-                        onChange={setRecaptchaToken}
-                      />
                       <div className="btn-wrapper text-center mt-0">
                         <label className="checkbox-inline mb-10">
                           {registerData.privacyPolicyConsentText}

@@ -12,7 +12,6 @@ import { signIn, useSession } from 'next-auth/react'; // Import both signIn and 
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
-import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -25,7 +24,6 @@ function Login() {
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
   const [showLoginForm, setShowLoginForm] = useState(false); // New state for login form visibility
-  const [recaptchaToken, setRecaptchaToken] = useState(null); // State for reCAPTCHA token
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
@@ -110,7 +108,10 @@ function Login() {
       return;
     }
 
-    if (!recaptchaToken) {
+    // Execute reCAPTCHA v3
+    const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'login' });
+
+    if (!token) {
       handleShowModal(loginData.recaptchaErrorMessage, true);
       return;
     }
@@ -126,7 +127,7 @@ function Login() {
         password, 
         subject: loginData.verificationEmailSubject, 
         body: loginData.verificationEmailSubject,
-        recaptchaToken, // Send reCAPTCHA token
+        recaptchaToken: token, // Send reCAPTCHA token
       }),
     });
 
@@ -146,11 +147,6 @@ function Login() {
       handleShowModal(data.message || loginData.defaultErrorMessage, true);  // Show error modal
     }
   };
-
-  useEffect(() => {
-    // Log the reCAPTCHA site key to the console
-    console.log("reCAPTCHA Site Key:", process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
-  }, []);
 
   return (
     <>
@@ -210,11 +206,6 @@ function Login() {
                           <small>{loginData.forgotPasswordText}</small>
                         </Link>
                       </p>
-                      <ReCAPTCHA
-                        className="mb-10"
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                        onChange={setRecaptchaToken}
-                      />
                       <div className="btn-wrapper mt-0 text-center">
                         <button className="continue-email-btn btn btn-block" type="submit">
                           {loginData.signInButtonText}

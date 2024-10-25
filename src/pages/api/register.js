@@ -13,13 +13,13 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=process.env.RECAPTCHA_SECRET_KEY&response=${recaptchaToken}`, // Replace with your secret key
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`, // Correctly access the secret key
     });
 
     const recaptchaData = await recaptchaResponse.json();
 
-    if (!recaptchaData.success) {
-      return res.status(400).json({ message: 'reCAPTCHA verification failed.' });
+    if (!recaptchaData.success || recaptchaData.score < 0.5) { // Check for success and score
+      return res.status(400).json({ message: 'reCAPTCHA verification failed. Please try again.' });
     }
 
     try {
