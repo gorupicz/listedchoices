@@ -147,6 +147,11 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    // Log the reCAPTCHA site key to the console
+    console.log("reCAPTCHA Site Key:", process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
+  }, []);
+
   return (
     <>
       <Layout topbar={false}>
@@ -207,7 +212,7 @@ function Login() {
                       </p>
                       <ReCAPTCHA
                         className="mb-10"
-                        sitekey="process.env.RECAPTCHA_SITE_KEY" // Replace with your site key
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                         onChange={setRecaptchaToken}
                       />
                       <div className="btn-wrapper mt-0 text-center">

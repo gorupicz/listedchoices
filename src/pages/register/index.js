@@ -235,7 +235,7 @@ function Register() {
                       )}
                       <ReCAPTCHA
                         className="mb-10"
-                        sitekey="process.env.RECAPTCHA_SITE_KEY" // Replace with your site key
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} // Replace with your site key
                         onChange={setRecaptchaToken}
                       />
                       <div className="btn-wrapper text-center mt-0">
