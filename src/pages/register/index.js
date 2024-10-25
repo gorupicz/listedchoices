@@ -13,6 +13,7 @@ import { signIn, useSession } from 'next-auth/react'; // Import both signIn and 
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the email icon
+import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -29,6 +30,7 @@ function Register() {
   const [showRegisterForm, setShowRegisterForm] = useState(false); // New state for form visibility
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
+  const [recaptchaToken, setRecaptchaToken] = useState(null); // State for reCAPTCHA token
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
@@ -70,6 +72,11 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
+    if (!recaptchaToken) {
+      handleShowModal(registerData.recaptchaErrorMessage, true);
+      return;
+    }
+
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -83,6 +90,7 @@ function Register() {
           last_name: cleanedLastName,
           subject: registerData.verificationEmailSubject,
           body: registerData.verificationEmailBody,
+          recaptchaToken, // Send reCAPTCHA token
         }),
       });
 
@@ -225,11 +233,16 @@ function Register() {
                           required
                         />
                       )}
+                      <ReCAPTCHA
+                        className="mb-10"
+                        sitekey="RECAPTCHA_SITE_KEY" // Replace with your site key
+                        onChange={setRecaptchaToken}
+                      />
                       <div className="btn-wrapper text-center mt-0">
                         <label className="checkbox-inline mb-10">
                           {registerData.privacyPolicyConsentText}
                         </label>
-                        <button className="theme-btn-1 btn reverse-color btn-block" type="submit">
+                        <button className="continue-email-btn btn btn-block" type="submit">
                           {registerData.createAccountButton}
                         </button>
                       </div>

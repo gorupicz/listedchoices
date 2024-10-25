@@ -1,10 +1,26 @@
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
+import fetch from 'node-fetch'; // Import node-fetch for server-side requests
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, first_name, last_name, subject, body } = req.body;
+    const { email, password, first_name, last_name, subject, body, recaptchaToken } = req.body;
+
+    // Verify reCAPTCHA
+    const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=RECAPTCHA_SECRET_KEY&response=${recaptchaToken}`, // Replace with your secret key
+    });
+
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success) {
+      return res.status(400).json({ message: 'reCAPTCHA verification failed.' });
+    }
 
     try {
       // Check if the user already exists

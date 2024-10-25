@@ -12,6 +12,7 @@ import { signIn, useSession } from 'next-auth/react'; // Import both signIn and 
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
+import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -24,6 +25,7 @@ function Login() {
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
   const [showLoginForm, setShowLoginForm] = useState(false); // New state for login form visibility
+  const [recaptchaToken, setRecaptchaToken] = useState(null); // State for reCAPTCHA token
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
@@ -108,6 +110,11 @@ function Login() {
       return;
     }
 
+    if (!recaptchaToken) {
+      handleShowModal(loginData.recaptchaErrorMessage, true);
+      return;
+    }
+
     // Send login request to check if credentials are correct
     const res = await fetch('/api/login', {
       method: 'POST',
@@ -118,7 +125,8 @@ function Login() {
         email, 
         password, 
         subject: loginData.verificationEmailSubject, 
-        body: loginData.verificationEmailSubject 
+        body: loginData.verificationEmailSubject,
+        recaptchaToken, // Send reCAPTCHA token
       }),
     });
 
@@ -197,8 +205,13 @@ function Login() {
                           <small>{loginData.forgotPasswordText}</small>
                         </Link>
                       </p>
+                      <ReCAPTCHA
+                        className="mb-10"
+                        sitekey="RECAPTCHA_SITE_KEY" // Replace with your site key
+                        onChange={setRecaptchaToken}
+                      />
                       <div className="btn-wrapper mt-0 text-center">
-                        <button className="theme-btn-1 btn btn-block" type="submit">
+                        <button className="continue-email-btn btn btn-block" type="submit">
                           {loginData.signInButtonText}
                         </button>
                       </div>

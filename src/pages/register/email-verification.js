@@ -71,7 +71,7 @@ function EmailVerification() {
                       required
                     />
                     <div className="btn-wrapper mt-0 text-center">
-                      <button className="theme-btn-1 btn btn-block" type="submit">
+                      <button className="continue-email-btn btn btn-block" type="submit">
                         {verificationData.submitButtonText}
                       </button>
                     </div>
