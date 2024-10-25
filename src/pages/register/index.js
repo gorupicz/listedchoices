@@ -10,7 +10,8 @@ import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
+import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -143,10 +144,15 @@ function Register() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
-                    <Button style={{ width:'100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} variant="primary" onClick={() => {
+                    <Button className="google-btn" style={{ width:'100%' }} variant="primary" onClick={() => {
                       signIn('google');
                     }}>
-                      <FaGoogle style={{ marginRight: '10px' }}/> {registerData.googleSignUpButtonLabel}
+                      <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
+                    </Button>
+                    <Button className="facebook-btn" style={{ width:'100%', marginTop: '10px' }} variant="primary" onClick={() => {
+                      signIn('facebook');
+                    }}>
+                      <span className="icon"><FaFacebook /></span> {registerData.facebookSignUpButtonLabel}
                     </Button>
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{registerData.socialSignUpOr}</small></p>
                   </div>

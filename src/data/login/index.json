@@ -2,6 +2,7 @@
   "pageTitle": "Sign In",
   "socialSignInOr": "Or",
   "googleSignInButtonLabel": "Sign In with Google",
+  "facebookSignInButtonLabel": "Sign up with Facebook",
   "emailPlaceholder": "Email*",
   "passwordPlaceholder": "Password*",
   "signInButtonText": "SIGN IN",

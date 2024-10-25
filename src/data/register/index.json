@@ -2,6 +2,7 @@
   "title": "Register",
   "socialSignUpOr": "Or",
   "googleSignUpButtonLabel": "Sign up with Google",
+  "facebookSignUpButtonLabel": "Sign up with Facebook",
   "firstNamePlaceholder": "First Name*",
   "lastNamePlaceholder": "Last Name*",
   "emailPlaceholder": "Email*",

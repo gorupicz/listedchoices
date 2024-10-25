@@ -219,3 +219,41 @@
 /* ----------------------------------------------------
     END
 ---------------------------------------------------- */
+
+/* Google Button Style - White Background */
+.google-btn {
+    background-color: #fff;
+    color: #4285F4;
+    border: 1px solid #4285F4;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; // Center the text
+    padding: 10px 20px;
+    &:hover {
+        background-color: #f1f1f1;
+        color: #4285F4;
+    }
+    .icon {
+        position: absolute;
+        left: 10px; // Adjust as needed
+    }
+}
+
+/* Facebook Button Style */
+.facebook-btn {
+    background-color: #1877F2; // Official Facebook blue
+    color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; // Center the text
+    padding: 10px 20px;
+    &:hover {
+        background-color: #2d4373;
+    }
+    .icon {
+        position: absolute;
+        left: 10px; // Adjust as needed
+    }
+}
