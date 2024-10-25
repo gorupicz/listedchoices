@@ -10,7 +10,9 @@ import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
+import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
+import { FaEnvelope } from 'react-icons/fa'; // Import the email icon
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -24,6 +26,7 @@ function Register() {
   const [modalMessage, setModalMessage] = useState('');  // For modal message
   const [isError, setIsError] = useState(false);  // For tracking error or success
   const [showModal, setShowModal] = useState(false);  // For showing modal
+  const [showRegisterForm, setShowRegisterForm] = useState(false); // New state for form visibility
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
 
@@ -134,7 +137,7 @@ function Register() {
           <Container>
             <Row>
               <Col xs={12}>
-                <div className="section-title-area text-center mb-20">
+                <div className="section-title-area text-center mb-30">
                   <h1 className="section-title">{registerData.title}</h1>
                 </div>
               </Col>
@@ -143,97 +146,101 @@ function Register() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
-                    <Button style={{ width:'100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} variant="primary" onClick={() => {
+                    <Button className="google-btn" style={{ width:'100%' }} variant="primary" onClick={() => {
                       signIn('google');
                     }}>
-                      <FaGoogle style={{ marginRight: '10px' }}/> {registerData.googleSignUpButtonLabel}
+                      <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
+                    </Button>
+                    <Button className="facebook-btn" style={{ width:'100%', marginTop: '10px' }} variant="primary" onClick={() => {
+                      signIn('facebook');
+                    }}>
+                      <span className="icon"><FaFacebook /></span> {registerData.facebookSignUpButtonLabel}
                     </Button>
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{registerData.socialSignUpOr}</small></p>
                   </div>
-                  <form onSubmit={handleSubmit}>
-                    <Row>
-                      <Col xs={12} md={6}>
-                        <input
-                          type="text"
-                          name="first_name"
-                          placeholder={registerData.firstNamePlaceholder}
-                          value={first_name}
-                          onChange={(e) => setFirstName(validator.trim(e.target.value))}
-                          required
-                        />
-                      </Col>
-                      <Col xs={12} md={6}>
-                        <input
-                          type="text"
-                          name="last_name"
-                          placeholder={registerData.lastNamePlaceholder}
-                          value={last_name}
-                          onChange={(e) => setLastName(validator.trim(e.target.value))}
-                          required
-                        />
-                      </Col>
-                    </Row>
-                    <input 
-                      type="text" 
-                      name="email" 
-                      placeholder={registerData.emailPlaceholder} 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-
-                    <div className="passwordInputContainer">
-                      <input
-                        type="password"
-                        name="password"
-                        placeholder={registerData.passwordPlaceholder}
-                        value={password}
-                        onChange={handlePasswordChange}  // Use the password handler
+                  {!showRegisterForm && (
+                    <div className="text-center">
+                    <Button className="continue-email-btn btn mb-10" style={{ width:'100%' }} onClick={() => setShowRegisterForm(!showRegisterForm)}>
+                      <span className="icon"><FaEnvelope /></span> {registerData.continueWithEmailButtonLabel}
+                    </Button>
+                  </div>
+                  )}
+                  {showRegisterForm && (
+                    <form onSubmit={handleSubmit}>
+                      <Row>
+                        <Col xs={12} md={6}>
+                          <input
+                            type="text"
+                            name="first_name"
+                            placeholder={registerData.firstNamePlaceholder}
+                            value={first_name}
+                            onChange={(e) => setFirstName(validator.trim(e.target.value))}
+                            required
+                          />
+                        </Col>
+                        <Col xs={12} md={6}>
+                          <input
+                            type="text"
+                            name="last_name"
+                            placeholder={registerData.lastNamePlaceholder}
+                            value={last_name}
+                            onChange={(e) => setLastName(validator.trim(e.target.value))}
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <input 
+                        type="text" 
+                        name="email" 
+                        placeholder={registerData.emailPlaceholder} 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                       />
-                      {password && (
-                        <p className="passwordStrength">
-                          <small>{registerData.passwordStrengthLabel}: {registerData.passwordStrengthLabels[passwordStrength]}</small>
-                        </p>
+
+                      <div className="passwordInputContainer">
+                        <input
+                          type="password"
+                          name="password"
+                          placeholder={registerData.passwordPlaceholder}
+                          value={password}
+                          onChange={handlePasswordChange}  // Use the password handler
+                          required
+                        />
+                        {password && (
+                          <p className="passwordStrength">
+                            <small>{registerData.passwordStrengthLabel}: {registerData.passwordStrengthLabels[passwordStrength]}</small>
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Conditionally render the Confirm Password field */}
+                      {showConfirmPassword && (
+                        <input
+                          type="password"
+                          name="confirmpassword"
+                          placeholder={registerData.confirmPasswordPlaceholder}
+                          value={confirm_password}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                        />
                       )}
-                    </div>
-
-                    {/* Conditionally render the Confirm Password field */}
-                    {showConfirmPassword && (
-                      <input
-                        type="password"
-                        name="confirmpassword"
-                        placeholder={registerData.confirmPasswordPlaceholder}
-                        value={confirm_password}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                      />
-                    )}
-                    <div className="btn-wrapper text-center mt-0">
-                      <label className="checkbox-inline mb-10">
-                        {registerData.privacyPolicyConsentText}
-                      </label>
-                      <button className="theme-btn-1 btn reverse-color btn-block" type="submit">
-                        {registerData.createAccountButton}
-                      </button>
-                    </div>
-                  </form>
+                      <div className="btn-wrapper text-center mt-0">
+                        <label className="checkbox-inline mb-10">
+                          {registerData.privacyPolicyConsentText}
+                        </label>
+                        <button className="theme-btn-1 btn reverse-color btn-block" type="submit">
+                          {registerData.createAccountButton}
+                        </button>
+                      </div>
+                    </form>
+                  )}
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
                       <Link href="/login"><b>{registerData.alreadyHaveAccountText}</b></Link>
                     </div>
                   </div>
                 </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-
-        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-          <Container>
-            <Row>
-              <Col xs={12}>
-                <CallToAction />
               </Col>
             </Row>
           </Container>

@@ -9,7 +9,9 @@ import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import loginData from "@/data/login/index.json";  // Import text content
 import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
+import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
+import { FaEnvelope } from 'react-icons/fa'; // Import the icon
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -21,6 +23,7 @@ function Login() {
   const [reopenForgotPassword, setReopenForgotPassword] = useState(false); // To track reopening Forgot Password modal
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
+  const [showLoginForm, setShowLoginForm] = useState(false); // New state for login form visibility
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
@@ -139,11 +142,11 @@ function Login() {
   return (
     <>
       <Layout topbar={false}>
-        <div className="ltn__login-area pb-65 pt-20">
-          <div className="container">
+        <div className="ltn__login-area pb-110 pt-20">
+          <Container>
             <Row>
               <Col xs={12}>
-                <div className="section-title-area text-center mb-0">
+                <div className="section-title-area text-center mb-10">
                   <h1 className="section-title">{loginData.pageTitle}</h1>
                 </div>
               </Col>
@@ -152,57 +155,61 @@ function Login() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <div className="text-center">
-                    <Button style={{ width:'100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} variant="primary" onClick={() => {
+                    <Button className="google-btn mb-10" onClick={() => {
                       signIn('google');
                     }}>
-                      <FaGoogle style={{ marginRight: '10px' }}/> {loginData.googleSignInButtonLabel}
+                      <span className="icon"><FcGoogle /></span> {loginData.googleSignInButtonLabel}
+                    </Button>
+                    <Button className="facebook-btn mb-10" onClick={() => {
+                      signIn('facebook');
+                    }}>
+                      <span className="icon"><FaFacebook /></span> {loginData.facebookSignInButtonLabel}
                     </Button>
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{loginData.socialSignInOr}</small></p>
                   </div>
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      type="text"
-                      name="email"
-                      placeholder={loginData.emailPlaceholder}
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder={loginData.passwordPlaceholder}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <p>
-                      <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
-                        <small>{loginData.forgotPasswordText}</small>
-                      </Link>
-                    </p>
-                    <div className="btn-wrapper mt-0 text-center">
-                      <button className="theme-btn-1 btn btn-block" type="submit">
-                        {loginData.signInButtonText}
-                      </button>
+                  {!showLoginForm && (
+                    <div className="text-center">
+                      <Button className="continue-email-btn btn mb-10" onClick={() => setShowLoginForm(true)}>
+                        <span className="icon"><FaEnvelope /></span> {loginData.continueWithEmailButtonLabel}
+                      </Button>
                     </div>
-                  </form>
+                  )}
+                  {showLoginForm && (
+                    <form onSubmit={handleSubmit}>
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder={loginData.emailPlaceholder}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder={loginData.passwordPlaceholder}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      <p>
+                        <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
+                          <small>{loginData.forgotPasswordText}</small>
+                        </Link>
+                      </p>
+                      <div className="btn-wrapper mt-0 text-center">
+                        <button className="theme-btn-1 btn btn-block" type="submit">
+                          {loginData.signInButtonText}
+                        </button>
+                      </div>
+                    </form>
+                  )}
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
                       <Link href="/register"><b>{loginData.dontHaveAccountText}</b></Link>
                     </div>
                   </div>
                 </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
-
-        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-          <Container>
-            <Row>
-              <Col xs={12}>
-                <CallToAction />
               </Col>
             </Row>
           </Container>

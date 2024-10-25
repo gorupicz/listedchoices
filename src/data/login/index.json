@@ -1,7 +1,9 @@
 {
   "pageTitle": "Sign In",
   "socialSignInOr": "Or",
-  "googleSignInButtonLabel": "Sign In with Google",
+  "googleSignInButtonLabel": "Continue with Google",
+  "facebookSignInButtonLabel": "Continue with Facebook",
+  "continueWithEmailButtonLabel": "Continue with Email",
   "emailPlaceholder": "Email*",
   "passwordPlaceholder": "Password*",
   "signInButtonText": "SIGN IN",
