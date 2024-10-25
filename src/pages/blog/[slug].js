@@ -19,7 +19,6 @@ import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
-import BlogSideBar from "@/components/blog/sidebar";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 
 function BlogtDetails({ blog }) {
@@ -38,19 +37,9 @@ function BlogtDetails({ blog }) {
 
   return (
     <>
-      <Layout topbar={true}>
-        {/* <!-- BREADCRUMB AREA START --> */}
-
-        <ShopBreadCrumb
-          title="News Details"
-          sectionPace=""
-          currentSlug="News Details"
-        />
-
-        {/* <!-- BREADCRUMB AREA END --> */}
-
+      <Layout topbar={false}>
         {/*  <!-- PAGE DETAILS AREA START (blog-details) -->*/}
-        <div className="ltn__page-details-area ltn__blog-details-area mb-120">
+        <div className="ltn__page-details-area ltn__blog-details-area mb-120  pt-50">
           <Container>
             <Row>
               <Col className="col-lg-8 col-md-12">
@@ -84,42 +73,25 @@ function BlogtDetails({ blog }) {
                         </li>
                       </ul>
                     </div>
-                    <p>{blog.fullDescription}</p>
+                    <div dangerouslySetInnerHTML={{ __html: blog.fullDescription }} />
                     <p>{blog.shortDescription}</p>
-                    <img src={`/img/blog/${blog.thumbImg}`} alt="Image" />
+                    {blog.thumbImg ? <img src={`/img/blog/${blog.thumbImg}`} alt="Image" /> : ""}
                     {blog.extraInformation.map((extra, key) => {
                       return (
                         <div key={key}>
                           <h2>{extra.title}</h2>
-                          <p>{extra.description}</p>
+                          <div dangerouslySetInnerHTML={{ __html: extra.description }} />
                           {extra.hr ? <hr /> : ""}
                         </div>
                       );
                     })}
-
-                    <h2>Setting the mood with incense</h2>
-
-                    <div className="list-item-with-icon-2">
-                      <ul>
-                        {blog.extraInformationList.map((single, key) => {
-                          return (
-                            <li key={key}>
-                              {" "}
-                              <span className="me-2">
-                                <FaCheck />
-                              </span>{" "}
-                              {single.name}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                    <blockquote>
+                    {blog.blockquote.quoteTitle ? <blockquote>
                       <h6 className="ltn__secondary-color mt-0">
                         BY {blog.blockquote.name}
                       </h6>
                       {blog.blockquote.quoteTitle}
-                    </blockquote>
+                    </blockquote> : ""}
+                    
                     <p>{blog.extraContent.description1}</p>
 
                     <img
@@ -135,17 +107,17 @@ function BlogtDetails({ blog }) {
 
                     <div className="row">
                       <div className="col-lg-6">
-                        <img
+                        {blog.extraContent.caption.img1 ? <img
                           src={`/img/service/${blog.extraContent.caption.img1}`}
                           alt="Image"
-                        />
+                        /> : ""}
                         <label>{blog.extraContent.caption.imageCaption}</label>
                       </div>
                       <div className="col-lg-6">
-                        <img
+                        {blog.extraContent.caption.img2 ? <img
                           src={`/img/service/${blog.extraContent.caption.img2}`}
                           alt="Image"
-                        />
+                        /> : ""}
                       </div>
                     </div>
                     <p>{blog.extraContent.caption.imageCaptionDetails}</p>
@@ -402,12 +374,7 @@ function BlogtDetails({ blog }) {
               </Col>
 
               <Col className="col-lg-4 col-md-12">
-                <BlogSideBar
-                  latestdBlogs={latestdBlogs}
-                  topRatedProducts={topRatedProducts}
-                  popularProducts={popularProducts}
-                  baseUrl="blog"
-                />
+                
               </Col>
             </Row>
           </Container>

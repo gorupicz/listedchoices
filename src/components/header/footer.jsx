@@ -108,9 +108,6 @@ const Footer = function () {
                         <Link href="/shop">All Products</Link>
                       </li>
                       <li>
-                        <Link href="/locations">Locations Map</Link>
-                      </li>
-                      <li>
                         <Link href="/faq">FAQ</Link>
                       </li>
                       <li>
@@ -136,9 +133,6 @@ const Footer = function () {
                       </li>
                       <li>
                         <Link href="/account">My account</Link>
-                      </li>
-                      <li>
-                        <Link href="/about">Terms & Conditions</Link>
                       </li>
                       <li>
                         <Link href="/about">Promotional Offers</Link>
@@ -214,13 +208,10 @@ const Footer = function () {
                 <div className="ltn__copyright-menu text-end">
                   <ul>
                     <li>
-                      <Link href="#">Terms & Conditions</Link>
+                      <Link href="/blog/terms-of-service">Terms of Service</Link>
                     </li>
                     <li>
-                      <Link href="#">Claim</Link>
-                    </li>
-                    <li>
-                      <Link href="#">Privacy & Policy</Link>
+                      <Link href="/blog/privacy-policy">Privacy Policy</Link>
                     </li>
                   </ul>
                 </div>

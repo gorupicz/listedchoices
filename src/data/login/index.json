@@ -18,8 +18,8 @@
   "errorSuccessModalSubmit": "Accept",
   "recoveryEmailSubject": "Password Recovery",
   "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}",
-  "verificationEmailSubject": "Your code is {code}",
-  "verificationEmailBody": "Enter this code to verify your email address: {code}",
+  "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
+  "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code. If you didn’t attempt to sign in, you can safely ignore this email. You can also set a password to sign in to your account.",
   "verificationCodeSentMessage": "A six-digit verification code has been sent to your email.",
   "verificationModalTitle": "Verify your email"
 }
