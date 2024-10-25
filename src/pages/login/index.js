@@ -207,7 +207,7 @@ function Login() {
                       </p>
                       <ReCAPTCHA
                         className="mb-10"
-                        sitekey="RECAPTCHA_SITE_KEY" // Replace with your site key
+                        sitekey="process.env.RECAPTCHA_SITE_KEY" // Replace with your site key
                         onChange={setRecaptchaToken}
                       />
                       <div className="btn-wrapper mt-0 text-center">

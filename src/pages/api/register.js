@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=RECAPTCHA_SECRET_KEY&response=${recaptchaToken}`, // Replace with your secret key
+      body: `secret=process.env.RECAPTCHA_SECRET_KEY&response=${recaptchaToken}`, // Replace with your secret key
     });
 
     const recaptchaData = await recaptchaResponse.json();
