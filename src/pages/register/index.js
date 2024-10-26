@@ -9,10 +9,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
-import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
-import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
-import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
-import { FaEnvelope } from 'react-icons/fa'; // Import the email icon
+import { signIn, useSession } from 'next-auth/react';
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaEnvelope } from 'react-icons/fa';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -22,12 +22,12 @@ function Register() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState(0); // for password strength meter
-  const [modalMessage, setModalMessage] = useState('');  // For modal message
-  const [isError, setIsError] = useState(false);  // For tracking error or success
-  const [showModal, setShowModal] = useState(false);  // For showing modal
-  const [showRegisterForm, setShowRegisterForm] = useState(false); // New state for form visibility
-  const { data: session, status } = useSession(); // Get session and status
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   // Check if the user is authenticated via Google or regular flow
@@ -70,6 +70,14 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
+    // Execute reCAPTCHA v3
+    const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
+
+    if (!token) {
+      handleShowModal(registerData.recaptchaErrorMessage, true);
+      return;
+    }
+
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -83,6 +91,7 @@ function Register() {
           last_name: cleanedLastName,
           subject: registerData.verificationEmailSubject,
           body: registerData.verificationEmailBody,
+          recaptchaToken: token,
         }),
       });
 
@@ -104,9 +113,14 @@ function Register() {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setShowConfirmPassword(value.length > 0); // Show the confirm password field if there's input in the password field
-    const strength = getPasswordStrength(value);  // Get strength score
-    setPasswordStrength(strength);  // Update state with the strength score
+    setShowConfirmPassword(value.length > 0);
+    const strength = getPasswordStrength(value);
+    setPasswordStrength(strength);
+  };
+
+    // Function to handle Google sign-in
+  const handleGoogleSignUp = () => {
+    signIn('google', { prompt: 'select_account' });
   };
 
   // Modal functions to show and close modal
@@ -146,9 +160,10 @@ function Register() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
-                    <Button className="google-btn" style={{ width:'100%' }} variant="primary" onClick={() => {
-                      signIn('google');
-                    }}>
+                    <Button 
+                      className="google-btn" 
+                      onClick={handleGoogleSignUp}
+                    >
                       <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
                     </Button>
                     <Button className="facebook-btn" style={{ width:'100%', marginTop: '10px' }} variant="primary" onClick={() => {
@@ -229,7 +244,7 @@ function Register() {
                         <label className="checkbox-inline mb-10">
                           {registerData.privacyPolicyConsentText}
                         </label>
-                        <button className="theme-btn-1 btn reverse-color btn-block" type="submit">
+                        <button className="continue-email-btn btn btn-block" type="submit">
                           {registerData.createAccountButton}
                         </button>
                       </div>

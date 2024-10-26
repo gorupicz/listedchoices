@@ -1,10 +1,27 @@
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
+import fetch from 'node-fetch'; // Import node-fetch for server-side requests
+import { sign } from 'jsonwebtoken';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, subject, body } = req.body;
+    const { email, password, subject, body, recaptchaToken } = req.body;
+
+    // Verify reCAPTCHA
+    const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`, // Correctly access the secret key
+    });
+
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      return res.status(400).json({ message: 'reCAPTCHA verification failed.' });
+    }
 
     try {
       // Fetch the user from the database by email
@@ -59,7 +76,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'Login successful', token, isVerified: true });
 
     } catch (dbError) {
-      console.error('Error during login:', dbError);  // Log the database error
+      console.error('Error during login:', dbError);
       return res.status(500).json({ message: 'Internal server error during login.' });
     }
   } else {
