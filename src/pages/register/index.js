@@ -156,7 +156,7 @@ function Register() {
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
                     <Button className="google-btn" style={{ width:'100%' }} variant="primary" onClick={() => {
-                      signIn('google');
+                      signIn('google', { prompt: 'select_account' });
                     }}>
                       <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
                     </Button>

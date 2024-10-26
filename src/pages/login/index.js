@@ -165,7 +165,7 @@ function Login() {
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <div className="text-center">
                     <Button className="google-btn mb-10" onClick={() => {
-                      signIn('google');
+  signIn('google', { prompt: 'select_account' });
                     }}>
                       <span className="icon"><FcGoogle /></span> {loginData.googleSignInButtonLabel}
                     </Button>
