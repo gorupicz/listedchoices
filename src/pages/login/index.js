@@ -99,6 +99,10 @@ function Login() {
     }
   };
 
+  const handleGoogleSignIn = () => {
+  signIn('google', { prompt: 'select_account' });
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -164,12 +168,14 @@ function Login() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <div className="text-center">
-                    <Button className="google-btn mb-10" onClick={() => {
-  signIn('google', { prompt: 'select_account' });
-                    }}>
+                    <Button 
+                      className="google-btn mb-10" 
+                      onClick={handleGoogleSignIn}
+                    >
                       <span className="icon"><FcGoogle /></span> {loginData.googleSignInButtonLabel}
                     </Button>
-                    <Button className="facebook-btn mb-10" onClick={() => {
+                    <Button className="facebook-btn mb-10" 
+                      onClick={() => {
                       signIn('facebook');
                     }}>
                       <span className="icon"><FaFacebook /></span> {loginData.facebookSignInButtonLabel}

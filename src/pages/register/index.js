@@ -118,6 +118,11 @@ function Register() {
     setPasswordStrength(strength);
   };
 
+    // Function to handle Google sign-in
+  const handleGoogleSignUp = () => {
+    signIn('google', { prompt: 'select_account' });
+  };
+
   // Modal functions to show and close modal
   const handleShowModal = (message, isError) => {
     setModalMessage(message);
@@ -155,9 +160,10 @@ function Register() {
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
-                    <Button className="google-btn" style={{ width:'100%' }} variant="primary" onClick={() => {
-                      signIn('google', { prompt: 'select_account' });
-                    }}>
+                    <Button 
+                      className="google-btn" 
+                      onClick={handleGoogleSignUp}
+                    >
                       <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
                     </Button>
                     <Button className="facebook-btn" style={{ width:'100%', marginTop: '10px' }} variant="primary" onClick={() => {
