@@ -220,56 +220,71 @@
     END
 ---------------------------------------------------- */
 
-/* Google Button Style - White Background */
-.google-btn {
-    width: 100%;
-    background-color: #fff;
-    color: #4285F4;
-    border: 1px solid #4285F4;
-    position: relative;
+
+/* Update button styles for mobile */
+@media only screen and (max-width: 767px) {
+  .google-btn, .facebook-btn, .continue-email-btn {
     display: flex;
     align-items: center;
-    justify-content: center; // Center the text
+    justify-content: center;
     padding: 10px 20px;
-    &:hover {
-        background-color: #f1f1f1;
-        color: #4285F4;
-    }
-    .icon {
+    position: relative;
+    font-size: 1rem; // Adjust font size if needed
+  }
+
+  .google-btn .icon, .facebook-btn .icon, .continue-email-btn .icon {
+    position: static; // Remove absolute positioning
+    margin-right: 10px; // Add space between icon and text
+  }
+}
+
+/* Shared button styles */
+.social-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  position: relative;
+  margin-bottom: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  .icon {
         position: absolute;
-        left: 10px; // Adjust as needed
+        left: 10px;
+        vertical-align: middle; // Ensure vertical alignment
+        display: flex;
+        align-items: center; // Center icon vertically
     }
+}
+
+/* Google Button Style */
+.google-btn {
+  background-color: #fff;
+  color: #4285F4;
+  border: 1px solid #4285F4;
+  &:hover {
+    background-color: #f1f1f1;
+    color: #4285F4;
+  }
 }
 
 /* Facebook Button Style */
 .facebook-btn {
-    width: 100%;
-    background-color: #1877F2; // Official Facebook blue
-    color: #fff;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center; // Center the text
-    padding: 10px 20px;
-    &:hover {
-        background-color: #2d4373;
-    }
-    .icon {
-        position: absolute;
-        left: 10px; // Adjust as needed
-    }
+  background-color: #1877F2;
+  color: #fff;
+  &:hover {
+    background-color: #2d4373;
+  }
 }
 
-.continue-email-btn {
-    width: 100%;
-    background-color: var(--ltn__primary-color);
-    color: var(--white);
-    padding: 10px 20px;
-    &:hover {
-        background-color: var(--ltn__secondary-color);
-    }
-    .icon {
-        position: absolute;
-        left: 10px;
-    }
+/* Email Button Style */
+.email-btn {
+  background-color: var(--ltn__primary-color);
+  color: var(--white);
+  &:hover {
+    background-color: var(--ltn__secondary-color);
+  }
 }
