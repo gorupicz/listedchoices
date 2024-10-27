@@ -161,24 +161,28 @@ function Register() {
                 <div className="account-login-inner ltn__form-box contact-form-box pt-10">
                   <div className="text-center">
                     <Button 
-                      className="google-btn" 
+                      className="social-btn google-btn" 
                       onClick={handleGoogleSignUp}
                     >
                       <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
                     </Button>
-                    <Button className="facebook-btn" style={{ width:'100%', marginTop: '10px' }} variant="primary" onClick={() => {
-                      signIn('facebook');
-                    }}>
+                    <Button 
+                      className="social-btn facebook-btn" 
+                      onClick={() => signIn('facebook')}
+                    >
                       <span className="icon"><FaFacebook /></span> {registerData.facebookSignUpButtonLabel}
                     </Button>
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{registerData.socialSignUpOr}</small></p>
                   </div>
                   {!showRegisterForm && (
                     <div className="text-center">
-                    <Button className="continue-email-btn btn mb-10" style={{ width:'100%' }} onClick={() => setShowRegisterForm(!showRegisterForm)}>
-                      <span className="icon"><FaEnvelope /></span> {registerData.continueWithEmailButtonLabel}
-                    </Button>
-                  </div>
+                      <Button 
+                        className="social-btn email-btn" 
+                        onClick={() => setShowRegisterForm(!showRegisterForm)}
+                      >
+                        <span className="icon"><FaEnvelope /></span> {registerData.continueWithEmailButtonLabel}
+                      </Button>
+                    </div>
                   )}
                   {showRegisterForm && (
                     <form onSubmit={handleSubmit}>
@@ -244,7 +248,7 @@ function Register() {
                         <label className="checkbox-inline mb-10">
                           {registerData.privacyPolicyConsentText}
                         </label>
-                        <button className="continue-email-btn btn btn-block" type="submit">
+                        <button className="email-btn social-btn btn" type="submit">
                           {registerData.createAccountButton}
                         </button>
                       </div>

@@ -169,22 +169,25 @@ function Login() {
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <div className="text-center">
                     <Button 
-                      className="google-btn mb-10" 
+                      className="social-btn google-btn" 
                       onClick={handleGoogleSignIn}
                     >
                       <span className="icon"><FcGoogle /></span> {loginData.googleSignInButtonLabel}
                     </Button>
-                    <Button className="facebook-btn mb-10" 
-                      onClick={() => {
-                      signIn('facebook');
-                    }}>
+                    <Button 
+                      className="social-btn facebook-btn" 
+                      onClick={() => signIn('facebook')}
+                    >
                       <span className="icon"><FaFacebook /></span> {loginData.facebookSignInButtonLabel}
                     </Button>
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{loginData.socialSignInOr}</small></p>
                   </div>
                   {!showLoginForm && (
                     <div className="text-center">
-                      <Button className="continue-email-btn btn mb-10" onClick={() => setShowLoginForm(true)}>
+                      <Button 
+                        className="social-btn email-btn" 
+                        onClick={() => setShowLoginForm(true)}
+                      >
                         <span className="icon"><FaEnvelope /></span> {loginData.continueWithEmailButtonLabel}
                       </Button>
                     </div>
@@ -213,7 +216,7 @@ function Login() {
                         </Link>
                       </p>
                       <div className="btn-wrapper mt-0 text-center">
-                        <button className="continue-email-btn btn btn-block" type="submit">
+                        <button className="email-btn social-btn btn" type="submit">
                           {loginData.signInButtonText}
                         </button>
                       </div>
