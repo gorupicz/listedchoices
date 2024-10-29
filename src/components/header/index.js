@@ -214,12 +214,16 @@ const Header = function ({ SetToggleClassName, topbar }) {
                           )}
                         </Link>
                         <ul>
-                          <li>
-                            <Link href="/login">{headerData.signIn}</Link>
-                          </li>
-                          <li>
-                            <Link href="/register">{headerData.register}</Link>
-                          </li>
+                          {(!session || status !== "authenticated") && (
+                            <>
+                              <li>
+                                <Link href="/login">{headerData.signIn}</Link>
+                              </li>
+                              <li>
+                                <Link href="/register">{headerData.register}</Link>
+                              </li>
+                            </>
+                          )}
                           {session && status === "authenticated" && (
                             <li>
                               <Link href="/my-account">{headerData.myAccount}</Link>
