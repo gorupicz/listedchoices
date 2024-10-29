@@ -122,22 +122,18 @@ const Header = function ({ SetToggleClassName, topbar }) {
         >
           <Container>
             <Row>
-              <Col>
-                <div className="site-logo-wrap">
-                  <div className="site-logo">
-                    <Link href="/">
-                      <Image
-                        src={headerData.logo}
-                        alt={headerData.logoAltText}
-                        width={185}
-                        height={77}
-                      />
-                    </Link>
-                  </div>
+              <Col className="site-logo-wrap" xs={12} md={6}>
+                <div className="site-logo">
+                  <Link href="/">
+                    <Image
+                      src={headerData.logo}
+                      alt={headerData.logoAltText}
+                      width={130}
+                      height={54}
+                    />
+                  </Link>
                 </div>
-              </Col>
-              <Col className="header-menu-column">
-                <div className="header-menu d-none d-xl-block">
+                <div className="header-menu d-none d-md-block">
                   <nav>
                     <div className="ltn__main-menu">
                       <MenuList addListing={false} />
