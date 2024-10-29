@@ -223,7 +223,6 @@ const Header = function ({ SetToggleClassName, topbar }) {
                               src={session.user.photograph}
                               alt="User Photograph"
                               className="user-photograph"
-                              style={{ width: '30px', height: '30px', borderRadius: '50%' }}
                             />
                           ) : (
                             <FaRegUser />

@@ -1,30 +1,28 @@
 import Link from "next/link";
-import Image from "next/image";
-import { FaPlus, FaAngleDoubleRight } from "react-icons/fa";
+import menuListData from "@/data/header/menuList/index.json"; // Import text content
 
 const MenuList = ({ addListing }) => {
   return (
     <ul>
       <li className="menu-icon">
         <Link href="/shop">
-          Invierte
+          {menuListData.loansLinkText}
         </Link>
-        
       </li>
       <li className="menu-icon">
-        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1" target="_blank" title="Comunidad de WhatsApp de Anfitriones de Airbnb">
-          Propietarios
+        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1" target="_blank" title={menuListData.whatsappCommunityLinkTitle}>
+          {menuListData.communityLinkText}
         </Link>
       </li>
       <li className="menu-icon">
         <Link href="/about">
-          Anfitriones
+          {menuListData.investorsLinkText}
         </Link>
       </li>
 
       {addListing ? (
         <li className="special-link">
-          <Link href="/add-listing">Add Listing</Link>
+          <Link href="/add-listing">{menuListData.addListingText}</Link>
         </li>
       ) : null}
     </ul>
