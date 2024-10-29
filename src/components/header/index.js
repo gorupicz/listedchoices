@@ -183,11 +183,35 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       </ul>
                     </div>
                   </div>
-                  <div className="ltn__drop-menu user-menu">
+                  <div className="mini-cart-icon">
+                    <button
+                      onClick={cartMenu}
+                      className={`ltn__utilize-toggle ${
+                        cartMenuOpener ? "close" : ""
+                      }`}
+                    >
+                      <FaCartArrowDown />
+                      {cartItems.length > 0 ? (
+                        <sup>{cartItems.length}</sup>
+                      ) : (
+                        <sup>{headerData.emptyCart}</sup>
+                      )}
+                    </button>
+                  </div>
+                                    <div className="ltn__drop-menu user-menu">
                     <ul>
                       <li>
                         <Link href="#">
-                          <FaRegUser />
+                          {session && session.user.photograph ? (
+                            <img
+                              src={session.user.photograph}
+                              alt="User Photograph"
+                              className="user-photograph"
+                              style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+                            />
+                          ) : (
+                            <FaRegUser />
+                          )}
                         </Link>
                         <ul>
                           <li>
@@ -212,21 +236,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       </li>
                     </ul>
                   </div>
-                  <div className="mini-cart-icon">
-                    <button
-                      onClick={cartMenu}
-                      className={`ltn__utilize-toggle ${
-                        cartMenuOpener ? "close" : ""
-                      }`}
-                    >
-                      <FaCartArrowDown />
-                      {cartItems.length > 0 ? (
-                        <sup>{cartItems.length}</sup>
-                      ) : (
-                        <sup>{headerData.emptyCart}</sup>
-                      )}
-                    </button>
-                  </div>
+
                   <div className="mobile-menu-toggle d-xl-none">
                     <button
                       onClick={offcanVasToggler}

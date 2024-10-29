@@ -41,6 +41,7 @@ export default NextAuth({
       if (account.provider === 'google' || account.provider === 'facebook') {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
+          select: { photograph: true },
         });
 
         if (existingUser) {
@@ -110,6 +111,7 @@ export default NextAuth({
     async session({ session, token, user }) {
       session.user.id = parseInt(token.id, 10);
       session.user.isVerified = token.isVerified;
+      session.user.photograph = token.photograph;
       return session;
     },
 
@@ -117,6 +119,13 @@ export default NextAuth({
       if (user) {
         token.id = parseInt(user.id, 10);
         token.isVerified = user.isVerified;
+        token.photograph = user.photograph;
+      } else if (account) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email },
+          select: { photograph: true },
+        });
+        token.photograph = dbUser?.photograph;
       }
       return token;
     },
