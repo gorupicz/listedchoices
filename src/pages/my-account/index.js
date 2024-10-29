@@ -3,8 +3,7 @@ import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaSignOutAlt, FaLock } from "react-icons/fa";
 import myAccountData from "@/data/my-account/index.json";
 import Link from "next/link";
-import { signOut, getSession } from "next-auth/react";
-import prisma from "@/lib/prisma"; // Ensure you have a prisma client setup
+import { signOut, getSession, useSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -18,23 +17,20 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: session.user.id, // Use the user ID from the session
-    },
-    select: {
-      first_name: true,
-    },
-  });
-
   return {
-    props: {
-      userName: user.first_name,
-    },
+    props: {},
   };
 }
 
-function MyAccount({ userName }) {
+function MyAccount() {
+  const { data: session, status } = useSession(); // Get session data
+
+  if (status === 'loading') {
+    return <div>Loading...</div>; // Handle loading state
+  }
+
+  const userName = session?.user?.first_name || 'Guest'; // Get first_name from session
+
   const handleLogout = () => {
     signOut({
       callbackUrl: "/login" // Redirects to the login page after sign-out

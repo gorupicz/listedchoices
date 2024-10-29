@@ -22,7 +22,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
   const isHomePage = router.pathname === '/';
 
   // Add a condition to hide the user-menu on specific routes
-  const hideUserMenuPages = ['/login', '/register', '/my-account'];
+  const hideUserMenuPages = ['/login', '/register'];
   const hideUserMenu = hideUserMenuPages.includes(router.pathname);
 
   const [searchFormOpener, searchFormOpenerSet] = useState(false);
