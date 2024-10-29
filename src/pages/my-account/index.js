@@ -3,9 +3,38 @@ import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaSignOutAlt, FaLock } from "react-icons/fa";
 import myAccountData from "@/data/my-account/index.json";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, getSession } from "next-auth/react";
+import prisma from "@/lib/prisma"; // Ensure you have a prisma client setup
 
-function MyAccount() {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id, // Use the user ID from the session
+    },
+    select: {
+      first_name: true,
+    },
+  });
+
+  return {
+    props: {
+      userName: user.first_name,
+    },
+  };
+}
+
+function MyAccount({ userName }) {
   const handleLogout = () => {
     signOut({
       callbackUrl: "/login" // Redirects to the login page after sign-out
@@ -46,10 +75,10 @@ function MyAccount() {
                       </Col>
                       <Col xs={12} lg={8}>
                         <Tab.Content>
-                          {myAccountData.tabContent.map((content, index) => (
-                            <Tab.Pane key={index} eventKey={content.eventKey}>
+                          {myAccountData.tabs.map((tab, index) => (
+                            <Tab.Pane key={index} eventKey={tab.eventKey}>
                               <div className="ltn__myaccount-tab-content-inner">
-                                <p>{content.text}</p>
+                                <p>{tab.text.replace("{userName}", userName)}</p>
                               </div>
                             </Tab.Pane>
                           ))}
