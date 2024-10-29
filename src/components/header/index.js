@@ -30,6 +30,22 @@ const Header = function ({ SetToggleClassName, topbar }) {
   const [overlayBtn, SetoverlayBtn] = useState(false);
   const [offCanVastoggleBtn, SetOffCanVastoggleBtn] = useState(false);
 
+  const [isValidPhoto, setIsValidPhoto] = useState(false);
+
+  useEffect(() => {
+    if (session && session.user.photograph) {
+      fetch(session.user.photograph)
+        .then(response => {
+          if (response.status === 200) {
+            setIsValidPhoto(true);
+          } else {
+            setIsValidPhoto(false);
+          }
+        })
+        .catch(() => setIsValidPhoto(false));
+    }
+  }, [session]);
+
   function offcanVasToggler() {
     SetToggleClassName(true);
     SetoverlayBtn(true);
@@ -202,7 +218,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                     <ul>
                       <li>
                         <Link href="#">
-                          {session && session.user.photograph ? (
+                          {session && isValidPhoto ? (
                             <img
                               src={session.user.photograph}
                               alt="User Photograph"
