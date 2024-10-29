@@ -3,9 +3,34 @@ import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaSignOutAlt, FaLock } from "react-icons/fa";
 import myAccountData from "@/data/my-account/index.json";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, getSession, useSession } from "next-auth/react";
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 function MyAccount() {
+  const { data: session, status } = useSession(); // Get session data
+
+  if (status === 'loading') {
+    return <div>Loading...</div>; // Handle loading state
+  }
+
+  const userName = session?.user?.first_name || 'Guest'; // Get first_name from session
+
   const handleLogout = () => {
     signOut({
       callbackUrl: "/login" // Redirects to the login page after sign-out
@@ -46,10 +71,10 @@ function MyAccount() {
                       </Col>
                       <Col xs={12} lg={8}>
                         <Tab.Content>
-                          {myAccountData.tabContent.map((content, index) => (
-                            <Tab.Pane key={index} eventKey={content.eventKey}>
+                          {myAccountData.tabs.map((tab, index) => (
+                            <Tab.Pane key={index} eventKey={tab.eventKey}>
                               <div className="ltn__myaccount-tab-content-inner">
-                                <p>{content.text}</p>
+                                <p>{tab.text.replace("{userName}", userName)}</p>
                               </div>
                             </Tab.Pane>
                           ))}
