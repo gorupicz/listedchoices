@@ -430,7 +430,7 @@
   left: 0;
   right: auto;
   overflow: hidden;
-  width: 100%;
+  width: 200%;
 }
 .mega-menu > li {
   float: left;
@@ -2327,4 +2327,13 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+
+.icon-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-text svg {
+  margin-right: 8px;
 }

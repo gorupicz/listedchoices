@@ -4,6 +4,19 @@ import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDoll
 import myAccountData from "@/data/my-account/index.json";
 import Link from "next/link";
 import { signOut, getSession, useSession } from "next-auth/react";
+import React from "react";
+
+// Map icon names to React components
+const iconMap = {
+    FaHome: FaHome,
+    FaUserAlt: FaUserAlt,
+    FaMapMarkerAlt: FaMapMarkerAlt,
+    FaList: FaList,
+    FaHeart: FaHeart,
+    FaMapMarked: FaMapMarked,
+    FaDollarSign: FaDollarSign,
+    FaLock: FaLock
+};
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -57,7 +70,7 @@ function MyAccount() {
                             {myAccountData.tabs.map((tab, index) => (
                               <Nav.Item key={index}>
                                 <Nav.Link eventKey={tab.eventKey}>
-                                  {tab.label} {tab.icon && <tab.icon />}
+                                  {tab.label} {tab.icon && React.createElement(iconMap[tab.icon])}
                                 </Nav.Link>
                               </Nav.Item>
                             ))}
