@@ -6,23 +6,59 @@ const MenuList = ({ addListing }) => {
     <ul>
       <li className="menu-icon">
         <Link href="/shop">
-          {menuListData.loansLinkText}
+          {menuListData.tabs[0].label}
         </Link>
+        <ul>
+          <li>
+            <Link href="/cart">{menuListData.tabs[0].subtabs[0].label}</Link>
+          </li>
+          <li>
+            <Link href="/wishlist">{menuListData.tabs[0].subtabs[1].label}</Link>
+          </li>
+          <li>
+            <Link href="/checkout">{menuListData.tabs[0].subtabs[2].label}</Link>
+          </li>
+        </ul>
       </li>
-      <li className="menu-icon">
-        <Link href="https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1" target="_blank" title={menuListData.whatsappCommunityLinkTitle}>
-          {menuListData.communityLinkText}
+      <li className="menu-icon mega-menu-parent">
+        <Link href={`${menuListData.tabs[1].link}`} target={menuListData.tabs[1].target} title={menuListData.tabs[1].title}>
+          {menuListData.tabs[1].label}
         </Link>
+        <ul className="mega-menu column-2">
+          <li>
+            <Link href={`${menuListData.tabs[1].subtabs[0].link}`} target={menuListData.tabs[1].subtabs[0].target} title={menuListData.tabs[1].subtabs[0].title}>
+              {menuListData.tabs[1].subtabs[0].label}
+            </Link>
+            <ul>
+              <li>
+                <Link href={`${menuListData.tabs[1].subtabs[1].link}`} target={menuListData.tabs[1].subtabs[1].target} title={menuListData.tabs[1].subtabs[1].title}>
+                  {menuListData.tabs[1].subtabs[1].label}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${menuListData.tabs[1].subtabs[2].link}`} target={menuListData.tabs[1].subtabs[2].target} title={menuListData.tabs[1].subtabs[2].title}>
+                  {menuListData.tabs[1].subtabs[2].label}
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+              <img 
+                src={menuListData.tabs[1].imgSrc} 
+                alt={menuListData.tabs[1].imgAlt} 
+              />
+          </li>
+        </ul>
       </li>
       <li className="menu-icon">
         <Link href="/about">
-          {menuListData.investorsLinkText}
+          {menuListData.tabs[2].label}
         </Link>
       </li>
 
       {addListing ? (
         <li className="special-link">
-          <Link href="/add-listing">{menuListData.addListingText}</Link>
+          <Link href="/add-listing">{menuListData.tabs[3].label}</Link>
         </li>
       ) : null}
     </ul>

@@ -1,7 +1,25 @@
 {
-  "investorsLinkText": "Investors",
-  "loansLinkText": "Your loan",
-  "communityLinkText": "Community",
-  "addListingText": "Add Listing",
-  "whatsappCommunityLinkTitle": "WhatsApp Comunnity for hosts and property managers"
+  "tabs": [
+    { "eventKey": "tab_1", "label": "Loans", "title": "A world of possibilities", "subtabs": [
+        { "eventKey": "subtab_1", "label": "Mortgage" },
+        { "eventKey": "subtab_2", "label": "Leasing" },
+        { "eventKey": "subtab_3", "label": "Factoring" } 
+    ] },
+    { 
+      "eventKey": "tab_2", 
+      "label": "Community", 
+      "link": "#",
+      "title": "",
+      "target": "",
+      "imgSrc": "img/slider/IMG_4867.png", 
+      "imgAlt": "#",
+      "subtabs": [
+        { "eventKey": "subtab_1", "label": "Communities", "link": "#", "title": "", "target": "" },
+        { "eventKey": "subtab_2", "label": "Comunidad de Anfitriones", "link": "https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1", "title": "WhatsApp Comunnity for hosts and property managers", "target": "_blank"  },
+        { "eventKey": "subtab_3", "label": "Club de Renta Vacacional", "link": "#", "title": "", "target": "" }
+      ]
+    },
+    { "eventKey": "tab_3", "label": "Investors" },
+    { "eventKey": "tab_4", "label": "Add Listing" }
+  ]
 }
