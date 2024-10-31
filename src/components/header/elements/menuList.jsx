@@ -2,6 +2,7 @@ import Link from "next/link";
 import menuListData from "@/data/header/menuList/index.json"; // Import text content
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaSignOutAlt, FaLock, FaFacebookF, FaWhatsapp, FaYoutube, FaInstagram, FaLinkedin } from "react-icons/fa";
 import React, { useState } from "react";
+import Image from 'next/image';
 
 // Map icon names to React components
 const iconMap = {
@@ -174,7 +175,15 @@ const MenuList = ({ addListing }) => {
             </ul>
           </li>
           <li>
-            <img src={hoveredImgSrc} alt={menuListData.tabs[1].imgAlt} />
+            {hoveredImgSrc && (
+              <Image
+                src={hoveredImgSrc.startsWith('http') ? hoveredImgSrc : `${process.env.NEXT_PUBLIC_BASE_URL}${hoveredImgSrc}`}
+                alt={menuListData.tabs[1].imgAlt}
+                layout="responsive"
+                width={500}
+                height={300}
+              />
+            )}
           </li>
         </ul>
       </li>
