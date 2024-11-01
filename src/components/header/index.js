@@ -19,8 +19,6 @@ import headerData from "@/data/header/index.json";  // Importing the JSON data
 const Header = function ({ SetToggleClassName, topbar }) {
   const { data: session, status } = useSession();  // Get the session and status
   const router = useRouter();
-  const isHomePage = router.pathname === '/';
-
   // Add a condition to hide the user-menu on specific routes
   const hideUserMenuPages = ['/login', '/register'];
   const hideUserMenu = hideUserMenuPages.includes(router.pathname);
@@ -143,7 +141,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                 </div>
               </Col>
               {!hideUserMenu && (
-                <Col className={`ltn__header-options ltn__header-options-2 mb-sm-20 ${isHomePage && "hide"}`}>
+                <Col className="ltn__header-options ltn__header-options-2 mb-sm-20 mt-20">
                   <div className="header-search-wrap">
                     <div
                       className={`header-search-1 ${
@@ -211,7 +209,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       )}
                     </button>
                   </div>
-                                    <div className="ltn__drop-menu user-menu">
+                  <div className="ltn__drop-menu user-menu">
                     <ul>
                       <li>
                         <Link href="#">
