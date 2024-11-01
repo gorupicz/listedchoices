@@ -5,13 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import HeaderTopBarOne from "./headerTopBar/headerTopBarStyleOne";
 import HeaderCartMenu from "./elements/headerCartMenu";
-import MobileMenu from "./elements/mobileMennu";
+import MobileMenu from "./elements/mobileMenu";
 import Container from "react-bootstrap/Container";
+import MenuList from "@/components/header/elements/menuList";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import clsx from "clsx";
 import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
-import MenuList from "@/components/header/elements/menuList";
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';  // Import the useSession hook
 import headerData from "@/data/header/index.json";  // Importing the JSON data
@@ -279,7 +279,14 @@ const Header = function ({ SetToggleClassName, topbar }) {
         </div>
       </header>
 
+      <HeaderCartMenu
+        cartMenu={cartMenu}
+        cartMenuOpener={cartMenuOpener}
+        closeSideBar={closeSideBar}
+      />
+
       <MobileMenu
+        offCanVastoggleBtn={offCanVastoggleBtn}
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
