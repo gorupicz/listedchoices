@@ -1,11 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   FaRegUser,
   FaRegHeart,
   FaShoppingCart,
   FaFacebookF,
-  FaTwitter,
   FaLinkedin,
   FaInstagram,
   FaSearch,
@@ -18,9 +16,10 @@ import {
   slideDown,
   slideToggle,
 } from "@/lib/product";
+import headerData from "@/data/header/index.json"; 
 import { useSelector } from "react-redux";
-import menuListData from '@/data/header/elements/menuIcon/index.json';
-import headerData from "@/data/header/index.json";
+import menuIcon from '@/data/header/elements/menuIcon/index.json';
+import megaMenu from '@/data/header/elements/megaMenu/index.json';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from "react";
 
@@ -85,6 +84,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
         <button onClick={closeSideBar} className="close close-button-mobile-menu" variant="secondary">
           <span aria-hidden="true">&times;</span>
         </button>
+
         <div className="ltn__utilize-menu-inner ltn__scrollbar">
           <div className="ltn__utilize-menu-head">
             <div className="site-logo">
@@ -104,7 +104,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           <div className="ltn__utilize-menu">
             <ul>
               <li>
-                <Link href={menuListData.tabs[0].link}>{menuListData.tabs[0].label}</Link>
+                <Link href={menuIcon.tabs[0].link}>{menuIcon.tabs[0].label}</Link>
                 <span
                   className="menu-expand"
                   onClick={onClickHandler}
@@ -112,18 +112,18 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
                 ></span>
                 <ul className="sub-menu">
                   <li>
-                    <Link href={menuListData.tabs[0].subtabs[0].link}>{menuListData.tabs[0].subtabs[0].label}</Link>
+                    <Link href={menuIcon.tabs[0].subtabs[0].link}>{menuIcon.tabs[0].subtabs[0].label}</Link>
                   </li>
                   <li>
-                    <Link href={menuListData.tabs[0].subtabs[1].link}>{menuListData.tabs[0].subtabs[1].label}</Link>
+                    <Link href={menuIcon.tabs[0].subtabs[1].link}>{menuIcon.tabs[0].subtabs[1].label}</Link>
                   </li>
                   <li>
-                    <Link href={menuListData.tabs[0].subtabs[2].link}>{menuListData.tabs[0].subtabs[2].label}</Link>
+                    <Link href={menuIcon.tabs[0].subtabs[2].link}>{menuIcon.tabs[0].subtabs[2].label}</Link>
                   </li>
                 </ul>
               </li>
               <li>
-                <Link href={menuListData.tabs[1].link}>{menuListData.tabs[1].label}</Link>
+                <Link href={megaMenu.tabs[0].link}>{megaMenu.tabs[0].label}</Link>
                 <span
                   className="menu-expand"
                   onClick={onClickHandler}
@@ -131,24 +131,80 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
                 ></span>
                 <ul className="sub-menu">
                   <li>
-                    <Link href={menuListData.tabs[1].subtabs[0].link}>{menuListData.tabs[1].subtabs[0].label}</Link>
+                    <Link href={megaMenu.tabs[0].subtabs[0].link}>{megaMenu.tabs[0].subtabs[0].label}</Link>
+                    <span
+                      className="menu-expand"
+                      onClick={onClickHandler}
+                      aria-hidden="true"
+                    ></span>
+                    <ul className="sub-menu">
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[0].label}</Link>
+                      </li>
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[1].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[1].label}</Link>
+                      </li>
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[2].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[2].label}</Link>
+                      </li>
+                    </ul>
                   </li>
                   <li>
-                    <Link href={menuListData.tabs[1].subtabs[1].link}>{menuListData.tabs[1].subtabs[1].label}</Link>
+                    <Link href={megaMenu.tabs[0].subtabs[1].link}>{megaMenu.tabs[0].subtabs[1].label}</Link>
+                    <span
+                      className="menu-expand"
+                      onClick={onClickHandler}
+                      aria-hidden="true"
+                    ></span>
+                    <ul className="sub-menu">
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[1].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[1].sub_subtabs[0].label}</Link>
+                      </li>
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[1].sub_subtabs[1].link}>{megaMenu.tabs[0].subtabs[1].sub_subtabs[1].label}</Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link href={megaMenu.tabs[0].subtabs[2].link}>{megaMenu.tabs[0].subtabs[2].label}</Link>
+                    <span
+                      className="menu-expand"
+                      onClick={onClickHandler}
+                      aria-hidden="true"
+                    ></span>
+                    <ul className="sub-menu">
+                      <li>
+                        <Link href={megaMenu.tabs[0].subtabs[2].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[2].sub_subtabs[0].label}</Link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link href={menuIcon.tabs[1].link}>{menuIcon.tabs[1].label}</Link>
+                <span
+                  className="menu-expand"
+                  onClick={onClickHandler}
+                  aria-hidden="true"
+                ></span>
+                <ul className="sub-menu">
+                  <li>
+                    <Link href={menuIcon.tabs[1].subtabs[0].link}>{menuIcon.tabs[1].subtabs[0].label}</Link>
+                  </li>
+                  <li>
+                    <Link href={menuIcon.tabs[1].subtabs[1].link}>{menuIcon.tabs[1].subtabs[1].label}</Link>
                   </li>
 
                   <li>
-                    <Link href={menuListData.tabs[1].subtabs[2].link}>{menuListData.tabs[1].subtabs[2].label}</Link>
+                    <Link href={menuIcon.tabs[1].subtabs[2].link}>{menuIcon.tabs[1].subtabs[2].label}</Link>
                   </li>
                   <li>
-                    <Link href={menuListData.tabs[1].subtabs[3].link}>{menuListData.tabs[1].subtabs[3].label}</Link>
+                    <Link href={menuIcon.tabs[1].subtabs[3].link}>{menuIcon.tabs[1].subtabs[3].label}</Link>
                   </li>
                 </ul>
               </li>
               <li>
-              </li>
-              <li>
-                <Link href={menuListData.tabs[2].link}>{menuListData.tabs[2].label}</Link>
+                <Link href={menuIcon.tabs[2].link}>{menuIcon.tabs[2].label}</Link>
               </li>
             </ul>
           </div>

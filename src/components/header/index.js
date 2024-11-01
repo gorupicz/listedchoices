@@ -124,8 +124,8 @@ const Header = function ({ SetToggleClassName, topbar }) {
                 <div className="site-logo">
                   <Link href="/">
                     <Image
-                      src={headerData.logo}
-                      alt={headerData.logoAltText}
+                      src="/img/logo.png"
+                      alt="Bolsa de Casas logo"
                       layout="responsive"
                       width={130}
                       height={54}
@@ -205,7 +205,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       {cartItems.length > 0 ? (
                         <sup>{cartItems.length}</sup>
                       ) : (
-                        <sup>{headerData.emptyCart}</sup>
+                        <sup>0</sup>
                       )}
                     </button>
                   </div>

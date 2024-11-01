@@ -1,12 +1,9 @@
 {
-  "logo": "/img/logo.png",
-  "logoAltText": "Bolsa de Casas logo",
   "searchPlaceholder": "Search here...",
   "noProducts": "No Products Found",
   "signIn": "Sign in",
   "register": "Register",
   "myAccount": "My Account",
   "wishlist": "Wishlist",
-  "shopingCart": "Shoping Cart",
-  "emptyCart": "0"
+  "shopingCart": "Shoping Cart"
 }
