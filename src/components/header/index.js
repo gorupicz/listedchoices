@@ -128,6 +128,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                     <Image
                       src={headerData.logo}
                       alt={headerData.logoAltText}
+                      layout="responsive"
                       width={130}
                       height={54}
                     />
