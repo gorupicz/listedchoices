@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import megaMenuData from '@/data/header/elements/megaMenu/index.json';
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaLock, FaFacebookF, FaWhatsapp, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Map icon names to React components
 const iconMap = {
@@ -78,7 +80,7 @@ const MegaMenu = ({ value }) => {
                     </li>
                 ))}
                 <li>
-                    {hoveredImgSrc && (
+                    {hoveredImgSrc ? (
                         <Image
                             src={hoveredImgSrc.startsWith('http') ? hoveredImgSrc : `${process.env.NEXT_PUBLIC_BASE_URL}${hoveredImgSrc}`}
                             alt={tab.imgAlt}
@@ -86,6 +88,8 @@ const MegaMenu = ({ value }) => {
                             width={500}
                             height={300}
                         />
+                    ) : (
+                        <Skeleton width={500} height={300} />
                     )}
                 </li>
             </ul>
