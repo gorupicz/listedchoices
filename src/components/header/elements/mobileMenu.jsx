@@ -18,8 +18,8 @@ import {
 } from "@/lib/product";
 import headerData from "@/data/header/index.json"; 
 import { useSelector } from "react-redux";
-import menuIcon from '@/data/header/elements/menuIcon/index.json';
-import megaMenu from '@/data/header/elements/megaMenu/index.json';
+import MobileMenuIcon from './mobileMenuIcon';
+import MobileMegaMenu from './mobileMegaMenu';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from "react";
 
@@ -103,109 +103,10 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           </div>
           <div className="ltn__utilize-menu">
             <ul>
-              <li>
-                <Link href={menuIcon.tabs[0].link}>{menuIcon.tabs[0].label}</Link>
-                <span
-                  className="menu-expand"
-                  onClick={onClickHandler}
-                  aria-hidden="true"
-                ></span>
-                <ul className="sub-menu">
-                  <li>
-                    <Link href={menuIcon.tabs[0].subtabs[0].link}>{menuIcon.tabs[0].subtabs[0].label}</Link>
-                  </li>
-                  <li>
-                    <Link href={menuIcon.tabs[0].subtabs[1].link}>{menuIcon.tabs[0].subtabs[1].label}</Link>
-                  </li>
-                  <li>
-                    <Link href={menuIcon.tabs[0].subtabs[2].link}>{menuIcon.tabs[0].subtabs[2].label}</Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link href={megaMenu.tabs[0].link}>{megaMenu.tabs[0].label}</Link>
-                <span
-                  className="menu-expand"
-                  onClick={onClickHandler}
-                  aria-hidden="true"
-                ></span>
-                <ul className="sub-menu">
-                  <li>
-                    <Link href={megaMenu.tabs[0].subtabs[0].link}>{megaMenu.tabs[0].subtabs[0].label}</Link>
-                    <span
-                      className="menu-expand"
-                      onClick={onClickHandler}
-                      aria-hidden="true"
-                    ></span>
-                    <ul className="sub-menu">
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[0].label}</Link>
-                      </li>
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[1].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[1].label}</Link>
-                      </li>
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[0].sub_subtabs[2].link}>{megaMenu.tabs[0].subtabs[0].sub_subtabs[2].label}</Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <Link href={megaMenu.tabs[0].subtabs[1].link}>{megaMenu.tabs[0].subtabs[1].label}</Link>
-                    <span
-                      className="menu-expand"
-                      onClick={onClickHandler}
-                      aria-hidden="true"
-                    ></span>
-                    <ul className="sub-menu">
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[1].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[1].sub_subtabs[0].label}</Link>
-                      </li>
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[1].sub_subtabs[1].link}>{megaMenu.tabs[0].subtabs[1].sub_subtabs[1].label}</Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <Link href={megaMenu.tabs[0].subtabs[2].link}>{megaMenu.tabs[0].subtabs[2].label}</Link>
-                    <span
-                      className="menu-expand"
-                      onClick={onClickHandler}
-                      aria-hidden="true"
-                    ></span>
-                    <ul className="sub-menu">
-                      <li>
-                        <Link href={megaMenu.tabs[0].subtabs[2].sub_subtabs[0].link}>{megaMenu.tabs[0].subtabs[2].sub_subtabs[0].label}</Link>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link href={menuIcon.tabs[1].link}>{menuIcon.tabs[1].label}</Link>
-                <span
-                  className="menu-expand"
-                  onClick={onClickHandler}
-                  aria-hidden="true"
-                ></span>
-                <ul className="sub-menu">
-                  <li>
-                    <Link href={menuIcon.tabs[1].subtabs[0].link}>{menuIcon.tabs[1].subtabs[0].label}</Link>
-                  </li>
-                  <li>
-                    <Link href={menuIcon.tabs[1].subtabs[1].link}>{menuIcon.tabs[1].subtabs[1].label}</Link>
-                  </li>
-
-                  <li>
-                    <Link href={menuIcon.tabs[1].subtabs[2].link}>{menuIcon.tabs[1].subtabs[2].label}</Link>
-                  </li>
-                  <li>
-                    <Link href={menuIcon.tabs[1].subtabs[3].link}>{menuIcon.tabs[1].subtabs[3].label}</Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link href={menuIcon.tabs[2].link}>{menuIcon.tabs[2].label}</Link>
-              </li>
+              <MobileMenuIcon eventKey="1" onClickHandler={onClickHandler} />
+              <MobileMegaMenu eventKey="1" onClickHandler={onClickHandler} />
+              <MobileMenuIcon eventKey="2" onClickHandler={onClickHandler} />
+              <MobileMenuIcon eventKey="3" onClickHandler={onClickHandler} />
             </ul>
           </div>
           <div className="ltn__utilize-buttons ltn__utilize-buttons-2">
