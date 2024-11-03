@@ -5,13 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import HeaderTopBarOne from "./headerTopBar/headerTopBarStyleOne";
 import HeaderCartMenu from "./elements/headerCartMenu";
-import MobileMenu from "./elements/mobileMennu";
+import MobileMenu from "./elements/mobileMenu";
 import Container from "react-bootstrap/Container";
+import MenuList from "@/components/header/elements/menuList";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import clsx from "clsx";
 import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
-import MenuList from "@/components/header/elements/menuList";
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';  // Import the useSession hook
 import headerData from "@/data/header/index.json";  // Importing the JSON data
@@ -19,8 +19,6 @@ import headerData from "@/data/header/index.json";  // Importing the JSON data
 const Header = function ({ SetToggleClassName, topbar }) {
   const { data: session, status } = useSession();  // Get the session and status
   const router = useRouter();
-  const isHomePage = router.pathname === '/';
-
   // Add a condition to hide the user-menu on specific routes
   const hideUserMenuPages = ['/login', '/register'];
   const hideUserMenu = hideUserMenuPages.includes(router.pathname);
@@ -122,22 +120,19 @@ const Header = function ({ SetToggleClassName, topbar }) {
         >
           <Container>
             <Row>
-              <Col>
-                <div className="site-logo-wrap">
-                  <div className="site-logo">
-                    <Link href="/">
-                      <Image
-                        src={headerData.logo}
-                        alt={headerData.logoAltText}
-                        width={185}
-                        height={77}
-                      />
-                    </Link>
-                  </div>
+              <Col className="site-logo-wrap" xs={12} md={6}>
+                <div className="site-logo">
+                  <Link href="/">
+                    <Image
+                      src="/img/logo.png"
+                      alt="Bolsa de Casas logo"
+                      layout="responsive"
+                      width={130}
+                      height={54}
+                    />
+                  </Link>
                 </div>
-              </Col>
-              <Col className="header-menu-column">
-                <div className="header-menu d-none d-xl-block">
+                <div className="header-menu d-none d-md-block">
                   <nav>
                     <div className="ltn__main-menu">
                       <MenuList addListing={false} />
@@ -146,7 +141,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                 </div>
               </Col>
               {!hideUserMenu && (
-                <Col className={`ltn__header-options ltn__header-options-2 mb-sm-20 ${isHomePage && "hide"}`}>
+                <Col className="ltn__header-options ltn__header-options-2 mb-sm-20 mt-20">
                   <div className="header-search-wrap">
                     <div
                       className={`header-search-1 ${
@@ -210,11 +205,11 @@ const Header = function ({ SetToggleClassName, topbar }) {
                       {cartItems.length > 0 ? (
                         <sup>{cartItems.length}</sup>
                       ) : (
-                        <sup>{headerData.emptyCart}</sup>
+                        <sup>0</sup>
                       )}
                     </button>
                   </div>
-                                    <div className="ltn__drop-menu user-menu">
+                  <div className="ltn__drop-menu user-menu">
                     <ul>
                       <li>
                         <Link href="#">
@@ -223,7 +218,6 @@ const Header = function ({ SetToggleClassName, topbar }) {
                               src={session.user.photograph}
                               alt="User Photograph"
                               className="user-photograph"
-                              style={{ width: '30px', height: '30px', borderRadius: '50%' }}
                             />
                           ) : (
                             <FaRegUser />
@@ -285,7 +279,14 @@ const Header = function ({ SetToggleClassName, topbar }) {
         </div>
       </header>
 
+      <HeaderCartMenu
+        cartMenu={cartMenu}
+        cartMenuOpener={cartMenuOpener}
+        closeSideBar={closeSideBar}
+      />
+
       <MobileMenu
+        offCanVastoggleBtn={offCanVastoggleBtn}
         offcanVasToggler={offcanVasToggler}
         closeSideBar={closeSideBar}
       />
