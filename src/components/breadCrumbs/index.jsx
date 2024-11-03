@@ -2,37 +2,51 @@ import Link from "next/link";
 import Image from "next/image";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaHome, FaAngleRight } from "react-icons/fa";
+import breadcrumbTexts from "../../data/breadcrumbs/index.json";
 
-const BreadCrumb = ({ title, currentSlug, sectionPace }) => {
+const BreadCrumb = ({ property, location, manager } ) => {
   return (
     <>
       <div
-        className={`ltn__breadcrumb-area text-left bg-overlay-white-30 bg-image ${sectionPace}`}
-        style={{ backgroundImage: `url("../img/bg/14.jpg")` }}
-      >
+        className="text-left section-bg-1-hero ltn__paragraph-color">
         <Container>
           <Row>
             <Col xs={12}>
               <div className="ltn__breadcrumb-inner">
-                <h1 className="page-title">{title}</h1>
                 <div className="ltn__breadcrumb-list">
                   <ul>
                     <li>
                       <Link href="/">
-                        <span className="ltn__secondary-color">
+                        <span>
                           <FaHome className="me-2" />
                         </span>
-                        <span className="me-2">Home</span>
                         <FaAngleRight />
                       </Link>
                     </li>
                     <li>
                       <Link href="/shop">
-                        <span className="me-2">Shop</span>
+                        <span className="me-2">{breadcrumbTexts.properties}</span>
                         <FaAngleRight />
                       </Link>
                     </li>
-                    <li>{currentSlug}</li>
+                    <li>
+                      <Link href="/shop">
+                        <span className="me-2">{location}</span>
+                        <FaAngleRight />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#">
+                        <span className="me-2">{property}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#">
+                        <span className="me-2">
+                          {breadcrumbTexts.visitInventory.replace("{manager}", manager)}
+                        </span>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>

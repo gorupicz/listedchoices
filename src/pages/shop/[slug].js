@@ -28,8 +28,6 @@ import {
   FaExclamationCircle,
   FaCircle
 } from "react-icons/fa";
-import BreadCrumb from "@/components/breadCrumbs";
-
 import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } from "@/lib/product";
@@ -235,7 +233,15 @@ const yearToDateTotalNights = () => {
 
   return (
     <>
-      <Layout topbar={false}>
+      <Layout 
+        topbar={false} 
+        breadcrumb={true} 
+        breadcrumbProps={{
+          property: productMONGO.name,
+          location: productMONGO.location,
+          manager: productMONGO.propertyManager.fullName
+        }}
+      >
         <Head>
           <title>{pageTitle}</title>
           <meta property="og:title" content={pageTitle} />
@@ -252,13 +258,6 @@ const yearToDateTotalNights = () => {
           isOpen={isOpen}
           videoId={productMONGO.videoId}
           onClose={() => setOpen(false)}
-        />
-        {/* <!-- BREADCRUMB AREA START --> */}
-{/*
-        <BreadCrumb
-          title="Product Details"
-          sectionPace="mb-0"
-          currentSlug={product.title}
         />
 
         {/* <!-- BREADCRUMB AREA END --> */}
