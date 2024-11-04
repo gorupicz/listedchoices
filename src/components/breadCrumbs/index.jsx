@@ -7,8 +7,7 @@ import breadcrumbTexts from "../../data/breadcrumbs/index.json";
 const BreadCrumb = ({ property, location, manager } ) => {
   return (
     <>
-      <div
-        className="text-left section-bg-1-hero ltn__paragraph-color">
+      <div className="text-left section-bg-1-hero ltn__paragraph-color hide-on-mobile">
         <Container>
           <Row>
             <Col xs={12}>
