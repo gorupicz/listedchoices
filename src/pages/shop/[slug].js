@@ -607,11 +607,8 @@ const yearToDateTotalNights = () => {
                       </div>
                     </div>
                   </div>
-
-
                   <h4 className="title-2">{propertyData.blueprint}</h4>
                   {/* <!-- APARTMENTS PLAN AREA START --> */}
-
                   <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
                     <Tab.Container defaultActiveKey="first">
                       <Tab.Content>
@@ -621,11 +618,10 @@ const yearToDateTotalNights = () => {
                               <div className="col-lg-7" style={{ width: `100%`, height: `312px` }}>
                                 <div className="apartments-plan-img">
                                   <Image 
-                                    src="/img/others/hunter.webp" 
+                                    src={productMONGO.blueprint} 
                                     alt="#" 
                                     fill={true}
                                     style={{objectFit: 'cover'}}
-
                                     />
                                 </div>
                               </div>
