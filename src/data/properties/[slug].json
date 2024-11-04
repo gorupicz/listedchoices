@@ -1,0 +1,64 @@
+{
+  "financials": {
+    "title": "Financials (Past 12 months)",
+    "rent": "Rent",
+    "expenses": "Operating, Financing, Legal & Mgmt Expenses",
+    "expensesTooltip": "Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not.",
+    "freeCashFlow": "Free Cash Flow",
+    "assetValuation": "Asset Valuation",
+    "returnPercentage": "Return %"
+  },
+  "vacationRentalPerformance": {
+    "title": "Vacation Rental Performance",
+    "occupancy": {
+      "title": "Occupancy",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "yearToDate": "Year to Date"
+    },
+    "adr": "ADR (Past 12 months)",
+    "adrTooltip": "The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)",
+    "revpar": "RevPAR (Past 12 months)",
+    "revparTooltip": "The revenue per available room (RevPAR) is a key performance indicator for vacation rental properties. It is calculated by multiplying the average daily rate (ADR) by the occupancy rate. RevPAR reflects the overall performance of a property in terms of revenue generation per available room, providing a comprehensive view of its financial health and market competitiveness."
+  },
+  "otherMetrics": "What other metrics would you like to see here?",
+  "location": "Location",
+  "amenities": "Amenities",
+  "propertyVideo": "Property Video",
+  "manager": {
+    "title": "Manager",
+    "name": "Manager Name",
+    "designation": "Manager Designation",
+    "description": "Manager Description",
+    "img": "Manager Image URL",
+    "rating": "Manager Rating"
+  },
+  "loginTooltip": "Login to access this information",
+  "blueprint": "Blueprint",
+  "relatedProperties": "Related Properties",
+  "amountAvailable": "Available",
+  "contactForm": {
+    "title": "Message {FirstName}",
+    "namePlaceholder": "Your Name*",
+    "emailPlaceholder": "Your e-Mail*",
+    "messagePlaceholder": "Write a message...",
+    "button": "Send Message"
+  },
+  "cacButton": {
+    "notLogged": "Login to unlock",
+    "loggedFollowing": "Fund or invest",
+    "loggedWaiting": "Pending",
+    "loggedNotFollowing": "Follow to unlock"
+  },
+  "topCategories": {
+    "title": "Top Categories",
+    "apartments": "Apartments",
+    "pictureStudio": "Picture Studio",
+    "office": "Office",
+    "luxaryVilas": "Luxary Vilas",
+    "duplexHouse": "Duplex House"
+  },
+  "popularProperties": {
+    "title": "Popular Properties"
+  }
+}

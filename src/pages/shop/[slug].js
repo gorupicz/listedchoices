@@ -34,7 +34,6 @@ import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } fr
 import products from "@/data/products.json";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
-import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
 import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
@@ -42,6 +41,8 @@ import ModalVideo from "react-modal-video";
 import { useRouter } from "next/router";
 import prisma from "@/lib/prisma";
 import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
+import { useSession } from 'next-auth/react';  // Import the useSession hook
+import propertyData from '@/data/properties/[slug].json';
 
 
 function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
@@ -231,6 +232,8 @@ const yearToDateTotalNights = () => {
     }
   }, [router.isReady, productJSON]);
 
+  const { data: session, status } = useSession();  // Get the session and status
+
   return (
     <>
       <Layout 
@@ -259,9 +262,6 @@ const yearToDateTotalNights = () => {
           videoId={productMONGO.videoId}
           onClose={() => setOpen(false)}
         />
-
-        {/* <!-- BREADCRUMB AREA END --> */}
-
         {/* <!-- IMAGE SLIDER AREA START (img-slider-3) --> */}
         <div className="ltn__img-slider-area mb-90">
           <Container fluid className="px-0">
@@ -342,70 +342,166 @@ const yearToDateTotalNights = () => {
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label>Rent:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
+                        <label>{propertyData.financials.rent}:</label>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
                       </li>
                       <li>
-                        <TooltipSpan title="Estimated expenses include property taxes, property insurance, management services, tax/audit expenses, LLC registration expenses, and interest if leveraged. Additionally, our model accounts for estimated repairs and maintenance costs equal to 6% of rent collected, and a vacancy expense allocation that assumes 15 days per year, whether incurred or not." id="expenses">
+                        <TooltipSpan title="{propertyData.financials.expensesTooltip}" id="expenses">
                           <label> 
-                            Operating, Financing, Legal & Mgmt Expenses{' '}
-                            <FaExclamationCircle />
-                          </label>
-                        </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <label>Free Cash Flow / Dividend:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
-                      </li>
-                      <li>
-                        <label>Asset Valuation:</label>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
-                      </li>
-                      <li>
-                        <label>Return %:</label> <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)/productMONGO.price*100)}%</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <h4 className="title-2">Vacation Rental Performance</h4>
-                  <div className="property-detail-info-list section-bg-1 clearfix mb-60">
-                    <ul>
-                      <li>
-                        <label><b>Occupancy</b></label>
-                      </li>
-                      <li>
-                        <label>Last month:</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.occupancy.lastMonthNights / 30 *100)}%</span>
-                      </li>
-                      <li>
-                        <label>Last 3 months:</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
-                      </li>
-                      <li>
-                        <label>Year to date:</label>
-                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <TooltipSpan title="The average daily rate (ADR) measures the average rental revenue earned for an occupied room per day. Multiplying the ADR by the occupancy rate equals the revenue per available room (RevPAR)" id="adr">
-                        <label>ADR (Past 12 months){' '}
+                            {propertyData.financials.expenses}:{' '}
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan>
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <label>{propertyData.financials.freeCashFlow}:</label>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
                       </li>
                       <li>
-                        <TooltipSpan title="RevPAN stands for Revenue per Available Night. Available nights are defined as nights that can be sold for a property compared to unavailable nights. Unavailable nights are when maintenance, cleaning, or renovation is taking place at the property." id="revpan">
+                        <label>{propertyData.financials.assetValuation}:</label>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      </li>
+                      <li>
+                        <label>{propertyData.financials.returnPercentage}:</label> 
+                          <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format((productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)/productMONGO.price*100)}%</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <h4 className="title-2">{propertyData.vacationRentalPerformance.title}</h4>
+                  <div className="property-detail-info-list section-bg-1 clearfix mb-60">
+                    <ul>
+                      <li>
+                        <label><b>{propertyData.vacationRentalPerformance.occupancy.title}</b></label>
+                      </li>
+                      <li>
+                        <label>{propertyData.vacationRentalPerformance.occupancy.lastMonth}</label>
+                        <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.occupancy.lastMonthNights / 30 *100)}%</span>
+                      </li>
+                      <li>
+                        <label>{propertyData.vacationRentalPerformance.occupancy.last3Months}</label>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      </li>
+                      <li>
+                        <label>{propertyData.vacationRentalPerformance.occupancy.yearToDate}</label>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <TooltipSpan title={propertyData.vacationRentalPerformance.adrTooltip} id="adr">
+                        <label>{propertyData.vacationRentalPerformance.adr}{' '}
+                            <FaExclamationCircle />
+                          </label>
+                        </TooltipSpan>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      </li>
+                      <li>
+                        <TooltipSpan title={propertyData.vacationRentalPerformance.revparTooltip} id="revpan">
                           <label> 
-                            RevPAR (Past 12 months){' '}
+                            {propertyData.vacationRentalPerformance.revpar}{' '}
                             <FaExclamationCircle />
                           </label>
                         </TooltipSpan> 
-                        <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
+                        {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
                       </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
@@ -413,14 +509,14 @@ const yearToDateTotalNights = () => {
                             href="https://forms.gle/27foVLZWB7nhufNC9"
                             target="_blank"
                           >
-                            What other metrics would you like to see here?
+                            {propertyData.otherMetrics}
                           </Link>
                         </label>
                       </li>
                     </ul>
                   </div>
 
-                  <h4 className="title-2">Location</h4>
+                  <h4 className="title-2">{propertyData.location}</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
                       src={`${productMYSQL.google_maps}`}
@@ -430,129 +526,9 @@ const yearToDateTotalNights = () => {
                       allowFullScreen=""
                     ></iframe>
                   </div>
-                  {/* <!--  
-                  <h4 className="title-2">Facts and Features</h4>
-                  <div className="property-detail-feature-list clearfix mb-45">
-                    <ul>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Living Room</h6>
-                            <small>{product.factsAndFeatures.livingRoom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Garage</h6>
-                            <small>{product.factsAndFeatures.garage}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Dining Area</h6>
-                            <small>{product.factsAndFeatures.diningArea}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Bedroom</h6>
-                            <small>{product.factsAndFeatures.bedroom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Bathroom</h6>
-                            <small>{product.factsAndFeatures.bathroom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Gym Area</h6>
-                            <small>{product.factsAndFeatures.gymArea}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Garden</h6>
-                            <small>{product.factsAndFeatures.garden}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Parking</h6>
-                            <small>{product.factsAndFeatures.parking}</small>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                   --> */}
-                   {/* <!--
-                  <h4 className="title-2">From Our Gallery</h4>
-                  <div className="ltn__property-details-gallery mb-30">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Link
-                          href={`/img/others/${product.gallery.img1}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img1}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                        <Link
-                          href={`/img/others/${product.gallery.img2}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img2}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                      </div>
-                      <div className="col-md-6">
-                        <Link
-                          href={`/img/others/${product.gallery.img3}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img3}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  --> */}
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
                   
-                  <h4 className="title-2">Property Video</h4>
+                  <h4 className="title-2">{propertyData.propertyVideo}</h4>
                   <div
                     className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
                     style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
@@ -565,7 +541,7 @@ const yearToDateTotalNights = () => {
                     </button>
                   </div>
                   
-                  <h4 className="title-2 mb-10">Amenities</h4>
+                  <h4 className="title-2 mb-10">{propertyData.amenities}</h4>
 
                   <div className="property-details-amenities mb-60">
                     <div className="row">
@@ -633,21 +609,11 @@ const yearToDateTotalNights = () => {
                   </div>
 
 
-                  <h4 className="title-2">Blueprint</h4>
+                  <h4 className="title-2">{propertyData.blueprint}</h4>
                   {/* <!-- APARTMENTS PLAN AREA START --> */}
 
                   <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
                     <Tab.Container defaultActiveKey="first">
-                      {/* <!--
-                      <div className="ltn__tab-menu ltn__tab-menu-3">
-                        <Nav className="nav">
-                          <Nav.Link eventKey="first">First Floor</Nav.Link>
-                          <Nav.Link eventKey="second">Second Floor</Nav.Link>
-                          <Nav.Link eventKey="third">Third Floor</Nav.Link>
-                          <Nav.Link eventKey="fourth">Top Garden</Nav.Link>
-                        </Nav>
-                      </div>
-                      --> */}
                       <Tab.Content>
                         <Tab.Pane eventKey="first">
                           <div className="ltn__apartments-tab-content-inner">
@@ -663,227 +629,6 @@ const yearToDateTotalNights = () => {
                                     />
                                 </div>
                               </div>
-                              {/* <!--
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>First Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                          --> */}
-                              {/* <!--
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
-                                          </li>
-                                          <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Belcony/Pets</label>
-                                            <span>Allowed</span>
-                                          </li>
-                                          <li>
-                                            <label>Lounge</label>
-                                            <span>650 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              --> */}
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="second">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Second Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
-                                          </li>
-                                          <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
-                                          </li>
-                                          <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="third">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Third Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
-                                          </li>
-                                          <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
-                                          </li>
-                                          <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="fourth">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Top Garden</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
-                                          </li>
-                                          <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
-                                          </li>
-                                          <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                             </div>
                           </div>
                         </Tab.Pane>
@@ -891,288 +636,7 @@ const yearToDateTotalNights = () => {
                     </Tab.Container>
                   </div>
 
-                  {/* <!--
-                  <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
-                    
-                  
-                    <h4 className="title-2">Guests Reviews</h4>
-                    <div className="product-ratting">
-                      <ul>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaRegStar />
-                          </a>
-                        </li>
-                        <li className="review-total">
-                          <a href="#"> ( ${product.vacationRentalDetails.reviews} Reviews )</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <hr />
-                    {/* <!-- comment-area --> */}
-                    {/* <!--
-                    <div className="ltn__comment-area mb-30">
-                      <div className="ltn__comment-inner">
-                        <ul>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/1.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 3, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/3.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 2, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/2.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 2, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* <!-- comment-reply --> */}
-                    {/* <!--
-                    <div className="ltn__comment-reply-area ltn__form-box mb-30">
-                      <form action="#">
-                        <h4>Add a Review</h4>
-                        <div className="mb-30">
-                          <div className="add-a-review">
-                            <h6>Your Ratings:</h6>
-                            <div className="product-ratting">
-                              <ul>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="input-item input-item-textarea ltn__custom-icon">
-                          <textarea placeholder="Type your comments...."></textarea>
-                          <span className="inline-icon">
-                            <FaPencilAlt />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-name ltn__custom-icon">
-                          <input type="text" placeholder="Type your name...." />
-                          <span className="inline-icon">
-                            <FaUserAlt />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-email ltn__custom-icon">
-                          <input
-                            type="email"
-                            placeholder="Type your email...."
-                          />
-                          <span className="inline-icon">
-                            <FaEnvelope />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-website ltn__custom-icon">
-                          <input
-                            type="text"
-                            name="website"
-                            placeholder="Type your website...."
-                          />
-                          <span className="inline-icon">
-                            <FaGlobe />
-                          </span>
-                        </div>
-                        <label className="mb-0">
-                          <input type="checkbox" name="agree" /> Save my name,
-                          email, and website in this browser for the next time I
-                          comment.
-                        </label>
-                        <div className="btn-wrapper">
-                          <button
-                            className="btn theme-btn-1 btn-effect-1 text-uppercase"
-                            type="submit"
-                          >
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  --> */}
-
-                  <h4 className="title-2">Related Properties</h4>
+                  <h4 className="title-2">{propertyData.relatedProperties}</h4>
                   <Row>
                     {relatedProducts.map((data, key) => {
                       const slug = productSlug(data.title);
@@ -1218,299 +682,36 @@ const yearToDateTotalNights = () => {
                   )}>
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)}</span> Available
+                      {
+                          session && status === "authenticated" ? (
+                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
+                          ) : (
+                            <Link href="/register">
+                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
+                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                                obfusca
+                              </span>
+                            </TooltipSpan>
+                            </Link>
+                          )
+                        }
+                      {propertyData.amountAvailable}
                     </h4>
-                    <Link
-                      href="https://formless.ai/c/O8dMU4mHBc7N"
+                    <button
                       className="theme-btn-1 btn btn-effect-1"
                       id="main-call-to-action-at-product-page-for-gtm"
+                      disabled={session && status === "authenticated"}
+                      onClick={() => {
+                        if (!(session && status === "authenticated")) {
+                          router.push('/register');
+                        }
+                      }}
                     >
-                      Sign up to invest
-                    </Link>
+                      {session && status === "authenticated" 
+                        ? propertyData.cacButton.loggedWaiting 
+                        : propertyData.cacButton.notLogged}
+                    </button>
                   </div>
-
-                  {/* <!-- Guests Reviews Widget --> */}
-                  {/* <!-- 
-                  <div className="widget ltn__author-widget">
-                    <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
-                      <h4 className="title-2">Guests Reviews</h4>
-                      <div className="product-ratting">
-                        <ul>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaRegStar />
-                            </a>
-                          </li>
-                          <li className="review-total">
-                            <a href="#"> ( {product.vacationRentalDetails.reviews} Reviews )</a>
-                          </li>
-                        </ul>
-                      </div>
-                      <hr />
-                      {/* <!-- comment-area --> */}
-                      {/* <!-- 
-                      <div className="ltn__comment-area mb-30">
-                        <div className="ltn__comment-inner">
-                          <ul>
-                            <li>
-                              <div className="ltn__comment-item clearfix">
-                                <div className="ltn__commenter-img">
-                                  <img src="/img/testimonial/1.jpg" alt="Image" />
-                                </div>
-                                <div className="ltn__commenter-comment">
-                                  <h6>
-                                    <a href="#">Adam Smit</a>
-                                  </h6>
-                                  <div className="product-ratting">
-                                    <ul>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaRegStar />
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Doloribus, omnis fugit
-                                    corporis iste magnam ratione.
-                                  </p>
-                                  <span className="ltn__comment-reply-btn">
-                                    September 3, 2020
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="ltn__comment-item clearfix">
-                                <div className="ltn__commenter-img">
-                                  <img src="/img/testimonial/3.jpg" alt="Image" />
-                                </div>
-                                <div className="ltn__commenter-comment">
-                                  <h6>
-                                    <a href="#">Adam Smit</a>
-                                  </h6>
-                                  <div className="product-ratting">
-                                    <ul>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaRegStar />
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Doloribus, omnis fugit
-                                    corporis iste magnam ratione.
-                                  </p>
-                                  <span className="ltn__comment-reply-btn">
-                                    September 2, 2020
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="ltn__comment-item clearfix">
-                                <div className="ltn__commenter-img">
-                                  <img src="/img/testimonial/2.jpg" alt="Image" />
-                                </div>
-                                <div className="ltn__commenter-comment">
-                                  <h6>
-                                    <a href="#">Adam Smit</a>
-                                  </h6>
-                                  <div className="product-ratting">
-                                    <ul>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaStar />
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a href="#">
-                                          <FaRegStar />
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Doloribus, omnis fugit
-                                    corporis iste magnam ratione.
-                                  </p>
-                                  <span className="ltn__comment-reply-btn">
-                                    September 2, 2020
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      {/* <!-- comment-reply --> */}
-                      {/* <!-- 
-                      <div className="ltn__comment-reply-area ltn__form-box mb-30">
-                        <form action="#">
-                          <h4>Add a Review</h4>
-                          <div className="mb-30">
-                            <div className="add-a-review">
-                              <h6>Your Ratings:</h6>
-                              <div className="product-ratting">
-                                <ul>
-                                  <li>
-                                    <a href="#">
-                                      <FaStar />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <FaStar />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <FaStar />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <FaStar />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <FaStar />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="input-item input-item-textarea ltn__custom-icon">
-                            <textarea placeholder="Type your comments...."></textarea>
-                            <span className="inline-icon">
-                              <FaPencilAlt />
-                            </span>
-                          </div>
-                          <div className="input-item input-item-name ltn__custom-icon">
-                            <input type="text" placeholder="Type your name...." />
-                            <span className="inline-icon">
-                              <FaUserAlt />
-                            </span>
-                          </div>
-                          <div className="input-item input-item-email ltn__custom-icon">
-                            <input
-                              type="email"
-                              placeholder="Type your email...."
-                            />
-                            <span className="inline-icon">
-                              <FaEnvelope />
-                            </span>
-                          </div>
-                          <div className="input-item input-item-website ltn__custom-icon">
-                            <input
-                              type="text"
-                              name="website"
-                              placeholder="Type your website...."
-                            />
-                            <span className="inline-icon">
-                              <FaGlobe />
-                            </span>
-                          </div>
-                          <label className="mb-0">
-                            <input type="checkbox" name="agree" /> Save my name,
-                            email, and website in this browser for the next time I
-                            comment.
-                          </label>
-                          <div className="btn-wrapper">
-                            <button
-                              className="btn theme-btn-1 btn-effect-1 text-uppercase"
-                              type="submit"
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  --> */}
-
                   {/* <!-- Author Widget --> */}
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">
@@ -1580,144 +781,60 @@ const yearToDateTotalNights = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- Search Widget --> */}
-                  {/* <!--
-                  <div className="widget ltn__search-widget">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Search Objects
-                    </h4>
-                    <form action="#">
-                      <input
-                        type="text"
-                        name="search"
-                        placeholder="Search your keyword..."
-                      />
-                      <button type="submit">
-                        <FaSearch />
-                      </button>
-                    </form>
-                  </div>
-                  --> */}
                   {/* <!-- Form Widget --> */}
                   <div className="widget ltn__form-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Send us a message
+                      {propertyData.contactForm.title.replace("{FirstName}", productMONGO.propertyManager.firstName)}
                     </h4>
                     <form action="#">
                       <input
                         type="text"
                         name="yourname"
-                        placeholder="Your Name*"
+                        placeholder={propertyData.contactForm.namePlaceholder}
                       />
                       <input
                         type="text"
                         name="youremail"
-                        placeholder="Your e-Mail*"
+                        placeholder={propertyData.contactForm.emailPlaceholder}
                       />
                       <textarea
                         name="yourmessage"
-                        placeholder="Write Message..."
+                        placeholder={propertyData.contactForm.messagePlaceholder}
                       ></textarea>
                       <button type="submit" className="btn theme-btn-1 btn-effect-4">
-                        Send Message
+                        {propertyData.contactForm.button}
                       </button>
                     </form>
                   </div>
-                  {/* <!-- Top Rated Product Widget --> */}
-                  {/* <!-- 
-                  <div className="widget ltn__top-rated-product-widget">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Top Rated Product
-                    </h4>
-                    <ul>
-                      {topRatedProducts.map((product, keys) => {
-                        const slug = productSlug(product.title);
-                        let key = keys + 1;
-                        return (
-                          <li key={product.id}>
-                            <div className="top-rated-product-item clearfix">
-                              <div className="top-rated-product-img">
-                                <a href={`/shop/${slug}`}>
-                                  <img
-                                    src={`/img/product/${key}.png`}
-                                    alt={product.title}
-                                  />
-                                </a>
-                              </div>
-                              <div className="top-rated-product-info">
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <h6>
-                                  <a href={`/shop/${slug}`}>{product.title}</a>
-                                </h6>
-                                <div className="product-price">
-                                  <span>${product.price}</span>
-                                  <del>${discountedPrice}</del>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                   --> */}
                   {/* <!-- Menu Widget (Category) --> */}
                   <div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Top Categories
+                      {propertyData.topCategories.title}
                     </h4>
                     <ul>
                       <li>
                         <Link href="#">
-                          Apartments <span>(26)</span>
+                          {propertyData.topCategories.apartments} <span>(26)</span>
                         </Link>
                       </li>
                       <li>
                         <Link href="#">
-                          Picture Stodio <span>(30)</span>
+                          {propertyData.topCategories.pictureStudio} <span>(30)</span>
                         </Link>
                       </li>
                       <li>
                         <Link href="#">
-                          Office <span>(71)</span>
+                          {propertyData.topCategories.office} <span>(71)</span>
                         </Link>
                       </li>
                       <li>
                         <Link href="#">
-                          Luxary Vilas <span>(56)</span>
+                          {propertyData.topCategories.luxaryVilas} <span>(56)</span>
                         </Link>
                       </li>
                       <li>
                         <Link href="#">
-                          Duplex House <span>(60)</span>
+                          {propertyData.topCategories.duplexHouse} <span>(60)</span>
                         </Link>
                       </li>
                     </ul>
@@ -1725,7 +842,7 @@ const yearToDateTotalNights = () => {
                   {/* <!-- Popular Product Widget --> */}
                   <div className="widget ltn__popular-product-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Popular Properties
+                      {propertyData.popularProperties.title}
                     </h4>
 
                     <Slider
@@ -1757,12 +874,6 @@ const yearToDateTotalNights = () => {
                               </div>
                             </div>
                             <div className="product-info">
-                              <div className="product-price">
-                                <span>
-                                  ${productMONGO.price}
-                                  <label>/Month</label>
-                                </span>
-                              </div>
                               <h2 className="product-title">
                                 <Link href={`/shop/${slug}`}>
                                   {productMONGO.name}
@@ -1800,60 +911,6 @@ const yearToDateTotalNights = () => {
                       })}
                     </Slider>
                   </div>
-                  {/* <!-- Popular Post Widget --> */}
-                  {/* <!--
-                  <div className="widget ltn__popular-post-widget">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Leatest Blogs
-                    </h4>
-                    <ul>
-                      {latestdBlogs.map((blog, key) => {
-                        const slug = productSlug(blog.title);
-                        let imagecount = key + 1;
-
-                        return (
-                          <li key={key}>
-                            <div className="popular-post-widget-item clearfix">
-                              <div className="popular-post-widget-img">
-                                <Link href={`/blog/${slug}`}>
-                                  <img
-                                    src={`/img/team/${imagecount}.jpg`}
-                                    alt="#"
-                                  />
-                                </Link>
-                              </div>
-                              <div className="popular-post-widget-brief">
-                                <h6>
-                                  <Link href={`/blog/${slug}`}>
-                                    {blog.title}
-                                  </Link>
-                                </h6>
-                                <div className="ltn__blog-meta">
-                                  <ul>
-                                    <li className="ltn__blog-date">
-                                      <Link href={`/blog/${slug}`}>
-                                        <span>
-                                          <FaCalendarAlt />
-                                        </span>
-                                        <span>{blog.date}</span>
-                                      </Link>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                  --> */}
-                  <FollowUs title="Follow Us" />
-
-                  {/* <!-- Tagcloud Widget --> */}
-                  {/* <!--
-                  <Tags title="Popular Tags" />
-                  --> */}
                 </aside>
               </Col>
             </Row>
