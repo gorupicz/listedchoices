@@ -432,7 +432,7 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.rent}:</label>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
                           ) : (
                             <Link href="/register">
@@ -453,7 +453,7 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
                           ) : (
                             <Link href="/register">
@@ -471,7 +471,7 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.freeCashFlow}:</label>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
                           ) : (
                             <Link href="/register">
@@ -487,7 +487,7 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.assetValuation}:</label>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
                           ) : (
                             <Link href="/register">
@@ -519,7 +519,7 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.vacationRentalPerformance.occupancy.last3Months}</label>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
                           ) : (
                             <Link href="/register">
@@ -535,7 +535,7 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.vacationRentalPerformance.occupancy.yearToDate}</label>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
                           ) : (
                             <Link href="/register">
@@ -557,7 +557,7 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan>
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
                           ) : (
                             <Link href="/register">
@@ -578,7 +578,7 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan> 
                         {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
                           ) : (
                             <Link href="/register">
@@ -767,7 +767,7 @@ const yearToDateTotalNights = () => {
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       {
-                          session && status === "authenticated" ? (
+                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
                             <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
                           ) : (
                             <Link href="/register">
