@@ -225,15 +225,6 @@ const yearToDateTotalNights = () => {
     setScroll(window.scrollY);
   };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && router.isReady) {
-      document.title = pageTitle;
-      document.querySelector('meta[property="og:title"]').setAttribute("content", pageTitle);
-      document.querySelector('meta[property="og:description"]').setAttribute("content", pageDescription);
-      document.querySelector('meta[property="og:image"]').setAttribute("content", `/img/img-slide/${ogImage}`);
-    }
-  }, [router.isReady, productJSON]);
-
   const { data: session, status } = useSession();  // Get the session and status
   
   const [showModal, setShowModal] = useState(false);
@@ -430,15 +421,26 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.rent}:</label>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -451,15 +453,26 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.expenses.last_twelve_months)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -469,15 +482,26 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.freeCashFlow}:</label>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -485,15 +509,26 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.financials.assetValuation}:</label>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.price)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -517,15 +552,26 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.vacationRentalPerformance.occupancy.last3Months}</label>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.last3MonthsNights / 90 * 100)}%</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -533,15 +579,26 @@ const yearToDateTotalNights = () => {
                       <li>
                         <label>{propertyData.vacationRentalPerformance.occupancy.yearToDate}</label>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0   }).format(productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100 )}%</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -555,15 +612,26 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan>
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -576,15 +644,26 @@ const yearToDateTotalNights = () => {
                           </label>
                         </TooltipSpan> 
                         {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.income.last12MonthsUSD / 365)}</span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }
@@ -765,15 +844,26 @@ const yearToDateTotalNights = () => {
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       {
-                          (session && status === "authenticated" && followRequestStatus === 'ACCEPTED') ? (
-                            <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
+                          session && status === "authenticated" ? (
+                            followRequestStatus === 'ACCEPTED' ? (
+                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
+                            ) : followRequestStatus === 'PENDING' ? (
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                            ) :
+                              (
+                              <a onClick={handleFollowButtonClick}>
+                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                <span className="obfuscation-span">obfusca</span>
+                              </TooltipSpan>
+                              </a>
+                            )
                           ) : (
                             <Link href="/register">
-                            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span className="obfuscation-span">
-                                obfusca
-                              </span>
-                            </TooltipSpan>
+                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                              </TooltipSpan>
                             </Link>
                           )
                         }

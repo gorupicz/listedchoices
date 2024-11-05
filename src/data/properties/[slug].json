@@ -33,7 +33,8 @@
     "img": "Manager Image URL",
     "rating": "Manager Rating"
   },
-  "loginTooltip": "Login to access this information",
+  "loginNotLoggedTooltip": "Login to access this information",
+  "pendingLoggedTooltip": "Your request to follow this property is pending approval",
   "blueprint": "Blueprint",
   "relatedProperties": "Related Properties",
   "amountAvailable": "Available",
