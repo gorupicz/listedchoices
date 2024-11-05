@@ -235,9 +235,7 @@ const yearToDateTotalNights = () => {
   }, [router.isReady, productJSON]);
 
   const { data: session, status } = useSession();  // Get the session and status
-  console.log('Session:', session);
-  console.log('Status:', status);
-
+  
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
