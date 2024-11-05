@@ -242,6 +242,28 @@ const yearToDateTotalNights = () => {
   const [modalContent, setModalContent] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
+  // Initialize button label based on followRequestStatus
+  const initialButtonLabel = session && status === "authenticated"
+    ? followRequestStatus === 'ACCEPTED'
+      ? propertyData.cacButton.loggedFollowing
+      : followRequestStatus === 'PENDING'
+        ? propertyData.cacButton.loggedPending
+        : propertyData.cacButton.loggedNotFollowing
+    : propertyData.cacButton.notLogged;
+
+  const [buttonLabel, setButtonLabel] = useState(initialButtonLabel);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      const label = followRequestStatus === 'ACCEPTED'
+        ? propertyData.cacButton.loggedFollowing
+        : followRequestStatus === 'PENDING'
+          ? propertyData.cacButton.loggedPending
+          : propertyData.cacButton.loggedNotFollowing;
+      setButtonLabel(label);
+    }
+  }, [status, followRequestStatus, propertyData]);
+
   const handleFollowButtonClick = async () => {
     if (!session || status !== "authenticated") {
       router.push('/register');
@@ -268,9 +290,10 @@ const yearToDateTotalNights = () => {
       });
 
       if (response.ok) {
+        setButtonDisabled(true); // Disable the button to prevent multiple requests
+        setButtonLabel(propertyData.cacButton.loggedPending);
         setModalContent('We sent your follow request');
         setShowModal(true);
-        setButtonDisabled(true); // Disable the button to prevent multiple requests
       }
     }
   };
@@ -293,7 +316,6 @@ const yearToDateTotalNights = () => {
 
       if (response.ok) {
         const newStatus = response.json().newStatus;
-        //setFollowRequestStatus(newStatus);
       }
     }
     setShowModal(false);
@@ -415,7 +437,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -436,7 +458,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -454,7 +476,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -470,7 +492,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -502,7 +524,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -518,7 +540,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -540,7 +562,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -561,7 +583,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -750,7 +772,7 @@ const yearToDateTotalNights = () => {
                           ) : (
                             <Link href="/register">
                             <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginTooltip}>
-                              <span style={{ display: 'inline-block', filter: 'blur(5px)', padding: '5px', cursor: 'pointer' }}>
+                              <span className="obfuscation-span">
                                 obfusca
                               </span>
                             </TooltipSpan>
@@ -760,18 +782,14 @@ const yearToDateTotalNights = () => {
                       {propertyData.amountAvailable}
                     </h4>
                     <button
-                      className="theme-btn-1 btn btn-effect-1"
+                      className={clsx(
+                        "theme-btn-1 btn btn-effect-1",
+                        followRequestStatus === 'PENDING' ? "disabled visually-disabled" : ""
+                      )}
                       id="main-call-to-action-at-product-page-for-gtm"
-                      disabled={buttonDisabled}
                       onClick={handleFollowButtonClick}
                     >
-                      {session && status === "authenticated"
-                        ? followRequestStatus === 'ACCEPTED'
-                          ? propertyData.cacButton.loggedFollowing
-                            : followRequestStatus === 'PENDING'
-                              ? propertyData.cacButton.loggedPending
-                              : propertyData.cacButton.loggedNotFollowing
-                        : propertyData.cacButton.notLogged}
+                      {buttonLabel}
                     </button>
                   </div>
                   {/* <!-- Author Widget --> */}

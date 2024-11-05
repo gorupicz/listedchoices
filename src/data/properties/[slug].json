@@ -45,9 +45,9 @@
     "button": "Send Message"
   },
   "cacButton": {
-    "notLogged": "Login to unlockFOo",
+    "notLogged": "Login to unlock",
     "loggedFollowing": "Fund or invest",
-    "loggedPending": "Pending",
+    "loggedPending": "Pending approval",
     "loggedNotFollowing": "Follow to unlock"
   },
   "topCategories": {

@@ -295,3 +295,8 @@
   right: 10px; /* Adjust as needed */
   /* Additional styling if needed */
 }
+
+.visually-disabled {
+  pointer-events: unset !important;
+  cursor: pointer !important;
+}
