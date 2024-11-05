@@ -784,7 +784,7 @@ const yearToDateTotalNights = () => {
                     <button
                       className={clsx(
                         "theme-btn-1 btn btn-effect-1",
-                        followRequestStatus === 'PENDING' ? "disabled visually-disabled" : ""
+                        followRequestStatus === 'PENDING' ? "disabled" : ""
                       )}
                       id="main-call-to-action-at-product-page-for-gtm"
                       onClick={handleFollowButtonClick}
