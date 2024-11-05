@@ -429,17 +429,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -461,17 +466,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -490,17 +500,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -517,17 +532,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -560,17 +580,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -587,17 +612,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -620,17 +650,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -652,17 +687,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -852,17 +892,22 @@ const yearToDateTotalNights = () => {
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
-                              (
-                              <a onClick={handleFollowButtonClick}>
-                                <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                              </a>
+                              (!buttonDisabled ? (
+                                <a onClick={handleFollowButtonClick}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                                </a>
+                              ) : (
+                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                    <span className="obfuscation-span">obfusca</span>
+                                  </TooltipSpan>
+                              )
                             )
                           ) : (
                             <Link href="/register">
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-                                <span className="obfuscation-span">NOT AUTHENTICATED</span>
+                                <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
@@ -876,6 +921,7 @@ const yearToDateTotalNights = () => {
                       )}
                       id="main-call-to-action-at-product-page-for-gtm"
                       onClick={handleFollowButtonClick}
+                      disabled={buttonDisabled}
                     >
                       {buttonLabel}
                     </button>
