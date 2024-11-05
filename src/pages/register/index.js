@@ -5,14 +5,13 @@ import zxcvbn from 'zxcvbn';
 import { Layout } from "@/layouts";
 import registerData from "@/data/register/index.json";
 import { Container, Row, Col } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import { signIn, useSession } from 'next-auth/react';
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaEnvelope } from 'react-icons/fa';
+import MessageModal from "@/components/modals/MessageModal";
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -30,14 +29,11 @@ function Register() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
     if (status === 'authenticated') {
       if (session?.user?.isVerified) {
-        // Redirect to the dashboard if the user is verified
         router.push('/my-account');
       } else {
-        // Redirect to email verification if the user is not verified
         router.push(`/register/email-verification?email=${session.user.email}`);
       }
     }
@@ -70,7 +66,6 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
-    // Execute reCAPTCHA v3
     const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
 
     if (!token) {
@@ -98,7 +93,6 @@ function Register() {
       const data = await res.json();
 
       if (res.ok) {
-        // Open modal saying the code was sent
         handleShowModal(registerData.verificationCodeSentMessage, false);
       } else {
         handleShowModal(data.message || registerData.defaultErrorMessage, true);
@@ -109,7 +103,6 @@ function Register() {
     }
   };
 
-  // Handle password input changes and update strength
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
@@ -118,12 +111,10 @@ function Register() {
     setPasswordStrength(strength);
   };
 
-    // Function to handle Google sign-in
   const handleGoogleSignUp = () => {
     signIn('google', { prompt: 'select_account' });
   };
 
-  // Modal functions to show and close modal
   const handleShowModal = (message, isError) => {
     setModalMessage(message);
     setIsError(isError);
@@ -135,10 +126,8 @@ function Register() {
 
     if (!isError) {
       if (session && session.user && session.user.isVerified) {
-        // If user is authenticated and verified, redirect to dashboard
         router.push('/my-account');
       } else {
-        // If not verified, redirect to email verification page
         router.push(`/register/email-verification?email=${email}`);
       }
     }
@@ -223,7 +212,7 @@ function Register() {
                           name="password"
                           placeholder={registerData.passwordPlaceholder}
                           value={password}
-                          onChange={handlePasswordChange}  // Use the password handler
+                          onChange={handlePasswordChange}
                           required
                         />
                         {password && (
@@ -233,7 +222,6 @@ function Register() {
                         )}
                       </div>
 
-                      {/* Conditionally render the Confirm Password field */}
                       {showConfirmPassword && (
                         <input
                           type="password"
@@ -266,39 +254,13 @@ function Register() {
         </div>
       </Layout>
 
-      <Modal
+      <MessageModal
         show={showModal}
-        onHide={handleCloseModal}
-        backdrop="static"
-        keyboard={false}
-        size="md"
-        className="ltn__modal-area"
-      >
-        <Modal.Header>
-          <Button onClick={handleCloseModal} className="close" variant="secondary">
-            <span aria-hidden="true">&times;</span>
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="ltn__quick-view-modal-inner">
-            <div className="modal-product-item">
-              <div className="row">
-                <div className="col-12">
-                  <div className="modal-product-info text-center">
-                    <h4>{isError ? registerData.errorModalTitle : registerData.successModalTitle}</h4>
-                    <p className="added-cart">{modalMessage}</p>
-                    <div className="btn-wrapper mt-0">
-                      <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
-                        {registerData.errorSuccessModalSubmit}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+        handleClose={handleCloseModal}
+        isError={isError}
+        modalMessage={modalMessage}
+        loginData={registerData}
+      />
     </>
   );
 }

@@ -45,9 +45,9 @@
     "button": "Send Message"
   },
   "cacButton": {
-    "notLogged": "Login to unlock",
+    "notLogged": "Login to unlockFOo",
     "loggedFollowing": "Fund or invest",
-    "loggedWaiting": "Pending",
+    "loggedPending": "Pending",
     "loggedNotFollowing": "Follow to unlock"
   },
   "topCategories": {
@@ -60,5 +60,11 @@
   },
   "popularProperties": {
     "title": "Popular Properties"
+  },
+  "modal": {
+    "title": "Confirmation",
+    "cancelButton": "Cancel",
+    "confirmButton": "Confirm",
+    "acceptButton": "Accept"
   }
 }

@@ -43,9 +43,11 @@ import prisma from "@/lib/prisma";
 import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
 import { useSession } from 'next-auth/react';  // Import the useSession hook
 import propertyData from '@/data/properties/[slug].json';
+import { getSession } from 'next-auth/react';
+import MessageModal from '@/components/modals/MessageModal';
+import Button from 'react-bootstrap/Button';
 
-
-function ProductDetails({ productJSON, productMYSQL, productMONGO }) {
+function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, propertyData }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -233,6 +235,70 @@ const yearToDateTotalNights = () => {
   }, [router.isReady, productJSON]);
 
   const { data: session, status } = useSession();  // Get the session and status
+  console.log('Session:', session);
+  console.log('Status:', status);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  const handleFollowButtonClick = async () => {
+    if (!session || status !== "authenticated") {
+      router.push('/register');
+      return;
+    }
+
+    if (followRequestStatus === 'ACCEPTED') {
+      setModalContent('Are you sure you want to unfollow this property?');
+      setShowModal(true);
+    } else if (followRequestStatus === 'PENDING') {
+      setModalContent('Are you sure you want to withdraw your follow request?');
+      setShowModal(true);
+    } else {
+      // Send follow request
+      const response = await fetch('/api/follow-property', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          propertyId: productMYSQL.id,
+          userId: session.user.id
+         }),
+      });
+
+      if (response.ok) {
+        setModalContent('We sent your follow request');
+        setShowModal(true);
+        setButtonDisabled(true); // Disable the button to prevent multiple requests
+      }
+    }
+  };
+
+  const handleFollowModalConfirm = async () => {
+
+    if (followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING') {
+
+      const response = await fetch('/api/update-follow-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          propertyId: productMYSQL.id,
+          userId: session.user.id,
+          followRequestStatus: followRequestStatus
+        }),
+      });
+
+      if (response.ok) {
+        const newStatus = response.json().newStatus;
+        //setFollowRequestStatus(newStatus);
+      }
+    }
+    setShowModal(false);
+
+  };
 
   return (
     <>
@@ -696,15 +762,15 @@ const yearToDateTotalNights = () => {
                     <button
                       className="theme-btn-1 btn btn-effect-1"
                       id="main-call-to-action-at-product-page-for-gtm"
-                      disabled={session && status === "authenticated"}
-                      onClick={() => {
-                        if (!(session && status === "authenticated")) {
-                          router.push('/register');
-                        }
-                      }}
+                      disabled={buttonDisabled}
+                      onClick={handleFollowButtonClick}
                     >
-                      {session && status === "authenticated" 
-                        ? propertyData.cacButton.loggedWaiting 
+                      {session && status === "authenticated"
+                        ? followRequestStatus === 'ACCEPTED'
+                          ? propertyData.cacButton.loggedFollowing
+                            : followRequestStatus === 'PENDING'
+                              ? propertyData.cacButton.loggedPending
+                              : propertyData.cacButton.loggedNotFollowing
                         : propertyData.cacButton.notLogged}
                     </button>
                   </div>
@@ -927,6 +993,15 @@ const yearToDateTotalNights = () => {
         {/* <!-- CALL TO ACTION END --> */}
       </Layout>
 
+      <MessageModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        title={propertyData.modalTitle}
+        modalMessage={modalContent}
+        confirmButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? propertyData.confirmButton : propertyData.acceptButton}
+        cancelButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? propertyData.cancelButton : null}
+        onConfirm={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? handleFollowModalConfirm : () => setShowModal(false)}
+      />
     </>
   );
 }
@@ -935,7 +1010,9 @@ export default ProductDetails;
 
 
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, req }) {
+  const session = await getSession({ req });
+
   // 1. Fetch property details using Prisma from MySQL
   const productMYSQL = await prisma.property.findUnique({
     where: {
@@ -972,12 +1049,31 @@ export async function getServerSideProps({ params }) {
     (singleProduct) => productSlug(singleProduct.title) === params.slug
   );
 
+  let followRequestStatus = null;
+
+  if (session) {
+    const userId = session.user.id; // Assuming session contains user ID
+    const followRequest = await prisma.propertyFollowRequest.findFirst({
+      where: {
+        requesterId: userId,
+        propertyId: productMYSQL.id,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
+
+    followRequestStatus = followRequest ? followRequest.currentStatus : null;
+  }
+
   // 5. Return the three separate products as props
   return {
     props: {
       productJSON,
       productMYSQL: serializedProductMYSQL,
       productMONGO: serializedProductMONGO,
+      followRequestStatus,
+      propertyData,  // Pass the property data to the component
     },
   };
 }
