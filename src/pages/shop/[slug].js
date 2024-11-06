@@ -14,7 +14,7 @@ import {
   FaRegStar,
   FaDribbble,
   FaInstagram,
-  FaTwitter,
+  FaXTwitter,  // X (formerly Twitter)
   FaFacebookF,
   FaUserAlt,
   FaEnvelope,
@@ -24,7 +24,12 @@ import {
   FaAirbnb,
   FaYoutube,
   FaExclamationCircle,
-  FaCircle
+  FaCircle,
+  FaLinkedinIn,  // LinkedIn
+  FaPinterestP,  // Pinterest
+  FaSnapchatGhost,  // Snapchat
+  FaTiktok,  // TikTok
+  FaRedditAlien  // Reddit
 } from "react-icons/fa";
 import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
@@ -790,22 +795,49 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 
                       <div className="ltn__social-media">
                         <ul>
-                          <li>
-                            <a href="https://www.facebook.com/boatairbnb" title="Facebook">
-                              <FaFacebookF />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="https://www.instagram.com/boatschoice/" title="Instagram">
-                              <FaInstagram />
-                            </a>
-                          </li>
+                          {Object.entries(productMONGO.propertyManager.social).map(([key, url]) => {
+                            let IconComponent;
 
-                          <li>
-                            <a href="https://www.youtube.com/channel/UCJau0nP2Ug5p-sXp7jcehKw/" title="Youtube">
-                              <FaYoutube />
-                            </a>
-                          </li>
+                            switch (key) {
+                              case 'facebook':
+                                IconComponent = FaFacebookF;
+                                break;
+                              case 'instagram':
+                                IconComponent = FaInstagram;
+                                break;
+                              case 'youtube':
+                                IconComponent = FaYoutube;
+                                break;
+                              case 'twitter':
+                                IconComponent = FaXTwitter;
+                                break;
+                              case 'linkedin':
+                                IconComponent = FaLinkedinIn;
+                                break;
+                              case 'pinterest':
+                                IconComponent = FaPinterestP;
+                                break;
+                              case 'snapchat':
+                                IconComponent = FaSnapchatGhost;
+                                break;
+                              case 'tiktok':
+                                IconComponent = FaTiktok;
+                                break;
+                              case 'reddit':
+                                IconComponent = FaRedditAlien;
+                                break;
+                              default:
+                                IconComponent = FaGlobe; // Generic icon for other social media
+                            }
+
+                            return (
+                              <li key={key}>
+                                <a href={url} title={key.charAt(0).toUpperCase() + key.slice(1)}>
+                                  <IconComponent />
+                                </a>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -984,6 +1016,7 @@ export async function getServerSideProps({ params, req }) {
       slug: params.slug,
     },
   });
+
   // 2. If no product is found in MySQL, return 404
   if (!productMYSQL) {
     return {
@@ -1007,7 +1040,6 @@ export async function getServerSideProps({ params, req }) {
   // Serialize both MySQL (Prisma) and MongoDB data
   const serializedProductMYSQL = serializePrismaData(productMYSQL);
   const serializedProductMONGO = serializeMongoData(productMONGO);
-
 
   // 4. Fetch data from products.json (find the product by slug)
   const productJSON = products.find(
