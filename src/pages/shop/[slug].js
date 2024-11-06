@@ -47,15 +47,7 @@ import { getSession } from 'next-auth/react';
 import MessageModal from '@/components/modals/MessageModal';
 import Button from 'react-bootstrap/Button';
 import Skeleton from 'react-loading-skeleton';
-
-const TooltipSpan = ({ id, title, children }) => (
-  <OverlayTrigger
-    placement="bottom"
-    delay={{ show: 250, hide: 400 }}
-    overlay={<Tooltip id={id}>{title}</Tooltip>}>
-    {children}
-  </OverlayTrigger>
-);
+import TooltipSpan from "@/components/Tooltips/TooltipSpan";
 
 function ListingDataItem({ label, value, tooltip, isCurrency = true, followRequestStatus, handleFollowButtonClick, buttonDisabled, isBlurable = true }) {
   const { data: session, status } = useSession();
@@ -142,16 +134,6 @@ const yearToDateTotalNights = () => {
   
   return differenceInDays > 0 ? differenceInDays : 0;
 };
-
-
-  const TooltipSpan = ({ id, title, children }) => (
-    <OverlayTrigger
-      placement="bottom"
-      delay={{ show: 250, hide: 400 }}
-      overlay={<Tooltip id={id}>{title}</Tooltip>}>
-        {children}
-    </OverlayTrigger>
-  );
 
   const relatedProducts = getProducts(
     products,
