@@ -867,39 +867,6 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       </button>
                     </form>
                   </div>
-                  {/* <!-- Menu Widget (Category) --> */}
-                  <div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {propertyData.topCategories.title}
-                    </h4>
-                    <ul>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.apartments} <span>(26)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.pictureStudio} <span>(30)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.office} <span>(71)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.luxaryVilas} <span>(56)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.duplexHouse} <span>(60)</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                   {/* <!-- Popular Product Widget --> */}
                   <div className="widget ltn__popular-product-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
