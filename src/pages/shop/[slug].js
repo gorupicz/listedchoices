@@ -48,75 +48,7 @@ import MessageModal from '@/components/modals/MessageModal';
 import Button from 'react-bootstrap/Button';
 import Skeleton from 'react-loading-skeleton';
 import TooltipSpan from "@/components/Tooltips/TooltipSpan";
-
-function ListingDataItem({ label, value, tooltip, isCurrency = true, followRequestStatus, handleFollowButtonClick, buttonDisabled, isBlurable = true }) {
-  const { data: session, status } = useSession();
-
-  const formattedValue = isCurrency
-    ? `$${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)}`
-    : `${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)}%`;
-
-  const renderContent = () => {
-    if (session && status === "authenticated") {
-      if (followRequestStatus === 'ACCEPTED') {
-        return <span>{formattedValue}</span>;
-      } else if (followRequestStatus === 'PENDING') {
-        return isBlurable ? (
-          <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
-            <span className="obfuscation-span">obfusca</span>
-          </TooltipSpan>
-        ) : (
-          <span>{formattedValue}</span>
-        );
-      } else {
-        return !buttonDisabled ? (
-          <a onClick={handleFollowButtonClick}>
-            {isBlurable ? (
-              <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                <span className="obfuscation-span">obfusca</span>
-              </TooltipSpan>
-            ) : (
-              <span>{formattedValue}</span>
-            )}
-          </a>
-        ) : (
-          isBlurable ? (
-            <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
-              <span className="obfuscation-span">obfusca</span>
-            </TooltipSpan>
-          ) : (
-            <span>{formattedValue}</span>
-          )
-        );
-      }
-    } else {
-      return (
-        <Link href="/register">
-          {isBlurable ? (
-            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-              <span className="obfuscation-span">obfusca</span>
-            </TooltipSpan>
-          ) : (
-            <span>{formattedValue}</span>
-          )}
-        </Link>
-      );
-    }
-  };
-
-  return (
-    <>
-      {tooltip ? (
-        <TooltipSpan title={tooltip} id={label.toLowerCase().replace(/\s+/g, '-')}>
-          <label>{label}: <FaExclamationCircle /></label>
-        </TooltipSpan>
-      ) : (
-        <label>{label}:</label>
-      )}
-      {renderContent()}
-    </>
-  );
-}
+import ListingDataItem from '@components/properties/ListingDataItem';
 
 function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, propertyData }) {
   const { products } = useSelector((state) => state.product);
@@ -1043,8 +975,6 @@ const yearToDateTotalNights = () => {
 }
 
 export default ProductDetails;
-
-
 
 export async function getServerSideProps({ params, req }) {
   const session = await getSession({ req });
