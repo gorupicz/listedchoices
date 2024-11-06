@@ -12,6 +12,8 @@ import { signIn, useSession } from 'next-auth/react'; // Import both signIn and 
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
+import ForgotPasswordModal from "@/components/modals/ForgotPasswordModal";
+import MessageModal from "@/components/modals/MessageModal";
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -234,85 +236,22 @@ function Login() {
         </div>
       </Layout>
 
-      {/* Modal for Forget Password */}
-      <Modal
+      <ForgotPasswordModal
         show={showForgotPassword}
-        onHide={handleCloseForgotPassword}
-        backdrop="static"
-        keyboard={false}
-        size="md"
-        className="ltn__modal-area"
-      >
-        <Modal.Header>
-          <Button onClick={handleCloseForgotPassword} className="close" variant="secondary">
-            <span aria-hidden="true">&times;</span>
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="ltn__quick-view-modal-inner">
-            <div className="modal-product-item">
-              <div className="row">
-                <div className="col-12">
-                  <div className="modal-product-info text-center">
-                    <h4>{loginData.modalTitle}</h4>
-                    <p className="added-cart">{loginData.modalDescription}</p>
-                    <form onSubmit={handlePasswordRecovery} className="ltn__form-box">
-                      <input
-                        type="text"
-                        name="email"
-                        placeholder={loginData.emailPlaceholder}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
-                      <div className="btn-wrapper mt-0">
-                        <button className="theme-btn-1 btn btn-full-width-2" type="submit">
-                          {loginData.modalSubmitButtonText}
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+        handleClose={handleCloseForgotPassword}
+        handlePasswordRecovery={handlePasswordRecovery}
+        email={email}
+        setEmail={setEmail}
+        loginData={loginData}
+      />
 
-      {/* Modal for showing success/error messages */}
-      <Modal
+      <MessageModal
         show={showModal}
-        onHide={handleCloseModal}
-        backdrop="static"
-        keyboard={false}
-        size="md"
-        className="ltn__modal-area"
-      >
-        <Modal.Header>
-          <Button onClick={handleCloseModal} className="close" variant="secondary">
-            <span aria-hidden="true">&times;</span>
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="ltn__quick-view-modal-inner">
-            <div className="modal-product-item">
-              <div className="row">
-                <div className="col-12">
-                  <div className="modal-product-info text-center">
-                    <h4>{isError ? loginData.errorModalTitle : loginData.verificationModalTitle}</h4>
-                    <p className="added-cart">{modalMessage}</p>
-                    <div className="btn-wrapper mt-0">
-                      <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
-                        {loginData.errorSuccessModalSubmit}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+        handleClose={handleCloseModal}
+        isError={isError}
+        modalMessage={modalMessage}
+        loginData={loginData}
+      />
     </>
   );
 }

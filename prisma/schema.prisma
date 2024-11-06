@@ -31,6 +31,11 @@ model User {
   sessions         Session[]
   bought_shares    Transactions[] @relation("Buyer")
   sold_shares      Transactions[] @relation("Seller")
+  propertyFollowRequests PropertyFollowRequest[] @relation("Requester")
+  userFollowRequests     UserFollowRequest[]     @relation("UserFollowRequester")
+  userFollowTargets      UserFollowRequest[]     @relation("UserFollowTarget")
+  propertyFollowRequestHistories PropertyFollowRequestHistory[] @relation("ChangedByUser")
+  userFollowRequestHistories     UserFollowRequestHistory[]     @relation("ChangedByUser")
 }
 
 model Account {
@@ -79,6 +84,7 @@ model Property {
   manager             User                @relation("PropertyManager", fields: [manager_id], references: [id])
   share_price_history SharePriceHistory[]
   transactions        Transactions[]
+  followRequests      PropertyFollowRequest[]
 
   @@index([manager_id], map: "Property_manager_id_fkey")
 }
@@ -176,6 +182,70 @@ model SharePriceHistory {
   property    Property          @relation(fields: [property_id], references: [id])
 
   @@index([property_id], map: "SharePriceHistory_property_id_fkey")
+}
+
+model PropertyFollowRequest {
+  id            Int                 @id @default(autoincrement())
+  requesterId   Int
+  propertyId    Int
+  currentStatus FollowStatus
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  requester     User                @relation("Requester", fields: [requesterId], references: [id])
+  property      Property            @relation(fields: [propertyId], references: [id])
+  history       PropertyFollowRequestHistory[]
+
+  @@index([requesterId], map: "FollowRequest_requesterId_fkey")
+  @@index([propertyId], map: "FollowRequest_propertyId_fkey")
+}
+
+model PropertyFollowRequestHistory {
+  id              Int           @id @default(autoincrement())
+  followRequestId Int
+  status          FollowStatus
+  changedAt       DateTime      @default(now())
+  changedByUserId Int
+  propertyFollowRequest   PropertyFollowRequest @relation(fields: [followRequestId], references: [id])
+  changedByUser   User          @relation("ChangedByUser", fields: [changedByUserId], references: [id])
+
+  @@index([followRequestId], map: "PropertyFollowRequestHistory_followRequestId_fkey")
+  @@index([changedByUserId], map: "PropertyFollowRequestHistory_changedByUserId_fkey")
+}
+
+model UserFollowRequest {
+  id            Int                     @id @default(autoincrement())
+  requesterId   Int
+  targetUserId  Int
+  currentStatus FollowStatus
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  requester     User                    @relation("UserFollowRequester", fields: [requesterId], references: [id])
+  targetUser    User                    @relation("UserFollowTarget", fields: [targetUserId], references: [id])
+  history       UserFollowRequestHistory[]
+
+  @@index([requesterId], map: "UserFollowRequest_requesterId_fkey")
+  @@index([targetUserId], map: "UserFollowRequest_targetUserId_fkey")
+}
+
+model UserFollowRequestHistory {
+  id                  Int                 @id @default(autoincrement())
+  followRequestId Int
+  status              FollowStatus
+  changedAt           DateTime            @default(now())
+  changedByUserId     Int
+  userFollowRequest   UserFollowRequest   @relation(fields: [followRequestId], references: [id])
+  changedByUser       User                @relation("ChangedByUser", fields: [changedByUserId], references: [id])
+
+  @@index([followRequestId], map: "UserFollowRequestHistory_followRequestId_fkey")
+  @@index([changedByUserId], map: "UserFollowRequestHistory_changedByUserId_fkey")
+}
+
+enum FollowStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+  UNFOLLOWED
 }
 
 enum PriceChangeReason {

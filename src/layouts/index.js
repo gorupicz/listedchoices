@@ -3,8 +3,9 @@ import { Header } from "@/components/header";
 import Footer from "@/components/footer/footer";
 import ScrollToTop from "@/components/scroll-to-top";
 import { GoogleTagManager } from '@next/third-parties/google'
+import BreadCrumb from "@/components/breadCrumbs";
 
-const Layout = ({ children, navPositionClass, topbar }) => {
+const Layout = ({ children, navPositionClass, topbar, breadcrumb, breadcrumbProps }) => {
   const [toggleClassName, SetToggleClassName] = useState(false);
 
   function toggleClassNameInBody() {
@@ -22,6 +23,7 @@ const Layout = ({ children, navPositionClass, topbar }) => {
           navPositionClass={navPositionClass}
           topbar={topbar}
         />
+        {breadcrumb && <BreadCrumb {...breadcrumbProps} />}
         {children}
         <Footer />
         <ScrollToTop />

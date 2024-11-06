@@ -3,23 +3,26 @@
 ---------------------------------------------------- */
 .ltn__breadcrumb-area {
     background-color: var(--section-bg-1);
-    margin-bottom: 120px;
-    padding-top: 110px;
-    padding-bottom: 110px;
 }
 .ltn__breadcrumb-list ul {
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
 }
 .ltn__breadcrumb-list ul li {
     display: inline-block;
     margin-right: 10px;
     position: relative;
-    font-weight: 700;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 .ltn__breadcrumb-list ul li:last-child {
     margin-right: 0;
-    color: var(--ltn__primary-color);
+    margin-left: auto;
+    //color: var(--ltn__primary-color);
 }
 // .ltn__breadcrumb-list ul li:after {
 //     position: absolute;
@@ -114,6 +117,9 @@
                 font-size: 14px;
             }
         }
+    }
+    .hide-on-mobile {
+        display: none;
     }
 }
 
