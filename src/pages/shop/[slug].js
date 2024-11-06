@@ -873,7 +873,6 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
           </Container>
         </div>
         {/* <!-- SHOP DETAILS AREA END -->
-
     <!-- CALL TO ACTION START (call-to-action-6) --> */}
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
