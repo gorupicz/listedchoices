@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import clsx from "clsx";
 import { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import {
   FaArrowRight,
   FaArrowLeft,
@@ -16,7 +14,7 @@ import {
   FaRegStar,
   FaDribbble,
   FaInstagram,
-  FaTwitter,
+  FaXTwitter,  // X (formerly Twitter)
   FaFacebookF,
   FaUserAlt,
   FaEnvelope,
@@ -26,7 +24,12 @@ import {
   FaAirbnb,
   FaYoutube,
   FaExclamationCircle,
-  FaCircle
+  FaCircle,
+  FaLinkedinIn,  // LinkedIn
+  FaPinterestP,  // Pinterest
+  FaSnapchatGhost,  // Snapchat
+  FaTiktok,  // TikTok
+  FaRedditAlien  // Reddit
 } from "react-icons/fa";
 import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
@@ -34,8 +37,6 @@ import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } fr
 import products from "@/data/products.json";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
-import Tags from "@/components/tags";
-import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import ModalVideo from "react-modal-video";
 import { useRouter } from "next/router";
@@ -45,86 +46,9 @@ import { useSession } from 'next-auth/react';  // Import the useSession hook
 import propertyData from '@/data/properties/[slug].json';
 import { getSession } from 'next-auth/react';
 import MessageModal from '@/components/modals/MessageModal';
-import Button from 'react-bootstrap/Button';
-import Skeleton from 'react-loading-skeleton';
-
-const TooltipSpan = ({ id, title, children }) => (
-  <OverlayTrigger
-    placement="bottom"
-    delay={{ show: 250, hide: 400 }}
-    overlay={<Tooltip id={id}>{title}</Tooltip>}>
-    {children}
-  </OverlayTrigger>
-);
-
-function ListingDataItem({ label, value, tooltip, isCurrency = true, followRequestStatus, handleFollowButtonClick, buttonDisabled, isBlurable = true }) {
-  const { data: session, status } = useSession();
-
-  const formattedValue = isCurrency
-    ? `$${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)}`
-    : `${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)}%`;
-
-  const renderContent = () => {
-    if (session && status === "authenticated") {
-      if (followRequestStatus === 'ACCEPTED') {
-        return <span>{formattedValue}</span>;
-      } else if (followRequestStatus === 'PENDING') {
-        return isBlurable ? (
-          <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
-            <span className="obfuscation-span">obfusca</span>
-          </TooltipSpan>
-        ) : (
-          <span>{formattedValue}</span>
-        );
-      } else {
-        return !buttonDisabled ? (
-          <a onClick={handleFollowButtonClick}>
-            {isBlurable ? (
-              <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-                <span className="obfuscation-span">obfusca</span>
-              </TooltipSpan>
-            ) : (
-              <span>{formattedValue}</span>
-            )}
-          </a>
-        ) : (
-          isBlurable ? (
-            <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
-              <span className="obfuscation-span">obfusca</span>
-            </TooltipSpan>
-          ) : (
-            <span>{formattedValue}</span>
-          )
-        );
-      }
-    } else {
-      return (
-        <Link href="/register">
-          {isBlurable ? (
-            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-              <span className="obfuscation-span">obfusca</span>
-            </TooltipSpan>
-          ) : (
-            <span>{formattedValue}</span>
-          )}
-        </Link>
-      );
-    }
-  };
-
-  return (
-    <>
-      {tooltip ? (
-        <TooltipSpan title={tooltip} id={label.toLowerCase().replace(/\s+/g, '-')}>
-          <label>{label}: <FaExclamationCircle /></label>
-        </TooltipSpan>
-      ) : (
-        <label>{label}:</label>
-      )}
-      {renderContent()}
-    </>
-  );
-}
+import TooltipSpan from "@/components/Tooltips/TooltipSpan";
+import ListingDataItem from '@components/properties/ListingDataItem';
+import { useOGMetadata } from "@/context/OGMetadataContext";
 
 function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, propertyData }) {
   const { products } = useSelector((state) => state.product);
@@ -134,24 +58,14 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const { getDateRanges } = require('/src/lib/dateRangeHelper'); 
   const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
 
-const yearToDateTotalNights = () => {
-  const updatedAt = new Date(productMONGO.updated_at);
-  const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
-  
-  const differenceInDays = calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd);
-  
-  return differenceInDays > 0 ? differenceInDays : 0;
-};
-
-
-  const TooltipSpan = ({ id, title, children }) => (
-    <OverlayTrigger
-      placement="bottom"
-      delay={{ show: 250, hide: 400 }}
-      overlay={<Tooltip id={id}>{title}</Tooltip>}>
-        {children}
-    </OverlayTrigger>
-  );
+  const yearToDateTotalNights = () => {
+    const updatedAt = new Date(productMONGO.updated_at);
+    const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
+    
+    const differenceInDays = calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd);
+    
+    return differenceInDays > 0 ? differenceInDays : 0;
+  };
 
   const relatedProducts = getProducts(
     products,
@@ -180,7 +94,6 @@ const yearToDateTotalNights = () => {
   const daysInPreviousMonth = getDaysInPreviousMonth(
     productMONGO.updated_at
   );
-
 
   const productPrice = productMONGO.price.toFixed(2);
   const cartItem = cartItems.find((cartItem) => cartItem.id === productMONGO.property_id);
@@ -285,9 +198,9 @@ const yearToDateTotalNights = () => {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
-  const pageTitle = productMONGO.title + " - " + productMONGO.locantion;
+  const pageTitle = productMONGO.name + " - " + productMONGO.location;
   const pageDescription = productMONGO.shortDescription;
-  const ogImage = productJSON.carousel[0].img;
+  const ogImage = productJSON.carousel[0]?.img || 'default-image.jpg';
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
     
@@ -392,8 +305,20 @@ const yearToDateTotalNights = () => {
 
   };
 
+  const { setOGMetadataSet } = useOGMetadata();
+
+  useEffect(() => {
+    setOGMetadataSet(true);
+  }, [setOGMetadataSet]);
+
   return (
     <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
+      </Head>
       <Layout 
         topbar={false} 
         breadcrumb={true} 
@@ -403,13 +328,6 @@ const yearToDateTotalNights = () => {
           manager: productMONGO.propertyManager.fullName
         }}
       >
-        <Head>
-          <title>{pageTitle}</title>
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
-        </Head>
-        
         <ModalVideo
           channel="youtube"
           youtube={{
@@ -877,22 +795,49 @@ const yearToDateTotalNights = () => {
 
                       <div className="ltn__social-media">
                         <ul>
-                          <li>
-                            <a href="https://www.facebook.com/boatairbnb" title="Facebook">
-                              <FaFacebookF />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="https://www.instagram.com/boatschoice/" title="Instagram">
-                              <FaInstagram />
-                            </a>
-                          </li>
+                          {Object.entries(productMONGO.propertyManager.social).map(([key, url]) => {
+                            let IconComponent;
 
-                          <li>
-                            <a href="https://www.youtube.com/channel/UCJau0nP2Ug5p-sXp7jcehKw/" title="Youtube">
-                              <FaYoutube />
-                            </a>
-                          </li>
+                            switch (key) {
+                              case 'facebook':
+                                IconComponent = FaFacebookF;
+                                break;
+                              case 'instagram':
+                                IconComponent = FaInstagram;
+                                break;
+                              case 'youtube':
+                                IconComponent = FaYoutube;
+                                break;
+                              case 'twitter':
+                                IconComponent = FaXTwitter;
+                                break;
+                              case 'linkedin':
+                                IconComponent = FaLinkedinIn;
+                                break;
+                              case 'pinterest':
+                                IconComponent = FaPinterestP;
+                                break;
+                              case 'snapchat':
+                                IconComponent = FaSnapchatGhost;
+                                break;
+                              case 'tiktok':
+                                IconComponent = FaTiktok;
+                                break;
+                              case 'reddit':
+                                IconComponent = FaRedditAlien;
+                                break;
+                              default:
+                                IconComponent = FaGlobe; // Generic icon for other social media
+                            }
+
+                            return (
+                              <li key={key}>
+                                <a href={url} title={key.charAt(0).toUpperCase() + key.slice(1)}>
+                                  <IconComponent />
+                                </a>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -922,118 +867,12 @@ const yearToDateTotalNights = () => {
                       </button>
                     </form>
                   </div>
-                  {/* <!-- Menu Widget (Category) --> */}
-                  <div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {propertyData.topCategories.title}
-                    </h4>
-                    <ul>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.apartments} <span>(26)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.pictureStudio} <span>(30)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.office} <span>(71)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.luxaryVilas} <span>(56)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          {propertyData.topCategories.duplexHouse} <span>(60)</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* <!-- Popular Product Widget --> */}
-                  <div className="widget ltn__popular-product-widget">
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {propertyData.popularProperties.title}
-                    </h4>
-
-                    <Slider
-                      {...popular_product}
-                      className="row ltn__popular-product-widget-active slick-arrow-1"
-                    >
-                      {/* <!-- ltn__product-item --> */}
-
-                      {popularProducts.map((productJSON, key) => {
-                        const slug = productSlug(productMONGO.name);
-                        return (
-                          <div
-                            key={key}
-                            className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---"
-                          >
-                            <div className="product-img">
-                              <Link href={`/shop/${slug}`}>
-                                <img
-                                  src={`/img/product-3/${productJSON.productImg}`}
-                                  alt={slug}
-                                />
-                              </Link>
-                              <div className="real-estate-agent">
-                                <div className="agent-img">
-                                  <Link href="#">
-                                    <img src={`/img/blog/author.jpg`} alt="#" />
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="product-info">
-                              <h2 className="product-title">
-                                <Link href={`/shop/${slug}`}>
-                                  {productMONGO.name}
-                                </Link>
-                              </h2>
-                              <div className="product-img-location">
-                                <ul>
-                                  <li>
-                                    <Link href="product-details">
-                                      <i className="flaticon-pin"></i>
-                                      {productMONGO.location}
-                                    </Link>
-                                  </li>
-                                </ul>
-                              </div>
-                              <ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
-                                <li>
-                                  <span>
-                                    {productJSON.propertyDetails.bedrooms}
-                                  </span>
-                                  <span className="ms-1">Bedrooms</span>
-                                </li>
-                                <li>
-                                  <span>{productJSON.propertyDetails.baths}</span>
-                                  <span className="ms-1">Bathrooms</span>
-                                </li>
-                                <li>
-                                  <span>{productJSON.propertyDetails.area}</span>
-                                  <span className="ms-1">square Ft</span>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </Slider>
-                  </div>
                 </aside>
               </Col>
             </Row>
           </Container>
         </div>
         {/* <!-- SHOP DETAILS AREA END -->
-
     <!-- CALL TO ACTION START (call-to-action-6) --> */}
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
@@ -1062,8 +901,6 @@ const yearToDateTotalNights = () => {
 
 export default ProductDetails;
 
-
-
 export async function getServerSideProps({ params, req }) {
   const session = await getSession({ req });
 
@@ -1073,6 +910,7 @@ export async function getServerSideProps({ params, req }) {
       slug: params.slug,
     },
   });
+
   // 2. If no product is found in MySQL, return 404
   if (!productMYSQL) {
     return {
@@ -1096,7 +934,6 @@ export async function getServerSideProps({ params, req }) {
   // Serialize both MySQL (Prisma) and MongoDB data
   const serializedProductMYSQL = serializePrismaData(productMYSQL);
   const serializedProductMONGO = serializeMongoData(productMONGO);
-
 
   // 4. Fetch data from products.json (find the product by slug)
   const productJSON = products.find(

@@ -18,6 +18,8 @@ import "@/assets/sass/style.scss";
 import "@/assets/responsive.css";
 import { SessionProvider } from 'next-auth/react';
 import CookieConsent from "react-cookie-consent";
+import { OGMetadataProvider, useOGMetadata } from "@/context/OGMetadataContext";
+import metadata from "@/data/metadata.json";
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -32,21 +34,36 @@ const Poppin = Poppins({
 
 const MyApp = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
+
   useEffect(() => {
     store.dispatch(setProducts(products));
   }, []);
 
   return (
+    <OGMetadataProvider>
+      <OGMetadataConsumerComponent Component={Component} props={props} store={store} />
+    </OGMetadataProvider>
+  );
+};
+
+const OGMetadataConsumerComponent = ({ Component, props, store }) => {
+  const { isOGMetadataSet } = useOGMetadata();
+
+  return (
     <Fragment>
       <Head>
-        <title>Bolsa de Casas</title>
-        <meta name="description" content="Bolsa de Casas - Mercado de Propiedades de Renta Vacacional" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Bolsa de Casas" />
-        <meta property="og:url" content="https://www.listedchoices.com" />
-        <meta property="og:description" content="Bolsa de Casas - Mercado de Propiedades de Renta Vacacional" />
-        <meta property="og:image" content="https://www.listedchoices.com/img/product-3/boat-vison-fund.jpg" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="viewport" content={metadata.viewport} />
+        <link rel="icon" href={metadata.icon} />
+        {!isOGMetadataSet && (
+          <>
+            <meta property="og:title" content={metadata.ogTitle} />
+            <meta property="og:url" content={metadata.ogUrl} />
+            <meta property="og:description" content={metadata.ogDescription} />
+            <meta property="og:image" content={metadata.ogImage} />
+          </>
+        )}
       </Head>
       <style jsx global>{`
         html,body {
@@ -55,7 +72,7 @@ const MyApp = ({ Component, ...rest }) => {
 
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
           font-family: ${Poppin.style.fontFamily};
-      }
+        }
       `}</style>
       <SessionProvider session={props.pageProps.session}>
         <Provider store={store}>
