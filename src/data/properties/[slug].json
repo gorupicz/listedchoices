@@ -49,7 +49,8 @@
     "notLogged": "Login to unlock",
     "loggedFollowing": "Fund or invest",
     "loggedPending": "Pending approval",
-    "loggedNotFollowing": "Follow to unlock"
+    "loggedNotFollowing": "Follow to unlock",
+    "loading": "Loading..."
   },
   "topCategories": {
     "title": "Top Categories",
@@ -66,6 +67,12 @@
     "title": "Confirmation",
     "cancelButton": "Cancel",
     "confirmButton": "Confirm",
-    "acceptButton": "Accept"
+    "acceptButton": "Accept",
+    "unfollowMessage": "Are you sure you want to unfollow this property?",
+    "withdrawFollowRequestMessage": "Are you sure you want to withdraw your follow request?",
+    "followRequestSentMessage": "We sent your follow request"
+  },
+  "links": {
+    "airbnbListing": "Airbnb listing"
   }
 }

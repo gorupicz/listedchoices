@@ -46,6 +46,7 @@ import propertyData from '@/data/properties/[slug].json';
 import { getSession } from 'next-auth/react';
 import MessageModal from '@/components/modals/MessageModal';
 import Button from 'react-bootstrap/Button';
+import Skeleton from 'react-loading-skeleton';
 
 const TooltipSpan = ({ id, title, children }) => (
   <OverlayTrigger
@@ -56,7 +57,7 @@ const TooltipSpan = ({ id, title, children }) => (
   </OverlayTrigger>
 );
 
-function ListingDataItem({ label, value, tooltip, isCurrency = true, followRequestStatus, handleFollowButtonClick, buttonDisabled }) {
+function ListingDataItem({ label, value, tooltip, isCurrency = true, followRequestStatus, handleFollowButtonClick, buttonDisabled, isBlurable = true }) {
   const { data: session, status } = useSession();
 
   const formattedValue = isCurrency
@@ -68,37 +69,51 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
       if (followRequestStatus === 'ACCEPTED') {
         return <span>{formattedValue}</span>;
       } else if (followRequestStatus === 'PENDING') {
-        return (
+        return isBlurable ? (
           <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
             <span className="obfuscation-span">obfusca</span>
           </TooltipSpan>
+        ) : (
+          <span>{formattedValue}</span>
         );
       } else {
         return !buttonDisabled ? (
           <a onClick={handleFollowButtonClick}>
-            <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
-              <span className="obfuscation-span">obfusca</span>
-            </TooltipSpan>
+            {isBlurable ? (
+              <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                <span className="obfuscation-span">obfusca</span>
+              </TooltipSpan>
+            ) : (
+              <span>{formattedValue}</span>
+            )}
           </a>
         ) : (
-          <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
-            <span className="obfuscation-span">obfusca</span>
-          </TooltipSpan>
+          isBlurable ? (
+            <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+              <span className="obfuscation-span">obfusca</span>
+            </TooltipSpan>
+          ) : (
+            <span>{formattedValue}</span>
+          )
         );
       }
     } else {
       return (
         <Link href="/register">
-          <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
-            <span className="obfuscation-span">obfusca</span>
-          </TooltipSpan>
+          {isBlurable ? (
+            <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+              <span className="obfuscation-span">obfusca</span>
+            </TooltipSpan>
+          ) : (
+            <span>{formattedValue}</span>
+          )}
         </Link>
       );
     }
   };
 
   return (
-    <li>
+    <>
       {tooltip ? (
         <TooltipSpan title={tooltip} id={label.toLowerCase().replace(/\s+/g, '-')}>
           <label>{label}: <FaExclamationCircle /></label>
@@ -107,7 +122,7 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
         <label>{label}:</label>
       )}
       {renderContent()}
-    </li>
+    </>
   );
 }
 
@@ -304,7 +319,7 @@ const yearToDateTotalNights = () => {
         : propertyData.cacButton.loggedNotFollowing
     : propertyData.cacButton.notLogged;
 
-  const [buttonLabel, setButtonLabel] = useState(initialButtonLabel);
+  const [buttonLabel, setButtonLabel] = useState(propertyData.cacButton.loading);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -314,6 +329,8 @@ const yearToDateTotalNights = () => {
           ? propertyData.cacButton.loggedPending
           : propertyData.cacButton.loggedNotFollowing;
       setButtonLabel(label);
+    } else if (status === "unauthenticated") {
+      setButtonLabel(propertyData.cacButton.notLogged);
     }
   }, [status, followRequestStatus, propertyData]);
 
@@ -324,10 +341,10 @@ const yearToDateTotalNights = () => {
     }
 
     if (followRequestStatus === 'ACCEPTED') {
-      setModalContent('Are you sure you want to unfollow this property?');
+      setModalContent(propertyData.modal.unfollowMessage);
       setShowModal(true);
     } else if (followRequestStatus === 'PENDING') {
-      setModalContent('Are you sure you want to withdraw your follow request?');
+      setModalContent(propertyData.modal.withdrawFollowRequestMessage);
       setShowModal(true);
     } else {
       // Send follow request
@@ -345,7 +362,7 @@ const yearToDateTotalNights = () => {
       if (response.ok) {
         setButtonDisabled(true); // Disable the button to prevent multiple requests
         setButtonLabel(propertyData.cacButton.loggedPending);
-        setModalContent('We sent your follow request');
+        setModalContent(propertyData.modal.followRequestSentMessage);
         setShowModal(true);
       }
     }
@@ -466,7 +483,7 @@ const yearToDateTotalNights = () => {
                       href={productJSON.vacationRentalDetails.listings.airbnb}
                       target="_blank"
                     >
-                      <FaAirbnb /> <span style={{ textDecoration: `underline` }}>Airbnb listing</span>
+                      <FaAirbnb /> <span style={{ textDecoration: `underline` }}>{propertyData.links.airbnbListing}</span>
                     </Link>
                   </label>
                   </div>
@@ -479,90 +496,111 @@ const yearToDateTotalNights = () => {
                   <h4 className="title-2"> {productMONGO.title}</h4>
                   <p>{productMONGO.shortDescription}</p>
 
-                  <h4 className="title-2">Financials (Past 12 months)</h4>
-                  <div className="property-detail-info-list section-bg-1 clearfix mb-60">
-                    <ul>
-                      <ListingDataItem
-                        label={propertyData.financials.rent}
-                        value={productMONGO.income.last12MonthsUSD}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                      <ListingDataItem
-                        label={propertyData.financials.expenses}
-                        value={productMONGO.expenses.last_twelve_months}
-                        tooltip={propertyData.financials.expensesTooltip}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                    </ul>
-                    <ul>
-                      <ListingDataItem
-                        label={propertyData.financials.freeCashFlow}
-                        value={productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                      <ListingDataItem
-                        label={propertyData.financials.assetValuation}
-                        value={productMONGO.price}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                      <ListingDataItem
-                        label={propertyData.financials.returnPercentage}
-                        value={(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months) / productMONGO.price * 100}
-                        isCurrency={false}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                    </ul>
-                  </div>
-                  <h4 className="title-2">{propertyData.vacationRentalPerformance.title}</h4>
+                  <h4 className="title-2">{propertyData.financials.title}</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label><b>{propertyData.vacationRentalPerformance.occupancy.title}</b></label>
+                        <ListingDataItem
+                          label={propertyData.financials.rent}
+                          value={productMONGO.income.last12MonthsUSD}
+                          followRequestStatus={followRequestStatus}
+                          handleFollowButtonClick={handleFollowButtonClick}
+                          buttonDisabled={buttonDisabled}
+                        />
                       </li>
-                      <ListingDataItem
-                        label={propertyData.vacationRentalPerformance.occupancy.lastMonth}
-                        value={productMONGO.occupancy.lastMonthNights / 30 * 100}
-                        isCurrency={false}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                      <ListingDataItem
-                        label={propertyData.vacationRentalPerformance.occupancy.last3Months}
-                        value={productMONGO.occupancy.last3MonthsNights / 90 * 100}
-                        isCurrency={false}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                      <ListingDataItem
-                        label={propertyData.vacationRentalPerformance.occupancy.yearToDate}
-                        value={productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100}
-                        isCurrency={false}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
-                    </ul>
-                    <ul>
-                      <ListingDataItem
-                        label={propertyData.vacationRentalPerformance.adr}
-                        value={productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights}
-                        tooltip={propertyData.vacationRentalPerformance.adrTooltip}
-                        followRequestStatus={followRequestStatus}
-                        handleFollowButtonClick={handleFollowButtonClick}
-                        buttonDisabled={buttonDisabled}
-                      />
+                        <li>
+                        <ListingDataItem
+                          label={propertyData.financials.expenses}
+                          value={productMONGO.expenses.last_twelve_months}
+                          tooltip={propertyData.financials.expensesTooltip}
+                          followRequestStatus={followRequestStatus}
+                          handleFollowButtonClick={handleFollowButtonClick}
+                          buttonDisabled={buttonDisabled}
+                        />
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <ListingDataItem
+                            label={propertyData.financials.freeCashFlow}
+                            value={productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                          />
+                        </li>
+    <li>
+                          <ListingDataItem
+                            label={propertyData.financials.assetValuation}
+                            value={productMONGO.price}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                          />
+    </li>
+    <li>
+                            <ListingDataItem
+                            label={propertyData.financials.returnPercentage}
+                            value={(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months) / productMONGO.price * 100}
+                            isCurrency={false}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                            isBlurable={false}
+                          />
+                          </li>
+                        </ul>
+                      </div>
+                      <h4 className="title-2">{propertyData.vacationRentalPerformance.title}</h4>
+                      <div className="property-detail-info-list section-bg-1 clearfix mb-60">
+                        <ul>
+                          <li>
+                            <label><b>{propertyData.vacationRentalPerformance.occupancy.title}</b></label>
+                          </li>
+                          <li>
+                          <ListingDataItem
+                            label={propertyData.vacationRentalPerformance.occupancy.lastMonth}
+                            value={productMONGO.occupancy.lastMonthNights / 30 * 100}
+                            isCurrency={false}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                            isBlurable={false}
+                          />
+    </li>
+    <li>
+                          <ListingDataItem
+                            label={propertyData.vacationRentalPerformance.occupancy.last3Months}
+                            value={productMONGO.occupancy.last3MonthsNights / 90 * 100}
+                            isCurrency={false}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                          />
+    </li>
+    <li>
+                          <ListingDataItem
+                            label={propertyData.vacationRentalPerformance.occupancy.yearToDate}
+                            value={productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100}
+                            isCurrency={false}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                          />
+                          </li>
+                        </ul>
+                        <ul>
+    <li>
+                          <ListingDataItem
+                            label={propertyData.vacationRentalPerformance.adr}
+                            value={productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights}
+                            tooltip={propertyData.vacationRentalPerformance.adrTooltip}
+                            followRequestStatus={followRequestStatus}
+                            handleFollowButtonClick={handleFollowButtonClick}
+                            buttonDisabled={buttonDisabled}
+                          />
+    </li>
+    <li>
                       <ListingDataItem
                         label={propertyData.vacationRentalPerformance.revpar}
                         value={productMONGO.income.last12MonthsUSD / 365}
@@ -571,6 +609,7 @@ const yearToDateTotalNights = () => {
                         handleFollowButtonClick={handleFollowButtonClick}
                         buttonDisabled={buttonDisabled}
                       />
+                      </li>
                       <li>
                         <label style={{maxWidth: `100%`}}>
                           <Link
@@ -762,7 +801,7 @@ const yearToDateTotalNights = () => {
                                   </TooltipSpan>
                                 </a>
                               ) : (
-                                                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
                                     <span className="obfuscation-span">obfusca</span>
                                   </TooltipSpan>
                               )
