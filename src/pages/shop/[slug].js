@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import clsx from "clsx";
 import { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import {
   FaArrowRight,
   FaArrowLeft,
@@ -34,8 +32,6 @@ import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } fr
 import products from "@/data/products.json";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
-import Tags from "@/components/tags";
-import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import ModalVideo from "react-modal-video";
 import { useRouter } from "next/router";
@@ -45,10 +41,9 @@ import { useSession } from 'next-auth/react';  // Import the useSession hook
 import propertyData from '@/data/properties/[slug].json';
 import { getSession } from 'next-auth/react';
 import MessageModal from '@/components/modals/MessageModal';
-import Button from 'react-bootstrap/Button';
-import Skeleton from 'react-loading-skeleton';
 import TooltipSpan from "@/components/Tooltips/TooltipSpan";
 import ListingDataItem from '@components/properties/ListingDataItem';
+import { useOGMetadata } from "@/context/OGMetadataContext";
 
 function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, propertyData }) {
   const { products } = useSelector((state) => state.product);
@@ -58,14 +53,14 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const { getDateRanges } = require('/src/lib/dateRangeHelper'); 
   const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
 
-const yearToDateTotalNights = () => {
-  const updatedAt = new Date(productMONGO.updated_at);
-  const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
-  
-  const differenceInDays = calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd);
-  
-  return differenceInDays > 0 ? differenceInDays : 0;
-};
+  const yearToDateTotalNights = () => {
+    const updatedAt = new Date(productMONGO.updated_at);
+    const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
+    
+    const differenceInDays = calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd);
+    
+    return differenceInDays > 0 ? differenceInDays : 0;
+  };
 
   const relatedProducts = getProducts(
     products,
@@ -94,7 +89,6 @@ const yearToDateTotalNights = () => {
   const daysInPreviousMonth = getDaysInPreviousMonth(
     productMONGO.updated_at
   );
-
 
   const productPrice = productMONGO.price.toFixed(2);
   const cartItem = cartItems.find((cartItem) => cartItem.id === productMONGO.property_id);
@@ -199,9 +193,9 @@ const yearToDateTotalNights = () => {
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
-  const pageTitle = productMONGO.title + " - " + productMONGO.locantion;
+  const pageTitle = productMONGO.name + " - " + productMONGO.location;
   const pageDescription = productMONGO.shortDescription;
-  const ogImage = productJSON.carousel[0].img;
+  const ogImage = productJSON.carousel[0]?.img || 'default-image.jpg';
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
     
@@ -306,8 +300,20 @@ const yearToDateTotalNights = () => {
 
   };
 
+  const { setOGMetadataSet } = useOGMetadata();
+
+  useEffect(() => {
+    setOGMetadataSet(true);
+  }, [setOGMetadataSet]);
+
   return (
     <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
+      </Head>
       <Layout 
         topbar={false} 
         breadcrumb={true} 
@@ -317,13 +323,6 @@ const yearToDateTotalNights = () => {
           manager: productMONGO.propertyManager.fullName
         }}
       >
-        <Head>
-          <title>{pageTitle}</title>
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
-        </Head>
-        
         <ModalVideo
           channel="youtube"
           youtube={{
