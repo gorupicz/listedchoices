@@ -60,6 +60,8 @@ function Login() {
       setShowForgotPassword(true);
       setReopenForgotPassword(false);  // Reset state
     }
+    console.log('Modal message:', modalMessage);
+    console.log('Is error:', isError);
     if (!isError) {
       // Redirect to email verification only if the action was related to verification
       if (modalMessage === loginData.verificationCodeSentMessage) {
@@ -146,6 +148,8 @@ function Login() {
       console.log('Response received:', data);
 
       if (res.ok) {
+        console.log('Token received:', data.token); // Log the received token
+        localStorage.setItem('authToken', data.token); // Store the token
         if (data.isVerified) {
           console.log('User is verified, redirecting to dashboard...');
           router.push('/my-account');

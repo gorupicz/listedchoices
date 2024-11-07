@@ -1,12 +1,16 @@
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, code } = req.body;
+    let { email, code } = req.body;
 
     try {
-      // Verification logic (fetch user and compare the code)
-      
-      // Example:
+      // Decode the email and replace spaces with '+'
+      email = decodeURIComponent(email).replace(/ /g, '+');
+
+      // Fetch user from the database
       const user = await prisma.user.findUnique({ where: { email } });
+
+      // Log the retrieved user and verification code
+
       if (user && user.verificationCode === code) {
         // Mark user as verified
         await prisma.user.update({
@@ -19,6 +23,7 @@ export default async function handler(req, res) {
         res.status(400).json({ message: 'Invalid verification code' });
       }
     } catch (error) {
+      console.error('Error during verification:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   } else {

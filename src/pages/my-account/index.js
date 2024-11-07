@@ -4,7 +4,7 @@ import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDoll
 import myAccountData from "@/data/my-account/index.json";
 import Link from "next/link";
 import { signOut, getSession, useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 // Map icon names to React components
 const iconMap = {
@@ -37,6 +37,16 @@ export async function getServerSideProps(context) {
 
 function MyAccount() {
   const { data: session, status } = useSession(); // Get session data
+
+  // Debugging useEffect to log component mounts and updates
+  useEffect(() => {
+    console.log('MyAccount component mounted or updated');
+    
+    // Optional: Return a cleanup function to log when the component unmounts
+    return () => {
+      console.log('MyAccount component unmounted');
+    };
+  }, [session, status]); // Dependencies array to track changes
 
   if (status === 'loading') {
     return <div>Loading...</div>; // Handle loading state

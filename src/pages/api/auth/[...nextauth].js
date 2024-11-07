@@ -43,23 +43,35 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        console.log('Authorizing user with email:', credentials.email);
+
         // Find user by email
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
         if (!user) {
-          throw new Error('No user found with the given email');
+          console.error('No user found with the given email');
+          return null; // Return null if no user is found
         }
 
         // Check if the password is correct
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) {
-          throw new Error('Invalid password');
+          console.error('Invalid password');
+          return null; // Return null if password is invalid
         }
 
-        // Return user object if authentication is successful
-        return user;
+        console.log('User authenticated successfully:', user);
+
+        // Return user object with necessary properties
+        return {
+          id: user.id,
+          email: user.email,
+          isVerified: user.isVerified,
+          photograph: user.photograph,
+          first_name: user.first_name
+        };
       }
     })
   ],
@@ -136,21 +148,23 @@ export default NextAuth({
       return true;
     },
 
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user.id = token.id;
       session.user.isVerified = token.isVerified;
       session.user.photograph = token.photograph;
       session.user.first_name = token.first_name;
+      console.log('Session:', session); // Debugging log
       return session;
     },
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.isVerified = user.isVerified;
         token.photograph = user.photograph;
         token.first_name = user.first_name;
       }
+      console.log('JWT Token:', token); // Debugging log
       return token;
     },
   },
