@@ -61,7 +61,10 @@ function Login() {
       setReopenForgotPassword(false);  // Reset state
     }
     if (!isError) {
-      router.push(`/register/email-verification?email=${email}`);
+      // Redirect to email verification only if the action was related to verification
+      if (modalMessage === loginData.verificationCodeSentMessage) {
+        router.push(`/register/email-verification?email=${email}`);
+      }
     }
   };
 
@@ -106,7 +109,7 @@ function Login() {
 };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form from refreshing the page
 
     const cleanedEmail = validator.trim(email);
     if (!validator.isEmail(cleanedEmail)) {
@@ -114,7 +117,7 @@ function Login() {
       return;
     }
 
-    // Execute reCAPTCHA v3
+    console.log('Executing reCAPTCHA...');
     const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'login' });
 
     if (!token) {
@@ -122,35 +125,41 @@ function Login() {
       return;
     }
 
-    // Send login request to check if credentials are correct
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        email, 
-        password, 
-        subject: loginData.verificationEmailSubject, 
-        body: loginData.verificationEmailSubject,
-        recaptchaToken: token, // Send reCAPTCHA token
-      }),
-    });
+    try {
+      console.log('Sending login request...');
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email, 
+          password, 
+          subject: loginData.verificationEmailSubject, 
+          body: loginData.verificationEmailSubject,
+          recaptchaToken: token, // Send reCAPTCHA token
+        }),
+      });
 
-    const data = await res.json();
+      console.log('Login request sent, awaiting response...');
+      const data = await res.json();
+      console.log('Response received:', data);
 
-    // First check if email and password are correct
-    if (res.ok) {
-      if (data.isVerified) {
-        // If verified, proceed to dashboard
-        router.push('/my-account');
+      if (res.ok) {
+        if (data.isVerified) {
+          console.log('User is verified, redirecting to dashboard...');
+          router.push('/my-account');
+        } else {
+          console.log('User is not verified, showing verification modal...');
+          handleShowModal(loginData.verificationCodeSentMessage, false);
+        }
       } else {
-        // If not verified, show the modal and send the user to verification page
-        handleShowModal(loginData.verificationCodeSentMessage, false);
+        console.log('Login failed, showing error modal...');
+        handleShowModal(data.message || loginData.defaultErrorMessage, true);  // Show error modal
       }
-    } else {
-      // Show error if email/password is incorrect
-      handleShowModal(data.message || loginData.defaultErrorMessage, true);  // Show error modal
+    } catch (error) {
+      console.error('Login error:', error);
+      handleShowModal(loginData.defaultErrorMessage, true);  // Show error modal
     }
   };
 

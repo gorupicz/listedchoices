@@ -1,8 +1,10 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import FacebookProvider from 'next-auth/providers/facebook'; // Import Facebook provider
+import FacebookProvider from 'next-auth/providers/facebook';
+import CredentialsProvider from 'next-auth/providers/credentials'; // Import Credentials provider
 import prisma from '@/lib/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import bcrypt from 'bcryptjs'; // Import bcrypt for password comparison
 
 export default NextAuth({
   providers: [
@@ -20,7 +22,7 @@ export default NextAuth({
         };
       },
     }),
-    FacebookProvider({ // Add Facebook provider
+    FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       profile(profile) {
@@ -34,6 +36,32 @@ export default NextAuth({
         };
       },
     }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        // Find user by email
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (!user) {
+          throw new Error('No user found with the given email');
+        }
+
+        // Check if the password is correct
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) {
+          throw new Error('Invalid password');
+        }
+
+        // Return user object if authentication is successful
+        return user;
+      }
+    })
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
@@ -109,7 +137,7 @@ export default NextAuth({
     },
 
     async session({ session, token, user }) {
-      session.user.id = parseInt(token.id, 10);
+      session.user.id = token.id;
       session.user.isVerified = token.isVerified;
       session.user.photograph = token.photograph;
       session.user.first_name = token.first_name;
@@ -118,17 +146,10 @@ export default NextAuth({
 
     async jwt({ token, account, user }) {
       if (user) {
-        token.id = parseInt(user.id, 10);
+        token.id = user.id;
         token.isVerified = user.isVerified;
         token.photograph = user.photograph;
         token.first_name = user.first_name;
-      } else if (account) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email },
-          select: { photograph: true, first_name: true },
-        });
-        token.photograph = dbUser?.photograph;
-        token.first_name = dbUser?.first_name;
       }
       return token;
     },
