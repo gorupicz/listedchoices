@@ -248,8 +248,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   }, [status, followRequestStatus, propertyData]);
 
   function setCookie(name, value, days) {
+    console.log("setting cookie:", name, value, days);
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
   }
 
   const handleFollowButtonClick = async () => {
