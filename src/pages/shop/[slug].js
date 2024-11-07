@@ -247,9 +247,15 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     }
   }, [status, followRequestStatus, propertyData]);
 
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  }
+
   const handleFollowButtonClick = async () => {
     if (!session || status !== "authenticated") {
-      router.push(`/register?redirect=${encodeURIComponent(window.location.pathname)}`);
+      setCookie('redirectAfterLogin', window.location.pathname, 100); // Cookie expires in 1 day
+      router.push('/register?foo=bar');
       return;
     }
 
