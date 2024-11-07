@@ -26,18 +26,33 @@ function Register() {
   const [isError, setIsError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [hasRedirected, setHasRedirected] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  function getCookie(name) {
+    return document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, '');
+  }
+  
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (status === 'authenticated' && !hasRedirected) {
       if (session?.user?.isVerified) {
-        router.push('/my-account');
+        const redirectUrl = getCookie('redirectAfterLogin');
+        if (redirectUrl) {
+          router.push(redirectUrl);
+          setHasRedirected(true);
+          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        } else {
+          router.push('/my-account?foo=bar');
+        }
       } else {
         router.push(`/register/email-verification?email=${session.user.email}`);
       }
     }
-  }, [session, status, router]);
+  }, [session, status, router, hasRedirected]);
 
   function getPasswordStrength(password) {
     const result = zxcvbn(password);
@@ -124,9 +139,16 @@ function Register() {
   const handleCloseModal = () => {
     setShowModal(false);
 
-    if (!isError) {
+    if (!isError && !hasRedirected) {
       if (session && session.user && session.user.isVerified) {
-        router.push('/my-account');
+        const redirectUrl = getCookie('redirectAfterLogin');
+        if (redirectUrl) {
+          router.push(redirectUrl);
+          setHasRedirected(true);
+          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        } else {
+          router.push('/my-account');
+        }
       } else {
         router.push(`/register/email-verification?email=${email}`);
       }

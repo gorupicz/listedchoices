@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
+import loginData from '@/data/login/index.json';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
       
       // Send recovery email
       try {
-        await await sendEmail({
+        await sendEmail({
           to: email,
           subject,
           body: body.replace('{link}', recoveryLink),

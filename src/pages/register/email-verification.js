@@ -13,6 +13,7 @@ function EmailVerification() {
   const [isError, setIsError] = useState(false);  // Track if it's an error or success modal
   const [showModal, setShowModal] = useState(false);  // Modal state
   const router = useRouter();
+  const { email } = router.query;  // Extract email from URL parameters
 
   // Modal functions to show and close modal
   const handleShowModal = (message, isError) => {
@@ -31,12 +32,17 @@ function EmailVerification() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('/api/verify-email', {
+    if (!email) {
+      handleShowModal('Email is missing from the URL.', true);
+      return;
+    }
+
+    const res = await fetch('/api/email-verification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ verificationCode }),
+      body: JSON.stringify({ email, code: verificationCode }),  // Use email from URL
     });
 
     if (res.ok) {
