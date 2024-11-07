@@ -29,10 +29,15 @@ function Register() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const { redirect } = router.query;
   useEffect(() => {
     if (status === 'authenticated') {
       if (session?.user?.isVerified) {
-        router.push('/my-account');
+        if (redirect) {
+          router.push(decodeURIComponent(redirect));
+        } else {
+          router.push('/my-account');
+        }
       } else {
         router.push(`/register/email-verification?email=${session.user.email}`);
       }
@@ -126,7 +131,11 @@ function Register() {
 
     if (!isError) {
       if (session && session.user && session.user.isVerified) {
-        router.push('/my-account');
+        if (redirect) {
+          router.push(decodeURIComponent(redirect));
+        } else {
+          router.push('/my-account');
+        }
       } else {
         router.push(`/register/email-verification?email=${email}`);
       }

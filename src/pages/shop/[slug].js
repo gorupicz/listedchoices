@@ -42,7 +42,7 @@ import ModalVideo from "react-modal-video";
 import { useRouter } from "next/router";
 import prisma from "@/lib/prisma";
 import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
-import { useSession } from 'next-auth/react';  // Import the useSession hook
+import { useSession } from 'next-auth/react';
 import propertyData from '@/data/properties/[slug].json';
 import { getSession } from 'next-auth/react';
 import MessageModal from '@/components/modals/MessageModal';
@@ -203,7 +203,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const ogImage = productJSON.carousel[0]?.img || 'default-image.jpg';
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
-    
+    router
   useEffect(() => {
     const slider = document.querySelector(".ltn__CaC-widget");
     setSliderHeight(slider.offsetHeight);
@@ -249,7 +249,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 
   const handleFollowButtonClick = async () => {
     if (!session || status !== "authenticated") {
-      router.push('/register');
+      router.push(`/register?redirect=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
 
@@ -725,7 +725,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                               )
                             )
                           ) : (
-                            <Link href="/register">
+                            <Link href='`/register?redirect=${encodeURIComponent(window.location.pathname)}`'>
                               <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
