@@ -259,13 +259,23 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
       router.push('/register');
       return;
     }
-    
-    if (followRequestStatus === 'ACCEPTED' && !redirectAfterLoginCookie) {
+    console.log("redirectAfterLoginCookie:", redirectAfterLoginCookie);
+    if (followRequestStatus === 'ACCEPTED') {
+      if(!redirectAfterLoginCookie) {
+      console.log("unfollow message");
       setModalContent(propertyData.modal.unfollowMessage);
-      setShowModal(true);
-    } else if (followRequestStatus === 'PENDING'  && !redirectAfterLoginCookie) {
-      setModalContent(propertyData.modal.withdrawFollowRequestMessage);
-      setShowModal(true);
+        setShowModal(true);
+      } else {
+        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+      }
+    } else if (followRequestStatus === 'PENDING') {
+      if(!redirectAfterLoginCookie) {
+        console.log("withdraw follow request message");
+        setModalContent(propertyData.modal.withdrawFollowRequestMessage);
+        setShowModal(true);
+      } else {
+        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+      }
     } else {
       // Send follow request
       const response = await fetch('/api/follow-property', {
