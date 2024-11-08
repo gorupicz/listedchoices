@@ -1,5 +1,6 @@
 import { getSession, getToken } from 'next-auth/react';
 import jwt from 'jsonwebtoken'; // Import jwt to sign the token
+import prisma from '@/lib/prisma';
 
 function setCookie(res, name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
