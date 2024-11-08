@@ -5,6 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'; // Import Cre
 import prisma from '@/lib/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from 'bcryptjs'; // Import bcrypt for password comparison
+import emailData from '@/data/emails.json';
+import { sendEmail } from '@/lib/mailer';
 
 export default NextAuth({
   providers: [
@@ -43,39 +45,64 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        console.log('Authorizing user with email:', credentials.email);
+        try {
+          // Find user by email
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          });
 
-        // Find user by email
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
+          if (!user) {
+            console.error('No user found with the given email');
+            return null;
+          }
 
-        if (!user) {
-          console.error('No user found with the given email');
-          return null; // Return null if no user is found
+          // Check if the password is correct
+          const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isPasswordValid) {
+            return null;
+          }
+
+          if (!user.isVerified) {
+            try {
+              // Generate a verification code if not provided in the request
+              const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+              // Update the user's verification code in the database
+              await prisma.user.update({
+                where: { email },
+                data: { verificationCode: code },
+              });
+
+              // Send verification email
+              await sendEmail({
+                to: email,
+                subject: emailData.verificationEmailSubject.replace('{code}', code),
+                body: emailData.verificationEmailBody.replace('{code}', code),  // Format the email body
+              });
+
+              return { message: emailData.verificationEmailInternalMessageEmailSentOK, isVerified: false };
+            } catch (emailError) {
+              return { message: emailData.verificationEmailInternalMessageEmailNotSent, isVerified: false };
+            }
+          }
+
+          // Return user object with necessary properties
+          return {
+            id: user.id,
+            isVerified: user.isVerified,
+            photograph: user.photograph,
+            first_name: user.first_name,
+            email: user.email
+          };
+        } catch (error) {
+          console.error('Error during authorization:', error);
+          return null;
         }
-
-        // Check if the password is correct
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) {
-          console.error('Invalid password');
-          return null; // Return null if password is invalid
-        }
-
-        console.log('User authenticated successfully:', user);
-
-        // Return user object with necessary properties
-        return {
-          id: user.id,
-          email: user.email,
-          isVerified: user.isVerified,
-          photograph: user.photograph,
-          first_name: user.first_name
-        };
       }
     })
   ],
   adapter: PrismaAdapter(prisma),
+
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account.provider === 'google' || account.provider === 'facebook') {
@@ -149,11 +176,13 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.isVerified = token.isVerified;
-      session.user.photograph = token.photograph;
-      session.user.first_name = token.first_name;
-      console.log('Session:', session); // Debugging log
+      if (session.user && token) {
+        session.user.id = token.id;
+        session.user.isVerified = token.isVerified;
+        session.user.photograph = token.photograph;
+        session.user.first_name = token.first_name;
+        session.user.email = token.email;
+      }
       return session;
     },
 
@@ -163,8 +192,8 @@ export default NextAuth({
         token.isVerified = user.isVerified;
         token.photograph = user.photograph;
         token.first_name = user.first_name;
+        token.email = user.email;
       }
-      console.log('JWT Token:', token); // Debugging log
       return token;
     },
   },

@@ -4,6 +4,7 @@ import validator from 'validator';
 import zxcvbn from 'zxcvbn';
 import { Layout } from "@/layouts";
 import registerData from "@/data/register/index.json";
+import emailData from "@/data/emails.json";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import CallToAction from "@/components/callToAction";
@@ -44,9 +45,9 @@ function Register() {
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
-          router.push('/my-account?foo=bar');
+          router.push('/my-account');
         }
       } else {
         router.push(`/register/email-verification?email=${session.user.email}`);
@@ -145,7 +146,7 @@ function Register() {
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
           router.push('/my-account');
         }

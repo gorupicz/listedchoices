@@ -19,6 +19,7 @@
   "successModalTitle": "Success",
   "errorSuccessModalSubmit": "Accept",
   "recoveryEmailSubject": "Password Recovery",
+  "errorInvalidEmailOrPasswordModalMessage": "Invalid email or password",
   "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}",
   "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
   "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code. If you didn’t attempt to sign in, you can safely ignore this email. You can also set a password to sign in to your account.",
