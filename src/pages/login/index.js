@@ -44,7 +44,6 @@ function Login() {
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
           router.push('/my-account');
         }
@@ -155,12 +154,13 @@ function Login() {
 
       if (result.status === 401) {
         handleShowModal(loginData.errorInvalidEmailOrPasswordModalMessage, true);  // Show error modal
+      } else if (result.error === '203') {
+        handleShowModal(loginData.verificationCodeSentMessage, false);
       } else if (!hasRedirected) {
         const redirectUrl = getCookie('redirectAfterLogin');
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
           router.push('/my-account');
         }
@@ -209,6 +209,11 @@ function Login() {
                       >
                         <span className="icon"><FaEnvelope /></span> {loginData.continueWithEmailButtonLabel}
                       </Button>
+                      <p>
+                        <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
+                          <small>{loginData.forgotPasswordText}</small>
+                        </Link>
+                      </p>
                     </div>
                   )}
                   {showLoginForm && (
@@ -229,7 +234,7 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                       />
-                      <p>
+                      <p className="text-center">
                         <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
                           <small>{loginData.forgotPasswordText}</small>
                         </Link>

@@ -25,7 +25,7 @@ function EmailVerification() {
   const handleCloseModal = () => {
     setShowModal(false);
     if (!isError) {
-      router.push('/my-account');  // Redirect to dashboard on success
+      router.push('/login');
     }
   };
 
@@ -77,7 +77,7 @@ function EmailVerification() {
                       required
                     />
                     <div className="btn-wrapper mt-0 text-center">
-                      <button className="continue-email-btn btn btn-block" type="submit">
+                      <button className="email-btn social-btn btn" type="submit">
                         {verificationData.submitButtonText}
                       </button>
                     </div>

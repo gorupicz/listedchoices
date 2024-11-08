@@ -256,7 +256,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const handleFollowButtonClick = async () => {
     if (!session || status !== "authenticated") {
       setCookie('redirectAfterLogin', window.location.pathname, 100); // Cookie expires in 1 day
-      router.push('/register?foo=bar');
+      router.push('/register');
       return;
     }
 
@@ -317,6 +317,14 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   useEffect(() => {
     setOGMetadataSet(true);
   }, [setOGMetadataSet]);
+
+  useEffect(() => {
+    const redirectAfterLoginCookie = document.cookie.split('; ').find(row => row.startsWith('redirectAfterLogin='));
+    if (redirectAfterLoginCookie) {
+      handleFollowButtonClick();
+      document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';//Delete cookie
+    }
+  }, []);
 
   return (
     <>

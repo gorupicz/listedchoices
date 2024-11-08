@@ -61,39 +61,39 @@ export default NextAuth({
           if (!isPasswordValid) {
             return null;
           }
-
-          if (!user.isVerified) {
-            try {
+          console.log('user.isVerified:', user.isVerified);
+          if (!(user.isVerified)) {
+            console.log('Sending verification email...', credentials.email);
+            
               // Generate a verification code if not provided in the request
               const code = Math.floor(100000 + Math.random() * 900000).toString();
 
               // Update the user's verification code in the database
               await prisma.user.update({
-                where: { email },
+                where: { email: credentials.email },
                 data: { verificationCode: code },
               });
-
+              console.log('Verification code updated in database', "code:",code);
               // Send verification email
               await sendEmail({
-                to: email,
+                to: credentials.email,
                 subject: emailData.verificationEmailSubject.replace('{code}', code),
                 body: emailData.verificationEmailBody.replace('{code}', code),  // Format the email body
               });
-
-              return { message: emailData.verificationEmailInternalMessageEmailSentOK, isVerified: false };
-            } catch (emailError) {
-              return { message: emailData.verificationEmailInternalMessageEmailNotSent, isVerified: false };
-            }
+              console.log('Verification email sentFOO');
+              return { isVerified: false };
+            
           }
 
-          // Return user object with necessary properties
-          return {
-            id: user.id,
-            isVerified: user.isVerified,
-            photograph: user.photograph,
-            first_name: user.first_name,
-            email: user.email
-          };
+          if (user && isPasswordValid && user.isVerified) {
+            return {
+              id: user.id,
+              isVerified: user.isVerified,
+              photograph: user.photograph,
+              first_name: user.first_name,
+              email: user.email
+            };
+          }
         } catch (error) {
           console.error('Error during authorization:', error);
           return null;
@@ -105,6 +105,9 @@ export default NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile }) {
+      if (!user.isVerified) {
+        throw new Error('203');
+      }
       if (account.provider === 'google' || account.provider === 'facebook') {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
@@ -200,6 +203,11 @@ export default NextAuth({
 
   session: {
     strategy: 'jwt',
+  },
+
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    encryption: false,
   },
 
   secret: process.env.NEXTAUTH_SECRET,

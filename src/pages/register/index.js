@@ -45,7 +45,6 @@ function Register() {
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
           router.push('/my-account');
         }
@@ -146,7 +145,6 @@ function Register() {
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
-          document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';
         } else {
           router.push('/my-account');
         }
