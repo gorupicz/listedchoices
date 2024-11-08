@@ -253,17 +253,17 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
   }
 
-  const handleFollowButtonClick = async () => {
+  const handleFollowButtonClick = async (redirectAfterLoginCookie = false) => {
     if (!session || status !== "authenticated") {
       setCookie('redirectAfterLogin', window.location.pathname, 100); // Cookie expires in 1 day
       router.push('/register');
       return;
     }
-
-    if (followRequestStatus === 'ACCEPTED') {
+    
+    if (followRequestStatus === 'ACCEPTED' && !redirectAfterLoginCookie) {
       setModalContent(propertyData.modal.unfollowMessage);
       setShowModal(true);
-    } else if (followRequestStatus === 'PENDING') {
+    } else if (followRequestStatus === 'PENDING'  && !redirectAfterLoginCookie) {
       setModalContent(propertyData.modal.withdrawFollowRequestMessage);
       setShowModal(true);
     } else {
@@ -284,6 +284,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
         setButtonLabel(propertyData.cacButton.loggedPending);
         setModalContent(propertyData.modal.followRequestSentMessage);
         setShowModal(true);
+        redirectAfterLoginCookie && (document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'); //Delete cookie
       }
     }
   };
@@ -321,8 +322,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   useEffect(() => {
     const redirectAfterLoginCookie = document.cookie.split('; ').find(row => row.startsWith('redirectAfterLogin='));
     if (redirectAfterLoginCookie) {
-      handleFollowButtonClick();
-      document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure';//Delete cookie
+      handleFollowButtonClick(redirectAfterLoginCookie);
     }
   }, []);
 
