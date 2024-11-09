@@ -6,6 +6,6 @@
   "errorMessage": "Invalid verification code. Please try again.",
   "successModalTitle": "Verification Successful",
   "errorModalTitle": "Verification Failed",
-  "modalSubmitText": "Accept",
+  "modalSubmitText": "Log in",
   "goBackToLoginText": "GO BACK TO LOGIN"
 }

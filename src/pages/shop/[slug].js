@@ -253,19 +253,29 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
   }
 
-  const handleFollowButtonClick = async () => {
+  const handleFollowButtonClick = async (redirectAfterLoginCookie = false) => {
     if (!session || status !== "authenticated") {
       setCookie('redirectAfterLogin', window.location.pathname, 100); // Cookie expires in 1 day
-      router.push('/register?foo=bar');
+      router.push('/register');
       return;
     }
-
+    console.log("redirectAfterLoginCookie:", redirectAfterLoginCookie);
     if (followRequestStatus === 'ACCEPTED') {
+      if(!redirectAfterLoginCookie) {
+      console.log("unfollow message");
       setModalContent(propertyData.modal.unfollowMessage);
-      setShowModal(true);
+        setShowModal(true);
+      } else {
+        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+      }
     } else if (followRequestStatus === 'PENDING') {
-      setModalContent(propertyData.modal.withdrawFollowRequestMessage);
-      setShowModal(true);
+      if(!redirectAfterLoginCookie) {
+        console.log("withdraw follow request message");
+        setModalContent(propertyData.modal.withdrawFollowRequestMessage);
+        setShowModal(true);
+      } else {
+        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+      }
     } else {
       // Send follow request
       const response = await fetch('/api/follow-property', {
@@ -284,6 +294,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
         setButtonLabel(propertyData.cacButton.loggedPending);
         setModalContent(propertyData.modal.followRequestSentMessage);
         setShowModal(true);
+        redirectAfterLoginCookie && (document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'); //Delete cookie
       }
     }
   };
@@ -317,6 +328,13 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   useEffect(() => {
     setOGMetadataSet(true);
   }, [setOGMetadataSet]);
+
+  useEffect(() => {
+    const redirectAfterLoginCookie = document.cookie.split('; ').find(row => row.startsWith('redirectAfterLogin='));
+    if (redirectAfterLoginCookie) {
+      handleFollowButtonClick(redirectAfterLoginCookie);
+    }
+  }, []);
 
   return (
     <>

@@ -8,12 +8,20 @@ import Modal from "react-bootstrap/Modal";
 import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import loginData from "@/data/login/index.json";  // Import text content
+import emailData from '@/data/emails.json';
 import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
 import ForgotPasswordModal from "@/components/modals/ForgotPasswordModal";
 import MessageModal from "@/components/modals/MessageModal";
+
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, '');
+}
 
 function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -26,16 +34,22 @@ function Login() {
   const { data: session, status } = useSession(); // Get session and status
   const router = useRouter();
   const [showLoginForm, setShowLoginForm] = useState(false); // New state for login form visibility
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   // Check if the user is authenticated via Google or regular flow
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (status === 'authenticated' && !hasRedirected) {
       if (session?.user?.isVerified) {
-        // Redirect to the dashboard if the user is verified
-        router.push('/my-account');
+        const redirectUrl = getCookie('redirectAfterLogin');
+        if (redirectUrl) {
+          router.push(redirectUrl);
+          setHasRedirected(true);
+        } else {
+          router.push('/my-account');
+        }
       }
     }
-  }, [session, status, router]);
+  }, [session, status, router, hasRedirected]);
 
   // Function to close all modals
   const handleCloseAllModals = () => {
@@ -92,8 +106,8 @@ function Login() {
       },
       body: JSON.stringify({ 
         email: cleanedEmail,
-        subject: loginData.recoveryEmailSubject,
-        body: loginData.recoveryEmailBody
+        subject: emailData.recoveryEmailSubject,
+        body: emailData.recoveryEmailBody
       }),
     });
 
@@ -129,40 +143,30 @@ function Login() {
 
     try {
       console.log('Sending login request...');
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          email, 
-          password, 
-          subject: loginData.verificationEmailSubject, 
-          body: loginData.verificationEmailSubject,
-          recaptchaToken: token, // Send reCAPTCHA token
-        }),
+      const result = await signIn('credentials', {
+        email: cleanedEmail,
+        password,
+        recaptchaToken: token, // Send reCAPTCHA token
+        redirect: false // Ensure no automatic redirect
       });
 
-      console.log('Login request sent, awaiting response...');
-      const data = await res.json();
-      console.log('Response received:', data);
+      console.log('Login result:', result); // Log the result
 
-      if (res.ok) {
-        console.log('Token received:', data.token); // Log the received token
-        localStorage.setItem('authToken', data.token); // Store the token
-        if (data.isVerified) {
-          console.log('User is verified, redirecting to dashboard...');
-          router.push('/my-account');
+      if (result.status === 401) {
+        handleShowModal(loginData.errorInvalidEmailOrPasswordModalMessage, true);  // Show error modal
+      } else if (result.error === '203') {
+        handleShowModal(loginData.verificationCodeSentMessage, false);
+      } else if (!hasRedirected) {
+        const redirectUrl = getCookie('redirectAfterLogin');
+        if (redirectUrl) {
+          router.push(redirectUrl);
+          setHasRedirected(true);
         } else {
-          console.log('User is not verified, showing verification modal...');
-          handleShowModal(loginData.verificationCodeSentMessage, false);
+          router.push('/my-account');
         }
-      } else {
-        console.log('Login failed, showing error modal...');
-        handleShowModal(data.message || loginData.defaultErrorMessage, true);  // Show error modal
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Unexpected login error:', error); // Log unexpected errors
       handleShowModal(loginData.defaultErrorMessage, true);  // Show error modal
     }
   };
@@ -205,6 +209,11 @@ function Login() {
                       >
                         <span className="icon"><FaEnvelope /></span> {loginData.continueWithEmailButtonLabel}
                       </Button>
+                      <p>
+                        <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
+                          <small>{loginData.forgotPasswordText}</small>
+                        </Link>
+                      </p>
                     </div>
                   )}
                   {showLoginForm && (
@@ -225,7 +234,7 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                       />
-                      <p>
+                      <p className="text-center">
                         <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
                           <small>{loginData.forgotPasswordText}</small>
                         </Link>
