@@ -4,17 +4,26 @@ import validator from 'validator';
 import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import CallToAction from "@/components/callToAction";
 import Link from "next/link";
 import loginData from "@/data/login/index.json";  // Import text content
-import emailData from '@/data/emails.json';
 import { signIn, useSession } from 'next-auth/react'; // Import both signIn and useSession
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
 import ForgotPasswordModal from "@/components/modals/ForgotPasswordModal";
 import MessageModal from "@/components/modals/MessageModal";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+export async function getStaticProps(context) {
+  const { locale } = context; // Ensure locale is destructured from context
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
 
 function getCookie(name) {
   return document.cookie.split('; ').reduce((r, v) => {
@@ -24,6 +33,7 @@ function getCookie(name) {
 }
 
 function Login() {
+  const { t } = useTranslation('common');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -106,8 +116,6 @@ function Login() {
       },
       body: JSON.stringify({ 
         email: cleanedEmail,
-        subject: emailData.recoveryEmailSubject,
-        body: emailData.recoveryEmailBody
       }),
     });
 
@@ -179,7 +187,7 @@ function Login() {
             <Row>
               <Col xs={12}>
                 <div className="section-title-area text-center mb-10">
-                  <h1 className="section-title">{loginData.pageTitle}</h1>
+                  <h1 className="section-title">{t('pageTitle')}</h1>
                 </div>
               </Col>
             </Row>
@@ -191,15 +199,15 @@ function Login() {
                       className="social-btn google-btn" 
                       onClick={handleGoogleSignIn}
                     >
-                      <span className="icon"><FcGoogle /></span> {loginData.googleSignInButtonLabel}
+                      <span className="icon"><FcGoogle /></span> {t('googleSignInButtonLabel')}
                     </Button>
                     <Button 
                       className="social-btn facebook-btn" 
                       onClick={() => signIn('facebook')}
                     >
-                      <span className="icon"><FaFacebook /></span> {loginData.facebookSignInButtonLabel}
+                      <span className="icon"><FaFacebook /></span> {t('facebookSignInButtonLabel')}
                     </Button>
-                    <p className="separator checkbox-inline mt-10 mb-10"><small>{loginData.socialSignInOr}</small></p>
+                    <p className="separator checkbox-inline mt-10 mb-10"><small>{t('socialSignInOr')}</small></p>
                   </div>
                   {!showLoginForm && (
                     <div className="text-center">
@@ -207,11 +215,11 @@ function Login() {
                         className="social-btn email-btn" 
                         onClick={() => setShowLoginForm(true)}
                       >
-                        <span className="icon"><FaEnvelope /></span> {loginData.continueWithEmailButtonLabel}
+                        <span className="icon"><FaEnvelope /></span> {t('continueWithEmailButtonLabel')}
                       </Button>
                       <p>
                         <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
-                          <small>{loginData.forgotPasswordText}</small>
+                          <small>{t('forgotPasswordText')}</small>
                         </Link>
                       </p>
                     </div>
@@ -221,7 +229,7 @@ function Login() {
                       <input
                         type="text"
                         name="email"
-                        placeholder={loginData.emailPlaceholder}
+                        placeholder={t('emailPlaceholder')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -229,26 +237,26 @@ function Login() {
                       <input
                         type="password"
                         name="password"
-                        placeholder={loginData.passwordPlaceholder}
+                        placeholder={t('passwordPlaceholder')}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                       />
                       <p className="text-center">
                         <Link href="" className="go-to-btn" onClick={handleShowForgotPassword}>
-                          <small>{loginData.forgotPasswordText}</small>
+                          <small>{t('forgotPasswordText')}</small>
                         </Link>
                       </p>
                       <div className="btn-wrapper mt-0 text-center">
                         <button className="email-btn social-btn btn" type="submit">
-                          {loginData.signInButtonText}
+                          {t('signInButtonText')}
                         </button>
                       </div>
                     </form>
                   )}
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
-                      <Link href="/register"><b>{loginData.dontHaveAccountText}</b></Link>
+                      <Link href="/register"><b>{t('dontHaveAccountText')}</b></Link>
                     </div>
                   </div>
                 </div>
