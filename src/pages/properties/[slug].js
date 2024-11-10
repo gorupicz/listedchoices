@@ -254,28 +254,28 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
   }
 
-  const handleFollowButtonClick = async (redirectAfterLoginCookie = false) => {
+  const handleFollowButtonClick = async (redirectAfterAuthenticatedCookie = false) => {
     if (!session || status !== "authenticated") {
-      setCookie('redirectAfterLogin', window.location.pathname, 100); // Cookie expires in 1 day
+      setCookie('redirectAfterAuthenticated', window.location.pathname, 100); // Cookie expires in 1 day
       router.push('/register');
       return;
     }
-    console.log("redirectAfterLoginCookie:", redirectAfterLoginCookie);
+    console.log("redirectAfterAuthenticatedCookie:", redirectAfterAuthenticatedCookie);
     if (followRequestStatus === 'ACCEPTED') {
-      if(!redirectAfterLoginCookie) {
+      if(!redirectAfterAuthenticatedCookie) {
       console.log("unfollow message");
       setModalContent(t('modal.unfollowMessage'));
         setShowModal(true);
       } else {
-        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+        document.cookie = 'redirectAfterAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
       }
     } else if (followRequestStatus === 'PENDING') {
-      if(!redirectAfterLoginCookie) {
+      if(!redirectAfterAuthenticatedCookie) {
         console.log("withdraw follow request message");
         setModalContent(t('modal.withdrawFollowRequestMessage'));
         setShowModal(true);
       } else {
-        document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
+        document.cookie = 'redirectAfterAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
       }
     } else {
       // Send follow request
@@ -295,7 +295,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
         setButtonLabel(t('cacButton.loggedPending'));
         setModalContent(t('modal.followRequestSentMessage'));
         setShowModal(true);
-        redirectAfterLoginCookie && (document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'); //Delete cookie
+        redirectAfterAuthenticatedCookie && (document.cookie = 'redirectAfterAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'); //Delete cookie
       }
     }
   };
@@ -331,9 +331,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   }, [setOGMetadataSet]);
 
   useEffect(() => {
-    const redirectAfterLoginCookie = document.cookie.split('; ').find(row => row.startsWith('redirectAfterLogin='));
-    if (redirectAfterLoginCookie) {
-      handleFollowButtonClick(redirectAfterLoginCookie);
+    const redirectAfterAuthenticatedCookie = document.cookie.split('; ').find(row => row.startsWith('redirectAfterAuthenticated='));
+    if (redirectAfterAuthenticatedCookie && session && status === "authenticated") {
+      handleFollowButtonClick(redirectAfterAuthenticatedCookie);
     }
   }, []);
 

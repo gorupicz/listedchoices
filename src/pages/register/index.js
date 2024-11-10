@@ -50,7 +50,7 @@ function Register() {
   useEffect(() => {
     if (status === 'authenticated' && !hasRedirected) {
       if (session?.user?.isVerified) {
-        const redirectUrl = getCookie('redirectAfterLogin');
+        const redirectUrl = getCookie('redirectAfterAuthenticated');
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
@@ -150,7 +150,7 @@ function Register() {
 
     if (!isError && !hasRedirected) {
       if (session && session.user && session.user.isVerified) {
-        const redirectUrl = getCookie('redirectAfterLogin');
+        const redirectUrl = getCookie('redirectAfterAuthenticated');
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);

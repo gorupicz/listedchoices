@@ -63,7 +63,7 @@ function Login() {
   useEffect(() => {
     if (status === 'authenticated' && !hasRedirected) {
       if (session?.user?.isVerified) {
-        const redirectUrl = getCookie('redirectAfterLogin');
+        const redirectUrl = getCookie('redirectAfterAuthenticated');
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
@@ -176,7 +176,7 @@ function Login() {
       } else if (result.error === '203') {
         handleShowModal(t('verificationCodeSentMessage'), false);
       } else if (!hasRedirected) {
-        const redirectUrl = getCookie('redirectAfterLogin');
+        const redirectUrl = getCookie('redirectAfterAuthenticated');
         if (redirectUrl) {
           router.push(redirectUrl);
           setHasRedirected(true);
