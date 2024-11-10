@@ -1,9 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import megaMenuData from '@/data/header/elements/megaMenu/index.json';
+import { useTranslation } from 'react-i18next';
 
 const MobileMegaMenu = ({ eventKey, onClickHandler }) => {
-    const tab = megaMenuData.tabs.find(tab => tab.eventKey === eventKey);
+    const { t } = useTranslation('header/elements/megaMenu');
+    const tabs = t('tabs', { returnObjects: true });
+    const tab = tabs.find(tab => tab.eventKey === eventKey);
 
     if (!tab) {
         return null;

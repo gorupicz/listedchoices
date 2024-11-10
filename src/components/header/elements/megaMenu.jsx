@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import megaMenuData from '@/data/header/elements/megaMenu/index.json';
+import { useTranslation } from 'react-i18next';
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaLock, FaFacebookF, FaWhatsapp, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-// Map icon names to React components
 const iconMap = {
     FaHome: FaHome,
     FaUserAlt: FaUserAlt,
@@ -24,7 +23,9 @@ const iconMap = {
 };
 
 const MegaMenu = ({ value }) => {
-    const tab = megaMenuData.tabs.find(tab => tab.eventKey === value);
+    const { t } = useTranslation('header/elements/megaMenu');
+    const tabs = t('tabs', { returnObjects: true });
+    const tab = tabs.find(tab => tab.eventKey === value);
 
     const [hoveredImgSrc, setHoveredImgSrc] = useState(tab.imgSrc);
 

@@ -1,0 +1,21 @@
+{
+  "tabs": [
+    { "eventKey": "1", "icon": "", "label": "Préstamos", "link": "/loans", "title": "Un mundo de posibilidades", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
+      [
+          { "eventKey": "subtab_1", "label": "Hipoteca", "link": "/mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_2", "label": "Arrendamiento", "link": "/leasing", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
+      ] 
+    },
+    { "eventKey": "2", "icon": "", "label": "Recursos", "link": "/tools", "title": "Recursos", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
+      [
+          { "eventKey": "subtab_1", "icon": "", "label": "Directorio de Técnicos", "link": "/technicians", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_2", "icon": "", "label": "Tours", "link": "/tours", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "icon": "", "label": "Alquiler de coches", "link": "/car-rentals", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_4", "icon": "", "label": "Empleos", "link": "/jobs", "target": "", "imgSrc": "", "imgAlt": "#" } 
+      ] 
+    },
+    { "eventKey": "3", "icon": "", "label": "Inversores", "link": "/shop", "title": "Inversores", "target": "", "imgSrc": "", "imgAlt": "#" 
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "tabs": [
+    { "eventKey": "tab_1", "icon": "", "label": "Agregar Propiedad", "link": "/add-listing", "title": "Agregar Propiedad", "target": "", "imgSrc": "", "imgAlt": "#" 
+    }
+  ]
+}
