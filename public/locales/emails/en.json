@@ -1,0 +1,8 @@
+{
+    "recoveryEmailSubject": "Password Recovery",
+    "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}",
+    "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
+    "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code. If you didn’t attempt to sign in, you can safely ignore this email. You can also set a password to sign in to your account.",
+    "verificationEmailInternalMessageEmailSentOK": "Email not verified, verification email sent",
+    "verificationEmailInternalMessageEmailNotSent": "Email not verified, but verification email could not be sent"
+}

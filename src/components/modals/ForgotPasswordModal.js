@@ -1,8 +1,7 @@
-import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email, setEmail, loginData }) => {
+const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email, setEmail, content }) => {
   return (
     <Modal
       show={show}
@@ -23,20 +22,20 @@ const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email,
             <div className="row">
               <div className="col-12">
                 <div className="modal-product-info text-center">
-                  <h4>{loginData.modalTitle}</h4>
-                  <p className="added-cart">{loginData.modalDescription}</p>
+                  <h4>{content.modalTitle}</h4>
+                  <p className="added-cart">{content.modalDescription}</p>
                   <form onSubmit={handlePasswordRecovery} className="ltn__form-box">
                     <input
                       type="text"
                       name="email"
-                      placeholder={loginData.emailPlaceholder}
+                      placeholder={content.emailPlaceholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                     <div className="btn-wrapper mt-0">
                       <button className="theme-btn-1 btn btn-full-width-2" type="submit">
-                        {loginData.modalSubmitButtonText}
+                        {content.modalSubmitButtonText}
                       </button>
                     </div>
                   </form>

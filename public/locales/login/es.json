@@ -23,6 +23,6 @@
   "recoveryEmailBody": "Por favor, restablece tu contraseña haciendo clic en el siguiente enlace: {link}",
   "verificationEmailSubject": "{code} es tu código de inicio de sesión en Bolsa de Casas",
   "verificationEmailBody": "{code} es tu código de inicio de sesión en Bolsa de Casas. Si no intentaste iniciar sesión, puedes ignorar este correo.",
-  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Verifica tu correo haciendo clic en el botón de abajo.",
+  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Has clic en aceptar para introducir el código.",
   "verificationModalTitle": "Verifica tu correo electrónico"
 }

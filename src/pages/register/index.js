@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import validator from 'validator';
 import zxcvbn from 'zxcvbn';
 import { Layout } from "@/layouts";
-import registerData from "@/data/register/index.json";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
@@ -11,8 +10,20 @@ import { signIn, useSession } from 'next-auth/react';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaEnvelope } from 'react-icons/fa';
 import MessageModal from "@/components/modals/MessageModal";
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
+export async function getStaticProps({ locale }) {
+  i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
+  return {
+    props: {
+      // Any other props you need
+    },
+  };
+}
 
 function Register() {
+  const { t } = useTranslation('register'); // Loads src/data/register/{{lng}}/index.json
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
@@ -62,17 +73,17 @@ function Register() {
 
     const cleanedEmail = validator.trim(email);
     if (!validator.isEmail(cleanedEmail)) {
-      handleShowModal(registerData.invalidEmailMessage, true);
+      handleShowModal(t('invalidEmailMessage'), true);
       return;
     }
     
     if (password !== confirm_password) {
-      handleShowModal(registerData.passwordsDoNotMatchMessage, true);
+      handleShowModal(t('passwordsDoNotMatchMessage'), true);
       return;
     }
 
     if (passwordStrength < 2) {  // Set minimum acceptable strength
-      handleShowModal(registerData.weakPasswordMessage, true);
+      handleShowModal(t('weakPasswordMessage'), true);
       return;
     }
 
@@ -82,7 +93,7 @@ function Register() {
     const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
 
     if (!token) {
-      handleShowModal(registerData.recaptchaErrorMessage, true);
+      handleShowModal(t('recaptchaErrorMessage'), true);
       return;
     }
 
@@ -97,8 +108,8 @@ function Register() {
           password,
           first_name: cleanedFirstName,
           last_name: cleanedLastName,
-          subject: registerData.verificationEmailSubject,
-          body: registerData.verificationEmailBody,
+          subject: t('verificationEmailSubject'),
+          body: t('verificationEmailBody'),
           recaptchaToken: token,
         }),
       });
@@ -106,13 +117,13 @@ function Register() {
       const data = await res.json();
 
       if (res.ok) {
-        handleShowModal(registerData.verificationCodeSentMessage, false);
+        handleShowModal(t('verificationCodeSentMessage'), false);
       } else {
-        handleShowModal(data.message || registerData.defaultErrorMessage, true);
+        handleShowModal(data.message || t('defaultErrorMessage'), true);
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      handleShowModal(registerData.defaultErrorMessage, true);
+      handleShowModal(t('defaultErrorMessage'), true);
     }
   };
 
@@ -160,7 +171,7 @@ function Register() {
             <Row>
               <Col xs={12}>
                 <div className="section-title-area text-center mb-30">
-                  <h1 className="section-title">{registerData.title}</h1>
+                  <h1 className="section-title">{t('title')}</h1>
                 </div>
               </Col>
             </Row>
@@ -172,15 +183,15 @@ function Register() {
                       className="social-btn google-btn" 
                       onClick={handleGoogleSignUp}
                     >
-                      <span className="icon"><FcGoogle /></span> {registerData.googleSignUpButtonLabel}
+                      <span className="icon"><FcGoogle /></span> {t('googleSignUpButtonLabel')}
                     </Button>
                     <Button 
                       className="social-btn facebook-btn" 
                       onClick={() => signIn('facebook')}
                     >
-                      <span className="icon"><FaFacebook /></span> {registerData.facebookSignUpButtonLabel}
+                      <span className="icon"><FaFacebook /></span> {t('facebookSignUpButtonLabel')}
                     </Button>
-                    <p className="separator checkbox-inline mt-10 mb-10"><small>{registerData.socialSignUpOr}</small></p>
+                    <p className="separator checkbox-inline mt-10 mb-10"><small>{t('socialSignUpOr')}</small></p>
                   </div>
                   {!showRegisterForm && (
                     <div className="text-center">
@@ -188,7 +199,7 @@ function Register() {
                         className="social-btn email-btn" 
                         onClick={() => setShowRegisterForm(!showRegisterForm)}
                       >
-                        <span className="icon"><FaEnvelope /></span> {registerData.continueWithEmailButtonLabel}
+                        <span className="icon"><FaEnvelope /></span> {t('continueWithEmailButtonLabel')}
                       </Button>
                     </div>
                   )}
@@ -199,7 +210,7 @@ function Register() {
                           <input
                             type="text"
                             name="first_name"
-                            placeholder={registerData.firstNamePlaceholder}
+                            placeholder={t('firstNamePlaceholder')}
                             value={first_name}
                             onChange={(e) => setFirstName(validator.trim(e.target.value))}
                             required
@@ -209,7 +220,7 @@ function Register() {
                           <input
                             type="text"
                             name="last_name"
-                            placeholder={registerData.lastNamePlaceholder}
+                            placeholder={t('lastNamePlaceholder')}
                             value={last_name}
                             onChange={(e) => setLastName(validator.trim(e.target.value))}
                             required
@@ -219,7 +230,7 @@ function Register() {
                       <input 
                         type="text" 
                         name="email" 
-                        placeholder={registerData.emailPlaceholder} 
+                        placeholder={t('emailPlaceholder')} 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -229,14 +240,14 @@ function Register() {
                         <input
                           type="password"
                           name="password"
-                          placeholder={registerData.passwordPlaceholder}
+                          placeholder={t('passwordPlaceholder')}
                           value={password}
                           onChange={handlePasswordChange}
                           required
                         />
                         {password && (
                           <p className="passwordStrength">
-                            <small>{registerData.passwordStrengthLabel}: {registerData.passwordStrengthLabels[passwordStrength]}</small>
+                            <small>{t('passwordStrengthLabel')}: {t('passwordStrengthLabels')[passwordStrength]}</small>
                           </p>
                         )}
                       </div>
@@ -245,7 +256,7 @@ function Register() {
                         <input
                           type="password"
                           name="confirmpassword"
-                          placeholder={registerData.confirmPasswordPlaceholder}
+                          placeholder={t('confirmPasswordPlaceholder')}
                           value={confirm_password}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           required
@@ -253,17 +264,17 @@ function Register() {
                       )}
                       <div className="btn-wrapper text-center mt-0">
                         <label className="checkbox-inline mb-10">
-                          {registerData.privacyPolicyConsentText}
+                          {t('privacyPolicyConsentText')}
                         </label>
                         <button className="email-btn social-btn btn" type="submit">
-                          {registerData.createAccountButton}
+                          {t('createAccountButton')}
                         </button>
                       </div>
                     </form>
                   )}
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
-                      <Link href="/login"><b>{registerData.alreadyHaveAccountText}</b></Link>
+                      <Link href="/login"><b>{t('alreadyHaveAccountText')}</b></Link>
                     </div>
                   </div>
                 </div>
@@ -278,7 +289,7 @@ function Register() {
         handleClose={handleCloseModal}
         isError={isError}
         modalMessage={modalMessage}
-        loginData={registerData}
+        loginData={t}
       />
     </>
   );

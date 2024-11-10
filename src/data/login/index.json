@@ -1,5 +1,5 @@
 {
-  "pageTitle": "Sign AN",
+  "pageTitle": "Sign In",
   "socialSignInOr": "Or",
   "googleSignInButtonLabel": "Continue with Google",
   "facebookSignInButtonLabel": "Continue with Facebook",
@@ -23,6 +23,6 @@
   "recoveryEmailBody": "Please reset your password by clicking on the following link: {link}",
   "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
   "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code. If you didn’t attempt to sign in, you can safely ignore this email. You can also set a password to sign in to your account.",
-  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email. Verify your email by clicking on the button below.",
+  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email. Enter the code in the next step.",
   "verificationModalTitle": "Verify your email"
 }

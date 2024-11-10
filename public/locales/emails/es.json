@@ -1,0 +1,8 @@
+{
+    "recoveryEmailSubject": "Recuperación de Contraseña",
+    "recoveryEmailBody": "Por favor, restablezca su contraseña haciendo clic en el siguiente enlace: {link}",
+    "verificationEmailSubject": "{code} es su código de inicio de sesión de Bolsa de Casas",
+    "verificationEmailBody": "{code} es su código de inicio de sesión de Bolsa de Casas. Si no intentó iniciar sesión, puede ignorar este correo electrónico de manera segura. También puede establecer una contraseña para iniciar sesión en su cuenta.",
+    "verificationEmailInternalMessageEmailSentOK": "Correo electrónico no verificado, correo de verificación enviado",
+    "verificationEmailInternalMessageEmailNotSent": "Correo electrónico no verificado, pero no se pudo enviar el correo de verificación"
+}

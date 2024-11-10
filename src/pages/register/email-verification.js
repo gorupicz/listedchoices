@@ -5,9 +5,19 @@ import { Container, Row, Col } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
-import verificationData from "@/data/register/email-verification.json";  // Import verification data
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
+export async function getStaticProps({ locale }) {
+  i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
+  return {
+    props: {
+      // Any other props you need
+    },
+  };
+}
 function EmailVerification() {
+  const { t } = useTranslation('register/email-verification'); 
   const [verificationCode, setVerificationCode] = useState('');
   const [modalMessage, setModalMessage] = useState('');
   const [isError, setIsError] = useState(false);  // Track if it's an error or success modal
@@ -46,9 +56,9 @@ function EmailVerification() {
     });
 
     if (res.ok) {
-      handleShowModal(verificationData.successMessage, false);  // Show success modal
+      handleShowModal(t('successMessage'), false);  // Show success modal
     } else {
-      handleShowModal(verificationData.errorMessage, true);  // Show error modal
+      handleShowModal(t('errorMessage'), true);  // Show error modal
     }
   };
 
@@ -60,7 +70,7 @@ function EmailVerification() {
             <Row>
               <Col xs={12}>
                 <div className="section-title-area text-center">
-                  <h1 className="section-title">{verificationData.pageTitle}</h1>
+                  <h1 className="section-title">{t('pageTitle')}</h1>
                 </div>
               </Col>
             </Row>
@@ -71,20 +81,20 @@ function EmailVerification() {
                     <input
                       type="text"
                       name="verificationCode"
-                      placeholder={verificationData.verificationCodePlaceholder}
+                      placeholder={t('verificationCodePlaceholder')}
                       value={verificationCode}
                       onChange={(e) => setVerificationCode(e.target.value)}
                       required
                     />
                     <div className="btn-wrapper mt-0 text-center">
                       <button className="email-btn social-btn btn" type="submit">
-                        {verificationData.submitButtonText}
+                        {t('submitButtonText')}
                       </button>
                     </div>
                   </form>
                   <div className="by-agree text-center mt-20 border-top">
                     <div className="go-to-btn mt-20">
-                      <Link href="/login"><b>{verificationData.goBackToLoginText}</b></Link>
+                      <Link href="/login"><b>{t('goBackToLoginText')}</b></Link>
                     </div>
                   </div>
                 </div>
@@ -114,11 +124,11 @@ function EmailVerification() {
               <div className="row">
                 <div className="col-12">
                   <div className="modal-product-info text-center">
-                    <h4>{isError ? verificationData.errorModalTitle : verificationData.successModalTitle}</h4>
+                    <h4>{isError ? t('errorModalTitle') : t('successModalTitle')}</h4>
                     <p className="added-cart">{modalMessage}</p>
                     <div className="btn-wrapper mt-0">
                       <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleCloseModal}>
-                        {verificationData.modalSubmitText}
+                        {t('modalSubmitText')}
                       </Button>
                     </div>
                   </div>

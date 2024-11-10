@@ -23,6 +23,6 @@
   "errorSuccessModalSubmit": "Accept",
   "verificationEmailSubject": "{code} is your Bolsa de Casas sign-in code",
   "verificationEmailBody": "{code} is your Bolsa de Casas sign-in code.\n\nIf you didn’t attempt to sign in, you can safely ignore this email.",
-  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email. Verify your email by clicking on the button below.",
+  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email. Enter the code in the next step.",
   "verificationModalTitle": "Verify your email"
 }
