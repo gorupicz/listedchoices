@@ -1,0 +1,17 @@
+{
+  "about": "Bolsa de Casas - Mercado de Propiedades de Renta Vacacional",
+  "address": "Dover, Delaware, United States",
+  "email": "info@bolsadecasas.mx",
+  "company": "Company",
+  "companyLinks": ["About", "Blog", "All Products", "FAQ", "Contact us"],
+  "services": "Services",
+  "servicesLinks": ["Order tracking", "Wish List", "Login", "My account", "Promotional Offers"],
+  "customerCare": "Customer Care",
+  "customerCareLinks": ["Login", "My account", "Wish List", "Order tracking", "FAQ", "Contact us"],
+  "newsletter": "Newsletter",
+  "newsletterDescription": "Subscribe to our weekly Newsletter and receive updates via email.",
+  "weAccept": "We Accept",
+  "allRightsReserved": "All Rights Reserved @ Listed Choices",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy"
+}

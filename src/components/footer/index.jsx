@@ -11,10 +11,12 @@ import {
   FaPaperPlane,
   FaEnvelope,
   FaMapMarkerAlt,
-  FaPhoneAlt,
 } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 const Footer = function () {
+  const { t } = useTranslation('footer');
+
   return (
     <>
       {/* <!-- FOOTER AREA START --> */}
@@ -34,9 +36,7 @@ const Footer = function () {
                       />
                     </div>
                   </div>
-                  <p>
-                    Bolsa de Casas - Mercado de Propiedades de Renta Vacacional
-                  </p>
+                  <p>{t('about')}</p>
                   <div className="footer-address">
                     <ul>
                       <li>
@@ -44,7 +44,7 @@ const Footer = function () {
                           <FaMapMarkerAlt />
                         </div>
                         <div className="footer-address-info">
-                          <p>Dover, Delaware, United States</p>
+                          <p>{t('address')}</p>
                         </div>
                       </li>
                       <li>
@@ -53,8 +53,8 @@ const Footer = function () {
                         </div>
                         <div className="footer-address-info">
                           <p>
-                            <Link href="mailto:info@bolsadecasas.mx">
-                              info@bolsadecasas.mx
+                            <Link href={`mailto:${t('email')}`}>
+                              {t('email')}
                             </Link>
                           </p>
                         </div>
@@ -89,86 +89,50 @@ const Footer = function () {
               </Col>
               <Col xs={12} sm={6} xl={2}>
                 <div className="footer-widget footer-menu-widget clearfix">
-                  <h4 className="footer-title">Company</h4>
+                  <h4 className="footer-title">{t('company')}</h4>
                   <div className="footer-menu">
                     <ul>
-                      <li>
-                        <Link href="/about">About</Link>
-                      </li>
-                      <li>
-                        <Link href="/blog">Blog</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop">All Products</Link>
-                      </li>
-                      <li>
-                        <Link href="/faq">FAQ</Link>
-                      </li>
-                      <li>
-                        <Link href="/contact">Contact us</Link>
-                      </li>
+                      {t('companyLinks', { returnObjects: true }).map((link, index) => (
+                        <li key={index}>
+                          <Link href={`/${link.toLowerCase().replace(/ /g, '-')}`}>{link}</Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={2}>
                 <div className="footer-widget footer-menu-widget clearfix">
-                  <h4 className="footer-title">Services</h4>
+                  <h4 className="footer-title">{t('services')}</h4>
                   <div className="footer-menu">
                     <ul>
-                      <li>
-                        <Link href="/order-tracking">Order tracking</Link>
-                      </li>
-                      <li>
-                        <Link href="/wishlist">Wish List</Link>
-                      </li>
-                      <li>
-                        <Link href="/login">Login</Link>
-                      </li>
-                      <li>
-                        <Link href="/my-account">My account</Link>
-                      </li>
-                      <li>
-                        <Link href="/about">Promotional Offers</Link>
-                      </li>
+                      {t('servicesLinks', { returnObjects: true }).map((link, index) => (
+                        <li key={index}>
+                          <Link href={`/${link.toLowerCase().replace(/ /g, '-')}`}>{link}</Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={2}>
                 <div className="footer-widget footer-menu-widget clearfix">
-                  <h4 className="footer-title">Customer Care</h4>
+                  <h4 className="footer-title">{t('customerCare')}</h4>
                   <div className="footer-menu">
                     <ul>
-                      <li>
-                        <Link href="/login">Login</Link>
-                      </li>
-                      <li>
-                        <Link href="/my-account">My account</Link>
-                      </li>
-                      <li>
-                        <Link href="/wishlist">Wish List</Link>
-                      </li>
-                      <li>
-                        <Link href="/order-tracking">Order tracking</Link>
-                      </li>
-                      <li>
-                        <Link href="/faq">FAQ</Link>
-                      </li>
-                      <li>
-                        <Link href="/contact">Contact us</Link>
-                      </li>
+                      {t('customerCareLinks', { returnObjects: true }).map((link, index) => (
+                        <li key={index}>
+                          <Link href={`/${link.toLowerCase().replace(/ /g, '-')}`}>{link}</Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={3}>
                 <div className="footer-widget footer-newsletter-widget">
-                  <h4 className="footer-title">Newsletter</h4>
-                  <p>
-                    Subscribe to our weekly Newsletter and receive updates via
-                    email.
-                  </p>
+                  <h4 className="footer-title">{t('newsletter')}</h4>
+                  <p>{t('newsletterDescription')}</p>
                   <div className="footer-newsletter">
                     <form action="#">
                       <input type="email" name="email" placeholder="Email*" />
@@ -180,7 +144,7 @@ const Footer = function () {
                       </div>
                     </form>
                   </div>
-                  <h5 className="mt-30">We Accept</h5>
+                  <h5 className="mt-30">{t('weAccept')}</h5>
                   <img src="/img/icons/payment-4.png" alt="Payment Image" />
                 </div>
               </Col>
@@ -193,7 +157,7 @@ const Footer = function () {
               <Col xs={12} md={6}>
                 <div className="ltn__copyright-design clearfix">
                   <p>
-                    All Rights Reserved @ Listed Choices{" "}
+                    {t('allRightsReserved')}{" "}
                     <span className="current-year"></span>
                   </p>
                 </div>
@@ -202,10 +166,10 @@ const Footer = function () {
                 <div className="ltn__copyright-menu text-end">
                   <ul>
                     <li>
-                      <Link href="/blog/terms-of-service">Terms of Service</Link>
+                      <Link href="/blog/terms-of-service">{t('termsOfService')}</Link>
                     </li>
                     <li>
-                      <Link href="/blog/privacy-policy">Privacy Policy</Link>
+                      <Link href="/blog/privacy-policy">{t('privacyPolicy')}</Link>
                     </li>
                   </ul>
                 </div>
