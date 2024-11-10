@@ -39,7 +39,7 @@
   "relatedProperties": "Propiedades Relacionadas",
   "amountAvailable": "Disponible",
   "contactForm": {
-    "title": "Mensaje {FirstName}",
+    "title": "Envía un mensaje a {FirstName}",
     "namePlaceholder": "Tu Nombre*",
     "emailPlaceholder": "Tu Correo Electrónico*",
     "messagePlaceholder": "Escribe un mensaje...",

@@ -10,17 +10,17 @@ i18n
   .use(initReactI18next)
   .init({
     supportedLngs: ['en', 'es'],
-    fallbackLng: 'en',
+    fallbackLng: 'es',
     debug: true,
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ['path', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
-      caches: ['cookie'], // Optionally store the chosen language in a cookie
+      order: ['cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path'],
+      caches: ['cookie'],
     },
     backend: {
-      loadPath: '/locales/{{ns}}/{{lng}}.json', // Load translations from public/locales
+      loadPath: '/locales/{{ns}}/{{lng}}.json',
     },
   });
 

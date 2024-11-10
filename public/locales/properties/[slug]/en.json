@@ -39,7 +39,7 @@
   "relatedProperties": "Related Properties",
   "amountAvailable": "Available",
   "contactForm": {
-    "title": "Message {FirstName}",
+    "title": "Send a message to {FirstName}",
     "namePlaceholder": "Your Name*",
     "emailPlaceholder": "Your e-Mail*",
     "messagePlaceholder": "Write a message...",
