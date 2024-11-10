@@ -2,9 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaHome, FaAngleRight } from "react-icons/fa";
-import breadcrumbTexts from "../../data/breadcrumbs/index.json";
+import { useTranslation } from 'react-i18next';
 
-const BreadCrumb = ({ property, location, manager } ) => {
+const BreadCrumb = ({ property, location, manager }) => {
+  const { t } = useTranslation('properties/breadcrumbs');
+
   return (
     <>
       <div className="text-left section-bg-1-hero ltn__paragraph-color hide-on-mobile">
@@ -24,7 +26,7 @@ const BreadCrumb = ({ property, location, manager } ) => {
                     </li>
                     <li>
                       <Link href="/properties">
-                        <span className="me-2">{breadcrumbTexts.properties}</span>
+                        <span className="me-2">{t('properties')}</span>
                         <FaAngleRight />
                       </Link>
                     </li>
@@ -42,7 +44,7 @@ const BreadCrumb = ({ property, location, manager } ) => {
                     <li>
                       <Link href="#">
                         <span className="me-2">
-                          {breadcrumbTexts.visitInventory.replace("{manager}", manager)}
+                          {t('visitInventory', { manager }).replace("{manager}", manager)}
                         </span>
                       </Link>
                     </li>
