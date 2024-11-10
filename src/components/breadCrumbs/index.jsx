@@ -23,13 +23,13 @@ const BreadCrumb = ({ property, location, manager } ) => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/shop">
+                      <Link href="/properties">
                         <span className="me-2">{breadcrumbTexts.properties}</span>
                         <FaAngleRight />
                       </Link>
                     </li>
                     <li>
-                      <Link href="/shop">
+                      <Link href="/properties">
                         <span className="me-2">{location}</span>
                         <FaAngleRight />
                       </Link>

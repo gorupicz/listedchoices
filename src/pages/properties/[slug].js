@@ -43,20 +43,21 @@ import { useRouter } from "next/router";
 import prisma from "@/lib/prisma";
 import { serializePrismaData, serializeMongoData } from '@/lib/serializationHelper';
 import { useSession } from 'next-auth/react';
-import propertyData from '@/data/properties/[slug].json';
-import { getSession } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';
 import MessageModal from '@/components/modals/MessageModal';
 import TooltipSpan from "@/components/Tooltips/TooltipSpan";
 import ListingDataItem from '@components/properties/ListingDataItem';
 import { useOGMetadata } from "@/context/OGMetadataContext";
+import { getSession } from 'next-auth/react';
 
-function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, propertyData }) {
+function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
   const { getDateRanges } = require('/src/lib/dateRangeHelper'); 
   const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
+  const { t } = useTranslation('properties/[slug]'); // Use the appropriate namespace for translations
 
   const yearToDateTotalNights = () => {
     const updatedAt = new Date(productMONGO.updated_at);
@@ -226,26 +227,26 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   // Initialize button label based on followRequestStatus
   const initialButtonLabel = session && status === "authenticated"
     ? followRequestStatus === 'ACCEPTED'
-      ? propertyData.cacButton.loggedFollowing
+      ? t('cacButton.loggedFollowing')
       : followRequestStatus === 'PENDING'
-        ? propertyData.cacButton.loggedPending
-        : propertyData.cacButton.loggedNotFollowing
-    : propertyData.cacButton.notLogged;
+        ? t('cacButton.loggedPending')
+        : t('cacButton.loggedNotFollowing')
+    : t('cacButton.notLogged');
 
-  const [buttonLabel, setButtonLabel] = useState(propertyData.cacButton.loading);
+  const [buttonLabel, setButtonLabel] = useState(t('cacButton.loading'));
 
   useEffect(() => {
     if (status === "authenticated") {
       const label = followRequestStatus === 'ACCEPTED'
-        ? propertyData.cacButton.loggedFollowing
+        ? t('cacButton.loggedFollowing')
         : followRequestStatus === 'PENDING'
-          ? propertyData.cacButton.loggedPending
-          : propertyData.cacButton.loggedNotFollowing;
+          ? t('cacButton.loggedPending')
+          : t('cacButton.loggedNotFollowing');
       setButtonLabel(label);
     } else if (status === "unauthenticated") {
-      setButtonLabel(propertyData.cacButton.notLogged);
+      setButtonLabel(t('cacButton.notLogged'));
     }
-  }, [status, followRequestStatus, propertyData]);
+  }, [status, followRequestStatus]);
 
   function setCookie(name, value, days) {
     console.log("setting cookie:", name, value, days);
@@ -263,7 +264,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     if (followRequestStatus === 'ACCEPTED') {
       if(!redirectAfterLoginCookie) {
       console.log("unfollow message");
-      setModalContent(propertyData.modal.unfollowMessage);
+      setModalContent(t('modal.unfollowMessage'));
         setShowModal(true);
       } else {
         document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
@@ -271,7 +272,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     } else if (followRequestStatus === 'PENDING') {
       if(!redirectAfterLoginCookie) {
         console.log("withdraw follow request message");
-        setModalContent(propertyData.modal.withdrawFollowRequestMessage);
+        setModalContent(t('modal.withdrawFollowRequestMessage'));
         setShowModal(true);
       } else {
         document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'; //Delete cookie
@@ -291,8 +292,8 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 
       if (response.ok) {
         setButtonDisabled(true); // Disable the button to prevent multiple requests
-        setButtonLabel(propertyData.cacButton.loggedPending);
-        setModalContent(propertyData.modal.followRequestSentMessage);
+        setButtonLabel(t('cacButton.loggedPending'));
+        setModalContent(t('modal.followRequestSentMessage'));
         setShowModal(true);
         redirectAfterLoginCookie && (document.cookie = 'redirectAfterLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure'); //Delete cookie
       }
@@ -426,7 +427,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       href={productJSON.vacationRentalDetails.listings.airbnb}
                       target="_blank"
                     >
-                      <FaAirbnb /> <span style={{ textDecoration: `underline` }}>{propertyData.links.airbnbListing}</span>
+                      <FaAirbnb /> <span style={{ textDecoration: `underline` }}>{t('links.airbnbListing')}</span>
                     </Link>
                   </label>
                   </div>
@@ -439,12 +440,12 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   <h4 className="title-2"> {productMONGO.title}</h4>
                   <p>{productMONGO.shortDescription}</p>
 
-                  <h4 className="title-2">{propertyData.financials.title}</h4>
+                  <h4 className="title-2">{t('financials.title')}</h4>
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
                         <ListingDataItem
-                          label={propertyData.financials.rent}
+                          label={t('financials.rent')}
                           value={productMONGO.income.last12MonthsUSD}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
@@ -453,9 +454,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       </li>
                         <li>
                         <ListingDataItem
-                          label={propertyData.financials.expenses}
+                          label={t('financials.expenses')}
                           value={productMONGO.expenses.last_twelve_months}
-                          tooltip={propertyData.financials.expensesTooltip}
+                          tooltip={t('financials.expensesTooltip')}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
                           buttonDisabled={buttonDisabled}
@@ -465,7 +466,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       <ul>
                         <li>
                           <ListingDataItem
-                            label={propertyData.financials.freeCashFlow}
+                            label={t('financials.freeCashFlow')}
                             value={productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
@@ -474,7 +475,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                         </li>
     <li>
                           <ListingDataItem
-                            label={propertyData.financials.assetValuation}
+                            label={t('financials.assetValuation')}
                             value={productMONGO.price}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
@@ -483,7 +484,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     </li>
     <li>
                             <ListingDataItem
-                            label={propertyData.financials.returnPercentage}
+                            label={t('financials.returnPercentage')}
                             value={(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months) / productMONGO.price * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
@@ -494,15 +495,15 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                           </li>
                         </ul>
                       </div>
-                      <h4 className="title-2">{propertyData.vacationRentalPerformance.title}</h4>
+                      <h4 className="title-2">{t('vacationRentalPerformance.title')}</h4>
                       <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                         <ul>
                           <li>
-                            <label><b>{propertyData.vacationRentalPerformance.occupancy.title}</b></label>
+                            <label><b>{t('vacationRentalPerformance.occupancy.title')}</b></label>
                           </li>
                           <li>
                           <ListingDataItem
-                            label={propertyData.vacationRentalPerformance.occupancy.lastMonth}
+                            label={t('vacationRentalPerformance.occupancy.lastMonth')}
                             value={productMONGO.occupancy.lastMonthNights / 30 * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
@@ -513,7 +514,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     </li>
     <li>
                           <ListingDataItem
-                            label={propertyData.vacationRentalPerformance.occupancy.last3Months}
+                            label={t('vacationRentalPerformance.occupancy.last3Months')}
                             value={productMONGO.occupancy.last3MonthsNights / 90 * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
@@ -523,7 +524,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     </li>
     <li>
                           <ListingDataItem
-                            label={propertyData.vacationRentalPerformance.occupancy.yearToDate}
+                            label={t('vacationRentalPerformance.occupancy.yearToDate')}
                             value={productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
@@ -535,9 +536,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                         <ul>
     <li>
                           <ListingDataItem
-                            label={propertyData.vacationRentalPerformance.adr}
+                            label={t('vacationRentalPerformance.adr')}
                             value={productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights}
-                            tooltip={propertyData.vacationRentalPerformance.adrTooltip}
+                            tooltip={t('vacationRentalPerformance.adrTooltip')}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
@@ -545,9 +546,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     </li>
     <li>
                       <ListingDataItem
-                        label={propertyData.vacationRentalPerformance.revpar}
+                        label={t('vacationRentalPerformance.revpar')}
                         value={productMONGO.income.last12MonthsUSD / 365}
-                        tooltip={propertyData.vacationRentalPerformance.revparTooltip}
+                        tooltip={t('vacationRentalPerformance.revparTooltip')}
                         followRequestStatus={followRequestStatus}
                         handleFollowButtonClick={handleFollowButtonClick}
                         buttonDisabled={buttonDisabled}
@@ -559,14 +560,14 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                             href="https://forms.gle/27foVLZWB7nhufNC9"
                             target="_blank"
                           >
-                            {propertyData.otherMetrics}
+                            {t('otherMetrics')}
                           </Link>
                         </label>
                       </li>
                     </ul>
                   </div>
 
-                  <h4 className="title-2">{propertyData.location}</h4>
+                  <h4 className="title-2">{t('location')}</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
                       src={`${productMYSQL.google_maps}`}
@@ -578,7 +579,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   </div>
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
                   
-                  <h4 className="title-2">{propertyData.propertyVideo}</h4>
+                  <h4 className="title-2">{t('propertyVideo')}</h4>
                   <div
                     className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
                     style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
@@ -591,7 +592,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     </button>
                   </div>
                   
-                  <h4 className="title-2 mb-10">{propertyData.amenities}</h4>
+                  <h4 className="title-2 mb-10">{t('amenities')}</h4>
 
                   <div className="property-details-amenities mb-60">
                     <div className="row">
@@ -657,7 +658,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       </div>
                     </div>
                   </div>
-                  <h4 className="title-2">{propertyData.blueprint}</h4>
+                  <h4 className="title-2">{t('blueprint')}</h4>
                   {/* <!-- APARTMENTS PLAN AREA START --> */}
                   <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
                     <Tab.Container defaultActiveKey="first">
@@ -682,7 +683,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     </Tab.Container>
                   </div>
 
-                  <h4 className="title-2">{propertyData.relatedProperties}</h4>
+                  <h4 className="title-2">{t('relatedProperties')}</h4>
                   <Row>
                     {relatedProducts.map((data, key) => {
                       const slug = productSlug(data.title);
@@ -705,7 +706,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                           <RelatedProduct
                             productData={data}
                             slug={slug}
-                            baseUrl="shop"
+                            baseUrl="properties"
                             discountedPrice={discountedPrice}
                             productPrice={productPrice}
                             cartItem={cartItem}
@@ -733,31 +734,31 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                             followRequestStatus === 'ACCEPTED' ? (
                               <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
                             ) : followRequestStatus === 'PENDING' ? (
-                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                              <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             ) :
                               (!buttonDisabled ? (
                                 <a onClick={handleFollowButtonClick}>
-                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.cacButton.loggedNotFollowing}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={t('cacButton.loggedNotFollowing')}>
                                     <span className="obfuscation-span">obfusca</span>
                                   </TooltipSpan>
                                 </a>
                               ) : (
-                                  <TooltipSpan id="obfuscation-tooltip" title={propertyData.pendingLoggedTooltip}>
+                                  <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
                                     <span className="obfuscation-span">obfusca</span>
                                   </TooltipSpan>
                               )
                             )
                           ) : (
                             <Link href='`/register?redirect=${encodeURIComponent(window.location.pathname)}`'>
-                              <TooltipSpan id="obfuscation-tooltip" title={propertyData.loginNotLoggedTooltip}>
+                              <TooltipSpan id="obfuscation-tooltip" title={t('loginNotLoggedTooltip')}>
                                 <span className="obfuscation-span">obfusca</span>
                               </TooltipSpan>
                             </Link>
                           )
                         }
-                      {propertyData.amountAvailable}
+                      {t('amountAvailable')}
                     </h4>
                     <button
                       className={clsx(
@@ -870,25 +871,25 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   {/* <!-- Form Widget --> */}
                   <div className="widget ltn__form-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {propertyData.contactForm.title.replace("{FirstName}", productMONGO.propertyManager.firstName)}
+                      {t('contactForm.title').replace("{FirstName}", productMONGO.propertyManager.firstName)}
                     </h4>
                     <form action="#">
                       <input
                         type="text"
                         name="yourname"
-                        placeholder={propertyData.contactForm.namePlaceholder}
+                        placeholder={t('contactForm.namePlaceholder')}
                       />
                       <input
-                        type="text"
+                        type="email"
                         name="youremail"
-                        placeholder={propertyData.contactForm.emailPlaceholder}
+                        placeholder={t('contactForm.emailPlaceholder')}
                       />
                       <textarea
                         name="yourmessage"
-                        placeholder={propertyData.contactForm.messagePlaceholder}
+                        placeholder={t('contactForm.messagePlaceholder')}
                       ></textarea>
                       <button type="submit" className="btn theme-btn-1 btn-effect-4">
-                        {propertyData.contactForm.button}
+                        {t('contactForm.button')}
                       </button>
                     </form>
                   </div>
@@ -914,10 +915,10 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
       <MessageModal
         show={showModal}
         handleClose={() => setShowModal(false)}
-        title={propertyData.modalTitle}
+        title={t('modalTitle')}
         modalMessage={modalContent}
-        confirmButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? propertyData.confirmButton : propertyData.acceptButton}
-        cancelButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? propertyData.cancelButton : null}
+        confirmButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('confirmButton') : t('acceptButton')}
+        cancelButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('cancelButton') : null}
         onConfirm={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? handleFollowModalConfirm : () => setShowModal(false)}
       />
     </>
@@ -989,7 +990,6 @@ export async function getServerSideProps({ params, req }) {
       productMYSQL: serializedProductMYSQL,
       productMONGO: serializedProductMONGO,
       followRequestStatus,
-      propertyData,  // Pass the property data to the component
     },
   };
 }

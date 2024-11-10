@@ -3,12 +3,7 @@ import { useSelector } from "react-redux";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import { getSortedProducts, productSlug ,getDiscountPrice} from "@/lib/product";
 import { Layout } from "@/layouts";
-import {
-  FaThLarge,
-  FaThList,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-} from "react-icons/fa";
+import { FaThLarge, FaThList, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import SideBar from "@/components/shopSideBar";
 import RelatedProduct from "@/components/product/related-product";
@@ -17,7 +12,7 @@ import Search from "@/components/search";
 import ReactPaginate from "react-paginate";
 import CallToAction from "@/components/callToAction";
 
-function ShopLeftSideBar() {
+function ShopRightSideBar() {
   const { products } = useSelector((state) => state.product);
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
@@ -32,6 +27,7 @@ function ShopLeftSideBar() {
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
+
   const getSortParams = (sortType, sortValue) => {
     setSortType(sortType);
     setSortValue(sortValue);
@@ -88,14 +84,15 @@ function ShopLeftSideBar() {
     setOffset(newOffset);
   };
 
+
   return (
     <Layout topbar={true}>
       {/* <!-- BREADCRUMB AREA START --> */}
 
       <ShopBreadCrumb
-        title="Property Left Sidebar"
+        title="Property Right Sidebar"
         sectionPace=""
-        currentSlug="Property Left Sidebar"
+        currentSlug="Property Right Sidebar"
       />
       {/* <!-- BREADCRUMB AREA END -->
     
@@ -103,7 +100,7 @@ function ShopLeftSideBar() {
       <div className="ltn__product-area ltn__product-gutter mb-120">
         <Container>
           <Row>
-            <Col xs={12} lg={{ span: 8, order: 1 }}>
+            <Col xs={12} lg={8}>
               <Tab.Container defaultActiveKey="first">
                 <div className="ltn__shop-options">
                   <ul className="justify-content-between">
@@ -125,19 +122,17 @@ function ShopLeftSideBar() {
                         <Form.Select
                           className="form-control nice-select"
                           onChange={(e) =>
+
                             getFilterSortParams("filterSort", e.target.value)
                           }
                         >
                           <option value="default">Default</option>
-                          <option value="priceHighToLow">
-                            Price - High to Low
-                          </option>
-                          <option value="priceLowToHigh">
-                            Price - Low to High
-                          </option>
+                          <option value="priceHighToLow">Price - High to Low</option>
+                          <option value="priceLowToHigh">Price - Low to High</option>
                         </Form.Select>
                       </div>
                     </li>
+
                   </ul>
                 </div>
 
@@ -167,7 +162,7 @@ function ShopLeftSideBar() {
                             <Col key={key} xs={12} sm={6}>
                               <RelatedProduct
                                 slug={slug}
-                                baseUrl="shop/left-sidebar"
+                                baseUrl="properties/right-sidebar"
                                 productData={product}
                                  discountedPrice={discountedPrice}
                                 productPrice={productPrice}
@@ -204,7 +199,7 @@ function ShopLeftSideBar() {
                             <Col key={key} xs={12}>
                               <ProductList
                                 slug={slug}
-                                baseUrl="shop/left-sidebar"
+                                baseUrl="properties/right-sidebar"
                                 productData={product}
                                  discountedPrice={discountedPrice}
                                 productPrice={productPrice}
@@ -222,7 +217,7 @@ function ShopLeftSideBar() {
               </Tab.Container>
 
               <div className="ltn__pagination-area text-center">
-                <ReactPaginate
+              <ReactPaginate
                   onPageChange={handlePageClick}
                   pageRangeDisplayed={3}
                   marginPagesDisplayed={2}
@@ -244,7 +239,7 @@ function ShopLeftSideBar() {
                 />
               </div>
             </Col>
-            <Col xs={12} lg={{ span: 4, order: 0 }}>
+            <Col xs={12} lg={4}>
               <SideBar products={products} getSortParams={getSortParams} />
             </Col>
           </Row>
@@ -253,18 +248,18 @@ function ShopLeftSideBar() {
       {/* <!-- PRODUCT DETAILS AREA END -->
 
     <!-- CALL TO ACTION START (call-to-action-6) --> */}
-      <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-        <Container>
-          <Row>
-            <Col xs={12}>
-              <CallToAction />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
+          <Container>
+            <Row>
+              <Col xs={12}>
+                <CallToAction />
+              </Col>
+            </Row>
+          </Container>
+        </div>
       {/* <!-- CALL TO ACTION END --> */}
     </Layout>
   );
 }
 
-export default ShopLeftSideBar;
+export default ShopRightSideBar;

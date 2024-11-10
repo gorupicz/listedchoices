@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-import { getSortedProducts, productSlug, getDiscountPrice } from "@/lib/product";
+import { getSortedProducts, productSlug ,getDiscountPrice} from "@/lib/product";
 import { Layout } from "@/layouts";
-import { FaThLarge, FaThList, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import {
+  FaThLarge,
+  FaThList,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from "react-icons/fa";
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import SideBar from "@/components/shopSideBar";
 import RelatedProduct from "@/components/product/related-product";
 import ProductList from "@/components/product/list";
-//import Search from "@/components/search";
-import CallToAction from "@/components/callToAction";
+import Search from "@/components/search";
 import ReactPaginate from "react-paginate";
+import CallToAction from "@/components/callToAction";
 
-
-function Shop() {
+function ShopLeftSideBar() {
   const { products } = useSelector((state) => state.product);
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
@@ -21,14 +25,13 @@ function Shop() {
   const [filterSortValue, setFilterSortValue] = useState("");
   const [offset, setOffset] = useState(0);
   const [sortedProducts, setSortedProducts] = useState([]);
+  const pageLimit = 6;
+  const [currentItems, setCurrentItems] = useState(products);
+  const [pageCount, setPageCount] = useState(0);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-
-  const pageLimit = 6;
-  const [currentItems, setCurrentItems] = useState(products);
-  const [pageCount, setPageCount] = useState(0);
   const getSortParams = (sortType, sortValue) => {
     setSortType(sortType);
     setSortValue(sortValue);
@@ -48,13 +51,22 @@ function Shop() {
   };
   useEffect(() => {
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
-    const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
+
+    const filterSortedProducts = getSortedProducts(
+      sortedProducts,
+      filterSortType,
+      filterSortValue
+    );
 
     sortedProducts = filterSortedProducts;
-    
-    // Only update state once instead of twice
-    const filteredProducts = SearchProduct(sortedProducts.slice(offset, offset + pageLimit));
-    setCurrentItems(filteredProducts);
+
+    setSortedProducts(sortedProducts);
+
+    setCurrentItems(sortedProducts.slice(offset, offset + pageLimit));
+
+    setCurrentItems(
+      SearchProduct(sortedProducts.slice(offset, offset + pageLimit))
+    );
   }, [
     offset,
     products,
@@ -72,23 +84,26 @@ function Shop() {
   }, [offset, pageLimit]);
 
   const handlePageClick = (event) => {
-    const newOffset = event.selected * pageLimit;
+    const newOffset = (event.selected * pageLimit) % products.length;
     setOffset(newOffset);
   };
 
-
   return (
-    <Layout topbar={false}>
+    <Layout topbar={true}>
       {/* <!-- BREADCRUMB AREA START --> */}
-{/* <!--
-      <ShopBreadCrumb title="Property" sectionPace="" currentSlug="Property" />--> */}
+
+      <ShopBreadCrumb
+        title="Property Left Sidebar"
+        sectionPace=""
+        currentSlug="Property Left Sidebar"
+      />
       {/* <!-- BREADCRUMB AREA END -->
     
     <!-- PRODUCT DETAILS AREA START --> */}
       <div className="ltn__product-area ltn__product-gutter mb-120">
         <Container>
           <Row>
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={{ span: 8, order: 1 }}>
               <Tab.Container defaultActiveKey="first">
                 <div className="ltn__shop-options">
                   <ul className="justify-content-between">
@@ -106,26 +121,27 @@ function Shop() {
                     </li>
 
                     <li>
-              {/*
                       <div className="short-by text-center">
                         <Form.Select
                           className="form-control nice-select"
                           onChange={(e) =>
-
                             getFilterSortParams("filterSort", e.target.value)
                           }
                         >
                           <option value="default">Default</option>
-                          <option value="priceHighToLow">Price - High to Low</option>
-                          <option value="priceLowToHigh">Price - Low to High</option>
+                          <option value="priceHighToLow">
+                            Price - High to Low
+                          </option>
+                          <option value="priceLowToHigh">
+                            Price - Low to High
+                          </option>
                         </Form.Select>
                       </div>
-                        */}
                     </li>
                   </ul>
                 </div>
 
-{/*<--                <Search spaceBottom="mb-30" setQuery={setQuery} /> -->*/}
+                <Search spaceBottom="mb-30" setQuery={setQuery} />
 
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
@@ -151,8 +167,9 @@ function Shop() {
                             <Col key={key} xs={12} sm={6}>
                               <RelatedProduct
                                 slug={slug}
-                                baseUrl="shop"
-                                productData={product} discountedPrice={discountedPrice}
+                                baseUrl="properties/left-sidebar"
+                                productData={product}
+                                 discountedPrice={discountedPrice}
                                 productPrice={productPrice}
                                 cartItem={cartItem}
                                 wishlistItem={wishlistItem}
@@ -185,11 +202,16 @@ function Shop() {
                           );
                           return (
                             <Col key={key} xs={12}>
-                              <ProductList slug={slug} baseUrl="shop" productData={product} discountedPrice={discountedPrice}
+                              <ProductList
+                                slug={slug}
+                                baseUrl="properties/left-sidebar"
+                                productData={product}
+                                 discountedPrice={discountedPrice}
                                 productPrice={productPrice}
                                 cartItem={cartItem}
                                 wishlistItem={wishlistItem}
-                                compareItem={compareItem} />
+                                compareItem={compareItem}
+                              />
                             </Col>
                           );
                         })}
@@ -222,7 +244,7 @@ function Shop() {
                 />
               </div>
             </Col>
-            <Col xs={12} lg={4}>
+            <Col xs={12} lg={{ span: 4, order: 0 }}>
               <SideBar products={products} getSortParams={getSortParams} />
             </Col>
           </Row>
@@ -245,4 +267,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default ShopLeftSideBar;

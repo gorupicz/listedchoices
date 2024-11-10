@@ -87,7 +87,7 @@ function BlogRightSideBar() {
 
               <Col xs={12} lg={{ span: 4, order: 0 }}>
                 <BlogSideBar
-                  baseUrl="shop"
+                  baseUrl="properties"
                   latestdBlogs={latestdBlogs}
                   topRatedProducts={topRatedProducts}
                   popularProducts={popularProducts}

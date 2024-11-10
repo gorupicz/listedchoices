@@ -1070,7 +1070,7 @@ function ProductDetails({ product, baseUrl }) {
                           <RelatedProduct
                             productData={data}
                             slug={slug}
-                            baseUrl="shop/left-sidebar"
+                            baseUrl="properties/left-sidebar"
                             discountedPrice={discountedPrice}
                             productPrice={productPrice}
                             cartItem={cartItem}

@@ -15,7 +15,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Apartments </Link>
+                <Link href="/properties"> Apartments </Link>
               </h3>
               <p> Great Deals Available</p>
               <mark> 13 Listings</mark>
@@ -31,7 +31,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Condos </Link>
+                <Link href="/properties"> Condos </Link>
               </h3>
               <p> Great Deals Available</p>
               <mark> 13 Listings</mark>
@@ -47,7 +47,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Houses </Link>
+                <Link href="/properties"> Houses </Link>
               </h3>
               <p> Great Deals Available</p>
               <mark> 13 Listings</mark>
@@ -63,7 +63,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Retail </Link>
+                <Link href="/properties"> Retail </Link>
               </h3>
               <p> Great Deals Available</p>
               <mark> 13 Listings</mark>
@@ -79,7 +79,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Villas </Link>
+                <Link href="/properties"> Villas </Link>
               </h3>
               <p> Great Deals Available</p>
               <mark> 13 Listings</mark>

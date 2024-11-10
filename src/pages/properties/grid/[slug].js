@@ -3,16 +3,6 @@ import ModalVideo from "react-modal-video";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
-import BreadCrumb from "@/components/breadCrumbs";
-import { Layout } from "@/layouts";
-import { useSelector } from "react-redux";
-import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
-import products from "@/data/products.json";
-import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
-import RelatedProduct from "@/components/product/related-product";
-import FollowUs from "@/components/followUs";
-import Tags from "@/components/tags";
-import blogData from "@/data/blog";
 import {
   FaArrowRight,
   FaArrowLeft,
@@ -31,14 +21,23 @@ import {
   FaPencilAlt,
   FaCalendarAlt
 } from "react-icons/fa";
-import CallToAction from "@/components/callToAction";
-
+import BreadCrumb from "@/components/breadCrumbs";
+import { Layout } from "@/layouts";
+import { useSelector } from "react-redux";
+import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
+import products from "@/data/products.json";
+import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
+import RelatedProduct from "@/components/product/related-product";
+import FollowUs from "@/components/followUs";
+import Tags from "@/components/tags";
+import blogData from "@/data/blog";
 
 function ProductDetails({ product }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
+  const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
 
   const relatedProducts = getProducts(
     products,
@@ -64,7 +63,7 @@ function ProductDetails({ product }) {
     product.price,
     product.discount
   ).toFixed(2);
-  const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
+
   const productPrice = product.price.toFixed(2);
   const cartItem = cartItems.find((cartItem) => cartItem.id === product.id);
   const wishlistItem = wishlistItems.find(
@@ -73,7 +72,6 @@ function ProductDetails({ product }) {
   const compareItem = compareItems.find(
     (compareItem) => compareItem.id === product.id
   );
-
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -220,7 +218,7 @@ function ProductDetails({ product }) {
 
     <!-- SHOP DETAILS AREA START --> */}
         <div className="ltn__shop-details-area pb-10">
-          <Container>
+          <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-12">
                 <div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
@@ -266,7 +264,6 @@ function ProductDetails({ product }) {
                     {product.locantion}
                   </label>
                   <h4 className="title-2"> {product.description.title}</h4>
-                  <p>{product.description.fullDescription}</p>
                   <p>{product.description.shortDescription}</p>
 
                   <h4 className="title-2">Property Detail</h4>
@@ -1071,7 +1068,7 @@ function ProductDetails({ product }) {
                           <RelatedProduct
                             productData={data}
                             slug={slug}
-                            baseUrl="shop/right-sidebar"
+                            baseUrl="properties/grid"
                             discountedPrice={discountedPrice}
                             productPrice={productPrice}
                             cartItem={cartItem}
@@ -1430,19 +1427,35 @@ function ProductDetails({ product }) {
                 </aside>
               </div>
             </div>
-          </Container>
+          </div>
         </div>
         {/* <!-- SHOP DETAILS AREA END -->
 
     <!-- CALL TO ACTION START (call-to-action-6) --> */}
-        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-          <Container>
-            <Row>
-              <Col xs={12}>
-                <CallToAction />
-              </Col>
-            </Row>
-          </Container>
+        <div
+          className="ltn__call-to-action-area call-to-action-6 before-bg-bottom"
+          data-bs-bg="img/1.jpg--"
+        >
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="call-to-action-inner call-to-action-inner-6 ltn__secondary-bg position-relative text-center---">
+                  <div className="coll-to-info text-color-white">
+                    <h1>Looking for a dream home?</h1>
+                    <p>We can help you realize your dream of a new home</p>
+                  </div>
+                  <div className="btn-wrapper">
+                    <Link
+                      className="btn btn-effect-3 btn-white"
+                      href="/contact"
+                    >
+                      Explore Properties <i className="icon-next"></i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         {/* <!-- CALL TO ACTION END --> */}
       </Layout>

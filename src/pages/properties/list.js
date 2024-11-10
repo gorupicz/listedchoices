@@ -178,7 +178,7 @@ function ShopList() {
                             <Col key={key} xs={12} sm={6} lg={4}>
                               <RelatedProduct
                                 slug={slug}
-                                baseUrl="shop/list"
+                                baseUrl="properties/list"
                                 productData={product}
                                 discountedPrice={discountedPrice}
                                 productPrice={productPrice}
@@ -216,7 +216,7 @@ function ShopList() {
                             <Col key={key} xs={12}>
                               <ProductList
                                 slug={slug}
-                                baseUrl="shop/grid"
+                                baseUrl="properties/grid"
                                 productData={product}
                                 discountedPrice={discountedPrice}
                                 productPrice={productPrice}

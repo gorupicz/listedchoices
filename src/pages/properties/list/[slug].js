@@ -172,16 +172,19 @@ function ProductDetails({ product }) {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
-      <Layout topbar={true}>
+      <Layout topbar={false}>
         <ModalVideo
           channel="youtube"
-          autoplay
+          youtube={{
+              autoplay: 1,
+              mute: 1
+            }}
           isOpen={isOpen}
           videoId="X7R-q9rsrtU"
           onClose={() => setOpen(false)}
         />
         {/* <!-- BREADCRUMB AREA START --> */}
-
+{/*
         <BreadCrumb
           title="Product Details"
           sectionPace="mb-0"
@@ -264,6 +267,7 @@ function ProductDetails({ product }) {
                     {product.locantion}
                   </label>
                   <h4 className="title-2"> {product.description.title}</h4>
+                  <p>{product.description.fullDescription}</p>
                   <p>{product.description.shortDescription}</p>
 
                   <h4 className="title-2">Property Detail</h4>
@@ -1068,7 +1072,7 @@ function ProductDetails({ product }) {
                           <RelatedProduct
                             productData={data}
                             slug={slug}
-                            baseUrl="shop/grid"
+                            baseUrl="properties/grid"
                             discountedPrice={discountedPrice}
                             productPrice={productPrice}
                             cartItem={cartItem}
@@ -1441,15 +1445,15 @@ function ProductDetails({ product }) {
               <div className="col-lg-12">
                 <div className="call-to-action-inner call-to-action-inner-6 ltn__secondary-bg position-relative text-center---">
                   <div className="coll-to-info text-color-white">
-                    <h1>Looking for a dream home?</h1>
-                    <p>We can help you realize your dream of a new home</p>
+                    <h1>Looking to invest in Vacation Rental?</h1>
+                    <p>Earn passive income by investing in <span>Choices</span></p>
                   </div>
                   <div className="btn-wrapper">
                     <Link
                       className="btn btn-effect-3 btn-white"
                       href="/contact"
                     >
-                      Explore Properties <i className="icon-next"></i>
+                      Explore Choices <i className="icon-next"></i>
                     </Link>
                   </div>
                 </div>

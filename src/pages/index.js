@@ -566,7 +566,7 @@ function HomeVersionTwo(props) {
                     key={key}
                     product={product}
                     slug={slug}
-                    baseUrl="/shop"
+                    baseUrl="/properties"
                   />
                 );
               })}

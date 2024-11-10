@@ -5,7 +5,7 @@ const AminitiesItem = ({data}) => {
   return (
     <>
       <div className="ltn__category-item ltn__category-item-5 text-center">
-        <Link href="/shop">
+        <Link href="/properties">
           <span className="category-icon">
             <i className={`${data.icon}`}></i>
           </span>

@@ -1115,6 +1115,7 @@
 .property-detail-info-list {
   ul {
     min-width: 40%;
+    max-width: 60%;
     padding: 30px 50px 40px;
     margin: 0;
     float: left;
@@ -1129,7 +1130,7 @@
         margin-right: 5px;
         font-weight: 600;
         min-width: 110px;
-        max-width: 70%;
+        max-width: 80%;
         display: inline-block;
         a {
           text-decoration: underline !important;

@@ -183,7 +183,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                             const slug = productSlug(product.title);
                             return (
                               <li key={key} className="list-group-item">
-                                <Link href={`/shop/${slug}`}>
+                                <Link href={`/properties/${slug}`}>
                                   {product.title}
                                 </Link>
                               </li>

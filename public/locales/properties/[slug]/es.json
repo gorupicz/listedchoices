@@ -1,0 +1,78 @@
+{
+  "financials": {
+    "title": "Finanzas (Últimos 12 meses)",
+    "rent": "Alquiler",
+    "expenses": "Gastos Operativos, Financieros, Legales y de Gestión",
+    "expensesTooltip": "Los gastos estimados incluyen impuestos a la propiedad, seguro de la propiedad, servicios de gestión, gastos de impuestos/auditoría, gastos de registro de LLC e intereses si se apalanca. Además, nuestro modelo considera costos estimados de reparaciones y mantenimiento equivalentes al 6% del alquiler cobrado, y una asignación de gastos por vacantes que asume 15 días por año, ya sea que se incurran o no.",
+    "freeCashFlow": "Flujo de Caja Libre",
+    "assetValuation": "Valoración del Activo",
+    "returnPercentage": "Porcentaje de Retorno"
+  },
+  "vacationRentalPerformance": {
+    "title": "Rendimiento de Alquiler Vacacional",
+    "occupancy": {
+      "title": "Ocupación",
+      "lastMonth": "Último Mes",
+      "last3Months": "Últimos 3 Meses",
+      "yearToDate": "Año hasta la Fecha"
+    },
+    "adr": "ADR (Últimos 12 meses)",
+    "adrTooltip": "La tarifa diaria promedio (ADR) mide el ingreso promedio por alquiler ganado por una habitación ocupada por día. Multiplicar el ADR por la tasa de ocupación equivale al ingreso por habitación disponible (RevPAR)",
+    "revpar": "RevPAR (Últimos 12 meses)",
+    "revparTooltip": "El ingreso por habitación disponible (RevPAR) es un indicador clave de rendimiento para propiedades de alquiler vacacional. Se calcula multiplicando la tarifa diaria promedio (ADR) por la tasa de ocupación. RevPAR refleja el rendimiento general de una propiedad en términos de generación de ingresos por habitación disponible, proporcionando una visión integral de su salud financiera y competitividad en el mercado."
+  },
+  "otherMetrics": "¿Qué otros métricas te gustaría ver aquí?",
+  "location": "Ubicación",
+  "amenities": "Servicios",
+  "propertyVideo": "Video de la Propiedad",
+  "manager": {
+    "title": "Gerente",
+    "name": "Nombre del Gerente",
+    "designation": "Designación del Gerente",
+    "description": "Descripción del Gerente",
+    "img": "URL de Imagen del Gerente",
+    "rating": "Calificación del Gerente"
+  },
+  "loginNotLoggedTooltip": "Inicia sesión para acceder a esta información",
+  "pendingLoggedTooltip": "Tu solicitud para seguir esta propiedad está pendiente de aprobación",
+  "blueprint": "Plano",
+  "relatedProperties": "Propiedades Relacionadas",
+  "amountAvailable": "Disponible",
+  "contactForm": {
+    "title": "Mensaje {FirstName}",
+    "namePlaceholder": "Tu Nombre*",
+    "emailPlaceholder": "Tu Correo Electrónico*",
+    "messagePlaceholder": "Escribe un mensaje...",
+    "button": "Enviar Mensaje"
+  },
+  "cacButton": {
+    "notLogged": "Inicia sesión para desbloquear",
+    "loggedFollowing": "Financiar o invertir",
+    "loggedPending": "Aprobación pendiente",
+    "loggedNotFollowing": "Sigue para desbloquear",
+    "loading": "Cargando..."
+  },
+  "topCategories": {
+    "title": "Categorías Principales",
+    "apartments": "Apartamentos",
+    "pictureStudio": "Estudio Fotográfico",
+    "office": "Oficina",
+    "luxaryVilas": "Villas de Lujo",
+    "duplexHouse": "Casa Dúplex"
+  },
+  "popularProperties": {
+    "title": "Propiedades Populares"
+  },
+  "modal": {
+    "title": "Confirmación",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Confirmar",
+    "acceptButton": "Aceptar",
+    "unfollowMessage": "¿Estás seguro de que deseas dejar de seguir esta propiedad?",
+    "withdrawFollowRequestMessage": "¿Estás seguro de que deseas retirar tu solicitud de seguimiento?",
+    "followRequestSentMessage": "Hemos enviado tu solicitud de seguimiento"
+  },
+  "links": {
+    "airbnbListing": "Listado de Airbnb"
+  }
+}

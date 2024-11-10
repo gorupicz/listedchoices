@@ -39,7 +39,7 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
                 return (
                   <div key={key} className="mini-cart-item clearfix">
                     <div className="mini-cart-img">
-                      <Link href={`/shop/${slug}`}>
+                      <Link href={`/properties/${slug}`}>
                         <img
                           src={`/img/product/${imagecount}.png`}
                           alt="Image"
@@ -56,7 +56,7 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
                     </div>
                     <div className="mini-cart-info">
                       <h6>
-                        <Link href={`/shop/${slug}`}>{product.title}</Link>
+                        <Link href={`/properties/${slug}`}>{product.title}</Link>
                       </h6>
                       <span className="mini-cart-quantity">
                         {product.quantity} x <span>$</span> {discountedPrice}

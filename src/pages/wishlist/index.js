@@ -57,10 +57,10 @@ const Wishlist = () => {
                                                                 </span>
                                                             </td>
                                                             <td class="cart-product-image">
-                                                                <Link href={`/shop/${slug}`}><img src={`/img/product/${imageCount}.png`} alt="#" /></Link>
+                                                                <Link href={`/properties/${slug}`}><img src={`/img/product/${imageCount}.png`} alt="#" /></Link>
                                                             </td>
                                                             <td class="cart-product-info">
-                                                                <h4><Link href={`/shop/${slug}`}>{product.title}</Link></h4>
+                                                                <h4><Link href={`/properties/${slug}`}>{product.title}</Link></h4>
                                                             </td>
                                                             <td class="cart-product-price"> ${discountedPrice}</td>
                                                             <td class="cart-product-stock">In Stock</td>
@@ -85,7 +85,7 @@ const Wishlist = () => {
                             </Row>) : (<div className="text-center">
                                 <p>No items found in wishlist</p>
                                 <Link
-                                    href="/shop"
+                                    href="/properties"
                                     className="theme-btn-1 btn btn-effect-1"
                                 >
                                     Shop Now

@@ -15,7 +15,7 @@
           { "eventKey": "subtab_4", "icon": "", "label": "Empleos", "link": "/jobs", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
-    { "eventKey": "3", "icon": "", "label": "Inversores", "link": "/shop", "title": "Inversores", "target": "", "imgSrc": "", "imgAlt": "#" 
+    { "eventKey": "3", "icon": "", "label": "Inversores", "link": "/properties", "title": "Inversores", "target": "", "imgSrc": "", "imgAlt": "#" 
     }
   ]
 }
