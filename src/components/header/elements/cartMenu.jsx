@@ -4,7 +4,10 @@ import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getDiscountPrice, productSlug } from "@/lib/product";
 import { deleteFromCart } from "@/store/slices/cart-slice";
+import { useTranslation } from 'react-i18next';
+
 const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
+  const { t } = useTranslation('header/elements/cartMenu');
   let cartTotalPrice = 0;
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -17,9 +20,9 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
     >
       <div className="ltn__utilize-menu-inner ltn__scrollbar">
         <div className="ltn__utilize-menu-head">
-          <span className="ltn__utilize-menu-title">Cart</span>
+          <span className="ltn__utilize-menu-title">{t('cartTitle')}</span>
           <button onClick={closeSideBar} className="ltn__utilize-close">
-            ×
+            {t('closeButton')}
           </button>
         </div>
 
@@ -66,20 +69,20 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
             <div className="mini-cart-footer">
               <div className="mini-cart-sub-total">
                 <h5>
-                  Subtotal: <span>${cartTotalPrice.toFixed(2)}</span>
+                  {t('subtotal')}: <span>${cartTotalPrice.toFixed(2)}</span>
                 </h5>
               </div>
               <div className="btn-wrapper">
                 <Link href="/cart" className="theme-btn-1 btn btn-effect-1">
-                  View Cart
+                  {t('viewCart')}
                 </Link>
                 <Link href="/checkout" className="theme-btn-2 btn btn-effect-2">
-                  Checkout
+                  {t('checkout')}
                 </Link>
               </div>
-              <p>Free Shipping on All Orders Over $100!</p>
+              <p>{t('freeShipping')}</p>
             </div>
-          </> : <p>No products in mini cart</p>}
+          </> : <p>{t('noProducts')}</p>}
       </div>
     </div>
   );

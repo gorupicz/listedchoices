@@ -3,8 +3,8 @@ import Image from "next/image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import HeaderTopInfo from "../elements/headerTopInfo";
-import HeaderSocialLinks from "../elements/headerSocialLinks";
+import HeaderTopInfo from "../headerTopInfo";
+import HeaderSocialLinks from "../headerSocialLinks";
 
 const HeaderTopBarOne = function () {
   return (

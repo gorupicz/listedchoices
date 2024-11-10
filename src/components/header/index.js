@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { productSlug } from "@/lib/product";
 import Link from "next/link";
 import Image from "next/image";
-import HeaderTopBarOne from "./headerTopBar/headerTopBarStyleOne";
-import HeaderCartMenu from "./elements/headerCartMenu";
+import TopBarOne from "./elements/topBar";
+import CartMenu from "./elements/cartMenu";
 import MobileMenu from "./elements/mobileMenu";
 import Container from "react-bootstrap/Container";
 import MenuList from "@/components/header/elements/menuList";
@@ -111,7 +111,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
   return (
     <>
       <header className="ltn__header-area ltn__header-5">
-        {topbar ? <HeaderTopBarOne /> : null}
+        {topbar ? <TopBarOne /> : null}
 
         <div
           className={clsx(
@@ -280,7 +280,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
         </div>
       </header>
 
-      <HeaderCartMenu
+      <CartMenu
         cartMenu={cartMenu}
         cartMenuOpener={cartMenuOpener}
         closeSideBar={closeSideBar}
