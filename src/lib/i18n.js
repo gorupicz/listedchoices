@@ -16,7 +16,7 @@ i18n
       escapeValue: false,
     },
     detection: {
-      order: ['cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path'],
+      order: ['path', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
       caches: ['cookie'],
     },
     backend: {
