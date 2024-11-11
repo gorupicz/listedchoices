@@ -915,10 +915,10 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
       <MessageModal
         show={showModal}
         handleClose={() => setShowModal(false)}
-        title={t('modalTitle')}
+        title={t('modal.title')}
         modalMessage={modalContent}
-        confirmButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('confirmButton') : t('acceptButton')}
-        cancelButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('cancelButton') : null}
+        confirmButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('modal.confirmButton') : t('modal.acceptButton')}
+        cancelButtonText={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? t('modal.cancelButton') : null}
         onConfirm={followRequestStatus === 'ACCEPTED' || followRequestStatus === 'PENDING' ? handleFollowModalConfirm : () => setShowModal(false)}
       />
     </>
