@@ -1216,6 +1216,11 @@
       padding: 20px 30px 20px;
       float: none;
       border: none;
+      max-width: unset;
+
+      li label {
+        max-width: 70%;
+      }
     }
   }
 }

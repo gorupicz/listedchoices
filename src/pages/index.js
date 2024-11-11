@@ -24,8 +24,7 @@ import testimonialData from "@/data/testimonial";
 import blogData from "@/data/blog";
 import BlogItem from "@/components/blog";
 import CallToAction from "@/components/callToAction";
-import heroData from '@/data/hero/index.json';
-
+import { useTranslation } from 'react-i18next';
 
 function HomeVersionTwo(props) {
   const [isOpen, setOpen] = useState(false);
@@ -33,6 +32,26 @@ function HomeVersionTwo(props) {
   const featureData = getProducts(featuresData, "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
   const { data } = props;
+  const { t } = useTranslation('home/hero');
+
+  const heroData = [
+    {
+      subtitle: t('0.subtitle'),
+      Title: t('0.Title'),
+      titleWord: t('0.titleWord'),
+      Desc: t('0.Desc'),
+      icon: t('0.icon'),
+      heroimage: t('0.heroimage'),
+      caption: t('0.caption'),
+      id: t('0.id'),
+      buttonText: t('0.buttonText'),
+      buttonLink: t('0.buttonLink'),
+      videoButton: t('0.videoButton'),
+      learnMoreButtonText: t('0.learnMoreButtonText'),
+      learnMoreButtonLink: t('0.learnMoreButtonLink'),
+      variationLeft: t('0.variationLeft'),
+    }
+  ];
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button

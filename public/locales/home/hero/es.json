@@ -1,0 +1,18 @@
+[
+  {
+    "subtitle": "Créditos para administradores de propiedades",
+    "Title": "Conviértete en dueño",
+    "titleWord": ["dueño"],
+    "Desc": "Compra a crédito la propiedad que administras y págala con los dividendos de tus futuras rentas. Tasa desde 9.05% anual. Precalifica en línea.",
+    "icon": "tabler:sailboat",
+    "heroimage": "IMG_4867.png",
+    "caption": "Cena de Property Managers de la Riviera Maya. Junio, 2024",
+    "id": "1",
+    "buttonText": "Simula tu crédito",
+    "buttonLink": "https://formless.ai/c/mGzBOphF10BF",
+    "videoButton": true,
+    "learnMoreButtonText": "Ver propiedades",
+    "learnMoreButtonLink": "/properties",
+    "variationLeft": false
+  }
+]
