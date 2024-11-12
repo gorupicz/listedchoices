@@ -6,7 +6,6 @@ import Accordion from "react-bootstrap/Accordion";
 import { getProducts, productSlug } from "@/lib/product";
 import TitleSection from "@/components/titleSection";
 import Feature from "@/components/features";
-import featuresData from "@/data/service";
 import Hero from "@/components/hero";
 import AboutUsSectionOne from "@/components/aboutUs/aboutUsSectionOne";
 import AboutUsSectionTwo from "@/components/aboutUs/aboutUsSectionTwo";
@@ -29,30 +28,36 @@ import { useTranslation } from 'react-i18next';
 function HomeVersionTwo(props) {
   const [isOpen, setOpen] = useState(false);
   const { products } = useSelector((state) => state.product);
-  const featureData = getProducts(featuresData, "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
   const { data } = props;
-  const { t } = useTranslation('home/hero');
-
+  
+  const { t: tHero } = useTranslation('home/hero');
   const heroData = [
     {
-      subtitle: t('0.subtitle'),
-      Title: t('0.Title'),
-      titleWord: t('0.titleWord'),
-      Desc: t('0.Desc'),
-      icon: t('0.icon'),
-      heroimage: t('0.heroimage'),
-      caption: t('0.caption'),
-      id: t('0.id'),
-      buttonText: t('0.buttonText'),
-      buttonLink: t('0.buttonLink'),
-      videoButton: t('0.videoButton'),
-      learnMoreButtonText: t('0.learnMoreButtonText'),
-      learnMoreButtonLink: t('0.learnMoreButtonLink'),
-      variationLeft: t('0.variationLeft'),
+      subtitle: tHero('0.subtitle'),
+      Title: tHero('0.Title'),
+      titleWord: tHero('0.titleWord'),
+      Desc: tHero('0.Desc'),
+      icon: tHero('0.icon'),
+      heroimage: tHero('0.heroimage'),
+      caption: tHero('0.caption'),
+      id: tHero('0.id'),
+      buttonText: tHero('0.buttonText'),
+      buttonLink: tHero('0.buttonLink'),
+      videoButton: tHero('0.videoButton'),
+      learnMoreButtonText: tHero('0.learnMoreButtonText'),
+      learnMoreButtonLink: tHero('0.learnMoreButtonLink'),
+      variationLeft: tHero('0.variationLeft'),
     }
   ];
 
+  const { t: tFeature } = useTranslation('home/feature');
+  const featureData = {
+    title: tFeature('title'),
+    subtitle: tFeature('subtitle'),
+    features: tFeature('features', { returnObjects: true }),
+  };
+  
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -231,11 +236,6 @@ function HomeVersionTwo(props) {
         data={featureData}
         classes=""
         headingClasses=""
-        titleSectionData={{
-          sectionClasses: "text-center",
-          subTitle: "Proceso simplificado y en línea",
-          title: "La mejor plusvalía de México",
-        }}
       />
       
       {/* <!-- FEATURE AREA END --> */}
@@ -287,7 +287,6 @@ function HomeVersionTwo(props) {
           <Row>
             <Col>
               <TitleSection
-                sectionClasses="text-center"
                 headingClasses=""
                 titleSectionData={{
                   subTitle: "Apartment Sketch",
@@ -1100,7 +1099,6 @@ function HomeVersionTwo(props) {
           <Row>
             <Col xs={12}>
               <TitleSection
-                sectionClasses="text-center"
                 headingClasses=""
                 titleSectionData={{
                   subTitle: "Our Aminities",
@@ -1167,7 +1165,6 @@ function HomeVersionTwo(props) {
           <Row>
             <Col lg={12}>
               <TitleSection
-                sectionClasses="text-center"
                 headingClasses=""
                 titleSectionData={{
                   subTitle: "News & Blogs",

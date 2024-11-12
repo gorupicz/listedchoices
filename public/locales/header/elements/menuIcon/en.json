@@ -15,7 +15,7 @@
           { "eventKey": "subtab_4", "icon": "", "label": "Jobs", "link": "/jobs", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
-    { "eventKey": "3", "icon": "", "label": "Investors", "link": "/properties", "title": "Investors", "target": "", "imgSrc": "", "imgAlt": "#" 
+    { "eventKey": "3", "icon": "", "label": "Invest", "link": "/properties", "title": "Invest", "target": "", "imgSrc": "", "imgAlt": "#" 
     }
   ]
 }

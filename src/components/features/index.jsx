@@ -5,14 +5,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TitleSection from "@/components/titleSection";
 import { productSlug } from "@/lib/product";
-function Feature({
-  data,
-  iconTag,
-  servicebtn,
-  titleSectionData,
-  classes,
-  headingClasses,
-}) {
+
+function Feature({ servicebtn, iconTag, data, classes, headingClasses }) {
+  
+  const featureHeaderData = {
+    title: data.title,
+    subTitle: data.subtitle,
+  }
+
+  const featureBodyData = data.features;
+
   return (
     <>
       <div className={`about-us-info-wrap ${classes}`}>
@@ -20,14 +22,13 @@ function Feature({
           <Row>
             <Col xs={12}>
               <TitleSection
-                titleSectionData={titleSectionData}
-                sectionClasses={titleSectionData.sectionClasses}
+                titleSectionData={featureHeaderData}
                 headingClasses={headingClasses}
               />
             </Col>
           </Row>
           <Row className="justify-content-center">
-            {data.map((item, key) => {
+            {featureBodyData.map((item, key) => {
               const slug = productSlug(item.title);
               return (
                 <Col key={key} xs={12} sm={6} lg={4}>
