@@ -1,0 +1,29 @@
+{
+  "title": "Earn monthly dividends",
+  "subtitle": "Live off your properties",
+  "description": "Invest in turn-key properties with active track-record in Airbnb and Vrbo, managed by professional property managers",
+  "image": {
+    "src": "/img/others/11.png",
+    "alt": "When I retire, I will make a living from this."
+  },
+  "features": [
+    {
+      "title": "Only the best properties, curated by our experts",
+      "description": "Listed properties go through our rigorous process to ensure product-market fit and maximize returns",
+      "flaticon": "flaticon-house-4",
+      "link": "https://quarter-nextjs.netlify.app/service/buy-a-home"
+    },
+    {
+      "title": "Furnished and optimized for tourists",
+      "description": "From different coffee makers to hypoallergenic bedding, we focus on providing a memorable and cost-effective guest experience",
+      "flaticon": "flaticon-call-center-agent",
+      "link": "https://quarter-nextjs.netlify.app/service/tourist-optimization"
+    },
+    {
+      "title": "Location rules, always",
+      "description": "We only list properties with direct sea views and walking distance to beach",
+      "flaticon": "flaticon-location",
+      "link": "https://quarter-nextjs.netlify.app/service/location-rules"
+    }
+  ]
+}

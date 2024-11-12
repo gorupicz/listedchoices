@@ -7,7 +7,7 @@ import { getProducts, productSlug } from "@/lib/product";
 import TitleSection from "@/components/titleSection";
 import Feature from "@/components/features";
 import Hero from "@/components/hero";
-import AboutUsSectionOne from "@/components/aboutUs/aboutUsSectionOne";
+import AboutUsSection from "@/components/aboutUs";
 import AboutUsSectionTwo from "@/components/aboutUs/aboutUsSectionTwo";
 import UpCommingcarousel from "@/components/upCommingCarousel";
 import PropertyItem from "@/components/product/properties";
@@ -57,7 +57,17 @@ function HomeVersionTwo(props) {
     subtitle: tFeature('subtitle'),
     features: tFeature('features', { returnObjects: true }),
   };
-  
+
+    const { t: tAboutUs } = useTranslation('home/aboutUs');
+
+  const aboutUsData = {
+    title: tAboutUs('title'),
+    subtitle: tAboutUs('subtitle'),
+    description: tAboutUs('description'),
+    image: tAboutUs('image'),
+    features: tAboutUs('features', { returnObjects: true }),
+  };
+
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -243,7 +253,9 @@ function HomeVersionTwo(props) {
 
     {/*  <!-- ABOUT US AREA START --> */}
       <div className="ltn__about-us-area pt-50 pb-30 ">
-        <AboutUsSectionOne />
+        <AboutUsSection 
+          data={aboutUsData}
+        />
       </div>
       {/* <!-- ABOUT US AREA END -->
 
