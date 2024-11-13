@@ -1,6 +1,6 @@
 {
   "tabs": [
-    { "eventKey": "1", "icon": "", "label": "Comunidad", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "imgAlt": "#", "subtabs": 
+    { "eventKey": "1", "icon": "", "label": "Comunidad", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "caption": "Cena de Property Managers de la Riviera Maya. Junio, 2024","imgAlt": "#", "subtabs": 
       [
         { "eventKey": "subtab_1", "icon": "", "label": "Comunidades", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs": 
         [

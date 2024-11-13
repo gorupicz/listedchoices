@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { Layout } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
-import { getProducts, productSlug } from "@/lib/product";
 import Feature from "@/components/features";
 import Hero from "@/components/hero";
 import AboutUsSection from "@/components/aboutUs";
-import { useSelector } from "react-redux";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
 import CallToAction from "@/components/callToAction";
 import { useTranslation } from 'react-i18next';
 
-function HomeVersionTwo() {
+function Home() {
   const [isOpen, setOpen] = useState(false);
   
   const { t: tHero } = useTranslation('home/hero');
@@ -129,4 +127,4 @@ function HomeVersionTwo() {
     </Layout>
   );
 }
-export default HomeVersionTwo;
+export default Home;

@@ -1,6 +1,6 @@
 {
   "tabs": [
-    { "eventKey": "1", "icon": "", "label": "Community", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "imgAlt": "#", "subtabs": 
+    { "eventKey": "1", "icon": "", "label": "Community", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "caption": "Property Managers Dinner in Riviera Maya. June, 2024", "imgAlt": "#", "subtabs": 
       [
         { "eventKey": "subtab_1", "icon": "", "label": "Communities", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs": 
         [

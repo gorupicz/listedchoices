@@ -81,17 +81,13 @@ const MegaMenu = ({ value }) => {
                     </li>
                 ))}
                 <li>
-                    {hoveredImgSrc ? (
-                        <Image
-                            src={hoveredImgSrc.startsWith('http') ? hoveredImgSrc : `${process.env.NEXT_PUBLIC_BASE_URL}${hoveredImgSrc}`}
-                            alt={tab.imgAlt}
-                            layout="responsive"
-                            width={500}
-                            height={300}
-                        />
-                    ) : (
-                        <Skeleton width={500} height={300} />
-                    )}
+                    <Image
+                        src={hoveredImgSrc.startsWith('http') ? hoveredImgSrc : `${process.env.NEXT_PUBLIC_BASE_URL}${hoveredImgSrc}`}
+                        alt={tab.imgAlt}
+                        layout="responsive"
+                        width={500}
+                        height={300}
+                    />
                 </li>
             </ul>
         </li>
