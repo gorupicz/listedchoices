@@ -15,15 +15,31 @@ import {
   FaFlag,
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LanguageModal from '../modals/LanguageModal'; // Adjust the path as necessary
+import CurrencyModal from '../modals/CurrencyModal'; // Ensure the path is correct
 import { Button } from 'react-bootstrap';
+import Cookies from 'js-cookie';
 
 const Footer = function () {
   const { t, i18n } = useTranslation('footer');
   const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [showCurrencyModal, setShowCurrencyModal] = useState(false);
+  const [currency, setCurrency] = useState('');
+
+  useEffect(() => {
+    // Check if the currency cookie exists
+    let currentCurrency = Cookies.get('currency');
+    if (!currentCurrency) {
+      // Set default currency based on language
+      currentCurrency = i18n.language === 'es' ? 'MXN' : 'USD';
+      Cookies.set('currency', currentCurrency, { expires: 365 });
+    }
+    setCurrency(currentCurrency);
+  }, [i18n.language]);
 
   const toggleLanguageModal = () => setShowLanguageModal(!showLanguageModal);
+  const toggleCurrencyModal = () => setShowCurrencyModal(!showCurrencyModal);
 
   return (
     <>
@@ -105,14 +121,14 @@ const Footer = function () {
                   <LanguageModal show={showLanguageModal} handleClose={toggleLanguageModal} />
                   <div className="btn-wrapper mt-0">
                     <Button
-                      onClick={toggleLanguageModal}
+                      onClick={toggleCurrencyModal}
                       variant="secondary"
                       className="language-btn social-btn"
                     >
-                      <span className="icon">{i18n.language === 'es' ? '$' : '$'}</span> {i18n.language === 'es' ? 'Español' : 'English'}
+                      <span className="icon">$</span> {currency === 'MXN' ? t('currencyMXN') : t('currencyUSD')}
                     </Button>
                   </div>
-                  <LanguageModal show={showLanguageModal} handleClose={toggleLanguageModal} />
+                  <CurrencyModal show={showCurrencyModal} handleClose={toggleCurrencyModal} />
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={2}>

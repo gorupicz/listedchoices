@@ -49,6 +49,7 @@ import TooltipSpan from "@/components/Tooltips/TooltipSpan";
 import ListingDataItem from '@components/properties/ListingDataItem';
 import { useOGMetadata } from "@/context/OGMetadataContext";
 import { getSession } from 'next-auth/react';
+import Cookies from 'js-cookie';
 
 function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus }) {
   const { products } = useSelector((state) => state.product);
@@ -337,6 +338,18 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     }
   }, []);
 
+  // Determine the currency based on the cookie or default to language-based currency
+  const currency = Cookies.get('currency') || (router.locale === 'es' ? 'MXN' : 'USD');
+
+  // Function to get the correct currency value
+  const getCurrencyValue = (valueUSD, valueMXN) => {
+    return currency === 'USD' ? valueUSD : valueMXN;
+  };
+
+  const incomeLast12Months = getCurrencyValue(productMONGO.income.last12MonthsUSD, productMONGO.income.last12MonthsMXN);
+  const expensesLast12Months = getCurrencyValue(productMONGO.expenses.last12MonthsUSD, productMONGO.expenses.last12MonthsMXN);
+  const freeCashFlow = incomeLast12Months - expensesLast12Months;
+
   return (
     <>
       <Head>
@@ -446,7 +459,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       <li>
                         <ListingDataItem
                           label={t('financials.rent')}
-                          value={productMONGO.income.last12MonthsUSD}
+                          value={incomeLast12Months}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
                           buttonDisabled={buttonDisabled}
@@ -455,7 +468,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                         <li>
                         <ListingDataItem
                           label={t('financials.expenses')}
-                          value={productMONGO.expenses.last_twelve_months}
+                          value={expensesLast12Months}
                           tooltip={t('financials.expensesTooltip')}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
@@ -467,7 +480,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                         <li>
                           <ListingDataItem
                             label={t('financials.freeCashFlow')}
-                            value={productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months}
+                            value={freeCashFlow}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
@@ -485,7 +498,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     <li>
                             <ListingDataItem
                             label={t('financials.returnPercentage')}
-                            value={(productMONGO.income.last12MonthsUSD - productMONGO.expenses.last_twelve_months) / productMONGO.price * 100}
+                            value={(freeCashFlow) / productMONGO.price * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
