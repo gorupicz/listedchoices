@@ -32,7 +32,7 @@ const Footer = function () {
     let currentCurrency = Cookies.get('currency');
     if (!currentCurrency) {
       // Set default currency based on language
-      currentCurrency = i18n.language === 'es' ? 'MXN' : 'USD';
+      currentCurrency = 'USD'; //i18n.language === 'es' ? 'MXN' : 'USD';
       Cookies.set('currency', currentCurrency, { expires: 365 });
     }
     setCurrency(currentCurrency);
@@ -124,6 +124,7 @@ const Footer = function () {
                       onClick={toggleCurrencyModal}
                       variant="secondary"
                       className="language-btn social-btn"
+                      disabled={true}
                     >
                       <span className="icon">$</span> {currency === 'MXN' ? t('currencyMXN') : t('currencyUSD')}
                     </Button>
