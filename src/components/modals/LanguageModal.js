@@ -1,21 +1,24 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { FaFlagUsa, FaFlag } from 'react-icons/fa';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-
 
 const LanguageModal = ({ show, handleClose }) => {
   const router = useRouter();
   const { t } = useTranslation('components/modals/LanguageModal');
+
+  // Define supported languages
+  const languages = [
+    { code: 'en', name: 'English', icon: '🇺🇸' },
+    { code: 'es', name: 'Español', icon: '🇲🇽' },
+    // Add more languages here
+  ];
+
   const switchLanguage = (lang) => {
     const currentLang = Cookies.get('i18next');
     if (currentLang !== lang) {
-      // Remove any existing language prefix from the path
       const pathWithoutLang = router.asPath.replace(/^\/(en|es)(\/|$)/, '/');
-      // Construct the new path with the selected language prefix
-      const newPath = lang === 'en' ? `/en${pathWithoutLang}` : `/es${pathWithoutLang}`;
-      // Force a full page reload to the new path
+      const newPath = `/${lang}${pathWithoutLang}`;
       window.location.href = newPath;
     }
     handleClose();
@@ -43,12 +46,16 @@ const LanguageModal = ({ show, handleClose }) => {
                 <div className="modal-product-info text-center">
                   <h4>{t('heading')}</h4>
                   <div className="btn-wrapper mt-0">
-                    <Button variant="secondary" className="social-btn language-btn btn-full-width-2 mb-10" onClick={() => switchLanguage('en')}>
-                        <span className="icon">🇺🇸</span> English
-                    </Button>
-                    <Button variant="secondary" className="social-btn language-btn btn-full-width-2" onClick={() => switchLanguage('es')}>
-                        <span className="icon">🇲🇽</span> Español
-                    </Button>
+                    {languages.map(({ code, name, icon }) => (
+                      <Button
+                        key={code}
+                        variant="secondary"
+                        className="social-btn language-btn btn-full-width-2 mb-10"
+                        onClick={() => switchLanguage(code)}
+                      >
+                        <span className="icon">{icon}</span> {name}
+                      </Button>
+                    ))}
                   </div>
                 </div>
               </div>

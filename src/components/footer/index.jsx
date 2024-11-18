@@ -37,7 +37,7 @@ const Footer = function () {
                   <div className="footer-logo">
                     <div className="site-logo">
                       <Image
-                        src="/img/logo-2.png"
+                        src="/img/isologo.png"
                         alt="Listed Choices logo"
                         width={43}
                         height={43}
@@ -103,6 +103,16 @@ const Footer = function () {
                     </Button>
                   </div>
                   <LanguageModal show={showLanguageModal} handleClose={toggleLanguageModal} />
+                  <div className="btn-wrapper mt-0">
+                    <Button
+                      onClick={toggleLanguageModal}
+                      variant="secondary"
+                      className="language-btn social-btn"
+                    >
+                      <span className="icon">{i18n.language === 'es' ? '$' : '$'}</span> {i18n.language === 'es' ? 'Español' : 'English'}
+                    </Button>
+                  </div>
+                  <LanguageModal show={showLanguageModal} handleClose={toggleLanguageModal} />
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={2}>
@@ -153,9 +163,9 @@ const Footer = function () {
                   <p>{t('newsletterDescription')}</p>
                   <div className="footer-newsletter">
                     <form action="#">
-                      <input type="email" name="email" placeholder="Email*" />
+                      <input type="email" name="email" placeholder={t('newsletterPlaceholder')} />
                       <div className="btn-wrapper">
-                        <button className="theme-btn-1 btn" type="submit">
+                        <button className="theme-btn-1 btn email-btn" type="submit">
                           {" "}
                           <FaPaperPlane />
                         </button>

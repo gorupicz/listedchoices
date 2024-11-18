@@ -10,6 +10,7 @@
   "customerCareLinks": ["Login", "My account", "Wish List", "Order tracking", "FAQ", "Contact us"],
   "newsletter": "Newsletter",
   "newsletterDescription": "Subscribe to our weekly Newsletter and receive updates via email.",
+  "newsletterPlaceholder": "Email*",
   "weAccept": "We Accept",
   "allRightsReserved": "All Rights Reserved @ Listed Choices",
   "termsOfService": "Terms of Service",

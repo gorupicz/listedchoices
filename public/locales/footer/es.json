@@ -10,6 +10,7 @@
   "customerCareLinks": ["Iniciar sesión", "Mi cuenta", "Lista de deseos", "Seguimiento de pedidos", "Preguntas frecuentes", "Contáctanos"],
   "newsletter": "Boletín",
   "newsletterDescription": "Suscríbete a nuestro boletín semanal y recibe actualizaciones por correo electrónico.",
+  "newsletterPlaceholder": "Correo electrónico*",
   "weAccept": "Aceptamos",
   "allRightsReserved": "Todos los derechos reservados @ Listed Choices",
   "termsOfService": "Términos de servicio",
