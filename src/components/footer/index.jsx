@@ -11,11 +11,19 @@ import {
   FaPaperPlane,
   FaEnvelope,
   FaMapMarkerAlt,
+  FaFlagUsa,
+  FaFlag,
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import LanguageModal from '../modals/LanguageModal'; // Adjust the path as necessary
+import { Button } from 'react-bootstrap';
 
 const Footer = function () {
-  const { t } = useTranslation('footer');
+  const { t, i18n } = useTranslation('footer');
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+
+  const toggleLanguageModal = () => setShowLanguageModal(!showLanguageModal);
 
   return (
     <>
@@ -74,7 +82,7 @@ const Footer = function () {
                         </Link>
                       </li>
                       <li>
-                        <Link href="#" title="Linkedin">
+                        <Link href="https://www.linkedin.com/company/bolsadecasas/" title="Linkedin">
                           <FaLinkedin />
                         </Link>
                       </li>
@@ -85,6 +93,16 @@ const Footer = function () {
                       </li>
                     </ul>
                   </div>
+                  <div className="btn-wrapper mt-20">
+                    <Button 
+                      onClick={toggleLanguageModal} 
+                      variant="secondary" 
+                      className="language-btn social-btn"
+                    >
+                      <span className="icon">{i18n.language === 'es' ? '🇲🇽' : '🇺🇸'}</span> {i18n.language === 'es' ? 'Español' : 'English'}
+                    </Button>
+                  </div>
+                  <LanguageModal show={showLanguageModal} handleClose={toggleLanguageModal} />
                 </div>
               </Col>
               <Col xs={12} sm={6} xl={2}>

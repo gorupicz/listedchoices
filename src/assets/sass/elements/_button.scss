@@ -22,6 +22,10 @@
     &:last-child {
         margin-right: 0;
     }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 .theme-btn-1 {
     background-color: var(--ltn__primary-color);
@@ -284,6 +288,16 @@
 .email-btn {
   background-color: var(--ltn__primary-color);
   color: var(--white);
+  &:hover {
+    background-color: var(--ltn__secondary-color);
+  }
+}
+
+.language-btn {
+  background-color: inherit;
+  color: inherit;
+  justify-content: left !important;
+  padding-left: 40px;
   &:hover {
     background-color: var(--ltn__secondary-color);
   }
