@@ -11,6 +11,10 @@ const nextConfig = {
       'scontent.fisj3-3.fna.fbcdn.net'
     ],
   },
+  i18n: {
+    locales: ['en', 'es'], // Add your supported languages here
+    defaultLocale: 'es',
+  },
 }
 
 module.exports = nextConfig

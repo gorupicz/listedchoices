@@ -16,19 +16,18 @@ import {
   slideDown,
   slideToggle,
 } from "@/lib/product";
-import headerData from "@/data/header/index.json"; 
 import { useSelector } from "react-redux";
 import MobileMenuIcon from './mobileMenuIcon';
 import MobileMegaMenu from './mobileMegaMenu';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
   const { cartItems } = useSelector((state) => state.cart);
-
   const { data: session, status } = useSession();
-
   const [isValidPhoto, setIsValidPhoto] = useState(false);
+  const { t } = useTranslation('header');
 
   useEffect(() => {
     if (session && session.user.photograph) {
@@ -95,7 +94,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           </div>
           <div className="ltn__utilize-menu-search-form">
             <form action="#">
-              <input type="text" placeholder="Search..." />
+              <input type="text" placeholder={t('searchPlaceholder')} />
               <button>
                 <FaSearch />
               </button>
@@ -112,7 +111,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           <div className="ltn__utilize-buttons ltn__utilize-buttons-2">
             <ul>
               <li>
-                <Link href={ session && status === "authenticated" ? "/my-account" : "/login" } title={headerData.myAccount}>
+                <Link href={ session && status === "authenticated" ? "/my-account" : "/login" } title={t('myAccount')}>
                   <span className="utilize-btn-icon">
                   {isValidPhoto ? (
                     <img
@@ -124,11 +123,11 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
                     <FaRegUser />
                   )}
                 </span>
-                  {headerData.myAccount}
+                  {t('myAccount')}
                 </Link>
               </li>
               <li>
-                <Link href={ session && status === "authenticated" ? "/wishlist" : "/login" } title={headerData.wishlist}>
+                <Link href={ session && status === "authenticated" ? "/wishlist" : "/login" } title={t('wishlist')}>
                   <span className="utilize-btn-icon">
                     <FaRegHeart />
                     {cartItems.length > 0 ? (
@@ -137,11 +136,11 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
                       <sup>0</sup>
                     )}
                   </span>
-                  {headerData.wishlist}
+                  {t('wishlist')}
                 </Link>
               </li>
               <li>
-                <Link href={session && status === "authenticated" ? "/cart" : "/login"} title={headerData.shopingCart}>
+                <Link href={session && status === "authenticated" ? "/cart" : "/login"} title={t('shopingCart')}>
                   <span className="utilize-btn-icon">
                     <FaShoppingCart />
                     {cartItems.length > 0 ? (
@@ -150,7 +149,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
                       <sup>0</sup>
                     )}
                   </span>
-                  {headerData.shopingCart}
+                  {t('shopingCart')}
                 </Link>
               </li>
             </ul>

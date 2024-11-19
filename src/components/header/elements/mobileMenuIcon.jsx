@@ -1,8 +1,10 @@
 import Link from "next/link";
-import menuIcon from '@/data/header/elements/menuIcon/index.json';
+import { useTranslation } from 'react-i18next';
 
 const MobileMenuIcon = ({ eventKey, onClickHandler }) => {
-  const tab = menuIcon.tabs.find(tab => tab.eventKey === eventKey);
+  const { t } = useTranslation('header/elements/menuIcon');
+  const tabs = t('tabs', { returnObjects: true });
+  const tab = tabs.find(tab => tab.eventKey === eventKey);
 
   if (!tab) return null;
 

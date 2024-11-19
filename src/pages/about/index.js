@@ -100,7 +100,6 @@ function AboutUs() {
             <Row>
               <Col lg={12}>
                 <TitleSection
-                  sectionClasses="text-center"
                   headingClasses="section-subtitle-2"
                   titleSectionData={{
                     subTitle: "Team",
@@ -136,7 +135,6 @@ function AboutUs() {
             <Row>
               <Col lg={12}>
                 <TitleSection
-                  sectionClasses="text-center"
                   headingClasses="section-subtitle-2"
                   titleSectionData={{
                     subTitle: "Our Testimonial",

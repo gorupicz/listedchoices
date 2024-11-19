@@ -89,7 +89,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                             >
                               <div className="btn-wrapper text-center mt-0">
                                 <Link
-                                  href="/shop/right-sidebar"
+                                  href="/properties/right-sidebar"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
                                   Search
@@ -103,7 +103,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                     <Tab.Pane eventKey="second">
                       <div className="car-dealer-form-inner">
                         <form
-                          action="/shop/right-sidebar"
+                          action="/properties/right-sidebar"
                           className="ltn__car-dealer-form-box"
                         >
                           <Row>
@@ -158,7 +158,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                             >
                               <div className="btn-wrapper text-center mt-0">
                                 <Link
-                                  href="/shop/right-sidebar"
+                                  href="/properties/right-sidebar"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
                                   Search

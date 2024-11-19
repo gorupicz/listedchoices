@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
-import loginData from '@/data/login/index.json';
+import emailData from '@/data/emails.json';
+
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, subject, body } = req.body;
+    const { email } = req.body;
 
     try {
       // Log to check if the email is coming through
@@ -33,21 +34,18 @@ export default async function handler(req, res) {
       try {
         await sendEmail({
           to: email,
-          subject,
-          body: body.replace('{link}', recoveryLink),
+          subject: emailData.recoveryEmailSubject,
+          body: emailData.recoveryEmailBody.replace('{link}', recoveryLink)
         });
-        console.log('Recovery email sent successfully to:', email);
-        return res.status(200).json({ message: loginData.passwordRecoverySentMessage });
+        return res.status(200).json();
       } catch (error) {
-        console.error('Error sending recovery email:', error);
-        return res.status(500).json({ message: 'Error sending email. Please try again.' });
+        return res.status(500).json();
       }
 
     } catch (error) {
-      console.error('Error during password recovery:', error);
-      return res.status(500).json({ message: loginData.defaultErrorMessage });
+      return res.status(500).json();
     }
   } else {
-    res.status(405).json({ message: 'Method not allowed' });
+    res.status(405).json();
   }
 }

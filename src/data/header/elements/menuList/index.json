@@ -7,7 +7,7 @@
           { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
-    { "eventKey": "tab_2", "icon": "", "label": "Community", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "imgAlt": "#", "subtabs": 
+    { "eventKey": "tab_2", "icon": "", "label": "Community", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/hero_home_investment.png", "imgAlt": "#", "subtabs": 
       [
         { "eventKey": "subtab_1", "icon": "", "label": "Communities", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs": 
         [
@@ -34,7 +34,7 @@
           { "eventKey": "subtab_4", "icon": "", "label": "Jobs", "link": "/jobs", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
-    { "eventKey": "tab_4", "icon": "", "label": "Investors", "link": "/shop", "title": "Investors", "target": "", "imgSrc": "", "imgAlt": "#" 
+    { "eventKey": "tab_4", "icon": "", "label": "Investors", "link": "/properties", "title": "Investors", "target": "", "imgSrc": "", "imgAlt": "#" 
     },
     { "eventKey": "tab_5", "icon": "", "label": "Add Listing", "link": "/add-listing", "title": "Add Listing", "target": "", "imgSrc": "", "imgAlt": "#" 
     }

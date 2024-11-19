@@ -1,0 +1,33 @@
+[
+  {
+    "subtitle": "All the best properties in Mexico are here",
+    "Title": "Invest in houses like you invest in the stock market",
+    "titleWord": ["houses", "stock market"],
+    "Desc": "Invest in vacation rental properties in Mexico in a transparent and professional way.",
+    "icon": "tabler:sailboat",
+    "heroimage": "hero_home_investment.png",
+    "id": "1",
+    "buttonText": "Simulate your investment",
+    "buttonLink": "https://formless.ai/c/0lF03P5MqeEp",
+    "videoButton": false,
+    "learnMoreButtonText": "See properties",
+    "learnMoreButtonLink": "/properties",
+    "variationLeft": false
+  },
+  {
+    "subtitle": "Loans for property managers",
+    "Title": "Become an owner",
+    "titleWord": ["owner"],
+    "Desc": "Buy the property you manage on credit and pay for it with the dividends from your future rents. Rate from 9.05% annually. Prequalify online.",
+    "icon": "tabler:sailboat",
+    "heroimage": "hero_home_investment.png",
+    "caption": "Property Managers Dinner in Riviera Maya. June, 2024",
+    "id": "1",
+    "buttonText": "Simulate your loan",
+    "buttonLink": "https://formless.ai/c/mGzBOphF10BF",
+    "videoButton": true,
+    "learnMoreButtonText": "See properties",
+    "learnMoreButtonLink": "/properties",
+    "variationLeft": false
+  }
+]

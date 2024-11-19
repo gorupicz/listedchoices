@@ -1,0 +1,33 @@
+[
+    {
+    "subtitle": "Todas las mejores propiedades de México están aquí",
+    "Title": "Invierte en casas como si invirtieras en la bolsa",
+    "titleWord": ["casas", "bolsa"],
+    "Desc": "Invierte en propiedades de renta vacacional en México de forma transparente y con el soporte de profesionales en el terreno.",
+    "icon": "tabler:sailboat",
+    "heroimage": "hero_home_investment.png",
+    "id": "1",
+    "buttonText": "Simula tu inversión",
+    "buttonLink": "https://formless.ai/c/0lF03P5MqeEp",
+    "videoButton": false,
+    "learnMoreButtonText": "Ver propiedades",
+    "learnMoreButtonLink": "/properties",
+    "variationLeft": false
+    },
+    {
+    "subtitle": "Créditos para administradores de propiedades",
+    "Title": "Conviértete en dueño",
+    "titleWord": ["dueño"],
+    "Desc": "Compra a crédito la propiedad que administras y págala con los dividendos de tus futuras rentas. Tasa desde 9.05% anual. Precalifica en línea.",
+    "icon": "tabler:sailboat",
+    "heroimage": "hero_home_investment.png",
+    "caption": "Cena de Property Managers de la Riviera Maya. Junio, 2024",
+    "id": "1",
+    "buttonText": "Simula tu crédito",
+    "buttonLink": "https://formless.ai/c/mGzBOphF10BF",
+    "videoButton": true,
+    "learnMoreButtonText": "Ver propiedades",
+    "learnMoreButtonLink": "/properties",
+    "variationLeft": false
+  }
+]

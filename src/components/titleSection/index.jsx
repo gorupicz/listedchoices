@@ -1,7 +1,7 @@
-const TitleSection = ({ titleSectionData, sectionClasses, headingClasses }) => {
+const TitleSection = ({ titleSectionData, headingClasses }) => {
   return (
     <>
-      <div className={`section-title-area ${sectionClasses}`}>
+      <div className={`section-title-area text-center`}>
         <h4
           className={`section-subtitle ${headingClasses} ltn__secondary-color`}
         >

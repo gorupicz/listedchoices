@@ -1,10 +1,7 @@
-import Link from "next/link";
-import menuListData from "@/data/header/elements/menuList/index.json"; // Import text content
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaSignOutAlt, FaLock, FaFacebookF, FaWhatsapp, FaYoutube, FaInstagram, FaLinkedin } from "react-icons/fa";
-import React, { useState } from "react";
-import Image from 'next/image';
 import MenuIcon from '@/components/header/elements/menuIcon';
 import MegaMenu from '@/components/header/elements/megaMenu';
+import SpecialLink from '@/components/header/elements/specialLink';
 
 
 
@@ -29,21 +26,11 @@ const MenuList = ({ addListing }) => {
   
   return (
     <ul>
+      <MenuIcon value="3" />
       <MenuIcon value="1" />
       <MegaMenu value="1" />
       <MenuIcon value="2" />
-      <MenuIcon value="3" />
-
-      {addListing ? (
-        <li className="special-link">
-          <Link href={`${menuListData.tabs[4].link}`} target={menuListData.tabs[4].target} title={menuListData.tabs[4].title}>
-            <span className="icon-text">
-              {menuListData.tabs[4].icon ? React.createElement(iconMap[menuListData.tabs[4].icon]) : null}
-            </span>
-            {menuListData.tabs[4].label}
-          </Link>
-        </li>
-      ) : null}
+      <SpecialLink addListing={addListing} />
     </ul>
   );
 };

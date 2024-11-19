@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { Header } from "@/components/header";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer";
 import ScrollToTop from "@/components/scroll-to-top";
 import { GoogleTagManager } from '@next/third-parties/google'
 import BreadCrumb from "@/components/breadCrumbs";

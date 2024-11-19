@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { productSlug } from "@/lib/product";
 import Link from "next/link";
 import Image from "next/image";
-import HeaderTopBarOne from "./headerTopBar/headerTopBarStyleOne";
-import HeaderCartMenu from "./elements/headerCartMenu";
+import TopBarOne from "./elements/topBar";
+import CartMenu from "./elements/cartMenu";
 import MobileMenu from "./elements/mobileMenu";
 import Container from "react-bootstrap/Container";
 import MenuList from "@/components/header/elements/menuList";
@@ -13,13 +13,14 @@ import Col from "react-bootstrap/Col";
 import clsx from "clsx";
 import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';  // Import the useSession hook
-import headerData from "@/data/header/index.json";  // Importing the JSON data
+import { useSession } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';  // Import the useTranslation hook
 
 const Header = function ({ SetToggleClassName, topbar }) {
-  const { data: session, status } = useSession();  // Get the session and status
+  const { data: session, status } = useSession();
   const router = useRouter();
-  // Add a condition to hide the user-menu on specific routes
+  const { t } = useTranslation('header');  // Initialize the translation function
+
   const hideUserMenuPages = ['/login', '/register'];
   const hideUserMenu = hideUserMenuPages.includes(router.pathname);
 
@@ -110,7 +111,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
   return (
     <>
       <header className="ltn__header-area ltn__header-5">
-        {topbar ? <HeaderTopBarOne /> : null}
+        {topbar ? <TopBarOne /> : null}
 
         <div
           className={clsx(
@@ -167,7 +168,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
                           onChange={(e) => setQuery(e.target.value.toLowerCase())}
                           type="text"
                           name="search"
-                          placeholder={headerData.searchPlaceholder}
+                          placeholder={t('searchPlaceholder')}  // Use translation for placeholder
                         />
                         <button type="submit">
                           <span>
@@ -182,14 +183,14 @@ const Header = function ({ SetToggleClassName, topbar }) {
                             const slug = productSlug(product.title);
                             return (
                               <li key={key} className="list-group-item">
-                                <Link href={`/shop/${slug}`}>
+                                <Link href={`/properties/${slug}`}>
                                   {product.title}
                                 </Link>
                               </li>
                             );
                           })
                         ) : (
-                          <li>{headerData.noProducts}</li>
+                          <li>{t('noProducts')}</li>  // Use translation for no products message
                         )}
                       </ul>
                     </div>
@@ -227,23 +228,23 @@ const Header = function ({ SetToggleClassName, topbar }) {
                           {(!session || status !== "authenticated") && (
                             <>
                               <li>
-                                <Link href="/login">{headerData.signIn}</Link>
+                                <Link href="/login">{t('signIn')}</Link>
                               </li>
                               <li>
-                                <Link href="/register">{headerData.register}</Link>
+                                <Link href="/register">{t('register')}</Link>
                               </li>
                             </>
                           )}
                           {session && status === "authenticated" && (
                             <li>
-                              <Link href="/my-account">{headerData.myAccount}</Link>
+                              <Link href="/my-account">{t('myAccount')}</Link>
                             </li>
                           )}
                           <li>
                             <Link
                               href={session && status === "authenticated" ? "/wishlist" : "/login"}
                             >
-                              {headerData.wishlist}
+                              {t('wishlist')}
                             </Link>
                           </li>
                         </ul>
@@ -279,7 +280,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
         </div>
       </header>
 
-      <HeaderCartMenu
+      <CartMenu
         cartMenu={cartMenu}
         cartMenuOpener={cartMenuOpener}
         closeSideBar={closeSideBar}

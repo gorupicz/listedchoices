@@ -20,6 +20,8 @@ import { SessionProvider } from 'next-auth/react';
 import CookieConsent from "react-cookie-consent";
 import { OGMetadataProvider, useOGMetadata } from "@/context/OGMetadataContext";
 import metadata from "@/data/metadata.json";
+import { appWithTranslation } from 'next-i18next';
+import '../lib/i18n'; // Import your i18n configuration
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],

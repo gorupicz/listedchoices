@@ -149,7 +149,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                 <li key={product.id}>
                   <div className="top-rated-product-item clearfix">
                     <div className="top-rated-product-img">
-                      <Link href={`/shop/${slug}`}>
+                      <Link href={`/properties/${slug}`}>
                         <img
                           src={`/img/product/${key}.png`}
                           alt={product.title}
@@ -187,7 +187,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                         </ul>
                       </div>
                       <h6>
-                        <Link href={`/shop/${slug}`}>{product.title}</Link>
+                        <Link href={`/properties/${slug}`}>{product.title}</Link>
                       </h6>
                       <div className="product-price">
                         <span>${product.price}</span>
@@ -253,7 +253,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                   className="ltn__product-item ltn__product-item-4 ltn__product-item-5"
                 >
                   <div className="product-img">
-                    <Link href={`/shop/${slug}`}>
+                    <Link href={`/properties/${slug}`}>
                       <img
                         src={`/img/product-3/${product.productImg}`}
                         alt={slug}
@@ -275,7 +275,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                       </span>
                     </div>
                     <h2 className="product-title">
-                      <Link href={`/shop/${slug}`}>{product.title}</Link>
+                      <Link href={`/properties/${slug}`}>{product.title}</Link>
                     </h2>
                     <div className="product-img-location">
                       <ul>

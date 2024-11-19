@@ -62,7 +62,7 @@ const Cart = () => {
                                   </span>
                                 </td>
                                 <td className="cart-product-image">
-                                  <Link href={`/shop/${slug}`}>
+                                  <Link href={`/properties/${slug}`}>
                                     <img
                                       src={`/img/product/${imageCount}.png`}
                                       alt="#"
@@ -71,7 +71,7 @@ const Cart = () => {
                                 </td>
                                 <td className="cart-product-info">
                                   <h4>
-                                    <Link href={`/shop/${slug}`}>
+                                    <Link href={`/properties/${slug}`}>
                                       {product.title}
                                     </Link>
                                   </h4>
@@ -191,7 +191,7 @@ const Cart = () => {
               <div className="text-center">
                 <p>No items found in cart</p>
                 <Link
-                  href="/shop"
+                  href="/properties"
                   className="theme-btn-1 btn btn-effect-1"
                 >
                   Shop Now

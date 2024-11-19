@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Verifica tu correo electrónico",
+  "verificationCodePlaceholder": "Introduce tu código de 6 dígitos",
+  "submitButtonText": "Verificar",
+  "successMessage": "Tu correo electrónico ha sido verificado con éxito.",
+  "errorMessage": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+  "successModalTitle": "Verificación exitosa",
+  "errorModalTitle": "Verificación fallida",
+  "modalSubmitText": "Iniciar sesión",
+  "goBackToLoginText": "VOLVER A INICIAR SESIÓN"
+}

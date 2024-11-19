@@ -1,9 +1,9 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const MessageModal = ({ show, handleClose, isError, modalMessage, loginData = {}, title, confirmButtonText, cancelButtonText, onConfirm }) => {
+const MessageModal = ({ show, handleClose, isError, modalMessage, content = {}, title, confirmButtonText, cancelButtonText, onConfirm }) => {
   const defaultTitle = isError ? "Error" : "Information"; // Default titles
-  const modalTitle = title || (isError ? loginData.errorModalTitle : loginData.verificationModalTitle) || defaultTitle;
+  const modalTitle = title || (isError ? content.errorModalTitle : content.verificationModalTitle) || defaultTitle;
 
   return (
     <Modal
@@ -34,7 +34,7 @@ const MessageModal = ({ show, handleClose, isError, modalMessage, loginData = {}
                       </Button>
                     )}
                     <Button className="theme-btn-1 btn btn-full-width-2" onClick={onConfirm || handleClose}>
-                      {confirmButtonText || loginData.errorSuccessModalSubmit || "OK"}
+                      {confirmButtonText || content.errorSuccessModalSubmit || "OK"}
                     </Button>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import menuListData from '@/data/header/elements/menuIcon/index.json';
 import { FaHome, FaUserAlt, FaMapMarkerAlt, FaList, FaHeart, FaMapMarked, FaDollarSign, FaLock, FaFacebookF, FaWhatsapp, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 // Map icon names to React components
 const iconMap = {
@@ -21,7 +21,9 @@ const iconMap = {
 };
 
 const MenuIcon = ({ value }) => {
-    const tab = menuListData.tabs.find(tab => tab.eventKey === value);
+    const { t } = useTranslation('header/elements/menuIcon');
+    const tabs = t('tabs', { returnObjects: true });
+    const tab = tabs.find(tab => tab.eventKey === value);
 
     if (!tab) {
         return null;

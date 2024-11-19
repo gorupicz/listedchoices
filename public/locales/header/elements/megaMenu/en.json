@@ -1,0 +1,23 @@
+{
+  "tabs": [
+    { "eventKey": "1", "icon": "", "label": "Community", "link": "#", "title": "", "target": "", "imgSrc": "/img/slider/IMG_4867.png", "caption": "Property Managers Dinner in Riviera Maya. June, 2024", "imgAlt": "#", "subtabs": 
+      [
+        { "eventKey": "subtab_1", "icon": "", "label": "Communities", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs": 
+        [
+          { "eventKey": "sub_subtab_1", "icon": "FaWhatsapp", "label": "Comunidad de Anfitriones", "link": "https://chat.whatsapp.com/JWT0uzy8k5V4auRfWE40T1", "title": "WhatsApp Comunnity for hosts and property managers", "target": "_blank", "imgSrc": "https://pps.whatsapp.net/v/t61.24694-24/425509045_496111326108942_1606710005723383508_n.jpg?ccb=11-4&oh=01_Q5AaICrtGCQqnW2rBmI8AT9jIAM_EdZec2JDWoT2GiE9f8mE&oe=672F9803&_nc_sid=5e03e0&_nc_cat=109", "imgAlt": "Comunidad de Anfitriones" },
+        { "eventKey": "sub_subtab_2", "icon": "FaWhatsapp", "label": "Club de Renta Vacacional", "link": "https://chat.whatsapp.com/CEtTxbGZpr9JtqFH9Zhxve", "title": "", "target": "_blank", "imgSrc": "https://pps.whatsapp.net/v/t61.24694-24/463952045_526760396813933_2662006991496834669_n.jpg?ccb=11-4&oh=01_Q5AaIE54XDBxqdQ5BwJn-xiXeVxUPa50rSJZmrDq5cAdPEx5&oe=672F8730&_nc_sid=5e03e0&_nc_cat=102", "imgAlt": "Club de Renta Vacacional" },
+        { "eventKey": "sub_subtab_3", "icon": "FaFacebookF", "label": "Airbnb Ayuda para Anfitriones. Traído por MundoBNB", "link": "https://www.facebook.com/groups/261643392960661", "title": "Airbnb Ayuda para Anfitriones. Traído por MundoBNB", "target": "_blank", "imgSrc": "https://scontent.fisj3-3.fna.fbcdn.net/v/t39.30808-6/448808336_395360563530965_7192944574248681779_n.png?stp=dst-jpg&_nc_cat=110&ccb=1-7&_nc_sid=2285d6&_nc_ohc=VHNdMOzJsI0Q7kNvgHbYhfr&_nc_zt=23&_nc_ht=scontent.fisj3-3.fna&_nc_gid=AVi8knG_8XOp-NAOQp7ayIx&oh=00_AYDeaWo560HIn-lIElX-tebryfCezBoFjG6Rta1SlD-ilw&oe=6728524B", "imgAlt": "Airbnb Ayuda para Anfitriones. Traído por MundoBNB" }
+        ] },
+        { "eventKey": "subtab_2", "icon": "", "label": "Podcasts", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs":
+        [
+          { "eventKey": "sub_subtab_1", "icon": "FaYoutube", "label": "MundoBNB, por Juan Pablo Tellez Girón", "link": "https://www.youtube.com/@MundoBNB/", "title": "MundoBNB, por Juan Pablo Tellez Girón", "target": "_blank", "imgSrc": "https://scontent.fisj3-3.fna.fbcdn.net/v/t39.30808-6/457793706_443623465371341_1321925785532783119_n.jpg?_nc_cat=102&ccb=11-4&_nc_sid=6ee11a&_nc_ohc=UEx84zCgTMQQ7kNvgFIo4DO&_nc_zt=23&_nc_ht=scontent.fisj3-3.fna&_nc_gid=ADxyiRSoMwcdS8cvAavjImZ&oh=00_AYCT6GipC58b4zC6_EfWegTJKJGki6e65vSSXnm5fVU9Og&oe=67284065", "imgAlt": "MundoBNB, por Juan Pablo Tellez Girón" },
+          { "eventKey": "subtab_7", "icon": "FaYoutube", "label": "The Hospitality Edge, por Sebastián Muñoz", "link": "https://www.youtube.com/playlist?list=PL0lGQwZesn2zFqX66IYNgxuuBCkKLzXuX", "title": "The Hospitality Edge, por Sebastián Muñoz", "target": "_blank", "imgSrc": "https://scontent.fisj3-3.fna.fbcdn.net/v/t39.30808-6/387035613_122099528942072203_8819236455762913677_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=muxXdyg41aEQ7kNvgEjqRfL&_nc_zt=23&_nc_ht=scontent.fisj3-3.fna&_nc_gid=ArVFPw-ELinsDatP60uMpyq&oh=00_AYBG80-OxVr60e5DxhEpnOICMP-C6BrRjfxHjQShyFEQuQ&oe=67285BB3", "imgAlt": "The Hospitality Edge, por Sebastián Muñoz" }
+        ] },
+        { "eventKey": "subtab_3", "icon": "", "label": "Content Creators", "link": "#", "title": "", "target": "", "imgSrc": "", "imgAlt": "#", "sub_subtabs": 
+        [
+          { "eventKey": "sub_subtab_1", "icon": "FaYoutube", "label": "Super Host Avanzado, por Rod Ross", "link": "https://www.youtube.com/@superhostavanzado", "title": "Super Host Avanzado, por Rod Ross", "target": "_blank", "imgSrc": "https://scontent.fisj3-3.fna.fbcdn.net/v/t39.30808-6/437044378_974883337491515_281366760041099233_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=c_zmj5qD5sMQ7kNvgHt-6IC&_nc_zt=23&_nc_ht=scontent.fisj3-3.fna&_nc_gid=AXXmPlwan6_TdSWxIi4jXTP&oh=00_AYB_RAbHt2Yj2lhTYV4mnVP_IRj9pi8K0ua5fJBpvKXaHg&oe=6728403C", "imgAlt": "Super Host Avanzado, por Rod Ross" }
+        ] }
+      ]
+    }
+  ]
+}

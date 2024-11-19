@@ -266,7 +266,7 @@ function Faq() {
                   </div>
                   {/* <!-- Banner Widget --> */}
                   <div className="widget ltn__banner-widget">
-                    <Link href="/shop">
+                    <Link href="/properties">
                       <img src="/img/banner/banner-3.jpg" alt="Banner Image" />
                     </Link>
                   </div>
@@ -287,7 +287,6 @@ function Faq() {
             <Row>
               <Col lg={12}>
                 <TitleSection
-                sectionClasses="text-center"
                 headingClasses="section-subtitle-2"
                   titleSectionData={{
                     subTitle: "News & Blogs",

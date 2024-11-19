@@ -1,0 +1,29 @@
+{
+  "title": "Gana dividendos mensuales",
+  "subtitle": "Vive de tus propiedades",
+  "description": "Invierte en propiedades llave en mano con un historial activo en Airbnb y Vrbo, gestionadas por administradores de propiedades profesionales",
+  "image": {
+    "src": "/img/others/11.png",
+    "alt": "Cuando me jubile, viviré de esto."
+  },
+  "features": [
+    {
+      "title": "Solo las mejores propiedades, seleccionadas por nuestros expertos",
+      "description": "Las propiedades listadas pasan por nuestro riguroso proceso para asegurar el ajuste al mercado y maximizar los retornos",
+      "flaticon": "flaticon-house-4",
+      "link": "https://quarter-nextjs.netlify.app/service/buy-a-home"
+    },
+    {
+      "title": "Amueblado y optimizado para turistas",
+      "description": "Desde diferentes cafeteras hasta ropa de cama hipoalergénica, nos enfocamos en proporcionar una experiencia memorable y rentable para los huéspedes",
+      "flaticon": "flaticon-call-center-agent",
+      "link": "https://quarter-nextjs.netlify.app/service/tourist-optimization"
+    },
+    {
+      "title": "La ubicación manda, siempre",
+      "description": "Solo listamos propiedades con vistas directas al mar y a poca distancia de la playa",
+      "flaticon": "flaticon-location",
+      "link": "https://quarter-nextjs.netlify.app/service/location-rules"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "title": "The best Mexican real estate appreciation",
+  "subtitle": "Simplified and online process",
+  "features": [
+    {
+      "title": "With or without mortgage",
+      "shortDescription": "Qualify for a mortgage and let your investment pay for itself with the generated dividends. Mortgages for Mexican residents in the USA.",
+      "fullDescription": "",
+      "captions": {
+        "image1": "31.jpg",
+        "image2": "32.jpg",
+        "caption": "",
+        "captionFullDescription": "",
+        "captionShortDescription": ""
+      },
+      "thumbImage": "21.jpg",
+      "img": "21.png",
+      "id": "01",
+      "link": "https://formless.ai/c/0lF03P5MqeEp",
+      "buttonText": "Simulate your investment",
+      "active": false,
+      "icon": "flaticon-house",
+      "category": ["buying", "women"],
+      "featured": true,
+      "coreFeature": false
+    },
+    {
+      "title": "Without intermediaries",
+      "shortDescription": "Bolsa de Casas is the only online platform in Mexico to invest directly in properties transparently and without intermediaries.",
+      "fullDescription": "",
+      "captions": {
+        "image1": "31.jpg",
+        "image2": "32.jpg",
+        "caption": "",
+        "captionFullDescription": "",
+        "captionShortDescription": ""
+      },
+      "thumbImage": "21.jpg",
+      "img": "23.png",
+      "id": "02",
+      "link": "/properties/",
+      "buttonText": "View properties",
+      "active": false,
+      "icon": "flaticon-deal-1",
+      "category": ["buying", "women"],
+      "featured": true,
+      "coreFeature": false
+    },
+    {
+      "title": "No hidden costs",
+      "shortDescription": "Receive financial information every month, your smart investment portfolio in properties without surprises.",
+      "fullDescription": "",
+      "captions": {
+        "image1": "31.jpg",
+        "image2": "32.jpg",
+        "caption": "",
+        "captionFullDescription": "",
+        "captionShortDescription": ""
+      },
+      "thumbImage": "21.jpg",
+      "img": "22.png",
+      "id": "03",
+      "link": "https://formless.ai/c/O8dMU4mHBc7N",
+      "buttonText": "Create your free account",
+      "active": false,
+      "icon": "flaticon-house-3",
+      "category": ["buying", "women"],
+      "featured": true,
+      "coreFeature": false
+    }
+  ]
+}
