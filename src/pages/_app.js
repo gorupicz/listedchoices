@@ -48,12 +48,12 @@ const OGMetadataConsumerComponent = ({ Component, props, store }) => {
   return (
     <Fragment>
       <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="viewport" content={metadata.viewport} />
-        <link rel="icon" href={metadata.icon} />
         {!isOGMetadataSet && (
           <>
+            <title>{metadata.title}</title>
+            <meta name="description" content={metadata.description} />
+            <meta name="viewport" content={metadata.viewport} />
+            <link rel="icon" href={metadata.icon} />
             <meta property="og:title" content={metadata.ogTitle} />
             <meta property="og:url" content={metadata.ogUrl} />
             <meta property="og:description" content={metadata.ogDescription} />
