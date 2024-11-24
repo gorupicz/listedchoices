@@ -1,12 +1,7 @@
 import { getSession, getToken } from 'next-auth/react';
 import jwt from 'jsonwebtoken'; // Import jwt to sign the token
 import prisma from '@/lib/prisma';
-
-function setCookie(res, name, value, days) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  const cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
-  res.setHeader('Set-Cookie', cookie);
-}
+import Cookies from 'js-cookie';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -39,8 +34,8 @@ export default async function handler(req, res) {
 
         console.log('Generated JWT:', token);
 
-        // Set the session token as a cookie
-        setCookie(res, 'next-auth.session-token', token, 1); // 1 day
+        // Set the session token as a cookie using js-cookie
+        res.setHeader('Set-Cookie', `next-auth.session-token=${token}; Max-Age=${60 * 60 * 24}; Path=/; HttpOnly; Secure; SameSite=Lax`);
 
         res.status(200).json({ message: 'Verification successful and user authenticated' });
       } else {

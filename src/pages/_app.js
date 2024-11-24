@@ -4,8 +4,6 @@ import { Nunito_Sans, Poppins } from "next/font/google";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "@/store";
-import { setProducts } from "@/store/slices/product-slice";
-import products from "@/data/products.json";
 import Preloader from "@/components/preloader";
 import "animate.css";
 import "slick-carousel/slick/slick.css";
@@ -36,10 +34,6 @@ const Poppin = Poppins({
 
 const MyApp = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
-
-  useEffect(() => {
-    store.dispatch(setProducts(products));
-  }, []);
 
   return (
     <OGMetadataProvider>

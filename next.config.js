@@ -8,7 +8,8 @@ const nextConfig = {
       'listedchoice.com',
       'listedchoices.com',
       'pps.whatsapp.net',
-      'scontent.fisj3-3.fna.fbcdn.net'
+      'scontent.fisj3-3.fna.fbcdn.net',
+      'a0.muscache.com'
     ],
   },
   i18n: {
