@@ -777,36 +777,8 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   )}>
                     
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {
-                          session && status === "authenticated" ? (
-                            followRequestStatus === 'ACCEPTED' ? (
-                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
-                            ) : followRequestStatus === 'PENDING' ? (
-                              <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                            ) :
-                              (!buttonDisabled ? (
-                                <a onClick={handleFollowButtonClick}>
-                                  <TooltipSpan id="obfuscation-tooltip" title={t('cacButton.loggedNotFollowing')}>
-                                    <span className="obfuscation-span">obfusca</span>
-                                  </TooltipSpan>
-                                </a>
-                              ) : (
-                                  <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
-                                    <span className="obfuscation-span">obfusca</span>
-                                  </TooltipSpan>
-                              )
-                            )
-                          ) : (
-                            <Link href='`/register?redirect=${encodeURIComponent(window.location.pathname)}`'>
-                              <TooltipSpan id="obfuscation-tooltip" title={t('loginNotLoggedTooltip')}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                            </Link>
-                          )
-                        }
-                      {t('amountAvailable')}
+                      <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.followers)} </span>
+                      {t('following')}
                     </h4>
                     <button
                       className={clsx(
