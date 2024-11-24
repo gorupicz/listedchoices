@@ -776,7 +776,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     scroll > sliderHeight && "CaC-widget__sticky-active"
                   )}>
                     
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
+                    <h4 className="ltn__widget-title ltn__widget-title-border-2" style={{marginLeft: 10, marginRight: 15}}>
                       <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.followers)} </span>
                       {t('following')}
                     </h4>
@@ -807,32 +807,24 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                             <a href="#">
                               <FaStar />
                             </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li className="review-total">
                             {" "}
                             <Link href="#">
                               {" "}
-                              ( {productMONGO.propertyManager.raiting} Reviews )
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.propertyManager.rating)} Rating
+                            </Link>
+                          </li>
+                          <li className="review-total">
+                            {" - "}
+                            <Link href="#">
+                              {" "}
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.propertyManager.reviews)} Reviews
+                            </Link>
+                          </li>
+                          <li className="review-total">
+                            {" - "}
+                            <Link href="#">
+                              {" "}
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.propertyManager.listings)} Listings
                             </Link>
                           </li>
                         </ul>
