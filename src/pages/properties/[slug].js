@@ -51,7 +51,7 @@ import { useOGMetadata } from "@/context/OGMetadataContext";
 import { getSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 
-function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus }) {
+function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, ogMetadata }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -194,7 +194,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const router = useRouter();
   const pageTitle = productMONGO.name + " - " + productMONGO.location;
   const pageDescription = productMONGO.shortDescription;
-  const ogImage = productJSON.carousel[0]?.img || 'img/img-slide/Elegance/40.jpg';
+  const ogImage = productMONGO.photos[0]?.img;
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
     router
@@ -375,11 +375,11 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
-        {console.log('OG Image URL:', `/img/img-slide/${ogImage}`)}
+        <title>{ogMetadata.title}</title>
+        <meta property="og:title" content={ogMetadata.title} />
+        <meta property="og:description" content={ogMetadata.description} />
+        <meta property="og:image" content={`/img/img-slide/${ogMetadata.image}`} />
+        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : ''} />
       </Head>
       <Layout 
         topbar={false} 
@@ -1042,6 +1042,11 @@ export async function getServerSideProps({ params, req }) {
       productMYSQL: serializedProductMYSQL,
       productMONGO: serializedProductMONGO,
       followRequestStatus,
+      ogMetadata: {
+        title: `${serializedProductMONGO.name} - ${serializedProductMONGO.location}`,
+        description: serializedProductMONGO.shortDescription,
+        image: serializedProductMONGO.photos[0]?.img, // Fallback image
+      },
     },
   };
 }
