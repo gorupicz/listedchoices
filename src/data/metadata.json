@@ -1,10 +1,11 @@
 {
   "title": "Bolsa de Casas",
-  "description": "Bolsa de Casas - Mercado de Propiedades de Renta Vacacional",
+  "description": "Bolsa de Casas - Soluciones Financieras y de Inversión en Rentas Vacacionales en México",
+  "description_old1": "Bolsa de Casas - Mercado de Propiedades de Renta Vacacional",
   "viewport": "width=device-width, initial-scale=1",
   "icon": "/favicon.ico",
   "ogTitle": "Bolsa de Casas",
   "ogUrl": "https://www.listedchoices.com",
-  "ogDescription": "Bolsa de Casas - Mercado de Propiedades de Renta Vacacional",
+  "ogDescription": "Bolsa de Casas - Soluciones Financieras y de Inversión en Rentas Vacacionales en México",
   "ogImage": "https://www.listedchoices.com/img/product-3/boat-vison-fund.jpg"
 } 

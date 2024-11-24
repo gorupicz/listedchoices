@@ -48,7 +48,7 @@ const OGMetadataConsumerComponent = ({ Component, props, store }) => {
   return (
     <Fragment>
       <Head>
-        {!isOGMetadataSet && (
+        {/* {!isOGMetadataSet && (
           <>
             <title>{metadata.title}</title>
             <meta name="description" content={metadata.description} />
@@ -59,7 +59,7 @@ const OGMetadataConsumerComponent = ({ Component, props, store }) => {
             <meta property="og:description" content={metadata.ogDescription} />
             <meta property="og:image" content={metadata.ogImage} />
           </>
-        )}
+        )} */}
       </Head>
       <style jsx global>{`
         html,body {
