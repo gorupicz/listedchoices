@@ -921,7 +921,10 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       {t('contactForm.title').replace("{FirstName}", productMONGO.propertyManager.firstName)}
                     </h4>
-                    <form action="#">
+                    <form onSubmit={(e) => {
+                      e.preventDefault(); // Prevent the default form submission
+                      router.push('/register'); // Redirect to the register page
+                    }}>
                       <input
                         type="text"
                         name="yourname"
