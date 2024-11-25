@@ -833,49 +833,59 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 
                       <div className="ltn__social-media">
                         <ul>
-                          {Object.entries(productMONGO.propertyManager.social).map(([key, url]) => {
-                            let IconComponent;
+                          {Object.entries(productMONGO.propertyManager.social)
+                            .filter(([key, url]) => url) // Filter out entries without a valid URL
+                            .sort(([keyA], [keyB]) => keyA.localeCompare(keyB)) // Sort entries alphabetically by key
+                            .map(([key, url]) => {
+                              let IconComponent;
 
-                            switch (key) {
-                              case 'facebook':
-                                IconComponent = FaFacebookF;
-                                break;
-                              case 'instagram':
-                                IconComponent = FaInstagram;
-                                break;
-                              case 'youtube':
-                                IconComponent = FaYoutube;
-                                break;
-                              case 'twitter':
-                                IconComponent = FaXTwitter;
-                                break;
-                              case 'linkedin':
-                                IconComponent = FaLinkedinIn;
-                                break;
-                              case 'pinterest':
-                                IconComponent = FaPinterestP;
-                                break;
-                              case 'snapchat':
-                                IconComponent = FaSnapchatGhost;
-                                break;
-                              case 'tiktok':
-                                IconComponent = FaTiktok;
-                                break;
-                              case 'reddit':
-                                IconComponent = FaRedditAlien;
-                                break;
-                              default:
-                                IconComponent = FaGlobe; // Generic icon for other social media
-                            }
+                              switch (key) {
+                                case 'airbnb':
+                                  IconComponent = FaAirbnb;
+                                  break;
+                                case 'facebook':
+                                  IconComponent = FaFacebookF;
+                                  break;
+                                case 'instagram':
+                                  IconComponent = FaInstagram;
+                                  break;
+                                case 'youtube':
+                                  IconComponent = FaYoutube;
+                                  break;
+                                case 'twitter':
+                                  IconComponent = FaXTwitter;
+                                  break;
+                                case 'linkedin':
+                                  IconComponent = FaLinkedinIn;
+                                  break;
+                                case 'pinterest':
+                                  IconComponent = FaPinterestP;
+                                  break;
+                                case 'snapchat':
+                                  IconComponent = FaSnapchatGhost;
+                                  break;
+                                case 'tiktok':
+                                  IconComponent = FaTiktok;
+                                  break;
+                                case 'reddit':
+                                  IconComponent = FaRedditAlien;
+                                  break;
+                                default:
+                                  IconComponent = FaGlobe; // Generic icon for other social media
+                              }
 
-                            return (
-                              <li key={key}>
-                                <a href={url} title={key.charAt(0).toUpperCase() + key.slice(1)}>
-                                  <IconComponent />
-                                </a>
-                              </li>
-                            );
-                          })}
+                              return (
+                                <li key={key}>
+                                  <Link 
+                                    href={url} 
+                                    title={key.charAt(0).toUpperCase() + key.slice(1)} 
+                                    target="_blank"
+                                  >
+                                    <IconComponent />
+                                  </Link>
+                                </li>
+                              );
+                            })}
                         </ul>
                       </div>
                     </div>

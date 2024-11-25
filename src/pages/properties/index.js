@@ -19,6 +19,8 @@ function Shop() {
   const [filterSortType, setFilterSortType] = useState("");
   const [filterSortValue, setFilterSortValue] = useState("");
   const [offset, setOffset] = useState(0);
+  const [sortedProducts, setSortedProducts] = useState([]);
+
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -73,11 +75,6 @@ function Shop() {
     const newOffset = event.selected * pageLimit;
     setOffset(newOffset);
   };
-
-  useEffect(() => {
-    console.log("currentItems updated:", currentItems);
-    // You can add more logic here if needed
-  }, [currentItems]);
 
   return (
     <Layout topbar={false}>
