@@ -185,12 +185,12 @@ function Register() {
                     >
                       <span className="icon"><FcGoogle /></span> {t('googleSignUpButtonLabel')}
                     </Button>
-                    <Button 
+                    {/* <Button 
                       className="social-btn facebook-btn" 
                       onClick={() => signIn('facebook')}
                     >
                       <span className="icon"><FaFacebook /></span> {t('facebookSignUpButtonLabel')}
-                    </Button>
+                    </Button> */}
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{t('socialSignUpOr')}</small></p>
                   </div>
                   {!showRegisterForm && (

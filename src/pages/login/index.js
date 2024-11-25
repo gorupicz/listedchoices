@@ -211,12 +211,12 @@ function Login() {
                     >
                       <span className="icon"><FcGoogle /></span> {t('googleSignInButtonLabel')}
                     </Button>
-                    <Button 
+                    {/* <Button 
                       className="social-btn facebook-btn" 
                       onClick={() => signIn('facebook')}
                     >
                       <span className="icon"><FaFacebook /></span> {t('facebookSignInButtonLabel')}
-                    </Button>
+                    </Button> */}
                     <p className="separator checkbox-inline mt-10 mb-10"><small>{t('socialSignInOr')}</small></p>
                   </div>
                   {!showLoginForm && (
