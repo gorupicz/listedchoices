@@ -623,7 +623,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       <h4 className="title-2">{t('propertyVideo')}</h4>
                       <div
                         className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
-                        style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
+                        style={{ backgroundImage: `url("${productMONGO.thumbnail}")` }}
                       >
                         <button
                           className="ltn__video-icon-2 ltn__video-icon-2-border---"
