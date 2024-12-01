@@ -38,6 +38,7 @@
   "blueprint": "Plano",
   "relatedProperties": "Propiedades Relacionadas",
   "amountAvailable": "Disponible",
+  "following": "seguidores",
   "contactForm": {
     "title": "Envía un mensaje a {FirstName}",
     "namePlaceholder": "Tu Nombre*",

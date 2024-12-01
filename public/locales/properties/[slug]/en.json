@@ -38,6 +38,7 @@
   "blueprint": "Blueprint",
   "relatedProperties": "Related Properties",
   "amountAvailable": "Available",
+  "following": "followers",
   "contactForm": {
     "title": "Send a message to {FirstName}",
     "namePlaceholder": "Your Name*",

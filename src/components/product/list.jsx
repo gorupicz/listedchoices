@@ -11,6 +11,7 @@ import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import numeral from 'numeral'; 
+
 const ProductList = ({
   productData,
   slug,

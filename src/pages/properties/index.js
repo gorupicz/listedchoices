@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import { getSortedProducts, productSlug, getDiscountPrice } from "@/lib/product";
 import { Layout } from "@/layouts";
 import { FaThLarge, FaThList, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
@@ -8,7 +7,7 @@ import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import SideBar from "@/components/properties/SideBar";
 import RelatedProduct from "@/components/product/related-product";
 import ProductList from "@/components/product/list";
-//import Search from "@/components/search";
+import Search from "@/components/search";
 import CallToAction from "@/components/callToAction";
 import ReactPaginate from "react-paginate";
 
@@ -21,6 +20,7 @@ function Shop() {
   const [filterSortValue, setFilterSortValue] = useState("");
   const [offset, setOffset] = useState(0);
   const [sortedProducts, setSortedProducts] = useState([]);
+
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -76,15 +76,10 @@ function Shop() {
     setOffset(newOffset);
   };
 
-
   return (
     <Layout topbar={false}>
-      {/* <!-- BREADCRUMB AREA START --> */}
-{/* <!--
-      <ShopBreadCrumb title="Property" sectionPace="" currentSlug="Property" />--> */}
-      {/* <!-- BREADCRUMB AREA END -->
     
-    <!-- PRODUCT DETAILS AREA START --> */}
+    {/* <!-- PRODUCT DETAILS AREA START --> */}
       <div className="ltn__product-area ltn__product-gutter mb-120">
         <Container>
           <Row>
@@ -104,14 +99,14 @@ function Shop() {
                         </Nav>
                       </div>
                     </li>
-
                     <li>
-              {/*
+                      <Search spaceBottom="mb-0" setQuery={setQuery} />
+                    </li>
+                    <li>
                       <div className="short-by text-center">
                         <Form.Select
                           className="form-control nice-select"
                           onChange={(e) =>
-
                             getFilterSortParams("filterSort", e.target.value)
                           }
                         >
@@ -120,12 +115,10 @@ function Shop() {
                           <option value="priceLowToHigh">Price - Low to High</option>
                         </Form.Select>
                       </div>
-                        */}
+                        
                     </li>
                   </ul>
                 </div>
-
-{/*<--                <Search spaceBottom="mb-30" setQuery={setQuery} /> -->*/}
 
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
@@ -185,11 +178,16 @@ function Shop() {
                           );
                           return (
                             <Col key={key} xs={12}>
-                              <ProductList slug={slug} baseUrl="properties" productData={product} discountedPrice={discountedPrice}
+                              <ProductList 
+                                slug={slug} 
+                                baseUrl="properties" 
+                                productData={product} 
+                                discountedPrice={discountedPrice}
                                 productPrice={productPrice}
                                 cartItem={cartItem}
                                 wishlistItem={wishlistItem}
-                                compareItem={compareItem} />
+                                compareItem={compareItem} 
+                              />
                             </Col>
                           );
                         })}

@@ -51,7 +51,7 @@ import { useOGMetadata } from "@/context/OGMetadataContext";
 import { getSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 
-function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus }) {
+function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, ogMetadata }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -189,20 +189,12 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     ],
   };
 
-  const popular_product = {
-    infinite: true,
-    slidesToShow: 1,
-    dots: true,
-    speed: 500,
-    arrows: false,
-  };
-
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
   const pageTitle = productMONGO.name + " - " + productMONGO.location;
   const pageDescription = productMONGO.shortDescription;
-  const ogImage = productJSON.carousel[0]?.img || 'default-image.jpg';
+  const ogImage = productMONGO.photos[0]?.img;
   const [scroll, setScroll] = useState(0);
   const [sliderHeight, setSliderHeight] = useState(0);
     router
@@ -249,15 +241,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
     }
   }, [status, followRequestStatus]);
 
-  function setCookie(name, value, days) {
-    console.log("setting cookie:", name, value, days);
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
-  }
-
   const handleFollowButtonClick = async (redirectAfterAuthenticatedCookie = false) => {
     if (!session || status !== "authenticated") {
-      setCookie('redirectAfterAuthenticated', window.location.pathname, 100); // Cookie expires in 1 day
+      Cookies.set('redirectAfterAuthenticated', window.location.pathname, { expires: 1, path: '/' });
       router.push('/register');
       return;
     }
@@ -350,13 +336,50 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const expensesLast12Months = getCurrencyValue(productMONGO.expenses.last12MonthsUSD, productMONGO.expenses.last12MonthsMXN);
   const freeCashFlow = incomeLast12Months - expensesLast12Months;
 
+  // Log the initial props to check their values
+  console.log('Product JSON:', productJSON);
+  console.log('Product MYSQL:', productMYSQL);
+  console.log('Product MONGO:', productMONGO);
+
+  // Log the ogImage to check its value
+  console.log('OG Image:', ogImage);
+
+  // Log each image in the carousel
+  if (productMONGO.photos) {
+    productMONGO.photos.forEach((photo, index) => {
+      console.log(`Photo ${index}:`, photo.img);
+      if (!photo.img) {
+        console.error(`Photo ${index} is missing an image source.`);
+      } 
+    });
+  }
+  const propertyManagerImgIsExternalUrl = productMONGO.propertyManager.img && productMONGO.propertyManager.img.startsWith('http');
+  const propertyManagerImg = propertyManagerImgIsExternalUrl ? productMONGO.propertyManager.img : `/img/team/${productMONGO.propertyManager.img}`;  
+
+  // Log the product details carousel settings
+  console.log('Carousel Settings:', productDetailsCarouselSettings);
+
+  // Log the session and status
+  console.log('Session:', session);
+  console.log('Status:', status);
+
+  // Log the follow request status
+  console.log('Follow Request Status:', followRequestStatus);
+
+  // Log the currency and calculated values
+  console.log('Currency:', currency);
+  console.log('Income Last 12 Months:', incomeLast12Months);
+  console.log('Expenses Last 12 Months:', expensesLast12Months);
+  console.log('Free Cash Flow:', freeCashFlow);
+
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={`/img/img-slide/${ogImage}`} />
+        <title>{ogMetadata.title}</title>
+        <meta property="og:title" content={ogMetadata.title} />
+        <meta property="og:description" content={ogMetadata.description} />
+        <meta property="og:image" content={`/img/img-slide/${ogMetadata.image}`} />
+        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : ''} />
       </Head>
       <Layout 
         topbar={false} 
@@ -378,24 +401,27 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
           onClose={() => setOpen(false)}
         />
         {/* <!-- IMAGE SLIDER AREA START (img-slider-3) --> */}
-        <div className="ltn__img-slider-area mb-90">
+        <div className="ltn__img-slider-area mb-90 mt-0">
           <Container fluid className="px-0">
             <Slider
               {...productDetailsCarouselSettings}
               className="ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner"
             >
-              {productMONGO.photos.map((single, key) => {
+              {productMONGO && productMONGO.photos && productMONGO.photos.map((single, key) => {
+                // Check if the image source is a full URL or a relative path
+                const isExternalUrl = single.img && single.img.startsWith('http');
+                const imageSrc = isExternalUrl ? single.img : `/img/img-slide/${single.img || 'img/img-slide/Elegance/40.jpg'}`;
+                
                 return (
                   <div className="ltn__img-slide-item-4" key={key}>
                     <Link href="#">
                       <Image
-                        src={`/img/img-slide/${single.img}`}
-                        alt={`${single.title}`}
-                        width={1904}
-                        height={1006}
-                        layout="responsive"
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                      />
+                        src={imageSrc}
+                        alt={`${single.title || 'Default Title'}`}
+                        layout="fill"
+                        objectFit="cover"
+                        priority={key === 0}
+                        />
                     </Link>
                   </div>
                 );
@@ -437,7 +463,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   <h1 className="ltn__primary-color"> {productMONGO.name}</h1>
                   <label style={{display:`inline-block`, marginLeft: `18px`}}>
                     <Link
-                      href={productJSON.vacationRentalDetails.listings.airbnb}
+                      href={productMONGO.listings.airbnb}
                       target="_blank"
                     >
                       <FaAirbnb /> <span style={{ textDecoration: `underline` }}>{t('links.airbnbListing')}</span>
@@ -583,7 +609,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   <h4 className="title-2">{t('location')}</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
-                      src={`${productMYSQL.google_maps}`}
+                      src={`${productMONGO.googleMaps}`}
                       width="100%"
                       height="100%"
                       frameBorder="0"
@@ -592,18 +618,22 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   </div>
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
                   
-                  <h4 className="title-2">{t('propertyVideo')}</h4>
-                  <div
-                    className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
-                    style={{ backgroundImage: `url("../../img/img-slide/Elegance/01.jpg")` }}
-                  >
-                    <button
-                      className="ltn__video-icon-2 ltn__video-icon-2-border---"
-                      onClick={() => setOpen(true)}
-                    >
-                      <FaPlay />
-                    </button>
-                  </div>
+                  {productMONGO.videoId && (
+                    <>
+                      <h4 className="title-2">{t('propertyVideo')}</h4>
+                      <div
+                        className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
+                        style={{ backgroundImage: `url("${productMONGO.videoThumbnail?.startsWith('http') ? productMONGO.videoThumbnail : `/img/img-slide/${productMONGO.videoThumbnail}`}")` }}
+                      >
+                        <button
+                          className="ltn__video-icon-2 ltn__video-icon-2-border---"
+                          onClick={() => setOpen(true)}
+                        >
+                          <FaPlay />
+                        </button>
+                      </div>
+                    </>
+                  )}
                   
                   <h4 className="title-2 mb-10">{t('amenities')}</h4>
 
@@ -671,30 +701,35 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       </div>
                     </div>
                   </div>
-                  <h4 className="title-2">{t('blueprint')}</h4>
-                  {/* <!-- APARTMENTS PLAN AREA START --> */}
-                  <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
-                    <Tab.Container defaultActiveKey="first">
-                      <Tab.Content>
-                        <Tab.Pane eventKey="first">
-                          <div className="ltn__apartments-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7" style={{ width: `100%`, height: `312px` }}>
-                                <div className="apartments-plan-img">
-                                  <Image 
-                                    src={productMONGO.blueprint} 
-                                    alt="#" 
-                                    fill={true}
-                                    style={{objectFit: 'cover'}}
-                                    />
+                  
+                  {productMONGO.blueprint && (
+                    <>
+                      <h4 className="title-2">{t('blueprint')}</h4>
+                      {/* <!-- APARTMENTS PLAN AREA START --> */}
+                      <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
+                        <Tab.Container defaultActiveKey="first">
+                          <Tab.Content>
+                            <Tab.Pane eventKey="first">
+                              <div className="ltn__apartments-tab-content-inner">
+                                <div className="row">
+                                  <div className="col-lg-7" style={{ width: `100%`, height: `312px` }}>
+                                    <div className="apartments-plan-img">
+                                      <Image 
+                                        src={productMONGO.blueprint} 
+                                        alt="#" 
+                                        fill={true}
+                                        style={{objectFit: 'cover'}}
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </Tab.Container>
-                  </div>
+                            </Tab.Pane>
+                          </Tab.Content>
+                        </Tab.Container>
+                      </div>
+                    </>
+                  )}
 
                   <h4 className="title-2">{t('relatedProperties')}</h4>
                   <Row>
@@ -741,37 +776,9 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     scroll > sliderHeight && "CaC-widget__sticky-active"
                   )}>
                     
-                    <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      {
-                          session && status === "authenticated" ? (
-                            followRequestStatus === 'ACCEPTED' ? (
-                              <span>${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productJSON.amountAvailable)} </span>
-                            ) : followRequestStatus === 'PENDING' ? (
-                              <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                            ) :
-                              (!buttonDisabled ? (
-                                <a onClick={handleFollowButtonClick}>
-                                  <TooltipSpan id="obfuscation-tooltip" title={t('cacButton.loggedNotFollowing')}>
-                                    <span className="obfuscation-span">obfusca</span>
-                                  </TooltipSpan>
-                                </a>
-                              ) : (
-                                  <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
-                                    <span className="obfuscation-span">obfusca</span>
-                                  </TooltipSpan>
-                              )
-                            )
-                          ) : (
-                            <Link href='`/register?redirect=${encodeURIComponent(window.location.pathname)}`'>
-                              <TooltipSpan id="obfuscation-tooltip" title={t('loginNotLoggedTooltip')}>
-                                <span className="obfuscation-span">obfusca</span>
-                              </TooltipSpan>
-                            </Link>
-                          )
-                        }
-                      {t('amountAvailable')}
+                    <h4 className="ltn__widget-title ltn__widget-title-border-2" style={{marginLeft: 10, marginRight: 15}}>
+                      <span>{new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.followers)} </span>
+                      {t('following')}
                     </h4>
                     <button
                       className={clsx(
@@ -789,7 +796,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   <div className="widget ltn__author-widget">
                     <div className="ltn__author-widget-inner text-center">
                       <img
-                        src={`/img/team/${productMONGO.propertyManager.img}`}
+                        src={`${propertyManagerImg}`}
                         alt={`${productMONGO.propertyManager.fullName}`}
                       />
                       <h5>{productMONGO.propertyManager.fullName}</h5>
@@ -800,32 +807,24 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                             <a href="#">
                               <FaStar />
                             </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li className="review-total">
                             {" "}
                             <Link href="#">
                               {" "}
-                              ( {productMONGO.propertyManager.raiting} Reviews )
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(productMONGO.propertyManager.rating)} Rating
+                            </Link>
+                          </li>
+                          <li className="review-total">
+                            {" - "}
+                            <Link href="#">
+                              {" "}
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.propertyManager.reviews)} Reviews
+                            </Link>
+                          </li>
+                          <li className="review-total">
+                            {" - "}
+                            <Link href="#">
+                              {" "}
+                              {new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(productMONGO.propertyManager.listings)} Listings
                             </Link>
                           </li>
                         </ul>
@@ -834,49 +833,59 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 
                       <div className="ltn__social-media">
                         <ul>
-                          {Object.entries(productMONGO.propertyManager.social).map(([key, url]) => {
-                            let IconComponent;
+                          {Object.entries(productMONGO.propertyManager.social)
+                            .filter(([key, url]) => url) // Filter out entries without a valid URL
+                            .sort(([keyA], [keyB]) => keyA.localeCompare(keyB)) // Sort entries alphabetically by key
+                            .map(([key, url]) => {
+                              let IconComponent;
 
-                            switch (key) {
-                              case 'facebook':
-                                IconComponent = FaFacebookF;
-                                break;
-                              case 'instagram':
-                                IconComponent = FaInstagram;
-                                break;
-                              case 'youtube':
-                                IconComponent = FaYoutube;
-                                break;
-                              case 'twitter':
-                                IconComponent = FaXTwitter;
-                                break;
-                              case 'linkedin':
-                                IconComponent = FaLinkedinIn;
-                                break;
-                              case 'pinterest':
-                                IconComponent = FaPinterestP;
-                                break;
-                              case 'snapchat':
-                                IconComponent = FaSnapchatGhost;
-                                break;
-                              case 'tiktok':
-                                IconComponent = FaTiktok;
-                                break;
-                              case 'reddit':
-                                IconComponent = FaRedditAlien;
-                                break;
-                              default:
-                                IconComponent = FaGlobe; // Generic icon for other social media
-                            }
+                              switch (key) {
+                                case 'airbnb':
+                                  IconComponent = FaAirbnb;
+                                  break;
+                                case 'facebook':
+                                  IconComponent = FaFacebookF;
+                                  break;
+                                case 'instagram':
+                                  IconComponent = FaInstagram;
+                                  break;
+                                case 'youtube':
+                                  IconComponent = FaYoutube;
+                                  break;
+                                case 'twitter':
+                                  IconComponent = FaXTwitter;
+                                  break;
+                                case 'linkedin':
+                                  IconComponent = FaLinkedinIn;
+                                  break;
+                                case 'pinterest':
+                                  IconComponent = FaPinterestP;
+                                  break;
+                                case 'snapchat':
+                                  IconComponent = FaSnapchatGhost;
+                                  break;
+                                case 'tiktok':
+                                  IconComponent = FaTiktok;
+                                  break;
+                                case 'reddit':
+                                  IconComponent = FaRedditAlien;
+                                  break;
+                                default:
+                                  IconComponent = FaGlobe; // Generic icon for other social media
+                              }
 
-                            return (
-                              <li key={key}>
-                                <a href={url} title={key.charAt(0).toUpperCase() + key.slice(1)}>
-                                  <IconComponent />
-                                </a>
-                              </li>
-                            );
-                          })}
+                              return (
+                                <li key={key}>
+                                  <Link 
+                                    href={url} 
+                                    title={key.charAt(0).toUpperCase() + key.slice(1)} 
+                                    target="_blank"
+                                  >
+                                    <IconComponent />
+                                  </Link>
+                                </li>
+                              );
+                            })}
                         </ul>
                       </div>
                     </div>
@@ -886,7 +895,10 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
                       {t('contactForm.title').replace("{FirstName}", productMONGO.propertyManager.firstName)}
                     </h4>
-                    <form action="#">
+                    <form onSubmit={(e) => {
+                      e.preventDefault(); // Prevent the default form submission
+                      router.push('/register'); // Redirect to the register page
+                    }}>
                       <input
                         type="text"
                         name="yourname"
@@ -941,6 +953,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
 export default ProductDetails;
 
 export async function getServerSideProps({ params, req }) {
+  
   const session = await getSession({ req });
 
   // 1. Fetch property details using Prisma from MySQL
@@ -1003,6 +1016,11 @@ export async function getServerSideProps({ params, req }) {
       productMYSQL: serializedProductMYSQL,
       productMONGO: serializedProductMONGO,
       followRequestStatus,
+      ogMetadata: {
+        title: `${serializedProductMONGO.name} - ${serializedProductMONGO.location}`,
+        description: serializedProductMONGO.shortDescription,
+        image: serializedProductMONGO.photos[0]?.img, // Fallback image
+      },
     },
   };
 }
