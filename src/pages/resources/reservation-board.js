@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useOGMetadata } from '@/context/OGMetadataContext';
 
 export default function ReservationBoard() {
   const { setMetadata } = useOGMetadata();
+  const [isMetadataSet, setIsMetadataSet] = useState(false);
 
   useEffect(() => {
+    console.log('Setting metadata for reservation board');
     setMetadata({
       title: 'Join Our WhatsApp Group',
       description: 'Connect with us on WhatsApp for the latest updates and discussions.',
@@ -13,12 +15,18 @@ export default function ReservationBoard() {
       ogDescription: 'Connect with us on WhatsApp for the latest updates and discussions.',
       ogImage: 'https://example.com/your-image.jpg',
     });
+    setIsMetadataSet(true);
   }, [setMetadata]);
 
   useEffect(() => {
-    // Redirect to WhatsApp group after the page loads
-    window.location.href = 'https://chat.whatsapp.com/FoJEJQG7AivBGSNhtcB83S';
-  }, []);
+    if (isMetadataSet) {
+      window.location.href = 'https://chat.whatsapp.com/FoJEJQG7AivBGSNhtcB83S';
+    }
+  }, [isMetadataSet]);
+
+  if (!isMetadataSet) {
+    return null;
+  }
 
   return (
     <>
