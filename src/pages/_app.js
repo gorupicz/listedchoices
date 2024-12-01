@@ -22,6 +22,7 @@ import { OGMetadataProvider, useOGMetadata } from "@/context/OGMetadataContext";
 import metadata from "@/data/metadata.json";
 import { appWithTranslation } from 'next-i18next';
 import '../lib/i18n'; // Import your i18n configuration
+import { GoogleTagManager } from '@next/third-parties/google'; // Import GTM
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -67,6 +68,7 @@ const OGMetadataConsumerComponent = ({ Component, props, store }) => {
           </>
         )}
       </Head>
+      <GoogleTagManager gtmId="GTM-5F6TSG9X" />
       <style jsx global>{`
         html,body {
           font-family: ${nunito.style.fontFamily};

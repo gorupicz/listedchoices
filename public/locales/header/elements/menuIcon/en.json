@@ -7,10 +7,10 @@
           { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
-    { "eventKey": "2", "icon": "", "label": "Resources", "link": "/tools", "title": "Resources", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
+    { "eventKey": "2", "icon": "", "label": "Resources", "link": "/resources", "title": "Resources", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
       [
           { "eventKey": "subtab_1", "icon": "", "label": "Technician Directory", "link": "/technicians", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_2", "icon": "", "label": "Reservation Board", "link": "/reservation-board", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_2", "icon": "", "label": "Reservation Board", "link": "/resources/reservation-board", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_3", "icon": "", "label": "Job Board", "link": "/job-board", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_4", "icon": "", "label": "Vendors", "link": "/vendors", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
