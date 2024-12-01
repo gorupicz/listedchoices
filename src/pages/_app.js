@@ -50,23 +50,19 @@ const MyApp = ({ Component, ...rest }) => {
 };
 
 const OGMetadataConsumerComponent = ({ Component, props, store }) => {
-  const { isOGMetadataSet } = useOGMetadata();
+  const { metadata } = useOGMetadata();
 
   return (
     <Fragment>
       <Head>
-        {!isOGMetadataSet && (
-          <>
-            <title>{metadata.title}</title>
-            <meta name="description" content={metadata.description} />
-            <meta name="viewport" content={metadata.viewport} />
-            <link rel="icon" href={metadata.icon} />
-            <meta property="og:title" content={metadata.ogTitle} />
-            <meta property="og:url" content={metadata.ogUrl} />
-            <meta property="og:description" content={metadata.ogDescription} />
-            <meta property="og:image" content={metadata.ogImage} />
-          </>
-        )}
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content={metadata.ogTitle} />
+        <meta property="og:url" content={metadata.ogUrl} />
+        <meta property="og:description" content={metadata.ogDescription} />
+        <meta property="og:image" content={metadata.ogImage} />
       </Head>
       <GoogleTagManager gtmId="GTM-5F6TSG9X" />
       <style jsx global>{`
