@@ -45,14 +45,13 @@ function Hero ({ data }) {
   );
 
   const [nav1, setNav1] = useState();
-  const [nav2, setNav2] = useState();
 
   const Herosettings = {
     dots: false,
     arrows: false,
     infinite: true,
     autoplay: false,
-    autoplaySpeed: 10000,
+    autoplaySpeed: 1000,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -97,49 +96,6 @@ function Hero ({ data }) {
       },
     ],
   };
-  const Navsettings = {
-    lazyLoad: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: 1,
-    centerMode: false,
-    centerPadding: "0px",
-    dots: false /* image slide dots */,
-    arrows: false /* image slide arrow */,
-    focusOnSelect: false,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          arrows: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          arrows: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 575,
-        settings: {
-          arrows: false,
-          dots: false,
-        },
-      },
-    ],
-  };
 
   const [isOpen, setOpen] = useState(false);
   return (
@@ -156,7 +112,7 @@ function Hero ({ data }) {
       <div className="ltn__slider-11-inner position-relative">
         <Slider
           {...Herosettings}
-          asNavFor={nav2}
+          asNavFor={nav1}
           ref={(slider1) => setNav1(slider1)}
           className="ltn__slider-11-active"
         >
@@ -169,6 +125,7 @@ function Hero ({ data }) {
 
             return (
               <div
+                id={item.anchor}
                 className="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal ltn__slide-item-3 ltn__slide-item-11"
                 key={key}
               >

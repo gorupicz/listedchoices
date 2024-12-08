@@ -50,7 +50,15 @@ const MyApp = ({ Component, ...rest }) => {
 };
 
 const OGMetadataConsumerComponent = ({ Component, props, store }) => {
-  const { metadata } = useOGMetadata();
+  const { metadata, setOGMetadataSet } = useOGMetadata();
+
+  useEffect(() => {
+    if (typeof setOGMetadataSet === 'function') {
+      setOGMetadataSet(true);
+    } else {
+      console.error('setOGMetadataSet is not a function');
+    }
+  }, [setOGMetadataSet]);
 
   return (
     <Fragment>
