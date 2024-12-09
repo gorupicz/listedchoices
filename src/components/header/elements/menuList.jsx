@@ -27,6 +27,7 @@ const MenuList = ({ addListing }) => {
   return (
     <ul>
       <MenuIcon value="3" />
+      <MenuIcon value="4" />
       <MenuIcon value="1" />
       <MegaMenu value="1" />
       <MenuIcon value="2" />

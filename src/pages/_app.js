@@ -22,6 +22,7 @@ import { OGMetadataProvider, useOGMetadata } from "@/context/OGMetadataContext";
 import metadata from "@/data/metadata.json";
 import { appWithTranslation } from 'next-i18next';
 import '../lib/i18n'; // Import your i18n configuration
+import { GoogleTagManager } from '@next/third-parties/google'; // Import GTM
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -49,24 +50,29 @@ const MyApp = ({ Component, ...rest }) => {
 };
 
 const OGMetadataConsumerComponent = ({ Component, props, store }) => {
-  const { isOGMetadataSet } = useOGMetadata();
+  const { metadata, setOGMetadataSet } = useOGMetadata();
+
+  useEffect(() => {
+    if (typeof setOGMetadataSet === 'function') {
+      setOGMetadataSet(true);
+    } else {
+      console.error('setOGMetadataSet is not a function');
+    }
+  }, [setOGMetadataSet]);
 
   return (
     <Fragment>
       <Head>
-        {!isOGMetadataSet && (
-          <>
-            <title>{metadata.title}</title>
-            <meta name="description" content={metadata.description} />
-            <meta name="viewport" content={metadata.viewport} />
-            <link rel="icon" href={metadata.icon} />
-            <meta property="og:title" content={metadata.ogTitle} />
-            <meta property="og:url" content={metadata.ogUrl} />
-            <meta property="og:description" content={metadata.ogDescription} />
-            <meta property="og:image" content={metadata.ogImage} />
-          </>
-        )}
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content={metadata.ogTitle} />
+        <meta property="og:url" content={metadata.ogUrl} />
+        <meta property="og:description" content={metadata.ogDescription} />
+        <meta property="og:image" content={metadata.ogImage} />
       </Head>
+      <GoogleTagManager gtmId="GTM-5F6TSG9X" />
       <style jsx global>{`
         html,body {
           font-family: ${nunito.style.fontFamily};

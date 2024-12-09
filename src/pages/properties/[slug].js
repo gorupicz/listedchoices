@@ -314,7 +314,11 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const { setOGMetadataSet } = useOGMetadata();
 
   useEffect(() => {
-    setOGMetadataSet(true);
+    if (typeof setOGMetadataSet === 'function') {
+      setOGMetadataSet(true);
+    } else {
+      console.error('setOGMetadataSet is not a function');
+    }
   }, [setOGMetadataSet]);
 
   useEffect(() => {
