@@ -6,7 +6,6 @@ export default function ReservationBoard() {
   const [isMetadataSet, setIsMetadataSet] = useState(false);
 
   useEffect(() => {
-    console.log('Setting metadata for reservation board');
     setMetadata({
       title: 'Join Our WhatsApp Group',
       description: 'Connect with us on WhatsApp for the latest updates and discussions.',

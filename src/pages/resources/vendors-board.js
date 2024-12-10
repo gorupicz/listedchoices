@@ -10,7 +10,7 @@ export default function ReservationBoard() {
       title: 'Join Our WhatsApp Group',
       description: 'Connect with us on WhatsApp for the latest updates and discussions.',
       ogTitle: 'Join Our WhatsApp Group',
-      ogUrl: 'https://bolsadecasas.mx/resources/job-board',
+      ogUrl: 'https://bolsadecasas.mx/resources/vendors-board',
       ogDescription: 'Connect with us on WhatsApp for the latest updates and discussions.',
       ogImage: 'https://example.com/your-image.jpg',
     });
@@ -19,7 +19,7 @@ export default function ReservationBoard() {
 
   useEffect(() => {
     if (isMetadataSet) {
-      window.location.href = 'https://chat.whatsapp.com/BudZ4zw685XFJZIMvmejNs';
+      window.location.href = 'https://chat.whatsapp.com/GJzG8S17CzeDmsHHpmBkuq';
     }
   }, [isMetadataSet]);
 
