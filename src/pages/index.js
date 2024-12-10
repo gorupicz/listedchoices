@@ -13,24 +13,9 @@ function Home() {
   const [isOpen, setOpen] = useState(false);
   
   const { t: tHero } = useTranslation('home/hero');
-  const heroData = [
-    {
-      subtitle: tHero('0.subtitle'),
-      Title: tHero('0.Title'),
-      titleWord: tHero('0.titleWord'),
-      Desc: tHero('0.Desc'),
-      icon: tHero('0.icon'),
-      heroimage: tHero('0.heroimage'),
-      caption: tHero('0.caption'),
-      id: tHero('0.id'),
-      buttonText: tHero('0.buttonText'),
-      buttonLink: tHero('0.buttonLink'),
-      videoButton: tHero('0.videoButton'),
-      learnMoreButtonText: tHero('0.learnMoreButtonText'),
-      learnMoreButtonLink: tHero('0.learnMoreButtonLink'),
-      variationLeft: tHero('0.variationLeft'),
-    }
-  ];
+  const heroData = tHero('slides', { returnObjects: true });
+
+  console.log('Hero Data:', heroData);
 
   const { t: tFeature } = useTranslation('home/feature');
   const featureData = {

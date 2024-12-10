@@ -2,7 +2,6 @@ import { Fragment, useState } from "react";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import ScrollToTop from "@/components/scroll-to-top";
-import { GoogleTagManager } from '@next/third-parties/google'
 import BreadCrumb from "@/components/breadCrumbs";
 
 const Layout = ({ children, navPositionClass, topbar, breadcrumb, breadcrumbProps }) => {
@@ -28,7 +27,6 @@ const Layout = ({ children, navPositionClass, topbar, breadcrumb, breadcrumbProp
         <Footer />
         <ScrollToTop />
       </div>
-      <GoogleTagManager gtmId="GTM-5F6TSG9X" />
     </Fragment>
   );
 };
