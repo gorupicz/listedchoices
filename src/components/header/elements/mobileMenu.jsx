@@ -102,10 +102,11 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           </div>
           <div className="ltn__utilize-menu">
             <ul>
+              <MobileMenuIcon eventKey="3" onClickHandler={onClickHandler} />
+              <MobileMenuIcon eventKey="4" onClickHandler={onClickHandler} />
               <MobileMenuIcon eventKey="1" onClickHandler={onClickHandler} />
               <MobileMegaMenu eventKey="1" onClickHandler={onClickHandler} />
               <MobileMenuIcon eventKey="2" onClickHandler={onClickHandler} />
-              <MobileMenuIcon eventKey="3" onClickHandler={onClickHandler} />
             </ul>
           </div>
           <div className="ltn__utilize-buttons ltn__utilize-buttons-2">
