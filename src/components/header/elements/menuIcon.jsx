@@ -31,7 +31,7 @@ const MenuIcon = ({ value }) => {
 
     return (
         <li className="menu-icon">
-            <Link href={tab.link} target={tab.target} title={tab.title}>
+            <Link href={tab?.link || '#'} target={tab?.target || '_self'} title={tab?.title || ''}>
                 <span className="icon-text">
                     {tab.icon ? React.createElement(iconMap[tab.icon]) : null}
                 </span>
@@ -41,7 +41,7 @@ const MenuIcon = ({ value }) => {
                 <ul>
                     {tab.subtabs.map(subtab => (
                         <li key={subtab.eventKey}>
-                            <Link href={subtab.link} target={subtab.target} title={subtab.title}>
+                            <Link href={subtab?.link || '#'} target={subtab?.target || '_self'} title={subtab?.title || ''}>
                                 <span className="icon-text">
                                     {subtab.icon ? React.createElement(iconMap[subtab.icon]) : null}
                                 </span>

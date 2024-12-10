@@ -9,10 +9,10 @@
     },
     { "eventKey": "2", "icon": "", "label": "Recursos", "link": "/resources", "title": "Recursos", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
       [
-          { "eventKey": "subtab_1", "icon": "", "label": "Directorio de Técnicos", "link": "/resources/technicians-directory", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_2", "icon": "", "label": "Bolsa de Reservas", "link": "/resources/reservation-board", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_3", "icon": "", "label": "Bolsa de Empleos", "link": "/resources/job-board", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_4", "icon": "", "label": "Proveedores", "link": "/resources/vendors-board", "target": "", "imgSrc": "", "imgAlt": "#" } 
+          { "eventKey": "subtab_1", "icon": "", "label": "Directorio de Técnicos", "link": "/resources/technicians-directory", "target": "_blank", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_2", "icon": "", "label": "Bolsa de Reservas", "link": "/resources/reservation-board", "target": "_blank", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "icon": "", "label": "Bolsa de Empleos", "link": "/resources/job-board", "target": "_blank", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_4", "icon": "", "label": "Proveedores", "link": "/resources/vendors-board", "target": "_blank", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
     { "eventKey": "3", "icon": "", "label": "Invertir", "link": "/properties", "title": "Invertir", "target": "", "imgSrc": "", "imgAlt": "#" 
