@@ -11,7 +11,7 @@
       [
           { "eventKey": "subtab_1", "icon": "", "label": "Technician Directory", "link": "/technicians", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_2", "icon": "", "label": "Reservation Board", "link": "/resources/reservation-board", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_3", "icon": "", "label": "Job Board", "link": "/job-board", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "icon": "", "label": "Job Board", "link": "/resources/job-board", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_4", "icon": "", "label": "Vendors", "link": "/vendors", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
