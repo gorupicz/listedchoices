@@ -10,7 +10,7 @@ const MobileMenuIcon = ({ eventKey, onClickHandler }) => {
 
   return (
     <li>
-      <Link href={tab?.link || '#'} target={tab?.target || '_self'}>{tab?.label || ''}</Link>
+      <Link href={tab.slideId ? `${tab?.link || '/'}?slideId=${tab.slideId}` : (tab?.link || '#')} target={tab?.target || '_self'}>{tab?.label || ''}</Link>
       {tab.subtabs && tab.subtabs.length > 0 && (
         <>
           <span
@@ -21,7 +21,7 @@ const MobileMenuIcon = ({ eventKey, onClickHandler }) => {
           <ul className="sub-menu">
             {tab.subtabs.map((subtab) => (
               <li key={subtab.eventKey}>
-                <Link href={subtab?.link || '#'} target={subtab?.target || '_self'}>{subtab?.label || ''}</Link>
+                <Link href={subtab.slideId ? `${subtab?.link || '/'}?slideId=${subtab.slideId}` : (subtab?.link || '#')} target={subtab?.target || '_self'}>{subtab?.label || ''}</Link>
               </li>
             ))}
           </ul>
