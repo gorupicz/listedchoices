@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -15,7 +16,20 @@ import {
 import { Col, Container, Row } from "react-bootstrap";
 
 function Hero ({ data }) {
-  
+  const router = useRouter();
+  const { slideId } = router.query;
+  const [nav1, setNav1] = useState();
+  const [isOpen, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (slideId && nav1) {
+      const slideIndex = data.findIndex(item => item.anchor === slideId);
+      if (slideIndex !== -1) {
+        nav1.slickGoTo(slideIndex);
+      }
+    }
+  }, [slideId, nav1, data]);
+
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -43,8 +57,6 @@ function Hero ({ data }) {
       <FaArrowRight />
     </button>
   );
-
-  const [nav1, setNav1] = useState();
 
   const Herosettings = {
     dots: false,
@@ -97,7 +109,6 @@ function Hero ({ data }) {
     ],
   };
 
-  const [isOpen, setOpen] = useState(false);
   return (
     <>
       <ModalVideo

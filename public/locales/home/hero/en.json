@@ -30,7 +30,7 @@
     "videoButton": true,
     "learnMoreButtonText": "See properties",
     "learnMoreButtonLink": "/properties",
-    "variationLeft": true,
+    "variationLeft": false,
     "anchor": "mortgage"
     }
   ]

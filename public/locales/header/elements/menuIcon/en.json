@@ -2,7 +2,7 @@
   "tabs": [
     { "eventKey": "1", "icon": "", "label": "Loans", "link": "/loans", "title": "A world of possibilities", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
       [
-          { "eventKey": "subtab_1", "label": "Azul-y-Oro Mortgage", "link": "#mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_1", "label": "Azul-y-Oro Mortgage", "link": "/", "slideId": "mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_2", "label": "Leasing", "link": "/leasing", "target": "", "imgSrc": "", "imgAlt": "#" },
           { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
@@ -17,7 +17,7 @@
     },
     { "eventKey": "3", "icon": "", "label": "Invest", "link": "/properties", "title": "Invest", "target": "", "imgSrc": "", "imgAlt": "#" 
     },
-    { "eventKey": "4", "icon": "", "label": "La Azul-y-Oro", "link": "#mortgage", "title": "La Azul y Oro", "target": "", "imgSrc": "", "imgAlt": "#" 
+    { "eventKey": "4", "icon": "", "label": "La Azul-y-Oro", "link": "/", "slideId": "mortgage", "title": "La Azul y Oro", "target": "", "imgSrc": "", "imgAlt": "#" 
     }
   ]
 }
