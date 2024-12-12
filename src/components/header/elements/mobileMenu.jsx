@@ -87,9 +87,11 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
         <div className="ltn__utilize-menu-inner ltn__scrollbar">
           <div className="ltn__utilize-menu-head">
             <div className="site-logo">
-              <Link href="/">
-                <img src="/img/logo.png" alt="Logo" />
-              </Link>
+              <div onClick={closeSideBar}>
+                <Link href="/?slideId=invest">
+                  <img src="/img/logo.png" alt="Logo" />
+                </Link>
+              </div>
             </div>
           </div>
           <div className="ltn__utilize-menu-search-form">
@@ -102,75 +104,87 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           </div>
           <div className="ltn__utilize-menu">
             <ul>
-              <MobileMenuIcon eventKey="3" onClickHandler={onClickHandler} />
-              <MobileMenuIcon eventKey="4" onClickHandler={onClickHandler} />
-              <MobileMenuIcon eventKey="1" onClickHandler={onClickHandler} />
+              <MobileMenuIcon eventKey="3" onClickHandler={onClickHandler} closeSideBar={closeSideBar} />
+              <MobileMenuIcon eventKey="4" onClickHandler={onClickHandler} closeSideBar={closeSideBar} />
+              <MobileMenuIcon eventKey="1" onClickHandler={onClickHandler} closeSideBar={closeSideBar} />
               <MobileMegaMenu eventKey="1" onClickHandler={onClickHandler} />
-              <MobileMenuIcon eventKey="2" onClickHandler={onClickHandler} />
+              <MobileMenuIcon eventKey="2" onClickHandler={onClickHandler} closeSideBar={closeSideBar} />
             </ul>
           </div>
           <div className="ltn__utilize-buttons ltn__utilize-buttons-2">
             <ul>
               <li>
-                <Link href={ session && status === "authenticated" ? "/my-account" : "/login" } title={t('myAccount')}>
-                  <span className="utilize-btn-icon">
-                  {isValidPhoto ? (
-                    <img
-                      src={session.user.photograph}
-                      alt="User Photograph"
-                      className="user-photograph"
-                    />
-                  ) : (
-                    <FaRegUser />
-                  )}
-                </span>
-                  {t('myAccount')}
-                </Link>
-              </li>
-              <li>
-                <Link href={ session && status === "authenticated" ? "/wishlist" : "/login" } title={t('wishlist')}>
-                  <span className="utilize-btn-icon">
-                    <FaRegHeart />
-                    {cartItems.length > 0 ? (
-                      <sup>{cartItems.length}</sup>
+                <div onClick={closeSideBar}>
+                  <Link href={ session && status === "authenticated" ? "/my-account" : "/login" } title={t('myAccount')}>
+                    <span className="utilize-btn-icon">
+                    {isValidPhoto ? (
+                      <img
+                        src={session.user.photograph}
+                        alt="User Photograph"
+                        className="user-photograph"
+                      />
                     ) : (
-                      <sup>0</sup>
+                      <FaRegUser />
                     )}
                   </span>
-                  {t('wishlist')}
-                </Link>
+                    {t('myAccount')}
+                  </Link>
+                </div>
               </li>
               <li>
-                <Link href={session && status === "authenticated" ? "/cart" : "/login"} title={t('shopingCart')}>
-                  <span className="utilize-btn-icon">
-                    <FaShoppingCart />
-                    {cartItems.length > 0 ? (
-                      <sup>{cartItems.length}</sup>
-                    ) : (
-                      <sup>0</sup>
-                    )}
-                  </span>
-                  {t('shopingCart')}
-                </Link>
+                <div onClick={closeSideBar}>
+                  <Link href={ session && status === "authenticated" ? "/wishlist" : "/login" } title={t('wishlist')}>
+                    <span className="utilize-btn-icon">
+                      <FaRegHeart />
+                      {cartItems.length > 0 ? (
+                        <sup>{cartItems.length}</sup>
+                      ) : (
+                        <sup>0</sup>
+                      )}
+                    </span>
+                    {t('wishlist')}
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div onClick={closeSideBar}>
+                  <Link href={session && status === "authenticated" ? "/cart" : "/login"} title={t('shopingCart')}>
+                    <span className="utilize-btn-icon">
+                      <FaShoppingCart />
+                      {cartItems.length > 0 ? (
+                        <sup>{cartItems.length}</sup>
+                      ) : (
+                        <sup>0</sup>
+                      )}
+                    </span>
+                    {t('shopingCart')}
+                  </Link>
+                </div>
               </li>
             </ul>
           </div>
           <div className="ltn__social-media-2">
             <ul>
               <li>
-                <Link href="https://www.facebook.com/bolsadecasasmx" target="_blank">
-                  <FaFacebookF />
-                </Link>
+                <div onClick={closeSideBar}>
+                  <Link href="https://www.facebook.com/bolsadecasasmx" target="_blank">
+                    <FaFacebookF />
+                  </Link>
+                </div>
               </li>
               <li>
-                <Link href="https://www.linkedin.com/company/bolsadecasas/" target="_blank">
-                  <FaLinkedin />
-                </Link>
+                <div onClick={closeSideBar}>
+                  <Link href="https://www.linkedin.com/company/bolsadecasas/" target="_blank">
+                    <FaLinkedin />
+                  </Link>
+                </div>
               </li>
               <li>
-                <Link href="https://www.instagram.com/bolsadecasasmx/" target="_blank">
-                  <FaInstagram />
-                </Link>
+                <div onClick={closeSideBar}>
+                  <Link href="https://www.instagram.com/bolsadecasasmx/" target="_blank">
+                    <FaInstagram />
+                  </Link>
+                </div>
               </li>
             </ul>
           </div>
