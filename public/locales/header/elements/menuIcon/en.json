@@ -1,10 +1,10 @@
 {
   "tabs": [
-    { "eventKey": "1", "icon": "", "label": "Loans", "link": "/loans", "title": "A world of possibilities", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
+    { "eventKey": "1", "icon": "", "label": "Loans", "link": "#", "title": "A world of possibilities", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
       [
           { "eventKey": "subtab_1", "label": "Azul-y-Oro Mortgage", "link": "/", "slideId": "mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_2", "label": "Leasing", "link": "/leasing", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
+          { "eventKey": "subtab_2", "label": "Factoring", "link": "/", "slideId": "factoring", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "label": "Leasing", "link": "/", "slideId": "leasing", "target": "", "imgSrc": "", "imgAlt": "#" }
       ] 
     },
     { "eventKey": "2", "icon": "", "label": "Resources", "link": "/resources", "title": "Resources", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 

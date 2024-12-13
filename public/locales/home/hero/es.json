@@ -26,12 +26,46 @@
       "caption": "Cena de Property Managers de la Riviera Maya. Junio, 2024",
       "id": "1",
       "buttonText": "Simula tu crédito",
-      "buttonLink": "https://formless.ai/c/mGzBOphF10BF",
+      "buttonLink": "/register",
+      "videoButton": true,
+      "learnMoreButtonText": "Ver propiedades",
+      "learnMoreButtonLink": "/properties",
+      "variationLeft": true,
+      "anchor": "mortgage"
+      },
+      {
+      "subtitle": "Factoraje basado en Reservas",
+      "Title": "Liquidéz inmediata para tu negocio",
+      "titleWord": ["inmediata"],
+      "Desc": "No esperes hasta el día siguiente del check-in para cobrar. Recibe el pago de tus reservas hoy.",
+      "icon": "tabler:sailboat",
+      "heroimage": "hero_home_mortgage.png",
+      "caption": "",
+      "id": "3",
+      "buttonText": "Crear cuenta",
+      "buttonLink": "/register",
       "videoButton": true,
       "learnMoreButtonText": "Ver propiedades",
       "learnMoreButtonLink": "/properties",
       "variationLeft": false,
-      "anchor": "mortgage"
+      "anchor": "factoring"
+      },
+      {
+      "subtitle": "Leasing para Property Managers",
+      "Title": "Reiventamos el Rent-to-Rent",
+      "titleWord": ["reinvented"],
+      "Desc": "Renta a largo plazo a precios convenientes y previsibles. Despreocupate de los gastos de mantenimiento, seguros e impuestos.",
+      "icon": "tabler:sailboat",
+      "heroimage": "hero_home_mortgage.png",
+      "caption": "",
+      "id": "3",
+      "buttonText": "Crear cuenta",
+      "buttonLink": "/register",
+      "videoButton": true,
+      "learnMoreButtonText": "Ver propiedades",
+      "learnMoreButtonLink": "/properties",
+      "variationLeft": true,
+      "anchor": "leasing"
       }
     ]
 }
