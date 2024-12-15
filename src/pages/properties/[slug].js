@@ -34,7 +34,6 @@ import {
 import { Layout } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug, getDiscountPrice, getDaysInPreviousMonth } from "@/lib/product";
-import products from "@/data/products.json";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
 import CallToAction from "@/components/callToAction";
@@ -51,7 +50,7 @@ import { useOGMetadata } from "@/context/OGMetadataContext";
 import { getSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 
-function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequestStatus, ogMetadata }) {
+function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMetadata }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -341,7 +340,6 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
   const freeCashFlow = incomeLast12Months - expensesLast12Months;
 
   // Log the initial props to check their values
-  console.log('Product JSON:', productJSON);
   console.log('Product MYSQL:', productMYSQL);
   console.log('Product MONGO:', productMONGO);
 
@@ -444,14 +442,14 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                   <div className="ltn__blog-meta">
                     <ul>
                       {
-                        (productJSON.featured ? (
+                        (productMONGO.featured ? (
                           <li className="ltn__blog-category">
                             <Link href="#">Featured</Link>
                           </li>
                         ) : (
                           ""
                         ),
-                          productJSON.rent ? (
+                          productMONGO.rent ? (
                             <li className="ltn__blog-category">
                               <Link className="bg-orange" href="#">
                                 For Rent
@@ -741,7 +739,7 @@ function ProductDetails({ productJSON, productMYSQL, productMONGO, followRequest
                       const slug = productSlug(data.title);
                       const discountedPrice = getDiscountPrice(
                         productMONGO.price,
-                        productJSON.discount
+                        productMONGO.discount
                       ).toFixed(2);
                       const productPrice = productMONGO.price.toFixed(2);
                       const cartItem = cartItems.find(
@@ -991,11 +989,6 @@ export async function getServerSideProps({ params, req }) {
   const serializedProductMYSQL = serializePrismaData(productMYSQL);
   const serializedProductMONGO = serializeMongoData(productMONGO);
 
-  // 4. Fetch data from products.json (find the product by slug)
-  const productJSON = products.find(
-    (singleProduct) => productSlug(singleProduct.title) === params.slug
-  );
-
   let followRequestStatus = null;
 
   if (session) {
@@ -1016,7 +1009,6 @@ export async function getServerSideProps({ params, req }) {
   // 5. Return the three separate products as props
   return {
     props: {
-      productJSON,
       productMYSQL: serializedProductMYSQL,
       productMONGO: serializedProductMONGO,
       followRequestStatus,

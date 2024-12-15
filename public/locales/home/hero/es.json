@@ -17,21 +17,55 @@
       "anchor": "invest"
       },
       {
-      "subtitle": "Créditos para administradores de propiedades",
+      "subtitle": "La hipoteca Azul-y-Oro para Property Managers",
       "Title": "Conviértete en dueño",
       "titleWord": ["dueño"],
       "Desc": "Compra a crédito la propiedad que administras y págala con los dividendos de tus futuras rentas. Tasa desde 9.05% anual. Precalifica en línea.",
       "icon": "tabler:sailboat",
-      "heroimage": "hero_home_investment.png",
+      "heroimage": "hero_home_mortgage.png",
       "caption": "Cena de Property Managers de la Riviera Maya. Junio, 2024",
       "id": "1",
       "buttonText": "Simula tu crédito",
-      "buttonLink": "https://formless.ai/c/mGzBOphF10BF",
+      "buttonLink": "/register",
+      "videoButton": true,
+      "learnMoreButtonText": "Ver propiedades",
+      "learnMoreButtonLink": "/properties",
+      "variationLeft": true,
+      "anchor": "mortgage"
+      },
+      {
+      "subtitle": "Factoraje basado en Reservas",
+      "Title": "Liquidéz inmediata para tu negocio",
+      "titleWord": ["inmediata"],
+      "Desc": "No esperes hasta el día siguiente del check-in para cobrar. Recibe el pago de tus reservas hoy.",
+      "icon": "tabler:sailboat",
+      "heroimage": "hero_home_mortgage.png",
+      "caption": "",
+      "id": "3",
+      "buttonText": "Crear cuenta",
+      "buttonLink": "/register",
       "videoButton": true,
       "learnMoreButtonText": "Ver propiedades",
       "learnMoreButtonLink": "/properties",
       "variationLeft": false,
-      "anchor": "mortgage"
+      "anchor": "factoring"
+      },
+      {
+      "subtitle": "Leasing para Property Managers",
+      "Title": "Reinventamos el Rent\u2011to\u2011Rent",
+      "titleWord": ["Rent\u2011to\u2011Rent"],
+      "Desc": "Renta a largo plazo a precios convenientes y previsibles. Despreocupate de los gastos de mantenimiento, seguros e impuestos.",
+      "icon": "tabler:sailboat",
+      "heroimage": "hero_home_mortgage.png",
+      "caption": "",
+      "id": "3",
+      "buttonText": "Crear cuenta",
+      "buttonLink": "/register",
+      "videoButton": true,
+      "learnMoreButtonText": "Ver propiedades",
+      "learnMoreButtonLink": "/properties",
+      "variationLeft": true,
+      "anchor": "leasing"
       }
     ]
 }

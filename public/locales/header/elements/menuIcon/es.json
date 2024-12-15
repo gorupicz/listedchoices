@@ -1,10 +1,10 @@
 {
   "tabs": [
-    { "eventKey": "1", "icon": "", "label": "Préstamos", "link": "/loans", "title": "Un mundo de posibilidades", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
+    { "eventKey": "1", "icon": "", "label": "Préstamos", "link": "#", "title": "Un mundo de posibilidades", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
       [
-          { "eventKey": "subtab_1", "label": "Hipoteca Azul-y-Oro", "link": "#mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_2", "label": "Leasing", "link": "/leasing", "target": "", "imgSrc": "", "imgAlt": "#" },
-          { "eventKey": "subtab_3", "label": "Factoring", "link": "/factoring", "target": "", "imgSrc": "", "imgAlt": "#" } 
+          { "eventKey": "subtab_1", "label": "Hipoteca Azul-y-Oro", "link": "/", "slideId": "mortgage", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_2", "label": "Factoraje", "link": "/", "slideId": "factoring", "target": "", "imgSrc": "", "imgAlt": "#" },
+          { "eventKey": "subtab_3", "label": "Leasing", "link": "/", "slideId": "leasing", "target": "", "imgSrc": "", "imgAlt": "#" } 
       ] 
     },
     { "eventKey": "2", "icon": "", "label": "Recursos", "link": "/resources", "title": "Recursos", "target": "", "imgSrc": "", "imgAlt": "#", "subtabs": 
@@ -17,7 +17,7 @@
     },
     { "eventKey": "3", "icon": "", "label": "Invertir", "link": "/properties", "title": "Invertir", "target": "", "imgSrc": "", "imgAlt": "#" 
     },
-    { "eventKey": "4", "icon": "", "label": "La Azul-y-Oro", "link": "#mortgage", "title": "La Azul y Oro", "target": "", "imgSrc": "", "imgAlt": "#" 
+    { "eventKey": "4", "icon": "", "label": "La Azul-y-Oro", "link": "/", "slideId": "mortgage", "title": "La Azul y Oro", "target": "", "imgSrc": "", "imgAlt": "#" 
     }
   ]
 }
