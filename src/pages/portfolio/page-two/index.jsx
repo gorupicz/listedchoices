@@ -1,53 +1,124 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaSearch } from "react-icons/fa";
-import Link from "next/link";
-import Image from "next/image";
-import portfolioData from "@/data/portfolio/index.json";
-import Slider from "react-slick";
+import { PrismaClient } from "@prisma/client";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import CallToAction from "@/components/callToAction";
-import CallToActionstyleTwo from "@/components/callToAction/callToActionstyleTwo";
-import brandLogoData from "@/data/brand-logo";
-import { getProducts, productSlug } from "@/lib/product";
-import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-import TitleSection from "@/components/titleSection";
-import BlogItem from "@/components/blog";
-import blogData from "@/data/blog";
+import { productSlug } from "@/lib/product";
 import Lightbox from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
 import { Layout } from "@/layouts";
+import connectMongoDB from "/mongodb/mongoClient";
+import { createAvatar } from '@dicebear/avatars';
+import * as personasStyle from '@dicebear/personas';
+import { parsePhoneNumber } from 'libphonenumber-js';
+import TechnicianCard from "@/components/TechnicianCard";
+const prisma = new PrismaClient();
 
-function PortFolioPageTwo() {
-  const portfolios = getProducts(portfolioData, "buying", "featured", 12);
+export async function getServerSideProps() {
+  // Fetch initial data from MySQL
+  const technicianDataMYSQL = await prisma.technician.findMany({
+    orderBy: {
+      featured: 'desc',
+    },
+    take: 12,
+  });
 
-  const [data, setData] = useState([]);
-  const [collection, setCollection] = useState([]);
+  // Convert Date objects to strings
+  const serializedtechnicianDataMYSQL = technicianDataMYSQL.map(technicianDataMYSQL => ({
+    ...technicianDataMYSQL,
+    createdAt: technicianDataMYSQL.createdAt.toISOString(),
+    updatedAt: technicianDataMYSQL.updatedAt.toISOString(),
+    phoneNumber: technicianDataMYSQL.phoneNumber.toString(),
+    upvotes: technicianDataMYSQL.upvotes ?? 0,
+    downvotes: technicianDataMYSQL.downvotes ?? 0,
+  }));
+  // Fetch filter data from MongoDB
+  const db = await connectMongoDB();
+  const technicians = await db.collection('technicians').find().toArray();
+  const cities = [...new Set(technicians.flatMap(tech => tech.cities))].filter(Boolean);
+  const specialities = [...new Set(technicians.flatMap(tech => tech.specialities))].filter(Boolean);
+  // Combine data from MySQL and MongoDB
+  const technicianData = serializedtechnicianDataMYSQL.map(mysqlTech => {
+    const mongoTech = technicians.find(mongoTech => mongoTech.id === mysqlTech.id);
+    return {
+      ...mysqlTech,
+      ...mongoTech,
+      _id: mongoTech._id.toString(),
+    };
+  });
+
+  return {
+    props: {
+      initialTechnicianData: technicianData,
+      cities,
+      specialities,
+    },
+  };
+}
+
+function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialities = [] }) {
+  const [data, setData] = useState(initialTechnicianData);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [cityFilter, setCityFilter] = useState(null);
+  const [specialityFilter, setSpecialityFilter] = useState(null);
+
+  const loadMoreData = useCallback(async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch(`/api/technicians?page=${page + 1}&city=${cityFilter || ''}&speciality=${specialityFilter || ''}`);
+      const newData = await res.json();
+
+      if (newData.length > 0) {
+        setData((prevData) => [...prevData, ...newData]);
+        setPage((prevPage) => prevPage + 1);
+      }
+    } catch (error) {
+      console.error("Failed to load more data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, loading, cityFilter, specialityFilter]);
 
   useEffect(() => {
-    const filterButtons = document.querySelectorAll(".portfolio-filter button");
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        filterButtons.forEach((btn) => {
-          btn.classList.remove("active");
-        });
-        button.classList.add("active");
-      });
-    });
-  }, [data]);
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+      loadMoreData();
+    };
 
-  useEffect(() => {
-    setData(portfolios);
-    setCollection([...new Set(portfolios.map((item) => item.filter))]);
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loadMoreData, loading]);
 
-  const gallery_filter = (itemData) => {
-    const filterData = portfolios.filter((item) => item.filter == itemData);
-    setData(filterData);
+  const filterData = async (city = null, speciality = null) => {
+    setCityFilter(city);
+    setSpecialityFilter(speciality);
+    setPage(1); // Reset page to 1
+
+    try {
+      const res = await fetch(`/api/technicians?page=1&city=${city || ''}&speciality=${speciality || ''}`);
+      const filteredData = await res.json();
+
+      if (filteredData.length > 0) {
+        setData(filteredData);
+      }
+    } catch (error) {
+      console.error("Failed to filter data:", error);
+    }
+  };
+
+  const handleCityFilter = (city) => {
+    filterData(city, specialityFilter);
+  };
+
+  const handleSpecialityFilter = (speciality) => {
+    filterData(cityFilter, speciality);
   };
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -77,27 +148,10 @@ function PortFolioPageTwo() {
       <FaArrowRight />
     </button>
   );
-  const blogSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-  };
-  const LogoSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-  };
+
   const [basicExampleOpen, setBasicExampleOpen] = useState(false);
-  const gallerySlides = portfolios.map((img, i) => ({
-    src: `/img/gallery/${img.thumbImage}`,
+  const gallerySlides = data.map((img, i) => ({
+    src: img.thumbImage || `data:image/svg+xml;utf8,${encodeURIComponent(createAvatar(personasStyle, { seed: img.name || 'default' }))}`,
     key: i,
   }));
 
@@ -110,32 +164,46 @@ function PortFolioPageTwo() {
         plugins={[Zoom, Counter, Fullscreen, Download]}
       />
 
-      <Layout topbar={true}>
-        <ShopBreadCrumb
-          title="Our Portfolio"
-          sectionPace=""
-          currentSlug="Portfolio"
-        />
+      <Layout 
+        topbar={false}
+      >
         <div className="ltn__gallery-area mb-120">
           <Container>
             <Row>
               <Col xs={12}>
-                <div className="ltn__gallery-menu">
-                  <div className="ltn__gallery-filter-menu portfolio-filter text-uppercase mb-50">
+                <div className="ltn__gallery-menu mt-50">
+                  <div className="ltn__gallery-filter-menu portfolio-filter text-uppercase mb-0">
                     <button
-                      onClick={() => setData(portfolios)}
-                      className="active"
+                      onClick={() => handleCityFilter(null)}
+                      className={cityFilter === null ? "active" : ""}
                     >
-                      All
+                      All Cities
                     </button>
-                    {collection.map((item, key) => (
+                    {cities.map((city, key) => (
                       <button
                         key={key}
-                        onClick={() => {
-                          gallery_filter(item);
-                        }}
+                        onClick={() => handleCityFilter(city)}
+                        className={cityFilter === city ? "active" : ""}
                       >
-                        {item}
+                        {city}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="ltn__gallery-filter-menu portfolio-filter text-uppercase mb-20">
+                    <button
+                      onClick={() => handleSpecialityFilter(null)}
+                      className={specialityFilter === null ? "active" : ""}
+                    >
+                      All Services
+                    </button>
+                    {specialities.map((speciality, key) => (
+                      <button
+                        key={key}
+                        onClick={() => handleSpecialityFilter(speciality)}
+                        className={specialityFilter === speciality ? "active" : ""}
+                      >
+                        {speciality}
                       </button>
                     ))}
                   </div>
@@ -146,109 +214,27 @@ function PortFolioPageTwo() {
             <Row className="ltn__gallery-active ltn__gallery-style-1">
               <AnimatePresence>
                 {data.map((item) => {
-                  const slug = productSlug(item.title);
                   return (
                     <motion.div
                       key={item.id}
-                      className="ltn__gallery-item col-md-4 col-sm-6 col-12"
+                      className="ltn__gallery-item col-md-3 col-sm-6 col-12"
                       layout
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <div className="ltn__gallery-item-inner">
-                        <div
-                          className="ltn__gallery-item-img"
-                          onClick={() => setBasicExampleOpen(true)}
-                          style={{
-                            cursor: "pointer",
-                          }}
-                        >
-                          <img src={`/img/gallery/${item.img}`} alt="Image" />
-                          <span className="ltn__gallery-action-icon">
-                            <span>
-                              <FaSearch />
-                            </span>
-                          </span>
-                        </div>
-                        <div className="ltn__gallery-item-info">
-                          <h4>
-                            <Link href={`${slug}`}>{item.title}</Link>
-                          </h4>
-                          <p>Web Design &amp; Development, Branding</p>
-                        </div>
-                      </div>
+                      <TechnicianCard
+                        key={item.id}
+                        item={item}
+                      />
                     </motion.div>
                   );
                 })}
               </AnimatePresence>
             </Row>
-
-            <div className="btn-wrapper text-center">
-              <Link
-                href="#"
-                className="btn btn-transparent btn-effect-1 btn-border"
-              >
-                LOAD MORE +
-              </Link>
-            </div>
           </Container>
         </div>
-
-        <CallToActionstyleTwo />
-
-        {/* <!-- BLOG AREA START (blog-3) -->  */}
-        <div className="ltn__blog-area pt-120 pb-70">
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  titleSectionData={{
-                    subTitle: "News & Blogs",
-                    title: "Leatest News Feeds",
-                  }}
-                />
-              </Col>
-            </Row>
-            <Slider
-              {...blogSettings}
-              className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
-            >
-              {blogData.map((data, key) => {
-                const slug = productSlug(data.title);
-                return (
-                  <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
-                );
-              })}
-            </Slider>
-          </Container>
-        </div>
-        {/* <!-- BLOG AREA END --> */}
-
-        {/* <!-- BRAND LOGO AREA START --> */}
-        <div className="ltn__brand-logo-area ltn__brand-logo-1 pt-80--- pb-110 plr--9">
-          <Container fluid>
-            <Row className="ltn__brand-logo-active">
-              <Col xs={12}>
-                <Slider {...LogoSettings}>
-                  {brandLogoData.map((logo, key) => {
-                    return (
-                      <div key={key} className="ltn__brand-logo-item">
-                        <img
-                          src={`/img/brand-logo/${logo.image}`}
-                          alt="Brand Logo"
-                        />
-                      </div>
-                    );
-                  })}
-                </Slider>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-        {/* <!-- BRAND LOGO AREA END --> */}
-
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
             <Row>
