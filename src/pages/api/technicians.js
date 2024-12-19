@@ -11,9 +11,17 @@ export default async function handler(req, res) {
   try {
     // Fetch all data from MySQL without filters
     const technicianDataMYSQL = await prisma.technician.findMany({
-      orderBy: {
-        featured: 'desc',
+      where: {
+        status: 'active',
       },
+      orderBy: [
+        {
+          featured: 'desc'
+        },
+        {
+          name: 'asc'
+        }
+      ],
     });
 
     console.log("Fetched MySQL Data:", technicianDataMYSQL);
@@ -45,7 +53,10 @@ export default async function handler(req, res) {
       } : null;
     }).filter(item => item !== null);
 
-    // Apply pagination after combining
+    // Sort combined data alphabetically by name
+    combinedData.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Apply pagination after sorting
     const paginatedData = combinedData.slice(offset, offset + limit);
 
     res.status(200).json(paginatedData);

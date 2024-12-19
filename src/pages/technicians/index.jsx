@@ -21,9 +21,17 @@ const prisma = new PrismaClient();
 export async function getServerSideProps() {
   // Fetch initial data from MySQL
   const technicianDataMYSQL = await prisma.technician.findMany({
-    orderBy: {
-      featured: 'desc',
+    where: {
+      status: 'active',
     },
+    orderBy: [
+      {
+        featured: 'desc'
+      },
+      {
+        name: 'asc'
+      }
+    ],
     take: 12,
   });
 
@@ -39,8 +47,8 @@ export async function getServerSideProps() {
   // Fetch filter data from MongoDB
   const db = await connectMongoDB();
   const technicians = await db.collection('technicians').find().toArray();
-  const cities = [...new Set(technicians.flatMap(tech => tech.cities))].filter(Boolean);
-  const specialities = [...new Set(technicians.flatMap(tech => tech.specialities))].filter(Boolean);
+  const cities = [...new Set(technicians.flatMap(tech => tech.cities))].filter(Boolean).sort();
+  const specialities = [...new Set(technicians.flatMap(tech => tech.specialities))].filter(Boolean).sort();
   // Combine data from MySQL and MongoDB
   const technicianData = serializedtechnicianDataMYSQL.map(mysqlTech => {
     const mongoTech = technicians.find(mongoTech => mongoTech.id === mysqlTech.id);

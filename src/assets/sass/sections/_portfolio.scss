@@ -82,9 +82,15 @@
   }
 }
 .ltn__gallery-item-info {
-  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 30px;
   position: relative;
   z-index: 2;
+  height: 100%;
+  min-height: 105px;
+  box-sizing: border-box;
 }
 .ltn__gallery-item-vote {
   display: flex;

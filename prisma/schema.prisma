@@ -243,14 +243,15 @@ model UserFollowRequestHistory {
 model Technician {
   id          Int      @id @default(autoincrement())
   name        String
-  thumbImage  String
-  location    String
+  thumbImage  String?
+  location    String?
   featured    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   phoneNumber String?
   downvotes   Int      @default(0)
   upvotes     Int      @default(0)
+  status      ListingStatus
 }
 
 enum FollowStatus {
