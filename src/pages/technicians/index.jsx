@@ -14,11 +14,16 @@ import { Layout } from "@/layouts";
 import connectMongoDB from "/mongodb/mongoClient";
 import { createAvatar } from '@dicebear/avatars';
 import * as personasStyle from '@dicebear/personas';
-import { parsePhoneNumber } from 'libphonenumber-js';
 import TechnicianCard from "@/components/TechnicianCard";
+import { getDistance } from 'geolib';
+import axios from 'axios';
+
 const prisma = new PrismaClient();
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  // Capture the client's IP address from the request headers
+  const clientIp = context.req.headers['x-forwarded-for'] || context.req.connection.remoteAddress;
+
   // Fetch initial data from MySQL
   const technicianDataMYSQL = await prisma.technician.findMany({
     where: {
@@ -47,7 +52,47 @@ export async function getServerSideProps() {
   // Fetch filter data from MongoDB
   const db = await connectMongoDB();
   const technicians = await db.collection('technicians').find().toArray();
-  const cities = [...new Set(technicians.flatMap(tech => tech.cities))].filter(Boolean).sort();
+
+  // Get user's coordinates from IP
+  const userCityCoordinates = await getUserCoordinatesFromIP(clientIp);
+
+  console.log("User Coordinates:", userCityCoordinates);
+
+  if (!userCityCoordinates) {
+    console.error("Could not determine user's coordinates from IP.");
+    return {
+      props: {
+        initialTechnicianData: [],
+        cities: [],
+        specialities: [],
+      },
+    };
+  }
+
+  // Calculate distances and sort cities
+  const citiesWithDistance = await Promise.all(
+    [...new Set(technicians.flatMap(tech => tech.cities))]
+      .filter(Boolean)
+      .map(async (city) => {
+        const cityCoordinates = await getCityCoordinates(city);
+        if (!cityCoordinates) {
+          console.error(`Could not get coordinates for city: ${city}`);
+          return null;
+        }
+        const distance = getDistance(userCityCoordinates, cityCoordinates);
+        console.log(`City: ${city}, Coordinates: ${cityCoordinates}, Distance: ${distance}`);
+        return { city, distance };
+      })
+  );
+
+  // Filter out any null values
+  const sortedCities = citiesWithDistance
+    .filter(item => item !== null)
+    .sort((a, b) => a.distance - b.distance)
+    .map(item => item.city);
+
+  console.log("Sorted Cities by Distance:", sortedCities);
+
   const specialities = [...new Set(technicians.flatMap(tech => tech.specialities))].filter(Boolean).sort();
   // Combine data from MySQL and MongoDB
   const technicianData = serializedtechnicianDataMYSQL.map(mysqlTech => {
@@ -62,10 +107,48 @@ export async function getServerSideProps() {
   return {
     props: {
       initialTechnicianData: technicianData,
-      cities,
+      cities: sortedCities,
       specialities,
     },
   };
+}
+
+async function getCityCoordinates(city) {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(city)}&key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    console.log(`Google Maps Response for ${city}:`, data);
+
+    if (data.results && data.results.length > 0) {
+      const { lat, lng } = data.results[0].geometry.location;
+      return { latitude: lat, longitude: lng };
+    } else {
+      console.error(`No results found for city: ${city}`);
+      return { latitude: 0, longitude: 0 }; // Default coordinates
+    }
+  } catch (error) {
+    console.error(`Error fetching coordinates for city: ${city}`, error);
+    return { latitude: 0, longitude: 0 }; // Default coordinates
+  }
+}
+
+async function getUserCoordinatesFromIP(clientIp) {
+  const token = process.env.IPINFO_TOKEN;
+  const url = `https://ipinfo.io/${clientIp}?token=${token}`;
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    console.log("IPInfo Response:", data);
+    const [latitude, longitude] = data.loc.split(',').map(Number);
+    return { latitude, longitude };
+  } catch (error) {
+    console.error("Error fetching user's coordinates from IP:", error);
+    return { latitude: 0, longitude: 0 };
+  }
 }
 
 function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialities = [] }) {
