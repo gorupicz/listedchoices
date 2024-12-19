@@ -113,9 +113,8 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
       const res = await fetch(`/api/technicians?page=1&city=${city || ''}&speciality=${speciality || ''}`);
       const filteredData = await res.json();
 
-      if (filteredData.length > 0) {
-        setData(filteredData);
-      }
+      // Directly set the filtered data
+      setData(filteredData);
     } catch (error) {
       console.error("Failed to filter data:", error);
     }
