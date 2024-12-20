@@ -15,13 +15,19 @@ export default async function handler(req, res) {
         status: 'active',
       },
       orderBy: [
-        {
-          featured: 'desc'
-        },
-        {
-          name: 'asc'
-        }
-      ],
+      {
+        featured: 'desc'
+      },
+      {
+        downvotes: 'asc'
+      },
+      {
+        upvotes: 'desc'
+      },
+      {
+        name: 'asc'
+      }
+    ],
     });
 
     console.log("Fetched MySQL Data:", technicianDataMYSQL);
@@ -52,9 +58,6 @@ export default async function handler(req, res) {
         _id: mongoTech._id.toString(),
       } : null;
     }).filter(item => item !== null);
-
-    // Sort combined data alphabetically by name
-    combinedData.sort((a, b) => a.name.localeCompare(b.name));
 
     // Apply pagination after sorting
     const paginatedData = combinedData.slice(offset, offset + limit);
