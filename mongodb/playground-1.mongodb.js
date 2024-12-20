@@ -17,16 +17,6 @@ db.technicians.insertMany([
     id: 1,
     cities: ["Isla Mujeres", "Playa del Carmen", "Cancún"],
     specialities: ["Factoring", "Loans", "Mortgages"]
-  },
-  {
-    id: 2,
-    cities: ["Tulum", "Cozumel"],
-    specialities: ["Investments", "Real Estate"]
-  },
-  {
-    id: 3,
-    cities: ["Merida", "Valladolid"],
-    specialities: ["Insurance", "Consulting"]
   }
 ]);
 

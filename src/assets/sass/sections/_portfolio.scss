@@ -120,6 +120,25 @@
     @extend .common;
     background-color: var(--green);
   }
+  .animate-icon {
+    animation: jumpEffect 0.5s ease-in-out;
+    color: var(--ltn__secondary-color);
+  }
+
+  @keyframes jumpEffect {
+    0% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-5px);
+    }
+  }
 }
 
 /* Gallery Style 1 */

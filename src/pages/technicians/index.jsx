@@ -34,6 +34,12 @@ export async function getServerSideProps(context) {
         featured: 'desc'
       },
       {
+        downvotes: 'asc'
+      },
+      {
+        upvotes: 'desc'
+      },
+      {
         name: 'asc'
       }
     ],
@@ -131,7 +137,7 @@ async function getCityCoordinates(city) {
     }
   } catch (error) {
     console.error(`Error fetching coordinates for city: ${city}`, error);
-    return { latitude: 0, longitude: 0 }; // Default coordinates
+    return null;
   }
 }
 
@@ -163,7 +169,7 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/technicians?page=${page + 1}&city=${cityFilter || ''}&speciality=${specialityFilter || ''}`);
+      const res = await fetch(`/api/technicians/technicians?page=${page + 1}&city=${cityFilter || ''}&speciality=${specialityFilter || ''}`);
       const newData = await res.json();
 
       if (newData.length > 0) {
@@ -193,7 +199,7 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
     setPage(1); // Reset page to 1
 
     try {
-      const res = await fetch(`/api/technicians?page=1&city=${city || ''}&speciality=${speciality || ''}`);
+      const res = await fetch(`/api/technicians/technicians?page=1&city=${city || ''}&speciality=${speciality || ''}`);
       const filteredData = await res.json();
 
       // Directly set the filtered data
