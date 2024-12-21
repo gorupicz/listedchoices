@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Col, Container, Row } from "react-bootstrap";
 import { PrismaClient } from "@prisma/client";
@@ -157,15 +157,17 @@ async function getUserCoordinatesFromIP(clientIp) {
   }
 }
 
-function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialities = [] }) {
+function vendorDirectory({ initialTechnicianData = [], cities = [], specialities = [] }) {
   const [data, setData] = useState(initialTechnicianData);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true);
   const [cityFilter, setCityFilter] = useState(null);
   const [specialityFilter, setSpecialityFilter] = useState(null);
+  const loaderRef = useRef(null);
 
   const loadMoreData = useCallback(async () => {
-    if (loading) return;
+    if (loading || !hasMoreData) return;
     setLoading(true);
 
     try {
@@ -175,28 +177,45 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
       if (newData.length > 0) {
         setData((prevData) => [...prevData, ...newData]);
         setPage((prevPage) => prevPage + 1);
+      } else {
+        setHasMoreData(false);
       }
     } catch (error) {
       console.error("Failed to load more data:", error);
     } finally {
       setLoading(false);
     }
-  }, [page, loading, cityFilter, specialityFilter]);
+  }, [page, loading, cityFilter, specialityFilter, hasMoreData]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
-      loadMoreData();
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreData();
+        }
+      },
+      {
+        threshold: 0.5,
+        rootMargin: '0px 0px 200px 0px',
+      }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loadMoreData, loading]);
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [loadMoreData]);
 
   const filterData = async (city = null, speciality = null) => {
     setCityFilter(city);
     setSpecialityFilter(speciality);
-    setPage(1); // Reset page to 1
+    setPage(1);
+    setHasMoreData(true);
 
     try {
       const res = await fetch(`/api/technicians/technicians?page=1&city=${city || ''}&speciality=${speciality || ''}`);
@@ -330,6 +349,11 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
               </AnimatePresence>
             </Row>
           </Container>
+          {/* Loader */}
+          <div ref={loaderRef} style={{ textAlign: 'center', margin: '20px 0' }}>
+            {loading && <div className="loader">Loading...</div>}
+            {!hasMoreData && <div>No more data available</div>}
+          </div>
         </div>
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
@@ -345,4 +369,4 @@ function PortFolioPageTwo({ initialTechnicianData = [], cities = [], specialitie
   );
 }
 
-export default PortFolioPageTwo;
+export default vendorDirectory;
