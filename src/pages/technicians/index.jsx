@@ -352,7 +352,7 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
           {/* Loader */}
           <div ref={loaderRef} style={{ textAlign: 'center', margin: '20px 0' }}>
             {loading && <div className="loader">Loading...</div>}
-            {!hasMoreData && <div>No more data available</div>}
+            {!hasMoreData && <div>No more Vendors registered. Want to register one? <a href="https://wa.me/14158052247">Contact Us</a></div>}
           </div>
         </div>
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
