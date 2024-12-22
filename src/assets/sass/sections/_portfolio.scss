@@ -49,6 +49,9 @@
   img {
     transition: all 3.5s ease 0s;
   }
+  p {
+    color: var(--white);
+  }
 }
 .ltn__gallery-action-icon {
   position: absolute;
@@ -57,7 +60,7 @@
   right: 0;
   margin: 0 auto;
   text-align: center;
-  font-size: 16px;
+  font-size: 64px;
   transform: translateY(-50%);
   opacity: 0;
   visibility: hidden;
@@ -65,24 +68,77 @@
   z-index: 2;
   span {
     display: inline-block;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    background-color: var(--white);
-    color: var(--ltn__primary-color);
-    border-radius: 100%;
-    margin: 3px;
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
+    color: var(--white);
     transition: all 0.3s ease 0s;
     &:hover {
       background-color: var(--ltn__secondary-color);
-      color: var(--white);
+      font-size: 96px;
+      line-height: 500%;
+      color: var(--ltn__primary-color);
     }
   }
 }
 .ltn__gallery-item-info {
-  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 30px;
   position: relative;
   z-index: 2;
+  height: 100%;
+  min-height: 105px;
+  box-sizing: border-box;
+}
+.ltn__gallery-item-vote {
+  display: flex;
+  width: 100%;
+  line-height: 2.8;
+  color: var(--white);
+  span {
+    margin-left: 10px;
+  }
+
+  .common {
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background-color: var(--ltn__primary-color);
+    }
+  }
+
+  .vote-down {
+    @extend .common;
+    background-color: var(--red);
+  }
+
+  .vote-up {
+    @extend .common;
+    background-color: var(--green);
+  }
+  .animate-icon {
+    animation: jumpEffect 0.5s ease-in-out;
+    color: var(--ltn__primary-color);
+  }
+
+  @keyframes jumpEffect {
+    0% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-5px);
+    }
+  }
 }
 
 /* Gallery Style 1 */
@@ -146,7 +202,14 @@
 #lightcase-caption {
   color: var(--white);
 }
-
+.sticky-filter {
+  position: sticky;
+  top: 60px; /* Adjust this value to match your header's height */
+  z-index: 1000;
+    background-color: white;
+  padding: 10px 0;
+}
 /* ----------------------------------------------------
     END
 ---------------------------------------------------- */
+

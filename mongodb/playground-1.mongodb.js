@@ -12,20 +12,13 @@
 // Select the database to use.
 use('bolsadecasas');
 
-// Update the document with the specified _id
+db.technicians.insertMany([
+  {
+    id: 1,
+    cities: ["Isla Mujeres", "Playa del Carmen", "Cancún"],
+    specialities: ["Factoring", "Loans", "Mortgages"]
+  }
+]);
 
-// Find the document with the specified _id
-const originalDocument = db.getCollection('listings').findOne(
-    { _id: ObjectId("673f6568cf409cc71082b57a") }
-);
-
-// Remove the _id field from the original document to avoid duplicate key error
-delete originalDocument._id;
-
-// Insert the document as a new entry
-db.getCollection('listings').insertOne(originalDocument);
-
-const allListings = db.getCollection('listings').find({}).toArray();
-
-// Print the results to the console.
-console.log(allListings);
+// Verify the insertion
+db.technicians.find({});
