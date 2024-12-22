@@ -17,6 +17,7 @@ import * as personasStyle from '@dicebear/personas';
 import TechnicianCard from "@/components/TechnicianCard";
 import { getDistance } from 'geolib';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const prisma = new PrismaClient();
 
@@ -165,6 +166,7 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
   const [cityFilter, setCityFilter] = useState(null);
   const [specialityFilter, setSpecialityFilter] = useState(null);
   const loaderRef = useRef(null);
+  const { t } = useTranslation('technicians');
 
   const loadMoreData = useCallback(async () => {
     if (loading || !hasMoreData) return;
@@ -236,34 +238,6 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
     filterData(cityFilter, speciality);
   };
 
-  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
-    <button
-      {...props}
-      className={
-        "slick-prev slick-arrow" + (currentSlide === 0 ? " slick-disabled" : "")
-      }
-      aria-hidden="true"
-      aria-disabled={currentSlide === 0 ? true : false}
-      type="button"
-    >
-      <FaArrowLeft />
-    </button>
-  );
-  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
-    <button
-      {...props}
-      className={
-        "slick-next slick-arrow" +
-        (currentSlide === slideCount - 1 ? " slick-disabled" : "")
-      }
-      aria-hidden="true"
-      aria-disabled={currentSlide === slideCount - 1 ? true : false}
-      type="button"
-    >
-      <FaArrowRight />
-    </button>
-  );
-
   const [basicExampleOpen, setBasicExampleOpen] = useState(false);
   const gallerySlides = data.map((img, i) => ({
     src: img.thumbImage || `data:image/svg+xml;utf8,${encodeURIComponent(createAvatar(personasStyle, { seed: img.name || 'default' }))}`,
@@ -292,7 +266,7 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
                       onClick={() => handleCityFilter(null)}
                       className={cityFilter === null ? "active" : ""}
                     >
-                      All Cities
+                      {t('allCities')}
                     </button>
                     {cities.map((city, key) => (
                       <button
@@ -310,7 +284,7 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
                       onClick={() => handleSpecialityFilter(null)}
                       className={specialityFilter === null ? "active" : ""}
                     >
-                      All Services
+                      {t('allServices')}
                     </button>
                     {specialities.map((speciality, key) => (
                       <button
@@ -351,8 +325,8 @@ function vendorDirectory({ initialTechnicianData = [], cities = [], specialities
           </Container>
           {/* Loader */}
           <div ref={loaderRef} style={{ textAlign: 'center', margin: '20px 0' }}>
-            {loading && <div className="loader">Loading...</div>}
-            {!hasMoreData && <div>No more Vendors registered. Want to register one? <a href="https://wa.me/14158052247">Contact Us</a></div>}
+            {loading && <div className="loader">{t('loading')}</div>}
+            {!hasMoreData && <div>{t('noTechniciansRegistered')}<a href={t('cacLink')} target={t('target')}><b>{t('cacText')}</b></a></div>}
           </div>
         </div>
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
