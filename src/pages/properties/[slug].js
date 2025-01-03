@@ -59,6 +59,17 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
   const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
   const { t } = useTranslation('properties/[slug]'); // Use the appropriate namespace for translations
 
+  const updatedAt = new Date(productMONGO.updated_at);
+
+  const {
+    lastMonthStart,
+    lastMonthEnd,
+    last12MonthsStart,
+    yearToDateStart,
+    last3MonthsStart,
+    currentMonthStart
+  } = getDateRanges(updatedAt);
+
   const yearToDateTotalNights = () => {
     const updatedAt = new Date(productMONGO.updated_at);
     const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
@@ -545,7 +556,7 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
                           <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.lastMonth')}
-                            value={productMONGO.occupancy.lastMonthNights / 30 * 100}
+                            value={productMONGO.occupancy.lastMonthNights / calculateNightsWithinPeriod(lastMonthStart, lastMonthEnd, lastMonthStart, lastMonthEnd) * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
@@ -556,7 +567,7 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.last3Months')}
-                            value={productMONGO.occupancy.last3MonthsNights / 90 * 100}
+                            value={productMONGO.occupancy.last3MonthsNights / calculateNightsWithinPeriod(last3MonthsStart, lastMonthEnd, last3MonthsStart, lastMonthEnd) * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
@@ -566,7 +577,7 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.yearToDate')}
-                            value={productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100}
+                            value={productMONGO.occupancy.yearToDateNights / calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd) * 100}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
