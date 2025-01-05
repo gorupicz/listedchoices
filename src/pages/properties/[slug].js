@@ -588,21 +588,23 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.adr')}
-                            value={productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights}
+                            value={[productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights, productMONGO.income.last12MonthsPreviousYearUSD / productMONGO.occupancy.last12MonthsPreviousYearNights]}
                             tooltip={t('vacationRentalPerformance.adrTooltip')}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
+                            isPreviousYearValue={true}
                           />
     </li>
     <li>
                       <ListingDataItem
                         label={t('vacationRentalPerformance.revpar')}
-                        value={productMONGO.income.last12MonthsUSD / 365}
+                        value={[productMONGO.income.last12MonthsUSD / 365, productMONGO.income.last12MonthsPreviousYearUSD / 365]}
                         tooltip={t('vacationRentalPerformance.revparTooltip')}
                         followRequestStatus={followRequestStatus}
                         handleFollowButtonClick={handleFollowButtonClick}
                         buttonDisabled={buttonDisabled}
+                        isPreviousYearValue={true}
                       />
                       </li>
                       <li>

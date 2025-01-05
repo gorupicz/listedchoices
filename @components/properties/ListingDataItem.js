@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import TooltipSpan from "@/components/Tooltips/TooltipSpan";
-import { FaExclamationCircle } from 'react-icons/fa'; // Adjust the import path as necessary
+import { FaExclamationCircle, FaLock } from 'react-icons/fa'; // Adjust the import path as necessary
 import propertyData from 'src/data/properties/[slug].json'; // Adjust the path as necessary
 import { useTranslation } from 'react-i18next'; // Import the useTranslation hook
 
@@ -37,16 +37,38 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
   const renderContent = () => {
     if (session && status === "authenticated") {
       if (followRequestStatus === 'ACCEPTED') {
-        return <span>{yoyComparisonSymbol} {formattedValue}</span>;
+        return <span>
+          {yoyComparisonSymbol && (
+            <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+              {yoyComparisonSymbol}
+            </TooltipSpan>
+          )}
+          {formattedValue}
+        </span>;
       } else if (followRequestStatus === 'PENDING') {
         return isBlurable ? (
           <TooltipSpan id="obfuscation-tooltip" title={t('pendingLoggedTooltip')}>
             <span>
-              {{yoyComparisonSymbol}} <span className="obfuscation-span">obfusca</span>
+              {yoyComparisonSymbol && (
+                <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                  {yoyComparisonSymbol}
+                </TooltipSpan>
+              )}
+              <span className="obfuscation-container">
+                <FaLock className="lock-icon" />
+                <span className="obfuscation-span">obfusca</span>
+              </span>
             </span>
           </TooltipSpan>
         ) : (
-          <span>{yoyComparisonSymbol} {formattedValue}</span>
+          <span>
+            {yoyComparisonSymbol && (
+              <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                {yoyComparisonSymbol}
+              </TooltipSpan>
+            )}
+            {formattedValue}
+          </span>
         );
       } else {
         return !buttonDisabled ? (
@@ -54,22 +76,52 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
             {isBlurable ? (
               <TooltipSpan id="obfuscation-tooltip" title={t('cacButton.loggedNotFollowing')}>
                 <span>
-                  {yoyComparisonSymbol} <span className="obfuscation-span">obfusca</span>
+                  {yoyComparisonSymbol && (
+                    <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                      {yoyComparisonSymbol}
+                    </TooltipSpan>
+                  )}
+                  <span className="obfuscation-container">
+                    <FaLock className="lock-icon" />
+                    <span className="obfuscation-span">obfusca</span>
+                  </span>
                 </span>
               </TooltipSpan>
             ) : (
-              <span>{yoyComparisonSymbol} {formattedValue}</span>
+              <span>
+                {yoyComparisonSymbol && (
+                  <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                    {yoyComparisonSymbol}
+                  </TooltipSpan>
+                )}
+                {formattedValue}
+              </span>
             )}
           </a>
         ) : (
           isBlurable ? (
             <TooltipSpan id="obfuscation-tooltip" title={t('cacButton.loggedNotFollowing')}>
               <span>
-                {yoyComparisonSymbol} <span className="obfuscation-span">obfusca</span>
+                {yoyComparisonSymbol && (
+                  <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                    {yoyComparisonSymbol}
+                  </TooltipSpan>
+                )}
+                <span className="obfuscation-container">
+                  <FaLock className="lock-icon" />
+                  <span className="obfuscation-span">obfusca</span>
+                </span>
               </span>
             </TooltipSpan>
           ) : (
-            <span>{yoyComparisonSymbol} {formattedValue}</span>
+            <span>
+              {yoyComparisonSymbol && (
+                <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                  {yoyComparisonSymbol}
+                </TooltipSpan>
+              )}
+              {formattedValue}
+            </span>
           )
         );
       }
@@ -78,13 +130,27 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
         <Link href="/register">
           {isBlurable ? (
             <span>
-                {yoyComparisonSymbol}
+                {yoyComparisonSymbol && (
+                  <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                    {yoyComparisonSymbol}
+                  </TooltipSpan>
+                )}
                 <TooltipSpan id="obfuscation-tooltip" title={t('loginNotLoggedTooltip')}>
-                    <span className="obfuscation-span">obfusca</span>
+                    <span className="obfuscation-container">
+                      <FaLock className="lock-icon" />
+                      <span className="obfuscation-span">obfusca</span>
+                    </span>
                 </TooltipSpan>
             </span>
           ) : (
-            <span>{yoyComparisonSymbol} {formattedValue}</span>
+            <span>
+              {yoyComparisonSymbol && (
+                <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
+                  {yoyComparisonSymbol}
+                </TooltipSpan>
+              )}
+              {formattedValue}
+            </span>
           )}
         </Link>
       );
