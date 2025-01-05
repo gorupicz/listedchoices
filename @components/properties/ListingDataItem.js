@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import TooltipSpan from "@/components/Tooltips/TooltipSpan";
-import { FaExclamationCircle, FaLock } from 'react-icons/fa'; // Adjust the import path as necessary
+import { FaExclamationCircle, FaLock, FaCircle } from 'react-icons/fa'; // Adjust the import path as necessary
 import propertyData from 'src/data/properties/[slug].json'; // Adjust the path as necessary
 import { useTranslation } from 'react-i18next'; // Import the useTranslation hook
 
@@ -27,9 +27,9 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
     : null;
 
   const yoyComparisonSymbol = yoyComparison > 0 
-    ? <a style={{ color: 'green' }}>▲</a> // Green triangle pointing up
+    ? <a style={{ color: 'green' }}><FaCircle /></a> // Green circle
     : yoyComparison < 0 
-    ? <a style={{ color: 'red' }}>▼</a> // Red triangle pointing down
+    ? <a style={{ color: 'red' }}><FaCircle /></a> // Red triangle pointing down
     : null;
   
   const yoyComparisonFormatted = yoyComparison ? `${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(yoyComparison)}%` : '';
@@ -43,7 +43,7 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
               {yoyComparisonSymbol}
             </TooltipSpan>
           )}
-          {formattedValue}
+          &nbsp;&nbsp;&nbsp;&nbsp;{formattedValue}
         </span>;
       } else if (followRequestStatus === 'PENDING') {
         return isBlurable ? (
@@ -144,12 +144,12 @@ function ListingDataItem({ label, value, tooltip, isCurrency = true, followReque
             </span>
           ) : (
             <span>
-              {yoyComparisonSymbol && (
+                {yoyComparisonSymbol && (
                 <TooltipSpan title={`${yoyComparisonFormatted} ${t('yoyComparisonTooltip')}`}>
                   {yoyComparisonSymbol}
                 </TooltipSpan>
               )}
-              {formattedValue}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formattedValue}
             </span>
           )}
         </Link>
