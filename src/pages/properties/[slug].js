@@ -59,6 +59,17 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
   const { calculateNightsWithinPeriod } = require('/src/lib/NightsWithinPeriodHelper'); 
   const { t } = useTranslation('properties/[slug]'); // Use the appropriate namespace for translations
 
+  const updatedAt = new Date(productMONGO.updated_at);
+
+  const {
+    lastMonthStart,
+    lastMonthEnd,
+    last12MonthsStart,
+    yearToDateStart,
+    last3MonthsStart,
+    currentMonthStart
+  } = getDateRanges(updatedAt);
+
   const yearToDateTotalNights = () => {
     const updatedAt = new Date(productMONGO.updated_at);
     const { lastMonthEnd, yearToDateStart } = getDateRanges(updatedAt);
@@ -335,44 +346,38 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
     return currency === 'USD' ? valueUSD : valueMXN;
   };
 
-  const incomeLast12Months = getCurrencyValue(productMONGO.income.last12MonthsUSD, productMONGO.income.last12MonthsMXN);
-  const expensesLast12Months = getCurrencyValue(productMONGO.expenses.last12MonthsUSD, productMONGO.expenses.last12MonthsMXN);
+  const incomeLast12Months = getCurrencyValue(
+    productMONGO.income.last12MonthsUSD, 
+    productMONGO.income.last12MonthsMXN
+  );
+
+  // New incomeLast12MonthsPreviousYear calculation
+  const incomeLast12MonthsPreviousYear = productMONGO.income.last12MonthsPreviousYearUSD && productMONGO.income.last12MonthsPreviousYearMXN
+    ? getCurrencyValue(
+        productMONGO.income.last12MonthsPreviousYearUSD, 
+        productMONGO.income.last12MonthsPreviousYearMXN
+      )
+    : null;
+
+  
+  const expensesLast12Months = getCurrencyValue(
+    (productMONGO.expenses.cogs?.last12MonthsUSD || productMONGO.expenses.last12MonthsUSD) + 
+    (productMONGO.expenses['sg&a']?.last12MonthsUSD || 0),
+    (productMONGO.expenses.cogs?.last12MonthsMXN || productMONGO.expenses.last12MonthsMXN) + 
+    ((productMONGO.expenses['sg&a']?.last12MonthsUSD || 0) * 20)
+  );
+
+  const expensesLast12MonthsPreviousYear = productMONGO.expenses.last12MonthsPreviousYearUSD && productMONGO.expenses.last12MonthsPreviousYearMXN
+    ? getCurrencyValue(
+        productMONGO.expenses.last12MonthsPreviousYearUSD, 
+        productMONGO.expenses.last12MonthsPreviousYearMXN
+      )
+    : null;
+  
   const freeCashFlow = incomeLast12Months - expensesLast12Months;
 
-  // Log the initial props to check their values
-  console.log('Product MYSQL:', productMYSQL);
-  console.log('Product MONGO:', productMONGO);
-
-  // Log the ogImage to check its value
-  console.log('OG Image:', ogImage);
-
-  // Log each image in the carousel
-  if (productMONGO.photos) {
-    productMONGO.photos.forEach((photo, index) => {
-      console.log(`Photo ${index}:`, photo.img);
-      if (!photo.img) {
-        console.error(`Photo ${index} is missing an image source.`);
-      } 
-    });
-  }
   const propertyManagerImgIsExternalUrl = productMONGO.propertyManager.img && productMONGO.propertyManager.img.startsWith('http');
-  const propertyManagerImg = propertyManagerImgIsExternalUrl ? productMONGO.propertyManager.img : `/img/team/${productMONGO.propertyManager.img}`;  
-
-  // Log the product details carousel settings
-  console.log('Carousel Settings:', productDetailsCarouselSettings);
-
-  // Log the session and status
-  console.log('Session:', session);
-  console.log('Status:', status);
-
-  // Log the follow request status
-  console.log('Follow Request Status:', followRequestStatus);
-
-  // Log the currency and calculated values
-  console.log('Currency:', currency);
-  console.log('Income Last 12 Months:', incomeLast12Months);
-  console.log('Expenses Last 12 Months:', expensesLast12Months);
-  console.log('Free Cash Flow:', freeCashFlow);
+  const propertyManagerImg = propertyManagerImgIsExternalUrl ? productMONGO.propertyManager.img : `/img/team/${productMONGO.propertyManager.img}`;
 
   return (
     <>
@@ -487,20 +492,22 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
                       <li>
                         <ListingDataItem
                           label={t('financials.rent')}
-                          value={incomeLast12Months}
+                          value={[incomeLast12Months, incomeLast12MonthsPreviousYear]}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
                           buttonDisabled={buttonDisabled}
-                        />
+                          isPreviousYearValue={true}
+                          />
                       </li>
                         <li>
                         <ListingDataItem
                           label={t('financials.expenses')}
-                          value={expensesLast12Months}
+                          value={[expensesLast12Months, expensesLast12MonthsPreviousYear]}
                           tooltip={t('financials.expensesTooltip')}
                           followRequestStatus={followRequestStatus}
                           handleFollowButtonClick={handleFollowButtonClick}
                           buttonDisabled={buttonDisabled}
+                          isPreviousYearValue={true}
                         />
                         </li>
                       </ul>
@@ -545,32 +552,35 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
                           <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.lastMonth')}
-                            value={productMONGO.occupancy.lastMonthNights / 30 * 100}
+                            value={[productMONGO.occupancy.lastMonthNights / calculateNightsWithinPeriod(lastMonthStart, lastMonthEnd, lastMonthStart, lastMonthEnd) * 100, productMONGO.occupancy.lastMonthPreviousYearNights / calculateNightsWithinPeriod(lastMonthStart, lastMonthEnd, lastMonthStart, lastMonthEnd) * 100]}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
+                            isPreviousYearValue={true}
                             isBlurable={false}
                           />
     </li>
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.last3Months')}
-                            value={productMONGO.occupancy.last3MonthsNights / 90 * 100}
+                            value={[productMONGO.occupancy.last3MonthsNights / calculateNightsWithinPeriod(last3MonthsStart, lastMonthEnd, last3MonthsStart, lastMonthEnd) * 100, productMONGO.occupancy.last3MonthsPreviousYearNights / calculateNightsWithinPeriod(last3MonthsStart, lastMonthEnd, last3MonthsStart, lastMonthEnd) * 100]}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
+                            isPreviousYearValue={true}
                           />
     </li>
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.occupancy.yearToDate')}
-                            value={productMONGO.occupancy.yearToDateNights / yearToDateTotalNights() * 100}
+                            value={[productMONGO.occupancy.yearToDateNights / calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd) * 100, productMONGO.occupancy.yearToDatePreviousYearNights / calculateNightsWithinPeriod(yearToDateStart, lastMonthEnd, yearToDateStart, lastMonthEnd) * 100]}
                             isCurrency={false}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
+                            isPreviousYearValue={true}
                           />
                           </li>
                         </ul>
@@ -578,21 +588,23 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
     <li>
                           <ListingDataItem
                             label={t('vacationRentalPerformance.adr')}
-                            value={productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights}
+                            value={[productMONGO.income.last12MonthsUSD / productMONGO.occupancy.last12MonthsNights, productMONGO.income.last12MonthsPreviousYearUSD / productMONGO.occupancy.last12MonthsPreviousYearNights]}
                             tooltip={t('vacationRentalPerformance.adrTooltip')}
                             followRequestStatus={followRequestStatus}
                             handleFollowButtonClick={handleFollowButtonClick}
                             buttonDisabled={buttonDisabled}
+                            isPreviousYearValue={true}
                           />
     </li>
     <li>
                       <ListingDataItem
                         label={t('vacationRentalPerformance.revpar')}
-                        value={productMONGO.income.last12MonthsUSD / 365}
+                        value={[productMONGO.income.last12MonthsUSD / 365, productMONGO.income.last12MonthsPreviousYearUSD / 365]}
                         tooltip={t('vacationRentalPerformance.revparTooltip')}
                         followRequestStatus={followRequestStatus}
                         handleFollowButtonClick={handleFollowButtonClick}
                         buttonDisabled={buttonDisabled}
+                        isPreviousYearValue={true}
                       />
                       </li>
                       <li>

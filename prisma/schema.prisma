@@ -126,7 +126,7 @@ model Reservation {
   platform_commission Decimal  @db.Decimal(10, 2)
   currency            Currency
   created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
+  updated_at          DateTime @default(now()) @updatedAt
   listing_id          Int
   listing             Listing  @relation(fields: [listing_id], references: [id])
   reviews             Review[]

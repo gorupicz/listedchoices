@@ -35,6 +35,7 @@
   },
   "loginNotLoggedTooltip": "Inicia sesión para acceder a esta información",
   "pendingLoggedTooltip": "Tu solicitud para seguir esta propiedad está pendiente de aprobación",
+  "yoyComparisonTooltip": "Variación Anual",
   "blueprint": "Plano",
   "relatedProperties": "Propiedades Relacionadas",
   "amountAvailable": "Disponible",

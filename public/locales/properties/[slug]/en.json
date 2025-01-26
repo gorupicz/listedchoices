@@ -35,6 +35,7 @@
   },
   "loginNotLoggedTooltip": "Login to access this information",
   "pendingLoggedTooltip": "Your request to follow this property is pending approval",
+  "yoyComparisonTooltip": "YoY",
   "blueprint": "Blueprint",
   "relatedProperties": "Related Properties",
   "amountAvailable": "Available",

@@ -1,11 +1,19 @@
-function getDateRanges(now) {
-  const lastMonthStart = new Date(Date.UTC(now.getFullYear(), now.getMonth() - 1, 1)); // First day of last month
-  const lastMonthEnd = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 0)); // Last day of last month
+const { startOfMonth, endOfMonth, startOfYear, subMonths } = require('date-fns');
 
-  const last12MonthsStart = new Date(Date.UTC(now.getFullYear() - 1, now.getMonth() - 1, 1)); // First day of last 12 months
-  const yearToDateStart = new Date(Date.UTC(now.getFullYear(), 0, 1)); // Start of the year
-  const last3MonthsStart = new Date(Date.UTC(now.getFullYear(), now.getMonth() - 3, 1)); // Start of last 3 months
-  const currentMonthStart = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1)); // Start of the current month
+function getDateRanges(now) {
+  const lastMonthStart = startOfMonth(subMonths(now, 1)); // First day of last month
+  const lastMonthStartPreviousYear = startOfMonth(subMonths(now, 13)); // First day of last month
+  const lastMonthEnd = endOfMonth(subMonths(now, 1));
+  const lastMonthEndPreviousYear = endOfMonth(subMonths(now, 13));
+
+  const last12MonthsStart = startOfMonth(subMonths(lastMonthStart, 11)); // First day of the month 12 months ago  
+  const last12MonthsStartPreviousYear = startOfMonth(subMonths(lastMonthStartPreviousYear, 11)); // First day of the month 12 months ago
+  const yearToDateStart  = startOfYear(lastMonthStart); // Start of the year
+  const yearToDateStartPreviousYear = startOfYear(lastMonthStartPreviousYear); // Start of the year
+  const last3MonthsStart = startOfMonth(subMonths(lastMonthStart, 2)); // Start of last 3 months
+  const last3MonthsStartPreviousYear = startOfMonth(subMonths(lastMonthStartPreviousYear, 2)); // Start of last 3 months
+  const currentMonthStart = startOfMonth(now); // Start of the current month
+  const currentMonthStartPreviousYear = startOfMonth(lastMonthStartPreviousYear); // Start of the current month
 
   return {
     lastMonthStart,
@@ -14,6 +22,12 @@ function getDateRanges(now) {
     yearToDateStart,
     last3MonthsStart,
     currentMonthStart,
+    lastMonthStartPreviousYear,
+    lastMonthEndPreviousYear,
+    last12MonthsStartPreviousYear,
+    yearToDateStartPreviousYear,
+    last3MonthsStartPreviousYear,
+    currentMonthStartPreviousYear,
   };
 }
 
