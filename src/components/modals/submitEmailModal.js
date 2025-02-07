@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email, setEmail, content }) => {
+const submitEmailModal = ({ show, handleClose, handleOnSubmit, email, setEmail, content }) => {
   return (
     <Modal
       show={show}
@@ -24,7 +24,7 @@ const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email,
                 <div className="modal-product-info text-center">
                   <h4>{content.modalTitle}</h4>
                   <p className="added-cart">{content.modalDescription}</p>
-                  <form onSubmit={handlePasswordRecovery} className="ltn__form-box">
+                  <form onSubmit={handleOnSubmit} className="ltn__form-box">
                     <input
                       type="text"
                       name="email"
@@ -49,4 +49,4 @@ const ForgotPasswordModal = ({ show, handleClose, handlePasswordRecovery, email,
   );
 };
 
-export default ForgotPasswordModal; 
+export default submitEmailModal; 

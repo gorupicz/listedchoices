@@ -9,7 +9,7 @@ import { signIn, useSession } from 'next-auth/react'; // Import both signIn and 
 import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original colors
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
-import ForgotPasswordModal from "@/components/modals/ForgotPasswordModal";
+import SubmitEmailModal from "@/components/modals/submitEmailModal";
 import MessageModal from "@/components/modals/MessageModal";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
@@ -276,10 +276,10 @@ function Login() {
         </div>
       </Layout>
 
-      <ForgotPasswordModal
+      <SubmitEmailModal
         show={showForgotPassword}
         handleClose={handleCloseForgotPassword}
-        handlePasswordRecovery={handlePasswordRecovery}
+        handleOnSubmit={handlePasswordRecovery}
         email={email}
         setEmail={setEmail}
         content={modalPasswordContent}
