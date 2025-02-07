@@ -25,6 +25,8 @@ model User {
   photograph                     String?
   isVerified                     Boolean?                       @default(false)
   verificationCode               String?
+  phoneVerificationSID           String?                @db.VarChar(34)
+  phoneVerificationStatus        PhoneVerificationStatus?
   accounts                       Account[]
   properties                     Property[]                     @relation("PropertyManager")
   propertyFollowRequests         PropertyFollowRequest[]        @relation("Requester")
@@ -291,4 +293,14 @@ enum ListingStatus {
 enum Currency {
   USD
   MXN
+}
+
+enum PhoneVerificationStatus {
+  pending
+  approved
+  canceled
+  max_attempts_reached
+  deleted
+  failed
+  expired
 }

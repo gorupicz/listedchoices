@@ -966,6 +966,20 @@ button:focus {
   border: 1px solid var(--ltn__primary-color);
   margin-bottom: 0;
 }
+
+.react-tel-input .form-input-box-phone {
+  background-color: var(--white) !important;
+  border: 2px solid var(--border-color-7) !important;
+  height: 55px !important;
+  box-shadow: none !important;
+  padding-left: 48px !important;
+  font-size: 16px !important;
+  color: var(--ltn__primary-color-2) !important;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  border-radius: 0 !important;
+  padding-right: 40px !important;
+}
 .form-input-box button[type="submit"] {
   background-color: var(--ltn__primary-color);
   color: var(--white);
