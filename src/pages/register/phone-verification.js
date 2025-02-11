@@ -16,10 +16,10 @@ export async function getServerSideProps(context) {
 
   const session = await getSession(context);
 
-  if (!session) {
+  if (!session || session.user.phoneIsVerified === true) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/history',
         permanent: false,
       },
     };

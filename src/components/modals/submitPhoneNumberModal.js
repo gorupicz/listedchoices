@@ -14,9 +14,6 @@ const submitPhoneNumberModal = ({ show, handleClose, handleOnSubmit, phoneNumber
       className="ltn__modal-area"
     >
       <Modal.Header>
-        <Button onClick={handleClose} className="close" variant="secondary">
-          <span aria-hidden="true">&times;</span>
-        </Button>
       </Modal.Header>
       <Modal.Body>
         <div className="ltn__quick-view-modal-inner">
@@ -40,9 +37,6 @@ const submitPhoneNumberModal = ({ show, handleClose, handleOnSubmit, phoneNumber
                       preferredCountries={['us', 'mx']}
                       enableSearch={true}
                       searchPlaceholder="Search country"
-                      containerStyle={{
-                        marginBottom: '0px !important'
-                      }}
                       inputClass="form-input-box form-input-box-phone"
                       dropdownStyle={{
                         marginTop: '0px',
@@ -54,7 +48,7 @@ const submitPhoneNumberModal = ({ show, handleClose, handleOnSubmit, phoneNumber
                         }
                       }}
                     />
-                    <div className="btn-wrapper mt-0">
+                    <div className="btn-wrapper mt-30">
                       <button className="theme-btn-1 btn btn-full-width-2" type="submit">
                         {content.modalSubmitButtonText}
                       </button>

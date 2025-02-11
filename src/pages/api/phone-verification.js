@@ -1,18 +1,11 @@
 import { getSession } from 'next-auth/react';
-import jwt from 'jsonwebtoken'; // Import jwt to sign the token
 import prisma from '@/lib/prisma';
 import twilio from 'twilio'; // Import Twilio
-import PhoneVerification from '../register/phone-verification';
 
 export default async function handler(req, res) {
-  
 
   if (req.method === 'POST') {
     const { phoneNumber, userId, code } = req.body;
-    console.log('Phone number:', phoneNumber);
-    console.log('User ID barbar:', userId);
-    console.log('Code:', code);
-
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const client = twilio(accountSid, authToken);
@@ -37,10 +30,15 @@ export default async function handler(req, res) {
       await prisma.user.update({
         where: { id: userId },
         data: { 
-          phoneVerificationStatus: verificationCheck.status,
+          phoneIsVerified: verificationCheck.status,
         },
       });
       if (verificationCheck.status === 'approved') {
+        // Update the session with the new phoneIsVerified
+        const session = await getSession({ req });
+        if (session) {
+          session.user.phoneIsVerified = verificationCheck.status;
+        }
         return res.status(200).json({ message: 'Phone number verified successfully' });
       } else {
         return res.status(400).json({ error: 'Invalid verification code' });
@@ -63,18 +61,15 @@ export default async function handler(req, res) {
             to: `+${phoneNumber}`,
           });
 
-        if (verification.status) {
+        if (verification.status === 'pending') {
           await prisma.user.update({
             where: { id: userId },
             data: { 
-              phoneVerificationSID: verification.sid,
-              phoneVerificationStatus: verification.status,
+              phoneVerificationSID: verification.sid
             },
           });
         }
-
         console.log(verification.sid);
-
         return res.status(200).json({ message: 'Verification code sent and phone number saved' });
       } catch (error) {
         console.error('Error during phone verification:', error);
