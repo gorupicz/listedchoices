@@ -147,6 +147,8 @@ function Login() {
     e.preventDefault(); // Prevent form from refreshing the page
 
     const cleanedEmail = validator.trim(email);
+    console.log('Cleaned email:', cleanedEmail);
+
     if (!validator.isEmail(cleanedEmail)) {
       handleShowModal(t('invalidEmailMessage'), true);  // Show invalid email modal
       return;
@@ -185,6 +187,7 @@ function Login() {
         }
       }
     } catch (error) {
+      console.error('Error during login:', error);
       handleShowModal(t('defaultErrorMessage'), true);  // Show error modal
     }
   };

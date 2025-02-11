@@ -137,7 +137,7 @@ function Hero ({ data }) {
             return (
               <div
                 id={item.anchor}
-                className="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal ltn__slide-item-3 ltn__slide-item-11"
+                className="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3-normal ltn__slide-item-3 ltn__slide-item-11 ltn__slide-item-bg-main-image"
                 key={key}
               >
                 <div
