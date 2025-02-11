@@ -45,54 +45,58 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        console.log('Authorize function called');
+        console.log('Received credentials:', credentials);
+
+        if (!credentials.email || !credentials.password) {
+          console.error('Missing email or password');
+          return null;
+        }
+
         try {
           // Find user by email
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
+            select: {
+              id: true,
+              password: true,
+              isVerified: true,
+              photograph: true,
+              first_name: true,
+              email: true,
+              phoneIsVerified: true,
+            },
           });
+
+          console.log('User found:', user);
 
           if (!user) {
             console.error('No user found with the given email');
-            return null;
+            return null;  
           }
 
           // Check if the password is correct
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
-          if (!isPasswordValid) {
-            return null;
-          }
-          console.log('user.isVerified:', user.isVerified);
-          if (!(user.isVerified)) {
-            console.log('Sending verification email...', credentials.email);
-            
-              // Generate a verification code if not provided in the request
-              const code = Math.floor(100000 + Math.random() * 900000).toString();
+          console.log('Password valid:', isPasswordValid);
 
-              // Update the user's verification code in the database
-              await prisma.user.update({
-                where: { email: credentials.email },
-                data: { verificationCode: code },
-              });
-              console.log('Verification code updated in database', "code:",code);
-              // Send verification email
-              await sendEmail({
-                to: credentials.email,
-                subject: emailData.verificationEmailSubject.replace('{code}', code),
-                body: emailData.verificationEmailBody.replace('{code}', code),  // Format the email body
-              });
-              console.log('Verification email sentFOO');
-              return { isVerified: false };
-            
+          if (!isPasswordValid) {
+            console.error('Invalid password');
+            return null;
           }
 
           if (user && isPasswordValid && user.isVerified) {
+            console.log('User is verified and authenticated');
             return {
               id: user.id,
               isVerified: user.isVerified,
               photograph: user.photograph,
               first_name: user.first_name,
-              email: user.email
+              email: user.email,
+              phoneIsVerified: user.phoneIsVerified,
             };
+          } else {
+            console.error('User is not verified');
+            return null;
           }
         } catch (error) {
           console.error('Error during authorization:', error);
@@ -179,24 +183,30 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      if (session.user && token) {
-        session.user.id = token.id;
-        session.user.isVerified = token.isVerified;
-        session.user.photograph = token.photograph;
-        session.user.first_name = token.first_name;
-        session.user.email = token.email;
-      }
+      session.user.id = token.id;
+      session.user.isVerified = token.isVerified;
+      session.user.photograph = token.photograph;
+      session.user.first_name = token.first_name;
+      session.user.phoneIsVerified = token.phoneIsVerified;
+      session.user.idVerificationInProgress = token.idVerificationInProgress;
       return session;
     },
 
-    async jwt({ token, user }) {
-      if (user) {
+    async jwt({ token, user, account }) {
+      // Initial sign in
+      if (account && user) {
         token.id = user.id;
         token.isVerified = user.isVerified;
         token.photograph = user.photograph;
         token.first_name = user.first_name;
-        token.email = user.email;
+        token.phoneIsVerified = user.phoneIsVerified;
       }
+
+      // Update token with new information
+      if (user?.idVerificationInProgress !== undefined) {
+        token.idVerificationInProgress = user.idVerificationInProgress;
+      }
+
       return token;
     },
   },

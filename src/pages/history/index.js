@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import { Layout } from "@/layouts";
-import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import TitleSection from "@/components/titleSection";
 import Slider from "react-slick";
@@ -10,14 +9,64 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { productSlug } from "@/lib/product";
 import BlogItem from "@/components/blog";
 import blogData from "@/data/blog";
-import {
-    FaTrophy,
-    FaAward,
-    FaMedal,
-} from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
+import * as Icons from 'react-icons/fa';
+import { signOut, getSession, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
 
-function HistoryPage() {
+    if (session) {
+        return {
+            props: { user: session.user },
+        };
+    }
+
+    return {
+        props: { user: null },
+    };
+}
+
+function HistoryPage( ) {
+    const { t } = useTranslation('history');
+
+    const { data: session, update } = useSession(); // Get session data and update function
+    const [sessionUpdated, setSessionUpdated] = useState(false);
+
+    useEffect(() => {
+        if (!sessionUpdated) {
+            update().then(() => {
+                setSessionUpdated(true);
+                console.log('Session after update:', session);
+            });
+        }
+    }, [sessionUpdated, update]);
+
+    useEffect(() => {
+        if (session) {
+            console.log('Session data:', session);
+        }
+    }, [session]);
+
+    const userEmailIsVerified = session?.user?.isVerified || false;
+    const userPhoneIsVerified = session?.user?.phoneIsVerified === true || false;
+    const userIdIsVerified = session?.user?.idIsVerified === true || false;
+    const idVerificationInProgress = session?.user?.idVerificationInProgress === true || false;
+    console.log('idVerificationInProgress:', idVerificationInProgress);
+    let defaultActiveKey = 'first';
+    if (session) {
+        if (userIdIsVerified || idVerificationInProgress) {
+            defaultActiveKey = 'fourth';
+        } else if (userPhoneIsVerified) {
+            defaultActiveKey = 'third';
+        } else if (userEmailIsVerified) {
+            defaultActiveKey = 'second';
+        }
+    }
+    console.log('Default active key:', defaultActiveKey);
+    
+    const slides = t('slides', { returnObjects: true });
 
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
         <button
@@ -74,154 +123,67 @@ function HistoryPage() {
         ],
     };
     return (
-        <Layout topbar={true}>
-            <ShopBreadCrumb title="Our History" sectionPace="" currentSlug="History" />
-
+        <Layout topbar={false}>
             <div className="ltn__our-history-area pb-100">
                 <Container>
                     <Row>
                         <Col xs={12}>
-                            <Tab.Container defaultActiveKey="first">
-                                <div className="ltn__our-history-inner">
+                            <Tab.Container defaultActiveKey={defaultActiveKey}>
+                                <div className="ltn__our-history-inner ltn__slide-item-bg-main-image">
                                     <div className="ltn__tab-menu text-uppercase">
                                         <Nav>
-                                            <Nav.Link eventKey="first">1900</Nav.Link>
-                                            <Nav.Link eventKey="second">1940</Nav.Link>
-                                            <Nav.Link eventKey="third">2000</Nav.Link>
-                                            <Nav.Link eventKey="fourth">2010</Nav.Link>
-                                            <Nav.Link eventKey="five">2021</Nav.Link>
+                                            {slides.map((slide, index) => (
+                                                <Nav.Link key={index} eventKey={slide.eventKey}>
+                                                    {slide.tabMenuText}
+                                                </Nav.Link>
+                                            ))}
                                         </Nav>
                                     </div>
                                     <Tab.Content>
-                                        <Tab.Pane eventKey="first">
-                                            <div className="ltn__product-tab-content-inner">
-                                                <Row>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-img-wrap about-img-left">
-                                                            <img src="/img/img-slide/12.jpg" alt="Image" />
-                                                            <div className="ltn__history-icon">
-                                                                <FaAward />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-info-wrap">
-                                                            <div className="section-title-area">
-                                                                <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">Our History</h6>
-                                                                <h1 className="section-title">We Started Our Journey</h1>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                                                            </div>
-
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua. consectetur adipis icing elit, sed do eius mod t</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="second">
-                                            <div className="ltn__product-tab-content-inner">
-                                                <Row>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-img-wrap about-img-left">
-                                                            <img src="/img/img-slide/11.jpg" alt="Image" />
-                                                            <div className="ltn__history-icon">
-                                                                <i className="icon-award"></i>
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-info-wrap">
-                                                            <div className="section-title-area">
-                                                                <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">Get rewards</h6>
-                                                                <h1 className="section-title">It Was An Sweet
-                                                                    Journey Time</h1>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                                                            </div>
-
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua. consectetur adipis icing elit, sed do eius mod t</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="third">
-                                            <div className="ltn__product-tab-content-inner">
-                                                <Row>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-img-wrap about-img-left">
-                                                            <img src="/img/img-slide/13.jpg" alt="Image" />
-                                                            <div className="ltn__history-icon">
-                                                                <FaMedal />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-info-wrap">
-                                                            <div className="section-title-area">
-                                                                <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">Get rewards</h6>
-                                                                <h1 className="section-title">It Was An Sweet
-                                                                    Journey Time</h1>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                                                            </div>
-
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua. consectetur adipis icing elit, sed do eius mod t</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="fourth">
-                                            <div className="ltn__product-tab-content-inner">
-                                                <Row>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-img-wrap about-img-left">
-                                                            <img src="/img/img-slide/12.jpg" alt="Image" />
-                                                            <div className="ltn__history-icon">
-                                                                <FaAward />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-info-wrap">
-                                                            <div className="section-title-area">
-                                                                <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">Get rewards</h6>
-                                                                <h1 className="section-title">It Was An Sweet
-                                                                    Journey Time</h1>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                                                            </div>
-
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua. consectetur adipis icing elit, sed do eius mod t</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="five">
-                                            <div className="ltn__product-tab-content-inner">
-                                                <Row>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-img-wrap about-img-left">
-                                                            <img src="/img/img-slide/11.jpg" alt="Image" />
-                                                            <div className="ltn__history-icon">
-                                                                <FaTrophy />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} lg={6} className="align-self-center">
-                                                        <div className="about-us-info-wrap">
-                                                            <div className="section-title-area">
-                                                                <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">Get rewards</h6>
-                                                                <h1 className="section-title">It Was An Sweet
-                                                                    Journey Time</h1>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                                                            </div>
-
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua. consectetur adipis icing elit, sed do eius mod t</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </Tab.Pane>
+                                        {slides.map((slide, index) => {
+                                            const IconComponent = Icons[slide.icon];
+                                            return (
+                                                <Tab.Pane key={index} eventKey={slide.eventKey}>
+                                                    <div className="ltn__product-tab-content-inner">
+                                                        <Row>
+                                                            <Col xs={12} lg={6} className="align-self-center">
+                                                                <div className="about-us-img-wrap about-img-left">
+                                                                    <Image 
+                                                                        src={slide.image} 
+                                                                        alt="Image" 
+                                                                        width={800} 
+                                                                        height={570} 
+                                                                        layout="responsive"
+                                                                    />
+                                                                    <div className="ltn__history-icon">
+                                                                        {IconComponent && <IconComponent />}
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col xs={12} lg={6} className="align-self-center">
+                                                                <div className="about-us-info-wrap">
+                                                                    <div className="section-title-area">
+                                                                        <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">{slide.subtitle}</h6>
+                                                                        <h1 className="section-title">{slide.title}</h1>
+                                                                        <p>{slide.description}</p>
+                                                                    </div>
+                                                                    {slide.additionalDescription && <p>{slide.additionalDescription}</p>}
+                                                                </div>
+                                                                <div className="btn-wrapper">
+                                                                    <Link
+                                                                        href={slide.buttonLink}
+                                                                        className="btn theme-btn-1 btn-effect-4"
+                                                                        id="main-call-to-action-at-home-for-gtm-tracking"
+                                                                    >
+                                                                        {slide.buttonText}
+                                                                    </Link>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                    </div>
+                                                </Tab.Pane>
+                                            );
+                                        })}
                                     </Tab.Content>
                                 </div>
                             </Tab.Container>

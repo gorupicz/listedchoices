@@ -1,0 +1,64 @@
+{
+  "slides": [
+    {
+      "tabMenuText": "Create Account",
+      "eventKey": "first",
+      "title": "Allow your clients to validate what's your email",
+      "subtitle": "Create account",
+      "description": "The first step is to create an account in Bolsa de Casas. Your data will not be shared with anyone but your clients.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaAward",
+      "buttonText": "Get started",
+      "buttonLink": "/register"
+    },
+    {
+      "tabMenuText": "Verify Phone",
+      "eventKey": "second",
+      "title": "Verify your phone number is yours",
+      "subtitle": "Get rewards",
+      "description": "Enter your phone number to get o one-time verification code",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaAward",
+      "buttonText": "Simula tu crédito",
+      "buttonLink": "https://formless.ai/c/mGzBOphF10BF"
+    },
+    {
+      "tabMenuText": "Verify ID",
+      "eventKey": "third",
+      "title": "It Was A Sweet Journey Time",
+      "subtitle": "Get rewards",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaMedal",
+      "buttonText": "Simula tu crédito",
+      "buttonLink": "https://formless.ai/c/mGzBOphF10BF"
+    },
+    {
+      "tabMenuText": "Check Status",
+      "eventKey": "fourth",
+      "title": "It Was A Sweet Journey Time",
+      "subtitle": "Get rewards",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaAward",
+      "buttonText": "Simula tu crédito",
+      "buttonLink": "https://formless.ai/c/mGzBOphF10BF"
+    },
+    {
+      "tabMenuText": "Share",
+      "eventKey": "fifth",
+      "title": "It Was A Sweet Journey Time",
+      "subtitle": "Get rewards",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaTrophy",
+      "buttonText": "Simula tu crédito",
+      "buttonLink": "https://formless.ai/c/mGzBOphF10BF"
+    }
+  ]
+}
