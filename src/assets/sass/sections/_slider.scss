@@ -5,6 +5,8 @@
   padding-top: 100px;
   padding-bottom: 100px;
   height: 750px;
+}
+.ltn__slide-item-bg-main-image {
   background-image: url(/img/backgrounds/real-state-pattern-icons.svg);
   background-repeat: repeat;
   background-size: cover;
@@ -1156,7 +1158,7 @@
 }
 
 @media (max-width: 767px) {
-  .ltn__slide-item {
+  .ltn__slide-item-bg-main-image {
   background-image: url(/img/backgrounds/real-state-pattern-icons-mobile.svg);
   background-repeat: repeat;
   background-size: cover;

@@ -3644,6 +3644,32 @@ blockquote {
   }
 }
 
+.webcam-container {
+  position: relative;
+width: 100%;
+&::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    pointer-events: none; // Ensures the pseudo-element doesn't interfere with interactions
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px; /* Top offset of the outline */
+    left: 10px; /* Left offset of the outline */
+    right: 10px; /* Right offset of the outline */
+    bottom: 90px; /* Different bottom offset */
+    border: 2px #fff; /* Border color */
+    border-style: dashed solid;
+    z-index: 999; /* Ensure the pseudo-element is behind the content */
+  }
+}
+
 .google-map {
   height: 800px;
 }
@@ -4886,11 +4912,27 @@ input.cart-plus-minus-box {
     About Us Area
 ---------------------------------------------------- */
 .about-us-img-wrap {
-  position: relative;
+    position: relative;
+    width: 100%;
+    height: auto; // Ensure the container adapts to the image's aspect ratio
 
-  img {
-    margin: 0;
-  }
+    .about-img-left {
+        margin-right: 30px;
+        // Ensure the image is responsive
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .about-us-img-wrap {
+        .about-img-left {
+            margin-right: 0;
+            margin-bottom: 20px; // Add margin for spacing on smaller screens
+        }
+    }
 }
 
 .about-us-img-info {
@@ -4998,7 +5040,6 @@ input.cart-plus-minus-box {
 }
 
 .about-us-info-wrap {
-  margin-top: 60px;
   position: relative;
 
   .btn-wrapper {

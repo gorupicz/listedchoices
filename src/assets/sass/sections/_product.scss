@@ -679,7 +679,7 @@
     Product Tab
 ---------------------------------------------------- */
 .ltn__tab-menu {
-  margin-bottom: 50px;
+  margin: 20px 0 50px;
 }
 .ltn__tab-menu .nav {
   // display: inline-block;
@@ -848,10 +848,20 @@
 }
 
 @media (max-width: 991px) {
+  .ltn__tab-menu {
+    margin: 20px 0 10px;
+    .nav {  
+      justify-content:left !important;
+      &::before {
+        display: none;
+      }
+    }
+  }
   .ltn__gallery-filter-menu button,
   .ltn__tab-menu .nav-link {
     padding: 15px 25px;
-    font-size: 14px;
+    font-size: 10px;
+
   }
   .ltn__tab-menu-top-right {
     position: initial;

@@ -293,6 +293,32 @@
   }
 }
 
+.camera-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--ltn__primary-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    outline: 3px solid white;
+    outline-offset: -5px;
+    z-index: 999;
+  &:hover {
+    background-color: var(--ltn__secondary-color);
+    outline: 3px solid white;
+    outline-offset: -5px;
+  }
+}
+
 .language-btn {
   background-color: inherit;
   color: inherit;
