@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { getSession } from "next-auth/react";
 import prisma from '@/lib/prisma'; // Import your Prisma client
 import AccreditationTab from "@/components/accreditationTab/";
+import Cookies from 'js-cookie';
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
@@ -42,6 +43,7 @@ function AccreditationPage({ user }) {
 
     let defaultActiveKey = 'first';
     if (user) {
+        Cookies.remove('redirectAfterAuthenticated');
         slides[0].isInactive = true;
         const userEmailIsVerified = user.isVerified || false;
         const userPhoneIsVerified = user.phoneIsVerified === true || false;
@@ -59,7 +61,10 @@ function AccreditationPage({ user }) {
         } else if (userEmailIsVerified) {
             defaultActiveKey = 'second';
         }
+    } else {
+        Cookies.set('redirectAfterAuthenticated', window.location.pathname, { expires: 1, path: '/' });
     }
+
 
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
         <button
