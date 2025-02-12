@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const ErrorSuccessModal = ({ show, handleClose, isError, content }) => {
+const ErrorSuccessModal = ({ show = false, handleClose, content }) => {
   return (
     <Modal
       show={show}
@@ -22,11 +22,11 @@ const ErrorSuccessModal = ({ show, handleClose, isError, content }) => {
             <div className="row">
               <div className="col-12">
                 <div className="modal-product-info text-center">
-                  <h4>{isError ? content.errorModalTitle : content.successModalTitle}</h4>
-                  <p className="added-cart">{content.modalMessage}</p>
+                  <h4>{content.title}</h4>
+                  <p className="added-cart">{content.message}</p>
                   <div className="btn-wrapper mt-0">
                     <Button className="theme-btn-1 btn btn-full-width-2" onClick={handleClose}>
-                      {content.modalSubmitText}
+                      {content.submitText}
                     </Button>
                   </div>
                 </div>

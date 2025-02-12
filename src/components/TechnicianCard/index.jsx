@@ -6,6 +6,8 @@ import { createAvatar } from '@dicebear/avatars';
 import * as personasStyle from '@dicebear/personas';
 import { productSlug } from "@/lib/product";
 import { useState } from 'react';
+import Cookies from 'js-cookie';
+
 
 const TechnicianCard = ({ item, showVotes = true }) => {
   const [hasVoted, setHasVoted] = useState(false);
@@ -34,6 +36,7 @@ const TechnicianCard = ({ item, showVotes = true }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': Cookies.get('i18next') || 'en',
         },
         body: JSON.stringify({ id, type }),
       });

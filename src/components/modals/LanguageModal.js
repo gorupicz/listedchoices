@@ -14,12 +14,22 @@ const LanguageModal = ({ show, handleClose }) => {
     // Add more languages here
   ];
 
-  const switchLanguage = (lang) => {
+  async function switchLanguage (lang) {
     const currentLang = Cookies.get('i18next');
     if (currentLang !== lang) {
+      //Change language in the client side
+      Cookies.set('i18next', lang);
       const pathWithoutLang = router.asPath.replace(/^\/(en|es)(\/|$)/, '/');
       const newPath = `/${lang}${pathWithoutLang}`;
       window.location.href = newPath;
+      // Update the session with the new language
+      await fetch('/api/update-language', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ language: lang }),
+      });
     }
     handleClose();
   };

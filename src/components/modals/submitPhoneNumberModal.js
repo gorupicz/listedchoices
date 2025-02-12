@@ -49,7 +49,7 @@ const submitPhoneNumberModal = ({ show, handleClose, handleOnSubmit, phoneNumber
                       }}
                     />
                     <div className="btn-wrapper mt-30">
-                      <button className="theme-btn-1 btn btn-full-width-2" type="submit">
+                      <button className="theme-btn-2 btn btn-full-width-2" type="submit">
                         {content.modalSubmitButtonText}
                       </button>
                     </div>
