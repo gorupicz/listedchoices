@@ -1,0 +1,55 @@
+{
+  "slides": [
+    {
+      "tabMenuText": "Crear cuenta",
+      "eventKey": "first",
+      "title": "Tranquilidad para Administradores de Propiedades y Brokers",
+      "subtitle": "Crear cuenta",
+      "description": "El primer paso para ser acreditado es crear una cuenta. Es gratis y tus datos no se compartirán con nadie más que tus clientes.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaHandshake",
+      "buttonText": "Comenzar",
+      "inactiveButtonText": "Conectado",
+      "buttonLink": "/register"
+    },
+    {
+      "tabMenuText": "Verificación de teléfono",
+      "eventKey": "second",
+      "title": "Para prevenir estafas, no hables con extraños",
+      "subtitle": "Teléfono y WhatsApp",
+      "description": "Tus reservas directas se manejan por teléfono, pero ¿sabes con quién estás hablando? Verifica tu número de teléfono para estar seguro.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaWhatsapp",
+      "buttonText": "Verificar teléfono",
+      "inactiveButtonText": "Teléfono verificado",
+      "buttonLink": "/register/phone-verification"
+    },
+    {
+      "tabMenuText": "Verificación de ID",
+      "eventKey": "third",
+      "title": "Sonríe a más huéspedes y reservas",
+      "subtitle": "Verificación biométrica",
+      "description": "Tan simple como tomarse una selfie, verificaremos tu INE o Pasaporte usando IA. Tu credencial se almacenará de forma segura y nunca se compartirá con nadie.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaIdCard",
+      "buttonText": "Tomar foto",
+      "inactiveButtonText": "ID verificado",
+      "buttonLink": "/register/id-verification"
+    },
+    {
+      "tabMenuText": "Compartir",
+      "eventKey": "fourth",
+      "title": "Comparte tu certificado con tus clientes",
+      "subtitle": "Enlace personalizado",
+      "description": "Envía a tus clientes un enlace personalizado a tu certificado. Pueden verlo en su teléfono.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaCertificate",
+      "buttonText": "Compartir certificado",
+      "buttonLink": "/my-account"
+    }
+  ]
+}

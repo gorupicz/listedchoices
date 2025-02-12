@@ -1,0 +1,55 @@
+{
+  "slides": [
+    {
+      "tabMenuText": "Create Account",
+      "eventKey": "first",
+      "title": "Peace of mind for Property Managers and Brokers",
+      "subtitle": "Create account",
+      "description": "The first step to be accredited is to create an account. It's free and your data will not be shared with anyone but your clients.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaHandshake",
+      "buttonText": "Get started",
+      "inactiveButtonText": "Signed in",
+      "buttonLink": "/register"
+    },
+    {
+      "tabMenuText": "Phone Verification",
+      "eventKey": "second",
+      "title": "Don't talk to strangers to avoid scams",
+      "subtitle": "Phone & WhatsApp",
+      "description": "Your direct bookings are handled by phone, but do you know who is talking to you? Verify your phone number to be sure.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaWhatsapp",
+      "buttonText": "Verify phone",
+      "inactiveButtonText": "Phone verified",
+      "buttonLink": "/register/phone-verification"
+    },
+    {
+      "tabMenuText": "ID verification",
+      "eventKey": "third",
+      "title": "Smile to more guests and clients",
+      "subtitle": "Biometric verification",
+      "description": "As simple as taking a selfie, we'll verify your ID using AI. Your ID will be stored securely and never shared with anyone.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaIdCard",
+      "buttonText": "Take photo",
+      "inactiveButtonText": "ID verified",
+      "buttonLink": "/register/id-verification"
+    },
+    {
+      "tabMenuText": "Share",
+      "eventKey": "fourth",
+      "title": "Share your Certificate with your clients",
+      "subtitle": "Personalized link",
+      "description": "Send your clients a personalized link to your certificate. They can view it on their phone.",
+      "additionalDescription": "",
+      "image": "/img/img-slide/11.jpg",
+      "icon": "FaCertificate",
+      "buttonText": "Share certificate",
+      "buttonLink": "/my-account"
+    }
+  ]
+}
