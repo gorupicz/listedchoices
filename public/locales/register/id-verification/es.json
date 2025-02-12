@@ -1,5 +1,6 @@
 {
-  "pageTitle": "Verifica tu número de teléfono",
+  "pageTitle": "Verifica tu identidad",
+  "pageDescription": "Tómate una selfie sosteniendo tu INE o Pasaporte para verificar tu identidad.",
   "verificationCodePlaceholder": "Introduce tu código de 6 dígitos",
   "submitButtonText": "Verificar",
   "successMessage": "Tu número de teléfono ha sido verificado con éxito.",

@@ -6,6 +6,10 @@
   "errorMessage": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
   "successModalTitle": "Verificación exitosa",
   "errorModalTitle": "Verificación fallida",
-  "modalSubmitText": "Iniciar sesión",
-  "goBackToLoginText": "VOLVER A INICIAR SESIÓN"
+  "modalSubmitText": "Aceptar",
+  "goBackToLoginText": "VOLVER A INICIAR SESIÓN",  
+  "verificationEmailSubject": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas",
+  "verificationEmailBody": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas. Si no intentaste iniciar sesión, puedes ignorar este correo.",
+  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Has clic en aceptar para introducir el código.",
+  "verificationModalTitle": "Verifica tu correo electrónico"
 }

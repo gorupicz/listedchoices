@@ -1,5 +1,6 @@
 {
-  "pageTitle": "Verify Your Phone Number",
+  "pageTitle": "Verify Your Identity",
+  "pageDescription": "Take a selfie holding your ID document to verify your identity.",
   "verificationCodePlaceholder": "Enter your 6-digit code",
   "submitButtonText": "Verify",
   "successMessage": "Your phone number has been successfully verified.",
