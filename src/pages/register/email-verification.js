@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import { Layout } from "@/layouts";
 import { Row, Col } from "react-bootstrap";
@@ -6,34 +6,34 @@ import Link from "next/link";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import ErrorSuccessModal from "@/components/modals/ErrorSuccessModal";
+import Cookies from 'js-cookie';
 
-export async function getStaticProps({ locale }) {
-  i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
-  return {
-    props: {
-      // Any other props you need
-    },
-  };
-}
 function EmailVerification() {
+  console.log('EmailVerification component mounted');
   const { t } = useTranslation('register/email-verification'); 
   const [verificationCode, setVerificationCode] = useState('');
+  const [title, setTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
+  const [submitText, setSubmitText] = useState('');
   const [isError, setIsError] = useState(false);  // Track if it's an error or success modal
+  const [isVerified, setIsVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);  // Modal state
   const router = useRouter();
-  const { email } = router.query;  // Extract email from URL parameters
-
+  const { email: rawEmail } = router.query;  // Extract email from URL parameters
+  const email = rawEmail ? decodeURIComponent(rawEmail.replace(/ /g, '+')) : '';  // Decode email
   // Modal functions to show and close modal
-  const handleShowModal = (message, isError) => {
+  const handleShowModal = (title, message, submitText, isError, isVerified) => {
+    setTitle(title);
     setModalMessage(message);
+    setSubmitText(submitText);
     setIsError(isError);
     setShowModal(true);
+    setIsVerified(isVerified);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    if (!isError) {
+    if ((isError && isVerified !== true) || (!isError && isVerified === true)) {
       router.push('/login');
     }
   };
@@ -42,7 +42,7 @@ function EmailVerification() {
     e.preventDefault();
 
     if (!email) {
-      handleShowModal('Email is missing from the URL.', true);
+      handleShowModal(t(errorModalTitle),'Email is missing from the URL.',t(modalSubmitText), true, false);
       return;
     }
 
@@ -50,16 +50,48 @@ function EmailVerification() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: JSON.stringify({ email, code: verificationCode }),  // Use email from URL
     });
 
     if (res.ok) {
-      handleShowModal(t('successMessage'), false);  // Show success modal
+      handleShowModal(t('successModalTitle'),t('successMessage'),t('goBackToLoginText'), false, true);  // Show success modal
     } else {
-      handleShowModal(t('errorMessage'), true);  // Show error modal
+      handleShowModal(t('errorModalTitle'),t('errorMessage'),t('modalSubmitText'), true, false);  // Show error modal
     }
   };
+
+  useEffect(() => {
+    let isMounted = true; // Flag to ensure the effect runs only once
+
+    if (email && isMounted) {
+      console.log('emailfoobar', email);
+  
+      const verifyEmail = async () => {
+        const res = await fetch('/api/email-verification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': Cookies.get('i18next') || 'en',
+          },
+          body: JSON.stringify({ email: email }),  // Use email from URL
+        });
+
+        if (res.ok) {
+          handleShowModal(t('verificationModalTitle'), t('verificationCodeSentMessage'), t('modalSubmitText'), false, false);  // Show success modal
+        } else {
+          handleShowModal(t('errorModalTitle'),'There is a problem with the email verification process. Please try again later.',t('modalSubmitText'), true, false);  // Show error modal
+        }
+      };
+
+      verifyEmail();
+    }
+
+    return () => {
+      isMounted = false; // Cleanup function to set the flag to false
+    };
+  }, []);  // Ensure this runs only once on initial load
 
   return (
     <>
@@ -107,12 +139,10 @@ function EmailVerification() {
       <ErrorSuccessModal
         show={showModal}
         handleClose={handleCloseModal}
-        isError={isError}
         content={{
-          errorModalTitle: t('errorModalTitle'),
-          successModalTitle: t('successModalTitle'),
-          modalSubmitText: t('modalSubmitText'),
-          modalMessage: modalMessage
+          title: title,
+          submitText: submitText,
+          message: modalMessage
         }}
       />
     </>

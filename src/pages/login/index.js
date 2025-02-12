@@ -13,6 +13,8 @@ import SubmitEmailModal from "@/components/modals/submitEmailModal";
 import MessageModal from "@/components/modals/MessageModal";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import Cookies from 'js-cookie';
+
 
 export async function getStaticProps({ locale }) {
   i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
@@ -97,12 +99,6 @@ function Login() {
       setShowForgotPassword(true);
       setReopenForgotPassword(false);  // Reset state
     }
-    if (!isError) {
-      // Redirect to email verification only if the action was related to verification
-      if (modalMessage === t('verificationCodeSentMessage')) {
-        router.push(`/register/email-verification?email=${email}`);
-      }
-    }
   };
 
   const handleCloseForgotPassword = () => setShowForgotPassword(false);
@@ -124,6 +120,7 @@ function Login() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: JSON.stringify({ 
         email: cleanedEmail,
@@ -154,29 +151,20 @@ function Login() {
       return;
     }
 
-    console.log('Executing reCAPTCHA...');
-    const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'login' });
-
-    if (!token) {
-      handleShowModal(t('recaptchaErrorMessage'), true);
-      return;
-    }
-
     try {
       console.log('Sending login request...');
       const result = await signIn('credentials', {
         email: cleanedEmail,
         password,
-        recaptchaToken: token, // Send reCAPTCHA token
         redirect: false // Ensure no automatic redirect
       });
 
       console.log('Login result:', result); // Log the result
 
-      if (result.status === 401) {
+      if (result.error === '401') {
         handleShowModal(t('errorInvalidEmailOrPasswordModalMessage'), true);  // Show error modal
-      } else if (result.error === '203') {
-        handleShowModal(t('verificationCodeSentMessage'), false);
+      } else if (result.error === 'Email not verified') {
+        router.push(`/register/email-verification?email=${cleanedEmail}`);
       } else if (!hasRedirected) {
         const redirectUrl = getCookie('redirectAfterAuthenticated');
         if (redirectUrl) {

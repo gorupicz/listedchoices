@@ -18,11 +18,12 @@ export async function getServerSideProps(context) {
 
   const session = await getSession(context);
 
-   if (!session || session.user.idIsVerified === true || session.user.idPhotograph !== null) {
+  if (session.user.idPhotograph) {
+     console.log('Session foobar:', session);
 
     return {
       redirect: {
-        destination: '/history',
+        destination: '/accreditation',
         permanent: false,
       },
     };
@@ -98,8 +99,8 @@ function IdVerification({ user }) {
         // Refresh the session to update the state
         await update(); // Use the update function to refresh the session
         console.log('Session after update:', await getSession()); // Log the session to verify
-        // Redirect to /history after successful upload
-        router.push('/history');
+        // Redirect to /accreditation after successful upload
+        router.push('/accreditation');
         handleShowModal(t('successMessage'), false);
       } else {
         console.error('Error:', result.error);
@@ -124,8 +125,9 @@ function IdVerification({ user }) {
           <div className="container">
             <Row>
               <Col xs={12}>
-                <div className="section-title-area text-center">
-                  <h1 className="section-title">{t('pageTitle')}</h1>
+                <div className="section-title-area text-center mb-10">
+                  <h1 className="section-title mb-10">{t('pageTitle')}</h1>
+                  <p>{t('pageDescription')}</p>
                 </div>
               </Col>
             </Row>
@@ -139,6 +141,7 @@ function IdVerification({ user }) {
                       ) : (
                         <Webcam
                           audio={false}
+                          mirrored={true}
                           ref={webcamRef}
                           screenshotFormat="image/jpeg"
                           videoConstraints={videoConstraints}
@@ -159,11 +162,6 @@ function IdVerification({ user }) {
                       </button>
                     </div>
                   </form>
-                  <div className="by-agree text-center mt-20 border-top">
-                    <div className="go-to-btn mt-20">
-                      <Link href="/login"><b>{t('goBackToLoginText')}</b></Link>
-                    </div>
-                  </div>
                 </div>
               </Col>
             </Row>

@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
 import loginData from "@/data/login/password-reset.json";  // Import the text content
+import Cookies from 'js-cookie';
 
 function PasswordReset() {
   const [newPassword, setNewPassword] = useState('');
@@ -56,6 +57,8 @@ function PasswordReset() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': Cookies.get('i18next') || 'en',
+
       },
       body: JSON.stringify({ 
         token, 

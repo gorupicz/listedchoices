@@ -9,6 +9,7 @@ import i18next from 'i18next';
 import SubmitPhoneNumberModal from "@/components/modals/submitPhoneNumberModal";
 import ErrorSuccessModal from "@/components/modals/ErrorSuccessModal";
 import { signOut, getSession, useSession } from "next-auth/react";
+import Cookies from 'js-cookie';
 
 export async function getServerSideProps(context) {
   const { locale } = context;
@@ -19,7 +20,7 @@ export async function getServerSideProps(context) {
   if (!session || session.user.phoneIsVerified === true) {
     return {
       redirect: {
-        destination: '/history',
+        destination: '/accreditation',
         permanent: false,
       },
     };
@@ -37,23 +38,30 @@ function PhoneVerification({ user }) {
   const [isError, setIsError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showPhoneVerificationModal, setShowPhoneVerificationModal] = useState(true); // Show phone verification modal initially
+  const [title, setTitle] = useState('');
+  const [submitText, setSubmitText] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
   const router = useRouter();
+  const { data: session, update } = useSession(); // Destructure session data
 
   useEffect(() => {
     setShowPhoneVerificationModal(true); // Show the phone verification modal when the page loads
   }, []);
 
   // Modal functions to show and close modal
-  const handleShowModal = (message, isError) => {
+  const handleShowModal = (title, message, submitText, isError, isVerified) => {
+    setTitle(title);
     setModalMessage(message);
+    setSubmitText(submitText);
     setIsError(isError);
     setShowModal(true);
+    setIsVerified(isVerified);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
     if (!isError) {
-      router.push('/register/identity-verification');
+      router.push('/register/id-verification');
     }
   };
 
@@ -67,6 +75,7 @@ function PhoneVerification({ user }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: JSON.stringify({ phoneNumber, userId: user.id }), // Use user.id from props
     });
@@ -75,16 +84,16 @@ function PhoneVerification({ user }) {
     } else {
       setShowPhoneVerificationModal(false);
       if (res.status === 400) {//Phone number is required
-        handleShowModal(t('otpSendErrorMessage'), true);
+        handleShowModal(t('errorModalTitle'), t('otpSendErrorMessage'), t('modalSubmitText'), true, false);
       }
       else if (res.status === 401) {//token expired or unauthorized
-        handleShowModal(t('otpSendErrorMessage'), true);
+        handleShowModal(t('errorModalTitle'), t('otpSendErrorMessage'), t('modalSubmitText'), true, false);
       }
       else if (res.status === 404) { //user not found
-        handleShowModal(t('otpSendErrorMessage'), true);
+        handleShowModal(t('errorModalTitle'), t('otpSendErrorMessage'), t('modalSubmitText'), true, false);
       }
       else if (res.status === 405) {//method not allowed
-        handleShowModal(t('otpSendErrorMessage'), true);
+        handleShowModal(t('errorModalTitle'), t('otpSendErrorMessage'), t('modalSubmitText'), true, false);
       }
     }
   };
@@ -92,19 +101,24 @@ function PhoneVerification({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate the OTP
     const res = await fetch('/api/phone-verification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: JSON.stringify({ code: verificationCode, userId: user.id }),
     });
 
     if (res.ok) {
-      handleShowModal(t('successMessage'), false);
+      // Manually update the session data on the client-side
+      if (session) {
+        session.user.phoneIsVerified = true;
+      }
+      await update(); // Refresh the session
+      handleShowModal(t('successModalTitle'), t('successMessage'), t('modalSubmitText'), false, true);
     } else {
-      handleShowModal(t('errorMessage'), true);
+      handleShowModal(t('errorModalTitle'), t('errorMessage'), t('modalSubmitText'), true, false);
     }
   };
 
@@ -160,18 +174,16 @@ function PhoneVerification({ user }) {
           modalTitle: t('phoneVerificationModalTitle'),
           modalDescription: t('phoneVerificationModalDescription'),
           phonePlaceholder: t('phoneNumberPlaceholder'),
-          modalSubmitButtonText: t('sendVerificationCodeButton')
+          modalSubmitButtonText: t('sendVerificationCodeButtonText')
         }}
       />
       <ErrorSuccessModal
         show={showModal}
         handleClose={handleCloseModal}
-        isError={isError}
         content={{
-          errorModalTitle: t('errorModalTitle'),
-          successModalTitle: t('successModalTitle'),
-          modalSubmitText: t('modalSubmitText'),
-          modalMessage: modalMessage
+          title: title,
+          submitText: submitText,
+          message: modalMessage
         }}
       />
     </>

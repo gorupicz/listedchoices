@@ -12,6 +12,7 @@ import { FaFacebook, FaEnvelope } from 'react-icons/fa';
 import MessageModal from "@/components/modals/MessageModal";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import Cookies from 'js-cookie';
 
 export async function getStaticProps({ locale }) {
   i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
@@ -90,9 +91,9 @@ function Register() {
     const cleanedFirstName = validator.trim(first_name);
     const cleanedLastName = validator.trim(last_name);
 
-    const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
+    const recaptchaToken = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
 
-    if (!token) {
+    if (!recaptchaToken) {
       handleShowModal(t('recaptchaErrorMessage'), true);
       return;
     }
@@ -102,22 +103,21 @@ function Register() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': Cookies.get('i18next') || 'en',
         },
         body: JSON.stringify({
           email: cleanedEmail,
           password,
           first_name: cleanedFirstName,
           last_name: cleanedLastName,
-          subject: t('verificationEmailSubject'),
-          body: t('verificationEmailBody'),
-          recaptchaToken: token,
+          recaptchaToken: recaptchaToken,
         }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        handleShowModal(t('verificationCodeSentMessage'), false);
+        router.push(`/register/email-verification?email=${encodeURIComponent(cleanedEmail)}`);
       } else {
         handleShowModal(data.message || t('defaultErrorMessage'), true);
       }
