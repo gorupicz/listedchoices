@@ -280,6 +280,7 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': Cookies.get('i18next') || 'en',
         },
         body: JSON.stringify({ 
           propertyId: productMYSQL.id,
@@ -305,6 +306,7 @@ function ProductDetails({ productMYSQL, productMONGO, followRequestStatus, ogMet
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': Cookies.get('i18next') || 'en',
         },
         body: JSON.stringify({ 
           propertyId: productMYSQL.id,

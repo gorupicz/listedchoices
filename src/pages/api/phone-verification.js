@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       });
       console.log('User:', user);
       if (!user) {
-        return res.status(404).json({ error: 'No user found with the given email' });
+        return res.status(404).json({ error: 'No user found' });
 
       }
 
@@ -27,26 +27,27 @@ export default async function handler(req, res) {
           code: code,
           verificationSid: user.phoneVerificationSID,
         });
-      await prisma.user.update({
-        where: { id: userId },
-        data: { 
-          phoneIsVerified: verificationCheck.status,
-        },
-      });
       if (verificationCheck.status === 'approved') {
+        await prisma.user.update({
+        where: { id: userId },
+        data: { phoneIsVerified: true },
+      });
         // Update the session with the new phoneIsVerified
         const session = await getSession({ req });
+        console.log('Session before update at API:', session);
         if (session) {
-          session.user.phoneIsVerified = verificationCheck.status;
+          session.user.phoneIsVerified = true;
+          console.log('Session updated in API:', session);
         }
-        return res.status(200).json({ message: 'Phone number verified successfully' });
+        return res.status(200).json({ message: 'Phone number verified successfully', phoneIsVerified: true });
       } else {
         return res.status(400).json({ error: 'Invalid verification code' });
       }
     } else {
-      if (!phoneNumber) {
+      if (!userId || !phoneNumber) {
         return res.status(400).json({ error: 'Phone number is required' });
       }
+
       try {
         // Update the user's phone_number in the database
         await prisma.user.update({

@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
 import fetch from 'node-fetch'; // Import node-fetch for server-side requests
 import { sign } from 'jsonwebtoken';
+import Cookies from 'js-cookie';
+
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -13,6 +15,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`, // Correctly access the secret key
     });

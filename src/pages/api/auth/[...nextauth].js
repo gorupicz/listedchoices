@@ -5,10 +5,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'; // Import Cre
 import prisma from '@/lib/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from 'bcryptjs'; // Import bcrypt for password comparison
-import emailData from '@/data/emails.json';
-import { sendEmail } from '@/lib/mailer';
 
 export default NextAuth({
+  
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -45,62 +44,74 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        console.log('Authorize function called');
-        console.log('Received credentials:', credentials);
-
         if (!credentials.email || !credentials.password) {
-          console.error('Missing email or password');
-          return null;
+          console.error('Error 400: Missing email or password');
+          return Promise.reject(new Error('Missing email or password'));
         }
 
         try {
-          // Find user by email
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
             select: {
               id: true,
+              username: true,
               password: true,
-              isVerified: true,
-              photograph: true,
-              first_name: true,
               email: true,
+              phone_number: true,
+              role: true,
+              created_at: true,
+              updated_at: true,
+              first_name: true,
+              last_name: true,
+              biography: true,
+              facebook: true,
+              instagram: true,
+              linkedin: true,
+              photograph: true,
+              isVerified: true,
+              verificationCode: true,
+              phoneVerificationSID: true,
               phoneIsVerified: true,
+              idIsVerified: true,
+              idPhotograph: true,
+              accounts: true,
+              properties: true,
+              propertyFollowRequests: true,
+              propertyFollowRequestHistories: true,
+              reviews: true,
+              sessions: true,
+              bought_shares: true,
+              sold_shares: true,
+              userFollowRequests: true,
+              userFollowTargets: true,
+              userFollowRequestHistories: true,
+              _count: true
             },
           });
 
-          console.log('User found:', user);
-
           if (!user) {
-            console.error('No user found with the given email');
-            return null;  
+            console.error('Error 401: User not found');
+            return Promise.reject(new Error('User not found'));
           }
 
-          // Check if the password is correct
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
-          console.log('Password valid:', isPasswordValid);
 
           if (!isPasswordValid) {
-            console.error('Invalid password');
-            return null;
+            console.error('Error 402: Invalid password');
+            return Promise.reject(new Error('Invalid password'));
           }
 
-          if (user && isPasswordValid && user.isVerified) {
-            console.log('User is verified and authenticated');
+          if (user.isVerified) {
             return {
-              id: user.id,
-              isVerified: user.isVerified,
-              photograph: user.photograph,
-              first_name: user.first_name,
-              email: user.email,
-              phoneIsVerified: user.phoneIsVerified,
+              ...user,
             };
           } else {
-            console.error('User is not verified');
-            return null;
+            console.error('Error: Email not verified');
+            return Promise.reject(new Error('Email not verified'));
           }
         } catch (error) {
-          console.error('Error during authorization:', error);
-          return null;
+          console.error('Authorization error:', error);
+          return Promise.reject(new Error('Authorization error'));
         }
       }
     })
@@ -109,13 +120,10 @@ export default NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (!user.isVerified) {
-        throw new Error('203');
-      }
       if (account.provider === 'google' || account.provider === 'facebook') {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
-          select: { photograph: true },
+          select: { photograph: true, isVerified: true },
         });
 
         if (existingUser) {
@@ -163,7 +171,6 @@ export default NextAuth({
               first_name: profile.given_name || profile.first_name,
               last_name: profile.family_name || profile.last_name,
               photograph: profile.picture,
-              password: null,
               isVerified: true,
             },
           });
@@ -183,30 +190,22 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.isVerified = token.isVerified;
-      session.user.photograph = token.photograph;
-      session.user.first_name = token.first_name;
-      session.user.phoneIsVerified = token.phoneIsVerified;
-      session.user.idVerificationInProgress = token.idVerificationInProgress;
+      session.user = { ...token };
+      console.log('Session:', session);
       return session;
     },
 
     async jwt({ token, user, account }) {
-      // Initial sign in
       if (account && user) {
         token.id = user.id;
+        token.email = user.email;
         token.isVerified = user.isVerified;
-        token.photograph = user.photograph;
-        token.first_name = user.first_name;
         token.phoneIsVerified = user.phoneIsVerified;
+        token.idPhotograph = user.idPhotograph;
+        token.idIsVerified = user.idIsVerified;
+        token.account = account;
       }
-
-      // Update token with new information
-      if (user?.idVerificationInProgress !== undefined) {
-        token.idVerificationInProgress = user.idVerificationInProgress;
-      }
-
+      console.log('JWT token:', token);
       return token;
     },
   },

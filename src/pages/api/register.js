@@ -2,16 +2,22 @@ import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { sendEmail } from '@/lib/mailer';
 import fetch from 'node-fetch'; // Import node-fetch for server-side requests
+import Cookies from 'js-cookie';
+
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email, password, first_name, last_name, subject, body, recaptchaToken } = req.body;
+    const { email, password, first_name, last_name, recaptchaToken } = req.body;
+
+    // Extract the Accept-Language header from the incoming request
+    const acceptLanguage = req.headers['accept-language'] || 'en';
 
     // Verify reCAPTCHA
     const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept-Language': Cookies.get('i18next') || 'en',
       },
       body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`, // Correctly access the secret key
     });
@@ -35,36 +41,21 @@ export default async function handler(req, res) {
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Generate a verification code (6-digit random)
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-
-      // Save the user and verification code to the database
+      // Save the user to the database
       const newUser = await prisma.user.create({
         data: {
           email,
           password: hashedPassword,
           first_name,
           last_name,
-          verificationCode: code,  // Store the verification code
-          isVerified: false,  // New users are not verified yet
         },
       });
 
-      // Try sending the verification email
-      try {
-        await sendEmail({
-          to: email,
-          subject: subject.replace('{code}', code),
-          body: body.replace('{code}', code),
-        });
-        return res.status(200).json({ message: 'User registered successfully and verification email sent.' });
-      } catch (emailError) {
-        console.error('Error sending verification email:', emailError);  // Log the email error
-        return res.status(201).json({ message: 'User registered successfully, but email could not be sent.' });
-      }
+      // Send a response with the redirect URL
+      res.status(200).json({ message: 'User registered successfully.' });
 
     } catch (dbError) {
-      console.error('Error during registration:', dbError);  // Log the database error
+      console.error('Error during registration:', dbError);
       return res.status(500).json({ message: 'Internal server error during user registration.' });
     }
   } else {
