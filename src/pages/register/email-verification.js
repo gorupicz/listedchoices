@@ -19,7 +19,7 @@ function EmailVerification() {
   const [isVerified, setIsVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);  // Modal state
   const router = useRouter();
-  const email = router.query;  // Extract email from URL parameters
+  const email = router.query.email;  // Extract email from URL parameters as a string
   // Modal functions to show and close modal
   const handleShowModal = (title, message, submitText, isError, isVerified) => {
     setTitle(title);
@@ -65,8 +65,6 @@ function EmailVerification() {
     let isMounted = true; // Flag to ensure the effect runs only once
 
     if (email && isMounted) {
-      console.log('emailfoobar', email);
-  
       const verifyEmail = async () => {
         const res = await fetch('/api/email-verification', {
           method: 'POST',

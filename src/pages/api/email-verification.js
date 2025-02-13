@@ -26,14 +26,12 @@ export default async function handler(req, res) {
     let { email, code } = req.body;
 
     try {
-      // Decode the email and replace spaces with '+'
-      email = decodeURIComponent(email).replace(/ /g, '+');
 
       // Fetch user from the database
       const user = await prisma.user.findUnique({ where: { email } });
 
       if (user) {
-        if (code) {//Check if the code is valid
+        if (code) { // Check if the code is valid
           if (user.verificationCode === code) {
             await prisma.user.update({
               where: { email },
@@ -43,36 +41,26 @@ export default async function handler(req, res) {
           } else {
             res.status(400).json({ message: 'Invalid verification code' });
           }
-        } else {//Send a new code
+        } else { // Send a new code
           if (user.isVerified === true) {
             res.status(400).json({ message: 'Invalid user' });
             return;
           }
 
-          console.log('No code provided, generating a new one.');
-            
           const language = req.headers['accept-language'] || 'en';
-          console.log('Language set to:', language);
           await i18next.changeLanguage(language);
           const t = i18next.getFixedT(null, 'register/email-verification');
 
-          console.log('Current language:', language);
-          console.log('Namespace:', 'register/email-verification');
-
           const newCode = Math.floor(100000 + Math.random() * 900000).toString();
-          console.log('Generated verification code:', newCode);
           // Save the verification code to the database
           await prisma.user.update({
             where: { email },
             data: { verificationCode: newCode },
           });
-          console.log('Verification code saved to database.');
 
           // Use the translation function to get email subject and body
           const subject = t('verificationEmailSubject', { newCode });
           const body = t('verificationEmailBody', { newCode });
-          console.log('Email subject:', subject);
-          console.log('Email body:', body);
 
           // Send the verification email
           try {
@@ -81,10 +69,8 @@ export default async function handler(req, res) {
               subject,
               body,
             });
-            console.log('Verification email sent successfully.');
             res.status(200).json({ message: 'Verification code sent successfully' });
           } catch (error) {
-            console.error('Error sending verification email:', error);
             res.status(500).json({ message: 'Failed to send verification code' });
           }
         }
@@ -94,7 +80,6 @@ export default async function handler(req, res) {
         return;
       }
     } catch (error) {
-      console.error('Error during verification:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   } else {
