@@ -10,6 +10,6 @@
   "goBackToLoginText": "VOLVER A INICIAR SESIÓN",  
   "verificationEmailSubject": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas",
   "verificationEmailBody": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas. Si no intentaste iniciar sesión, puedes ignorar este correo.",
-  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Has clic en aceptar para introducir el código.",
+  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Introduce el código a continuación.",
   "verificationModalTitle": "Verifica tu correo electrónico"
 }

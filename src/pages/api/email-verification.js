@@ -12,13 +12,13 @@ i18next
   .use(Backend)
   .init({
     backend: {
-      loadPath: './public/locales/{{ns}}/{{lng}}.json', // Adjusted path
+      loadPath: './public/locales/{{ns}}/{{lng}}.json', // Ensure this path is correct
     },
     fallbackLng: 'en',
-    preload: ['en', 'es'], // Preload the languages you need
-    ns: ['register/email-verification'], // Specify the namespace
+    preload: ['en', 'es'], // Ensure these languages are preloaded
+    ns: ['register/email-verification'], // Ensure the namespace is correct
     defaultNS: 'register/email-verification',
-    debug: false, // Enable debug mode to see more logs
+    debug: false, // Disable debug mode to remove logs
   });
 
 export default async function handler(req, res) {
