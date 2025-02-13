@@ -19,8 +19,7 @@ function EmailVerification() {
   const [isVerified, setIsVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);  // Modal state
   const router = useRouter();
-  const { email: rawEmail } = router.query;  // Extract email from URL parameters
-  const email = rawEmail ? decodeURIComponent(rawEmail.replace(/ /g, '+')) : '';  // Decode email
+  const email = router.query;  // Extract email from URL parameters
   // Modal functions to show and close modal
   const handleShowModal = (title, message, submitText, isError, isVerified) => {
     setTitle(title);
