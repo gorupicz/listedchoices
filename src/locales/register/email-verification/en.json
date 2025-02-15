@@ -1,0 +1,15 @@
+{
+  "pageTitle": "Verify Your Email",
+  "verificationCodePlaceholder": "Enter your 6-digit code",
+  "submitButtonText": "Verify",
+  "successMessage": "Your email has been successfully verified.",
+  "errorMessage": "Invalid verification code. Please try again.",
+  "successModalTitle": "Verification Successful",
+  "errorModalTitle": "Verification Failed",
+  "modalSubmitText": "Accept",
+  "goBackToLoginText": "GO BACK TO LOGIN",
+  "verificationEmailSubject": "{{newCode}} is your Bolsa de Casas sign-in code",
+  "verificationEmailBody": "{{newCode}} is your Bolsa de Casas sign-in code. If you didn't attempt to sign in, you can safely ignore this email. You can also set a password to sign in to your account.",
+  "verificationCodeSentMessage": "A six-digit verification code has been sent to your email. Enter the code in the next step.",
+  "verificationModalTitle": "Verify your email"
+}

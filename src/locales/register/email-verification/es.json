@@ -1,0 +1,15 @@
+{
+  "pageTitle": "Verifica tu correo electrónico",
+  "verificationCodePlaceholder": "Introduce tu código de 6 dígitos",
+  "submitButtonText": "Verificar",
+  "successMessage": "Tu correo electrónico ha sido verificado con éxito.",
+  "errorMessage": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+  "successModalTitle": "Verificación exitosa",
+  "errorModalTitle": "Verificación fallida",
+  "modalSubmitText": "Aceptar",
+  "goBackToLoginText": "VOLVER A INICIAR SESIÓN",  
+  "verificationEmailSubject": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas",
+  "verificationEmailBody": "{{newCode}} es tu código de inicio de sesión en Bolsa de Casas. Si no intentaste iniciar sesión, puedes ignorar este correo.",
+  "verificationCodeSentMessage": "Se ha enviado un código de verificación de seis dígitos a tu correo electrónico. Introduce el código a continuación.",
+  "verificationModalTitle": "Verifica tu correo electrónico"
+}

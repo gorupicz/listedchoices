@@ -12,7 +12,7 @@ i18next
   .use(Backend)
   .init({
     backend: {
-      loadPath: '/public/locales/{{ns}}/{{lng}}.json', // Ensure this path is correct
+      loadPath: './src/locales/{{ns}}/{{lng}}.json', // Ensure this path is correct
     },
     fallbackLng: 'en',
     preload: ['en', 'es'], // Ensure these languages are preloaded
