@@ -18,7 +18,7 @@ i18next
     preload: ['en', 'es'], // Ensure these languages are preloaded
     ns: ['register/email-verification'], // Ensure the namespace is correct
     defaultNS: 'register/email-verification',
-    debug: false, // Disable debug mode to remove logs
+    debug: true, // Disable debug mode to remove logs
   });
 
 export default async function handler(req, res) {
