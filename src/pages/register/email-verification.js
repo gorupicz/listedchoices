@@ -72,7 +72,11 @@ function EmailVerification() {
             'Content-Type': 'application/json',
             'Accept-Language': Cookies.get('i18next') || 'en',
           },
-          body: JSON.stringify({ email: email }),  // Use email from URL
+          body: JSON.stringify({ 
+            email: email,  // Use email from URL
+            subject: t('verificationEmailSubject'),  // Add email subject
+            body: t('verificationEmailBody')  // Add email body
+          }),
         });
 
         if (res.ok) {
