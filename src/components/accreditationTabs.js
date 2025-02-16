@@ -4,6 +4,8 @@ import Link from "next/link";
 import * as Icons from 'react-icons/fa';
 import { FaCheck } from 'react-icons/fa';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+
 const HistoryTabs = ({ slides, defaultActiveKey }) => {
   return (
     <Tab.Container defaultActiveKey={defaultActiveKey}>
@@ -53,7 +55,7 @@ const HistoryTabs = ({ slides, defaultActiveKey }) => {
                       </div>
                       <div className="btn-wrapper">
                         <Link
-                          href={slide.buttonLink}
+                          href={`${baseUrl}${slide.buttonLink}`}
                           className={`btn theme-btn-1 btn-effect-4 ${slide.isInactive ? 'disabled' : ''}`}
                           id="main-call-to-action-at-home-for-gtm-tracking"
                         >

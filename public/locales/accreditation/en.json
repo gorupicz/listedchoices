@@ -11,6 +11,7 @@
       "icon": "FaHandshake",
       "buttonText": "Get started",
       "inactiveButtonText": "Signed in",
+      "verificationInProgressButtonText": "Verification in progress",
       "buttonLink": "/register"
     },
     {
@@ -24,6 +25,7 @@
       "icon": "FaWhatsapp",
       "buttonText": "Verify phone",
       "inactiveButtonText": "Phone verified",
+      "verificationInProgressButtonText": "Verification in progress",
       "buttonLink": "/register/phone-verification"
     },
     {
@@ -37,6 +39,7 @@
       "icon": "FaIdCard",
       "buttonText": "Take photo",
       "inactiveButtonText": "ID verified",
+      "verificationInProgressButtonText": "Verification in progress",
       "buttonLink": "/register/id-verification"
     },
     {
@@ -49,6 +52,7 @@
       "image": "/img/img-slide/11.jpg",
       "icon": "FaCertificate",
       "buttonText": "Share certificate",
+      "verificationInProgressButtonText": "Verification in progress",
       "buttonLink": "/my-account"
     }
   ]

@@ -8,8 +8,9 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import SubmitPhoneNumberModal from "@/components/modals/submitPhoneNumberModal";
 import ErrorSuccessModal from "@/components/modals/ErrorSuccessModal";
-import { signOut, getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Cookies from 'js-cookie';
+import prisma from '@/lib/prisma'; // Import your Prisma client 
 
 export async function getServerSideProps(context) {
   const { locale } = context;
@@ -17,20 +18,42 @@ export async function getServerSideProps(context) {
 
   const session = await getSession(context);
 
-  if (!session || session.user.phoneIsVerified === true) {
+    if (session) {
+        // Query the database for the latest user information
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: {
+                id: true,
+                email: true,
+                isVerified: true,
+                phoneIsVerified: true,
+                idIsVerified: true,
+                idPhotograph: true,
+                // Add any other fields you need
+            },
+        });
+
+        return {
+            props: { user },
+        };
+    }
     return {
-      redirect: {
-        destination: '/accreditation',
-        permanent: false,
-      },
+        props: { user: null },
     };
-  }
-  return {
-    props: { user: session.user },
-  };
 }
 
 function PhoneVerification({ user }) {
+  const router = useRouter();
+
+  if (!user || user.phoneIsVerified) {
+    const redirectPath = !user ? '/register' : '/accreditation';
+    if (!user) {
+      Cookies.set('redirectAfterAuthenticated', window.location.pathname, { expires: 1, path: '/' });
+    }
+    router.push(redirectPath);
+    return;
+  }
+
   const { t } = useTranslation('register/phone-verification'); 
   const [verificationCode, setVerificationCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,8 +64,6 @@ function PhoneVerification({ user }) {
   const [title, setTitle] = useState('');
   const [submitText, setSubmitText] = useState('');
   const [isVerified, setIsVerified] = useState(false);
-  const router = useRouter();
-  const { data: session, update } = useSession(); // Destructure session data
 
   useEffect(() => {
     setShowPhoneVerificationModal(true); // Show the phone verification modal when the page loads
@@ -111,11 +132,6 @@ function PhoneVerification({ user }) {
     });
 
     if (res.ok) {
-      // Manually update the session data on the client-side
-      if (session) {
-        session.user.phoneIsVerified = true;
-      }
-      await update(); // Refresh the session
       handleShowModal(t('successModalTitle'), t('successMessage'), t('modalSubmitText'), false, true);
     } else {
       handleShowModal(t('errorModalTitle'), t('errorMessage'), t('modalSubmitText'), true, false);

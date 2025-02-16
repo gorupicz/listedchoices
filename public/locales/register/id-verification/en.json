@@ -1,15 +1,11 @@
 {
   "pageTitle": "Verify Your Identity",
   "pageDescription": "Take a selfie holding your ID document to verify your identity.",
-  "verificationCodePlaceholder": "Enter your 6-digit code",
   "submitButtonText": "Verify",
-  "successMessage": "Your phone number has been successfully verified.",
-  "errorMessage": "Invalid verification code. Please try again.",
+  "successMessage": "Your photograph is under review. You will receive an email once it is approved.",
+  "photoRequiredMessage": "Please take a clear photograph of you holding an ID document.",
+  "errorMessage": "Your photograph is not clear. Please try again.",
   "successModalTitle": "Verification Successful",
   "errorModalTitle": "Verification Failed",
-  "modalSubmitText": "Accept",
-  "goBackToLoginText": "GO BACK TO LOGIN",
-  "phoneVerificationCodeSentMessage": "A six-digit verification code will be sent to your phone number. Enter the code in the next step.",
-  "phoneVerificationModalTitle": "Verify your phone number",
-  "sendVerificationCodeButtonText": "Send verification code"
+  "modalSubmitText": "Accept"
 }

@@ -7,51 +7,111 @@ import Link from "next/link";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import ErrorSuccessModal from "@/components/modals/ErrorSuccessModal";
-import { signIn, getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import React, { useCallback } from "react";
 import Webcam from "react-webcam";
 import { FaTrash } from "react-icons/fa";
-
+import Cookies from 'js-cookie';
+import prisma from '@/lib/prisma'; // Import your Prisma client
 export async function getServerSideProps(context) {
   const { locale } = context;
   i18next.changeLanguage(locale); // Set the language explicitly based on the route locale
 
   const session = await getSession(context);
 
-  if (session.user.idPhotograph) {
-     console.log('Session foobar:', session);
+    if (session) {
+        // Query the database for the latest user information
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: {
+                id: true,
+                email: true,
+                isVerified: true,
+                phoneIsVerified: true,
+                idIsVerified: true,
+                idPhotograph: true,
+                // Add any other fields you need
+            },
+        });
 
+        return {
+            props: { user },
+        };
+    }
     return {
-      redirect: {
-        destination: '/accreditation',
-        permanent: false,
-      },
+        props: { user: null },
     };
-  }
-  return {
-    props: { user: session.user },
-  };
 }
 
 function IdVerification({ user }) {
+const router = useRouter();
+
+  if (!user || user.idIsVerified || (user.idPhotograph && !user.idIsVerified)) {
+    const redirectPath = !user ? '/register' : '/accreditation';
+    if (!user) {
+      Cookies.set('redirectAfterAuthenticated', window.location.pathname, { expires: 1, path: '/' });
+    }
+    router.push(redirectPath);
+    return;
+  }
+
+
   const { t } = useTranslation('register/id-verification'); 
   const [modalMessage, setModalMessage] = useState('');
+  const [title, setTitle] = useState('');
+  const [submitText, setSubmitText] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
   const [isError, setIsError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
   const [photo, setPhoto] = useState(null);
   const webcamRef = React.useRef(null);
-  const { update } = useSession(); // Get the update function from useSession
+
+  const [videoConstraints, setVideoConstraints] = useState({
+    width: 640,
+    height: 820,
+    facingMode: "user",
+  });
+
+  useEffect(() => {
+    const updateVideoConstraints = () => {
+      if (window.innerWidth <= 768) { // Assuming 768px as the breakpoint for mobile
+        setVideoConstraints({
+          width: 320,
+          height: 480,
+          facingMode: "user",
+        });
+      } else {
+        setVideoConstraints({
+          width: 720,
+          height: 1280,
+          facingMode: "user",
+        });
+      }
+    };
+
+    updateVideoConstraints();
+    window.addEventListener('resize', updateVideoConstraints);
+
+    return () => {
+      window.removeEventListener('resize', updateVideoConstraints);
+    };
+  }, []);
 
   // Modal functions to show and close modal
-  const handleShowModal = (message, isError = false) => {
+  const handleShowModal = (title, message, submitText, isError, isVerified) => {
+    setTitle(title);
     setModalMessage(message);
+    setSubmitText(submitText);
     setIsError(isError);
     setShowModal(true);
+    setIsVerified(isVerified);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    if (!isError) {
+      router.push('/accreditation');
+    }
   };
 
   const capture = useCallback(() => {
@@ -67,7 +127,7 @@ function IdVerification({ user }) {
     e.preventDefault();
 
     if (!photo) {
-      handleShowModal(t('photoRequiredMessage'), true);
+      handleShowModal(t('errorModalTitle'), t('photoRequiredMessage'), t('modalSubmitText'), true, false);
       return;
     }
 
@@ -94,28 +154,15 @@ function IdVerification({ user }) {
       const result = await res.json();
 
       if (res.ok && result.idVerificationInProgress) {
-        // Call the custom API route to refresh the session
-        await fetch('/api/refresh-session');
-        // Refresh the session to update the state
-        await update(); // Use the update function to refresh the session
-        console.log('Session after update:', await getSession()); // Log the session to verify
-        // Redirect to /accreditation after successful upload
-        router.push('/accreditation');
-        handleShowModal(t('successMessage'), false);
+        handleShowModal(t('successModalTitle'), t('successMessage'), t('modalSubmitText'), false, true);
       } else {
         console.error('Error:', result.error);
-        handleShowModal(t('errorMessage'), true);
+        handleShowModal(t('errorModalTitle'), t('errorMessage'), t('modalSubmitText'), true, false);
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      handleShowModal(t('errorMessage'), true);
+      handleShowModal(t('errorModalTitle'), t('errorMessage'), t('modalSubmitText'), true, false);
     }
-  };
-
-  const videoConstraints = {
-    width: 640,
-    height: 820,
-    facingMode: "user",
   };
 
   return (
@@ -172,12 +219,10 @@ function IdVerification({ user }) {
       <ErrorSuccessModal
         show={showModal}
         handleClose={handleCloseModal}
-        isError={isError}
         content={{
-          errorModalTitle: t('errorModalTitle'),
-          successModalTitle: t('successModalTitle'),
-          modalSubmitText: t('modalSubmitText'),
-          modalMessage: modalMessage
+          title: title,
+          submitText: submitText,
+          message: modalMessage
         }}
       />
     </>

@@ -1,15 +1,11 @@
 {
   "pageTitle": "Verifica tu identidad",
   "pageDescription": "Tómate una selfie sosteniendo tu INE o Pasaporte para verificar tu identidad.",
-  "verificationCodePlaceholder": "Introduce tu código de 6 dígitos",
   "submitButtonText": "Verificar",
-  "successMessage": "Tu número de teléfono ha sido verificado con éxito.",
-  "errorMessage": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+  "successMessage": "Tu fotografía está bajo revisión. Recibirás un correo electrónico cuando sea aprobada.",
+  "photoRequiredMessage": "Por favor, toma una fotografía clara de ti sosteniendo tu INE o Pasaporte.",
+  "errorMessage": "Tu fotografía no es clara. Por favor, inténtalo de nuevo.",
   "successModalTitle": "Verificación exitosa",
   "errorModalTitle": "Verificación fallida",
-  "modalSubmitText": "Aceptar",
-  "goBackToLoginText": "VOLVER A INICIAR SESIÓN",
-  "phoneVerificationModalDescription": "Un código de verificación de seis dígitos será enviado a tu número de teléfono. Introduce el código en el siguiente paso.",
-  "phoneVerificationModalTitle": "Verifica tu número de teléfono",
-  "sendVerificationCodeButtonText": "Enviar código de verificación"
+  "modalSubmitText": "Aceptar"
 }
