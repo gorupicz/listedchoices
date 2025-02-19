@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
 function IdVerification({ user }) {
 const router = useRouter();
 
-  if (!user || user.idIsVerified || (user.idPhotograph && !user.idIsVerified)) {
+  if (!user || user.idIsVerified) {
     const redirectPath = !user ? '/register' : '/accreditation';
     if (!user) {
       Cookies.set('redirectAfterAuthenticated', window.location.pathname, { expires: 1, path: '/' });
@@ -67,8 +67,6 @@ const router = useRouter();
   const webcamRef = React.useRef(null);
 
   const [videoConstraints, setVideoConstraints] = useState({
-    width: 640,
-    height: 820,
     facingMode: "user",
   });
 
@@ -78,13 +76,11 @@ const router = useRouter();
         setVideoConstraints({
           width: 320,
           height: 480,
-          facingMode: "user",
         });
       } else {
         setVideoConstraints({
           width: 720,
           height: 1280,
-          facingMode: "user",
         });
       }
     };

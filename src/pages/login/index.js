@@ -10,10 +10,11 @@ import { FcGoogle } from "react-icons/fc"; // Import FcGoogle for original color
 import { FaFacebook } from "react-icons/fa"; // Import FaFacebook
 import { FaEnvelope } from 'react-icons/fa'; // Import the icon
 import SubmitEmailModal from "@/components/modals/submitEmailModal";
-import MessageModal from "@/components/modals/MessageModal";
+import ErrorSuccessModal from "@/components/modals/ErrorSuccessModal";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
+import { SettingsUpdateListInstance } from "twilio/lib/rest/supersim/v1/settingsUpdate";
 
 
 export async function getStaticProps({ locale }) {
@@ -40,6 +41,8 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modalMessage, setModalMessage] = useState('');  // For showing messages in modal
+  const [title, setTitle] = useState('');
+  const [submitText, setSubmitText] = useState('');
   const [isError, setIsError] = useState(false);  // Track if it's an error message
   const [showModal, setShowModal] = useState(false);  // Modal state
   const [reopenForgotPassword, setReopenForgotPassword] = useState(false); // To track reopening Forgot Password modal
@@ -83,8 +86,10 @@ function Login() {
   };
 
   // Function to show error/success modal
-  const handleShowModal = (message, isError, reopenForgotPassword = false) => {
+  const handleShowModal = (title, message, submitText, isError) => {
+    setTitle(title);
     setModalMessage(message);
+    setSubmitText(submitText);
     setIsError(isError);
     setShowModal(true);
     if (reopenForgotPassword) {
@@ -111,7 +116,7 @@ function Login() {
     if (!validator.isEmail(cleanedEmail)) {
       // Close Forgot Password modal and show error modal
       handleCloseForgotPassword();
-      handleShowModal(t('invalidEmailMessage'), true, true);
+      handleShowModal(t('errorModalTitle '), t('invalidEmailMessage'), t('errorSuccessModalSubmit'), true);
       return;
     }
 
@@ -129,10 +134,10 @@ function Login() {
 
     if (res.ok) {
       handleCloseForgotPassword();  // Close the modal after submission
-      handleShowModal(t('passwordRecoverySentMessage'), false);  // Show recovery success message
+      handleShowModal(t('modalTitle'), t('passwordRecoverySentMessage'), t('errorSuccessModalSubmit'), false);  // Show recovery success message
     } else {
       handleCloseForgotPassword();
-      handleShowModal(t('defaultErrorMessage'), true);
+      handleShowModal(t('errorModalTitle'), t('defaultErrorMessage'), t('errorSuccessModalSubmit'), true);
     }
   };
 
@@ -144,25 +149,21 @@ function Login() {
     e.preventDefault(); // Prevent form from refreshing the page
 
     const cleanedEmail = validator.trim(email);
-    console.log('Cleaned email:', cleanedEmail);
 
     if (!validator.isEmail(cleanedEmail)) {
-      handleShowModal(t('invalidEmailMessage'), true);  // Show invalid email modal
+      handleShowModal(t('errorModalTitle'), t('invalidEmailMessage'), t('errorSuccessModalSubmit'), true);  // Show invalid email modal
       return;
     }
 
     try {
-      console.log('Sending login request...');
       const result = await signIn('credentials', {
         email: cleanedEmail,
         password,
         redirect: false // Ensure no automatic redirect
       });
 
-      console.log('Login result:', result); // Log the result
-
-      if (result.error === '401') {
-        handleShowModal(t('errorInvalidEmailOrPasswordModalMessage'), true);  // Show error modal
+      if (result.status === 401) {
+        handleShowModal(t('errorModalTitle'), t('errorInvalidEmailOrPasswordModalMessage'), t('errorSuccessModalSubmit'), true);  // Show error modal
       } else if (result.error === 'Email not verified') {
         router.push(`/register/email-verification?email=${cleanedEmail}`);
       } else if (!hasRedirected) {
@@ -175,8 +176,7 @@ function Login() {
         }
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      handleShowModal(t('defaultErrorMessage'), true);  // Show error modal
+      handleShowModal(t('errorModalTitle'), t('defaultErrorMessage'), t('errorSuccessModalSubmit'), true);  // Show error modal
     }
   };
 
@@ -276,12 +276,14 @@ function Login() {
         content={modalPasswordContent}
       />
 
-      <MessageModal
+      <ErrorSuccessModal
         show={showModal}
         handleClose={handleCloseModal}
-        isError={isError}
-        modalMessage={modalMessage}
-        content={modalMessageContent}
+        content={{
+          title: title,
+          submitText: submitText,
+          message: modalMessage
+        }}
       />
     </>
   );

@@ -51,12 +51,10 @@ function AccreditationPage({ user }) {
         const idVerificationInProgress = (!userIdIsVerified && user.idPhotograph !== null) || false;
         
         if (userIdIsVerified) {
-            console.log('User ID is verified');
             defaultActiveKey = 'fourth';
             slides[2].isInactive = true;
             if (userPhoneIsVerified) slides[1].isInactive = true;
         } else if (userPhoneIsVerified) {
-            console.log('User phone is verified');
             defaultActiveKey = 'third';
             slides[1].isInactive = true;
             if (idVerificationInProgress) {
@@ -64,7 +62,6 @@ function AccreditationPage({ user }) {
                 slides[2].inactiveButtonText = slides[2].verificationInProgressButtonText;
             }
         } else if (userEmailIsVerified) {
-            console.log('User email is verified');
             defaultActiveKey = 'second';
         }
     } else {

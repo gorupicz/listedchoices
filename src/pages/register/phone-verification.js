@@ -88,9 +88,6 @@ function PhoneVerification({ user }) {
 
   const handlePhoneVerification = async (e) => {
     e.preventDefault();
-
-    console.log('Sending phone number:', phoneNumber); // Debugging log
-
     // Send OTP to the phone number using Twilio
     const res = await fetch('/api/phone-verification', {
       method: 'POST',

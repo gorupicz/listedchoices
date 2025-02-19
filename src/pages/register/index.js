@@ -119,7 +119,7 @@ function Register() {
       if (res.ok) {
         router.push(`/register/email-verification?email=${encodeURIComponent(cleanedEmail)}`);
       } else {
-        handleShowModal(data.message || t('defaultErrorMessage'), true);
+        handleShowModal(t('defaultErrorMessage'), true);
       }
     } catch (error) {
       console.error("Error during registration:", error);
