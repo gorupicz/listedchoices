@@ -66,12 +66,22 @@ const router = useRouter();
   const [photo, setPhoto] = useState(null);
   const webcamRef = React.useRef(null);
 
-  // Determine video constraints based on initial window size
-  const initialVideoConstraints = window.innerWidth <= 768 ? 
-    { width: 320, height: 480, facingMode: "user" } : 
-    { width: 320, height: 480, facingMode: "user" };
+  const [videoConstraints, setVideoConstraints] = useState({
+    width: 600,
+    height: 800,
+    facingMode: "user",
+  });
 
-  const [videoConstraints, setVideoConstraints] = useState(initialVideoConstraints);
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 576; // Simple check for mobile devices
+    if (isMobile) {
+      setVideoConstraints({
+        width: 480, // VGA width
+        height: 640, // VGA height
+        facingMode: "user",
+      });
+    }
+  }, []);
 
   // Modal functions to show and close modal
   const handleShowModal = (title, message, submitText, isError, isVerified) => {
