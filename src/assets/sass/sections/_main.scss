@@ -3644,6 +3644,7 @@ blockquote {
   }
 }
 
+
 .webcam-container {
   position: relative;
   &::after {
@@ -3713,6 +3714,9 @@ blockquote {
 @media (max-width: 767px) {
   .contact-form-box {
     padding: 40px 25px 50px;
+  }
+  .foo {
+    height: 800px !important
   }
 }
 
