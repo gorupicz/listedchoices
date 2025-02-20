@@ -1,6 +1,6 @@
 {
   "pageTitle": "Verify Your Identity",
-  "pageDescription": "Take a selfie holding your ID document to verify your identity.",
+  "pageDescription": "Take a selfie holding your ID document.",
   "submitButtonText": "Verify",
   "successMessage": "Your photograph is under review. You will receive an email once it is approved.",
   "photoRequiredMessage": "Please take a clear photograph of you holding an ID document.",

@@ -63,7 +63,7 @@ const OGMetadataConsumerComponent = ({ Component, props, store }) => {
       <Head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content={metadata.ogTitle} />
         <meta property="og:url" content={metadata.ogUrl} />

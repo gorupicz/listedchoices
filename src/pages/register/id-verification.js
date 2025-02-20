@@ -69,7 +69,7 @@ const router = useRouter();
   // Determine video constraints based on initial window size
   const initialVideoConstraints = window.innerWidth <= 768 ? 
     { width: 320, height: 480, facingMode: "user" } : 
-    { width: 720, height: 1280, facingMode: "user" };
+    { width: 320, height: 480, facingMode: "user" };
 
   const [videoConstraints, setVideoConstraints] = useState(initialVideoConstraints);
 
