@@ -77,7 +77,7 @@ const router = useRouter();
     if (isMobile) {
       setVideoConstraints({
         width: 480, // VGA width
-        height: 640, // VGA height
+        height: 800, // VGA height
         facingMode: "user",
       });
     }
@@ -164,7 +164,6 @@ const router = useRouter();
                 </div>
               </Col>
             </Row>
-
             <Row>
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
