@@ -31,7 +31,7 @@ const HistoryTabs = ({ slides, defaultActiveKey }) => {
                 <div className="ltn__product-tab-content-inner">
                   <Row>
                     <Col xs={12} lg={6} className="align-self-center">
-                      <div className="about-us-img-wrap about-img-left">
+                      <div className="about-us-img-wrap about-img-left d-none d-lg-block">
                         <Image
                           src={slide.image}
                           alt="Image"
