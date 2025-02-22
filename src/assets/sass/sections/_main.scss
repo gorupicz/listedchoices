@@ -6746,6 +6746,7 @@ input.cart-plus-minus-box {
     Our History Area
 ---------------------------------------------------- */
 .ltn__our-history-inner {
+
   .ltn__tab-menu {
     .nav {
       display: flex;
@@ -6763,16 +6764,18 @@ input.cart-plus-minus-box {
         z-index: -1;
       }
     }
-
-    a {
-      background-color: var(--white);
-      border: 2px solid var(--white-6);
-    }
-
     .active {
-      border-color: var(--ltn__secondary-color);
-      background-color: var(--ltn__secondary-color);
-      color: var(--white);
+      background-color: var(--section-bg-1) !important;
+      color: var(--ltn__secondary-color);
+      &:hover {
+        color: var(--ltn__primary-color);
+      }
+    }
+    .nav-link {
+      &:hover {
+        background-color: var(--ltn__secondary-color);
+        color: var(--white);
+      }
     }
   }
 }

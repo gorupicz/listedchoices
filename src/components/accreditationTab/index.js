@@ -12,7 +12,13 @@ const HistoryTabs = ({ slides, defaultActiveKey }) => {
           <Nav>
             {slides.map((slide, index) => (
               <Nav.Link key={index} eventKey={slide.eventKey}>
-                {slide.tabMenuText}
+                {slide.eventKey === defaultActiveKey ? (
+                  <Link href={`${slide.buttonLink}`}>
+                    {slide.tabMenuText}
+                  </Link>
+                ) : (
+                  slide.tabMenuText
+                )}
               </Nav.Link>
             ))}
           </Nav>

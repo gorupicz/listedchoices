@@ -50,6 +50,7 @@
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.11.17",
+    "mkcert": "^3.2.0",
     "mongodb": "^6.9.0",
     "mysql2": "^3.11.3",
     "next": "13.2.3",

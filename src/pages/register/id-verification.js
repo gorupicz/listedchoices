@@ -164,7 +164,8 @@ const router = useRouter();
                 </div>
               </Col>
             </Row>
-            <Row className="foo">
+
+            <Row>
               <Col xs={12} lg={{ span: 4, offset: 4 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <form onSubmit={handleSubmit}>
