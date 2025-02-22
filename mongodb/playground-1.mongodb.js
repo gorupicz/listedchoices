@@ -12,13 +12,6 @@
 // Select the database to use.
 use('bolsadecasas');
 
-db.technicians.insertMany([
-  {
-    id: 1,
-    cities: ["Isla Mujeres", "Playa del Carmen", "Cancún"],
-    specialities: ["Factoring", "Loans", "Mortgages"]
-  }
-]);
 
 // Verify the insertion
-db.technicians.find({});
+db.technicians.find({ id: 41 });

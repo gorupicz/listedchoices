@@ -7,11 +7,11 @@ use('bolsadecasas');
 
 // Create a new document in the collection.
 db.getCollection('technicians').insertOne({
-  id: 28,
+  id: 51,
   cities: [
-    'Merida'
+    'Cancún'
   ],
   specialities: [
-    'Fumigacion'
+    'Carpintería'
   ]
 });

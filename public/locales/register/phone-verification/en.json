@@ -10,5 +10,5 @@
   "goBackToLoginText": "GO BACK TO LOGIN",
   "phoneVerificationCodeSentMessage": "A six-digit verification code will be sent to your phone number. Enter the code in the next step.",
   "phoneVerificationModalTitle": "Verify your phone number",
-  "sendVerificationCodeButtonText": "Send verification code"
+  "sendVerificationCodeButtonText": "Send code"
 }

@@ -67,8 +67,8 @@ const router = useRouter();
   const webcamRef = React.useRef(null);
 
   const [videoConstraints, setVideoConstraints] = useState({
-    width: 600,
-    height: 800,
+    width: 1280,
+    height: 720,
     facingMode: "user",
   });
 
@@ -76,8 +76,8 @@ const router = useRouter();
     const isMobile = window.innerWidth <= 576; // Simple check for mobile devices
     if (isMobile) {
       setVideoConstraints({
-        width: 640, // VGA width
-        height: 480, // VGA height
+        width: 1280, // VGA width
+        height: 720, // VGA height
         facingMode: "user",
       });
     }

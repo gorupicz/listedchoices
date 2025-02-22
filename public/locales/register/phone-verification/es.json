@@ -10,5 +10,5 @@
   "goBackToLoginText": "VOLVER A INICIAR SESIÓN",
   "phoneVerificationModalDescription": "Un código de verificación de seis dígitos será enviado a tu número de teléfono. Introduce el código en el siguiente paso.",
   "phoneVerificationModalTitle": "Verifica tu número de teléfono",
-  "sendVerificationCodeButtonText": "Enviar código de verificación"
+  "sendVerificationCodeButtonText": "Enviar código"
 }

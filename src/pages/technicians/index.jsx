@@ -106,8 +106,7 @@ export async function getServerSideProps(context) {
     const mongoTech = technicians.find(mongoTech => mongoTech.id === mysqlTech.id);
     return {
       ...mysqlTech,
-      ...mongoTech,
-      _id: mongoTech._id.toString(),
+      ...(mongoTech ? { ...mongoTech, _id: mongoTech._id.toString() } : {}),
     };
   });
 

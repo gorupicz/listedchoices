@@ -54,6 +54,12 @@
         background-color:  var(--ltn__primary-color);
     }
 }
+.reverse-color{
+    background-color: var(--ltn__secondary-color);
+    &:hover{
+        background-color:  var(--ltn__primary-color);
+    }
+}
 .btn-white {
     background-color: var(--white);
     color: var(--ltn__primary-color);

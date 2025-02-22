@@ -84,7 +84,7 @@ const TechnicianCard = ({ item, showVotes = true }) => {
         <h4>
           <Link href={`${slug}`}>{item.name}</Link>
         </h4>
-        <p>{item.specialities.join(', ')}</p>
+        <p>{Array.isArray(item.specialities) ? item.specialities.join(', ') : ''}</p>
       </div>
       {showVotes && (
         <div className="ltn__gallery-item-vote">
