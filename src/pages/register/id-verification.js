@@ -67,8 +67,8 @@ const router = useRouter();
   const webcamRef = React.useRef(null);
 
   const [videoConstraints, setVideoConstraints] = useState({
-    width: 1280,
-    height: 720,
+    width: 720,
+    height: 1280,
     facingMode: "user",
   });
 
