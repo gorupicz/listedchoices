@@ -76,8 +76,8 @@ const router = useRouter();
     const isMobile = window.innerWidth <= 576; // Simple check for mobile devices
     if (isMobile) {
       setVideoConstraints({
-        width: 480, // VGA width
-        height: 800, // VGA height
+        width: 640, // VGA width
+        height: 480, // VGA height
         facingMode: "user",
       });
     }
