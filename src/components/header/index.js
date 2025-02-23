@@ -123,7 +123,7 @@ const Header = function ({ SetToggleClassName, topbar }) {
             <Row>
               <Col className="site-logo-wrap" xs={12} md={6}>
                 <div className="site-logo">
-                  <Link href="/?slideId=invest">
+                  <Link href="/?slideId=mortgage">
                     <Image
                       src="/img/logo.png"
                       alt="Bolsa de Casas logo"

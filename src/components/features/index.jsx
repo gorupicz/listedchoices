@@ -17,7 +17,7 @@ function Feature({ servicebtn, iconTag, data, classes, headingClasses }) {
 
   return (
     <>
-      <div className={`about-us-info-wrap ${classes}`}>
+      <div className={`about-us-info-wrap ${classes} pt-60`}>
         <Container>
           <Row>
             <Col xs={12}>

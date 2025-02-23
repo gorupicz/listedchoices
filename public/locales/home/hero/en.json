@@ -1,26 +1,10 @@
 {
   "slides": [
-    {
-      "subtitle": "All the best properties in Mexico are here",
-    "Title": "Invest in houses like you invest in the stock market",
-    "titleWord": ["houses", "stock market"],
-    "Desc": "Invest in vacation rental properties in Mexico in a transparent and professional way.",
-    "icon": "tabler:sailboat",
-    "heroimage": "hero_home_investment.png",
-    "id": "1",
-    "buttonText": "Simulate your investment",
-    "buttonLink": "/register",
-    "videoButton": false,
-    "learnMoreButtonText": "See properties",
-    "learnMoreButtonLink": "/properties",
-    "variationLeft": false,
-    "anchor": "invest"
-  },
   {
     "subtitle": "The Azul-y-Oro mortgage for property managers",
     "Title": "Become an owner",
     "titleWord": ["owner"],
-    "Desc": "Buy the property you manage on credit and pay for it with the dividends from your future rents. Rate from 9.05% annually. Prequalify online.",
+    "Desc": "Buy properties to manage and pay for it with the dividends from your future rents. The monthly payments are flexible so you don't struggle during the low season.",
     "icon": "tabler:sailboat",
     "heroimage": "hero_home_mortgage.png",
     "caption": "Property Managers Dinner in Riviera Maya. June, 2024",
@@ -28,8 +12,8 @@
     "buttonText": "Simulate your loan",
     "buttonLink": "/register",
     "videoButton": true,
-    "learnMoreButtonText": "See properties",
-    "learnMoreButtonLink": "/properties",
+    "learnMoreButtonText": "Attend a group demo",
+    "learnMoreButtonLink": "/register",
     "variationLeft": false,
     "anchor": "mortgage"
     },
@@ -66,6 +50,22 @@
     "learnMoreButtonLink": "/properties",
     "variationLeft": false,
     "anchor": "leasing"
+    },
+    {
+      "subtitle": "All the best properties in Mexico are here",
+      "Title": "Invest in houses like you invest in the stock market",
+      "titleWord": ["houses", "stock market"],
+      "Desc": "Invest in vacation rental properties in Mexico in a transparent and professional way.",
+      "icon": "tabler:sailboat",
+      "heroimage": "hero_home_investment.png",
+      "id": "4",
+      "buttonText": "Simulate your investment",
+      "buttonLink": "/register",
+      "videoButton": false,
+      "learnMoreButtonText": "See properties",
+      "learnMoreButtonLink": "/properties",
+      "variationLeft": false,
+      "anchor": "invest"
     }
   ]
 }

@@ -5,7 +5,7 @@
   "successMessage": "Tu fotografía está bajo revisión. Recibirás un correo electrónico cuando sea aprobada.",
   "photoRequiredMessage": "Por favor, toma una fotografía clara de ti sosteniendo tu INE o Pasaporte.",
   "errorMessage": "Tu fotografía no es clara. Por favor, inténtalo de nuevo.",
-  "successModalTitle": "Verificación exitosa",
+  "successModalTitle": "Verificación en progreso",
   "errorModalTitle": "Verificación fallida",
   "modalSubmitText": "Aceptar"
 }

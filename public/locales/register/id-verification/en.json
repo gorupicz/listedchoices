@@ -5,7 +5,7 @@
   "successMessage": "Your photograph is under review. You will receive an email once it is approved.",
   "photoRequiredMessage": "Please take a clear photograph of you holding an ID document.",
   "errorMessage": "Your photograph is not clear. Please try again.",
-  "successModalTitle": "Verification Successful",
+  "successModalTitle": "Verification in progress",
   "errorModalTitle": "Verification Failed",
   "modalSubmitText": "Accept"
 }
