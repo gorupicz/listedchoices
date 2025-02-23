@@ -28,6 +28,8 @@ const TechnicianCard = ({ item, showVotes = true }) => {
     console.error("Failed to parse phone number:", error.message);
   }
 
+  const customMessage = `Hola, he visto tu perfil "${item.name} - ${Array.isArray(item.specialities) ? item.specialities.join(', ') : ''}, en ${Array.isArray(item.cities) ? item.cities.join(', ') : ''}", en Bolsa de Casas.`;
+
   const handleVote = async (id, type) => {
     if (hasVoted) return; // Prevent multiple votes
 
@@ -63,7 +65,7 @@ const TechnicianCard = ({ item, showVotes = true }) => {
     <div className="ltn__gallery-item-inner">
       <div
         className="ltn__gallery-item-img"
-        onClick={() => window.open(`https://wa.me/${item.phoneNumber}`, '_blank')}
+        onClick={() => window.open(`https://wa.me/${item.phoneNumber}?text=${encodeURIComponent(customMessage)}`, '_blank')}
         style={{ cursor: "pointer" }}
       >
         <Image 
