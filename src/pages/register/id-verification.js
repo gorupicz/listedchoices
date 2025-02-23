@@ -67,8 +67,8 @@ const router = useRouter();
   const webcamRef = React.useRef(null);
 
   const [videoConstraints, setVideoConstraints] = useState({
-    width: 720,
-    height: 1280,
+    width: 1280,
+    height: 720,
     facingMode: "user",
   });
 
@@ -76,8 +76,8 @@ const router = useRouter();
     const isMobile = window.innerWidth <= 576; // Simple check for mobile devices
     if (isMobile) {
       setVideoConstraints({
-        width: 1280, // VGA width
-        height: 720, // VGA height
+        width: 1280,
+        height: 720,
         facingMode: "user",
       });
     }
@@ -165,7 +165,7 @@ const router = useRouter();
               </Col>
             </Row>
             <Row>
-              <Col xs={12} lg={{ span: 4, offset: 4 }}>
+              <Col xs={12} lg={{ span: 6, offset: 3 }}>
                 <div className="account-login-inner ltn__form-box contact-form-box">
                   <form onSubmit={handleSubmit}>
                     <div className="webcam-container">
