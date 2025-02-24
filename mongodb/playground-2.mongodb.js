@@ -7,11 +7,11 @@ use('bolsadecasas');
 
 // Create a new document in the collection.
 db.getCollection('technicians').insertOne({
-  id: 51,
+  id: 61,
   cities: [
-    'Cancún'
+    'Playa del Carmen'
   ],
   specialities: [
-    'Carpintería'
+    'Carpintero'
   ]
 });
