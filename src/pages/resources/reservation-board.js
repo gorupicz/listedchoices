@@ -19,7 +19,7 @@ export default function ReservationBoard() {
 
   useEffect(() => {
     if (isMetadataSet) {
-      window.location.href = 'https://chat.whatsapp.com/FoJEJQG7AivBGSNhtcB83S';
+      window.location.href = 'https://chat.whatsapp.com/GYWZwmDjC7J5YhFY28Wzqs';
     }
   }, [isMetadataSet]);
 
